@@ -6,5 +6,5 @@ app_name = 'users'
 urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
     path('<int:pk>/', views.DetailView.as_view(), name='detail'),
-    path('<int:user_id>/skills/', views.skills, name='skills'),
+    path('<int:user_id>/skills/', views.SkillsView.as_view(), name='skills'),
 ]

@@ -29,7 +29,7 @@ class QuestionModelTests(TestCase):
 
     def test_was_published_recently_with_recent_user(self):
         """
-        joined_recently() returns True for users whose joined_date
+        joined_recently() returns True for users whose join_date
         is within the last day.
         """
         time = timezone.now() - datetime.timedelta(hours=23, minutes=59, seconds=59)
