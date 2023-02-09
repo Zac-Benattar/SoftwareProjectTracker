@@ -25,7 +25,6 @@ class IndexView(generic.ListView):
 class DetailView(generic.DetailView):
     model = User
     template_name = 'users/detail.html'
-
     def get_queryset(self):
         """
         Excludes any users have not joined yet.
