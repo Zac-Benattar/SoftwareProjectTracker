@@ -7,11 +7,11 @@ from django.urls import reverse
 from .models import User
 
 
-class QuestionModelTests(TestCase):
+class UserModelTests(TestCase):
 
     def test_was_published_recently_with_future_user(self):
         """
-        joined_recently() returns False for questions whose join_date
+        joined_recently() returns False for users whose join_date
         is in the future.
         """
         time = timezone.now() + datetime.timedelta(days=30)
