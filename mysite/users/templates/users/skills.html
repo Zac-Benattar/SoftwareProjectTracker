@@ -19,6 +19,8 @@
         <li>{{ skill.name }} - {{ skill.description }}</li>
         {% endfor %}
     </ul>
+    {% else %}
+    <p>User has no skills assigned.</p>
     {% endif %}
 </body>
 
