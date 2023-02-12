@@ -1,5 +1,6 @@
 import datetime
 
+from phonenumber_field.modelfields import PhoneNumberField
 from django.db import models
 from django.utils import timezone
 from django.contrib import admin
@@ -20,6 +21,11 @@ class User(models.Model):
     forename = models.CharField(max_length=30)
     lastname = models.CharField(max_length=30)
     join_date = models.DateTimeField('date joined')
+    email = models.EmailField()
+    # Using a library for phone number, if you want the string 
+    # representation use phone.as_e164
+    # https://django-phonenumber-field.readthedocs.io/en/latest/
+    phone = PhoneNumberField(null=False, blank=False, unique=True)
     skillset = models.ManyToManyField(Skill)
     def __str__(self):
         return self.username + " (" + self.forename + " " + self.lastname + ")"

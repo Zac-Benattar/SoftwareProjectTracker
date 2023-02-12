@@ -10,6 +10,7 @@ class UserSkillsInline(admin.TabularInline):
 class UserAdmin(admin.ModelAdmin):
     fieldsets = [
         ('Personal Details', {'fields': ('username', 'forename', 'lastname')}),
+        ('Contact Details', {'fields': ('email', 'phone')}),
         ('Date information', {'fields': ['join_date'], 'classes': ['collapse']}),
     ]
     
