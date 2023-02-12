@@ -1,7 +1,7 @@
-<h1>{{user.username}} {{ user.forename }} {{ user.lastname }}</h1>
+<h1>{{ user.username }} ({{ user.forename }} {{ user.lastname }}) Skills</h1>
 
 <ul>
-{% for skill in user.skill_set.all %}
+{% for skill in user.skillset.all %}
     <li>{{ skill.name }}</li>
 {% endfor %}
 </ul>

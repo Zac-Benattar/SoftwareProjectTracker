@@ -1,10 +1,10 @@
-<h1>{{ user.username }}</h1>
+<h1>{{ user.username }} Details</h1>
 
 <h2>Skills</h2>
 {% if user.skillset %}
     <ul>
     {% for skill in user.skillset.all %}
-        <li>{{ skill.skill_name }}</li>
+        <li>{{ skill.name }}</li>
     {% endfor %}
     </ul>
 {% else %}

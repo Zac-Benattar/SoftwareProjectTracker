@@ -32,3 +32,7 @@ class User(models.Model):
     def joined_recently(self):
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.join_date <= now
+    
+class UserSkill(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    skill = models.ForeignKey(Skill, on_delete=models.CASCADE)
