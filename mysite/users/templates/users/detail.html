@@ -13,8 +13,8 @@
     <link rel="stylesheet" href="{% static 'users/style.css' %}">
     <h1>{{ user.username }} ({{ user.forename }} {{ user.lastname }}) Details</h1>
     <div>
-        <p>{{ user.email }}</p>
-        <p>{{ user.phone }}</p>
+        <p><a href="mailto:"{{ user.email }}>{{ user.email }}</a></p>
+        <p><a href="tel:"{{ user.phone }}>{{ user.phone }}</a></p>
     </div>
 
     <div>
