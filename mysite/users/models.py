@@ -8,12 +8,11 @@ from django.contrib import admin
 # Create your models here.
 
 class Skill(models.Model):
-    skill_name = models.CharField(max_length=20)
+    name = models.CharField(max_length=20, primary_key=True)
+    description = models.CharField(max_length=200, blank=True)
+    pass 
     def __str__(self):
-        return self.skill_name
-    # Required for many to many relationship. The object that makes sense to 'own' the other declares the many to many
-    # and the other has a pass attribute
-    pass
+        return self.name
 
 
 class User(models.Model):
