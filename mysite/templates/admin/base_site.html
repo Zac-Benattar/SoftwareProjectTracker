@@ -1,9 +1,25 @@
 {% extends "admin/base.html" %}
+{% load static %}
+<!doctype html>
+<html lang="en">
 
-{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+</html>
 
-{% block branding %}
-<h1 id="site-name"><a href="{% url 'admin:index' %}">Software Project Tracker Administration</a></h1>
-{% endblock %}
+<head>
+    <title>Project Management App Admin</title>
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}" />
+</head>
 
-{% block nav-global %}{% endblock %}
+<body>
+    {% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site
+    admin')
+    }}{% endblock %}
+
+    {% block branding %}
+    <h1 id="site-name"><a href="{% url 'admin:index' %}">Software Project Tracker Administration</a></h1>
+    {% endblock %}
+
+    {% block nav-global %}{% endblock %}
+</body>
+
+</html>

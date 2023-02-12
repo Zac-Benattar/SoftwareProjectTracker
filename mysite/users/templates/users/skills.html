@@ -1,7 +1,25 @@
-<h1>{{ user.username }} ({{ user.forename }} {{ user.lastname }}) Skills</h1>
+{% load static %}
+<!doctype html>
+<html lang="en">
 
-<ul>
-{% for skill in user.skillset.all %}
-    <li>{{ skill.name }}</li>
-{% endfor %}
-</ul>
+</html>
+
+<head>
+    <title>Project Management App</title>
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+</head>
+
+<body>
+    <link rel="stylesheet" href="{% static 'users/style.css' %}">
+    <h1>{{ user.username }} ({{ user.forename }} {{ user.lastname }}) Skills</h1>
+
+    {% if user.skillset %}
+    <ul>
+        {% for skill in user.skillset.all %}
+        <li>{{ skill.name }} - {{ skill.description }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</body>
+
+</html>
