@@ -5,13 +5,12 @@ from .models import Project, Member
 
 class ProjectAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Details', {'fields': ('name', 'description', 'methodology')}),
-        ('Contact Details', {'fields': ('email', 'phone')}),
-        ('Date information', {'fields': ['join_date'], 'classes': ['collapse']}),
+        ('Details', {'fields': ('name', 'description', 'methodology', 'gitHubToken')}),
+        ('Deadlines', {'fields': ('initialDeadline', 'currentDeadline')}),
+        ('Finances', {'fields': ('initialBudget', 'currentBudget')}),
     ]
     
-    list_display = ('username', 'forename', 'lastname', 'join_date', 'joined_recently')
-    list_filter = ['join_date']
-    search_fields = ['username', 'forename', 'lastname']
-    inlines = [UserSkillsInline,]
+    list_display = ('name', 'methodology', 'currentDeadline', 'currentBudget')
+    list_filter = ['currentDeadline']
+    search_fields = ['name']
 
