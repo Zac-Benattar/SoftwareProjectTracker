@@ -14,3 +14,5 @@ class ProjectAdmin(admin.ModelAdmin):
     list_filter = ['currentDeadline']
     search_fields = ['name']
 
+
+admin.site.register(Project, ProjectAdmin)
