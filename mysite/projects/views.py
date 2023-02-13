@@ -13,7 +13,7 @@ class IndexView(generic.ListView):
     template_name = 'projects/index.html'
     context_object_name = 'projects_list'
 
-    def get_inProgressProjects(self):
+    def get_queryset(self):
         """
         Return all in progress projects.
         """
