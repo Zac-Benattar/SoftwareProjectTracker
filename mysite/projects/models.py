@@ -22,7 +22,7 @@ class Meeting(models.Model):
     date = models.DateTimeField()
     duration = models.IntegerField()
     def __str__(self):
-        return self.project + ' ' + self.date
+        return self.project.__str__() + ' ' + self.date.__str__()
     
 
 class Feedback(models.Model):
@@ -31,7 +31,7 @@ class Feedback(models.Model):
     emotion = models.IntegerField()
     date = models.DateTimeField()
     def __str__(self):
-        return self.project + ' Feedback ' + self.pk 
+        return self.project.__str__() + ' Feedback ' + str(self.pk)
 
 
 # This was originally allocated to a single member,
@@ -58,7 +58,7 @@ class Task(models.Model):
         default='Not Applicable'
     )
     def __str__(self):
-        return self.name
+        return self.name + ' ' + self.project.__str__()
 
     
 class Role(models.Model):
@@ -74,15 +74,18 @@ class Member(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     workhours = models.IntegerField()
     def __str__(self):
-        return self.user
+        return self.user.__str__() + ' ' + self.project.__str__() + ' ' + self.role.__str__()
     
 
 # Joins roles and skills
-class RoleRequirements(models.Model):
+class RoleRequirement(models.Model):
     skillset = models.ManyToManyField(Skill)  
     role = models.ForeignKey(Role, on_delete=models.CASCADE) 
     def __str__(self):
-        return self.role + self.skillset
+        output=self.role.__str__() + ' '
+        for x in self.skillset.all():
+            output=output+' | '+str(x) 
+        return output
     
     
 # I don't understand why we have this class,
@@ -93,16 +96,16 @@ class Schedule(models.Model):
     hours = models.IntegerField()
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     def __str__(self):
-        return self.member + ' ' + self.project
+        return self.member.__str__() + ' ' + self.project.__str__()
 
 
 # Used for tracking time worked
 class TimeWorked(models.Model):
     member = models.ForeignKey(Member, on_delete=models.CASCADE)
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
-    time = models.TimeField()
+    time = models.DecimalField(max_digits=5, decimal_places=2)
     def __str__(self):
-        return self.member + ' ' + self.task + ' ' + self.time
+        return self.member.__str__() + ' ' + self.task.__str__() + ' ' + self.time.__str__() + ' hours'
     
 
 class Recommendation(models.Model):

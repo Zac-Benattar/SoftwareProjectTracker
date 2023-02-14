@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 
-from .models import Project, Meeting, Feedback, Task, Role, RoleRequirements, Member, Schedule, TimeWorked, Recommendation
+from .models import Project, Meeting, Feedback, Task, Role, RoleRequirement, Member, Schedule, TimeWorked, Recommendation
 
 # Create your views here.
 
