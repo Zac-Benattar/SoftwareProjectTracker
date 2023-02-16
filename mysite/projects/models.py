@@ -8,6 +8,7 @@ class Project(models.Model):
     description = models.CharField(max_length=200)
     initialBudget = models.DecimalField(max_digits=15, decimal_places=2)
     currentBudget = models.DecimalField(max_digits=15, decimal_places=2)
+    startTime = models.DateTimeField()
     initialDeadline = models.DateTimeField()
     currentDeadline = models.DateTimeField()
     methodology = models.CharField(max_length=30)
@@ -46,6 +47,7 @@ class Task(models.Model):
     description = models.CharField(max_length=200)
     duration = models.IntegerField()
     createdTime = models.DateTimeField(auto_now_add=True)
+    startedTime = models.DateTimeField()
     NOTSTARTED = 'NS'
     STARTED = 'S'
     FINISHED = 'F'
@@ -78,7 +80,7 @@ class Member(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     workhours = models.IntegerField()
-    joinedTime = models.DateTimeField(auto_now_add=True)
+    joinedDate = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.user.__str__() + ' ' + self.project.__str__() + ' ' + self.role.__str__()
     

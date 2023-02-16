@@ -25,6 +25,7 @@ class IndexView(generic.ListView):
 class DetailView(generic.DetailView):
     model = Project
     template_name = 'projects/detail.html'
+    
     def get_queryset(self):
         """
         Excludes any projects that have not started yet.
