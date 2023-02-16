@@ -4,7 +4,7 @@ from startevaluationdata import StartEvaluationData
 #This object can return a matrix containing data for the model to predict a riskiness
 class CurrentEvaluationData(StartEvaluationData): #CurrentEvaluationData inherits from StartEvaluationData
     #Overrides StartEvaluationData init
-    def __init__(self, initial_budget, current_budget, money_spent, num_developers, num_other_team_members, original_deadline, current_deadline, daily_running_cost, num_tasks, completed_tasks, average_happiness, average_confidence):
+    def __init__(self, initial_budget, current_budget, money_spent, num_developers, num_other_team_members, num_team_left, original_deadline, current_deadline, daily_running_cost, num_tasks, completed_tasks, average_happiness, average_confidence):
         self.initial_budget = initial_budget
         self.current_budget = current_budget
 
@@ -12,6 +12,8 @@ class CurrentEvaluationData(StartEvaluationData): #CurrentEvaluationData inherit
 
         self.num_developers = num_developers
         self.num_other_team_members = num_other_team_members
+
+        self.num_team_left = num_team_left
 
         self.days_until_original_deadline = None
         self.days_until_current_deadline = None
@@ -26,9 +28,23 @@ class CurrentEvaluationData(StartEvaluationData): #CurrentEvaluationData inherit
 
     #Overrides method from StartEvaluationData
     def get_data_as_matrix(self):
-        #No idea how to code this yet! Will look this up ASAP
-        #Converts all this data into a matrix that the trained model can understand
-        return None #Change return statement
+        matrix = [[
+        self.initial_budget,
+        self.current_budget,
+        self.money_spent,
+        self.num_developers,
+        self.num_other_team_members,
+        self.num_team_left,
+        self.days_until_original_deadline,
+        self.days_until_current_deadline,
+        self.days_budget_covers_running_costs,
+        self.num_tasks,
+        self.num_completed_tasks,
+        self.current_average_happiness,
+        self.current_average_confidence
+        ]]
+
+        return array #Return 1xn matrix
 
     #Inherits methods from StartEvaluationData
 

@@ -14,9 +14,18 @@ class StartEvaluationData:
         self.num_completed_tasks = 0
 
     def get_data_as_matrix(self):
-        #No idea how to code this yet! Will look this up ASAP
-        #Converts all this data into a matrix that the trained model can understand
-        return None #Change return statement
+        matrix = [[
+        self.initial_budget,
+        self.money_spent,
+        self.num_developers,
+        self.num_other_team_members,
+        self.days_until_original_deadline,
+        self.days_budget_covers_running_costs,
+        self.num_tasks,
+        self.num_completed_tasks
+        ]]
+
+        return matrix #Return 1xn matrix
 
     def get_initial_budget(self):
         return self.initial_budget
