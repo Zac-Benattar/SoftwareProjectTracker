@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Project, Member, Role, TimeWorked, Recommendation, Schedule, RoleRequirement, Meeting, Feedback, Task
+from .models import Project, Member, Role, TimeWorked, Recommendation, Schedule, RoleRequirement, Meeting, Feedback, Task, RiskEvaluation
 
 
 class ProjectAdmin(admin.ModelAdmin):
@@ -13,6 +13,17 @@ class ProjectAdmin(admin.ModelAdmin):
     list_display = ('name', 'methodology', 'currentDeadline', 'currentBudget')
     list_filter = ['currentDeadline']
     search_fields = ['name']
+    
+    
+class RiskEvaluationAdmin(admin.ModelAdmin):
+    fieldsets = [
+        ('Details', {'fields': ('project', 'riskScore')}),
+    ]
+    
+    list_display = ('project', 'riskScore', 'date')
+    list_filter = ['project', 'riskScore', 'date']
+    search_fields = ['project']
+    
     
 class RoleAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -116,3 +127,4 @@ admin.site.register(RoleRequirement, RoleRequirementAdmin)
 admin.site.register(Meeting, MeetingAdmin)
 admin.site.register(Feedback, FeedbackAdmin)
 admin.site.register(Task, TaskAdmin)
+admin.site.register(RiskEvaluation, RiskEvaluationAdmin)

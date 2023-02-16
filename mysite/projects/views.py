@@ -1,15 +1,16 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, get_list_or_404, render
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 
-from .models import Project, Meeting, Feedback, Task, Role, RoleRequirement, Member, Schedule, TimeWorked, Recommendation
+from .models import Project, Meeting, Feedback, Task, Role, RoleRequirement, Member, Schedule, TimeWorked, Recommendation, RiskEvaluation
 
 # Create your views here.
 
 
 class IndexView(generic.ListView):
+    model = Project
     template_name = 'projects/index.html'
     context_object_name = 'projects_list'
 
@@ -23,14 +24,14 @@ class IndexView(generic.ListView):
 
 
 class DetailView(generic.DetailView):
-    model = Project
+    model = RiskEvaluation
     template_name = 'projects/detail.html'
+    context_object_name = 'riskevaluation'
     
-    def get_queryset(self):
-        """
-        Excludes any projects that have not started yet.
-        """
-        return Project.objects.filter(createdTime__lte=timezone.now())
+    def get_object(self):
+        return RiskEvaluation.objects.filter(
+            project=get_object_or_404(Project, pk=self.kwargs['pk'])
+        ).order_by('-date')[:1][0]
 
 
 class PeopleView(generic.ListView):

@@ -19,6 +19,14 @@ class Project(models.Model):
         return self.name
 
 
+class RiskEvaluation(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    riskScore = models.DecimalField(max_digits=3, decimal_places=2)
+    date = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return str(self.riskScore)
+
+
 class Meeting(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     attendence = models.IntegerField()

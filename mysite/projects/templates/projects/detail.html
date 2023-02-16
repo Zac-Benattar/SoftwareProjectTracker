@@ -1,0 +1,20 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+</html>
+
+<head>
+    <title>Project Management App</title>
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.png' %}" />
+</head>
+
+<body>
+    <p>{{ riskevaluation.project }}</p>
+    <p>{{ riskevaluation.project.description }}</p>
+    <p>Risk Score: {{ riskevaluation.riskScore }} ({{ riskevaluation.date }})</p>
+
+
+</body>
+
+</html>

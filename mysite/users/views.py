@@ -10,6 +10,7 @@ from .models import User, Skill
 
 
 class IndexView(generic.ListView):
+    model = User
     template_name = 'users/index.html'
     context_object_name = 'latest_users_list'
 
