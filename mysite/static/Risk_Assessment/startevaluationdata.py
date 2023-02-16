@@ -1,4 +1,7 @@
-
+#Class used to store all the relevant project data at the start of development
+#It includes less data than current evaluation data which inherits from this
+#This is because the project isn't in progress yet and some values would be useless
+#This object can return a matrix containing data for the model to predict a riskiness
 class StartEvaluationData:
     def __init__(self, initial_budget, num_developers, num_other_team_members, original_deadline, daily_running_cost, num_tasks):
         self.initial_budget = initial_budget

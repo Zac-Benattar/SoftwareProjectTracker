@@ -1,6 +1,7 @@
 
-import startevaluationdata
-
+from startevaluationdata import StartEvaluationData
+#Class used to store all the relevant project data during development
+#This object can return a matrix containing data for the model to predict a riskiness
 class CurrentEvaluationData(StartEvaluationData): #CurrentEvaluationData inherits from StartEvaluationData
     #Overrides StartEvaluationData init
     def __init__(self, initial_budget, current_budget, money_spent, num_developers, num_other_team_members, original_deadline, current_deadline, daily_running_cost, num_tasks, completed_tasks, average_happiness, average_confidence):
