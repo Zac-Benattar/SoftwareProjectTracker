@@ -13,6 +13,7 @@ class Project(models.Model):
     methodology = models.CharField(max_length=30)
     gitHubToken = models.CharField(max_length=30)
     createdTime = models.DateTimeField(auto_now_add=True)
+    paused = models.BooleanField(default=False)
     def __str__(self):
         return self.name
 
