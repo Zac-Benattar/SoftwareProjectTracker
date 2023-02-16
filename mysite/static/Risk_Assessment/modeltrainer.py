@@ -1,6 +1,11 @@
+#Import SK learn libary for machine learning
 from sklearn import datasets
 from sklearn import linear_model
 from sklearn.model_selection import train_test_split
+
+import pickle #Used to serialise the model to be loaded later saves retraining everytime the program is rerun
+
+import sys #Used to fetch command line arguments
 
 
 def train_model_and_save(data_set_filepath, model_filename):
@@ -13,7 +18,7 @@ def train_model_and_save(data_set_filepath, model_filename):
     #this matrix represents the dataset we'll use to train
     #in_data is the inputs we'll take and output_data are like the results of the data.
     #Think in data as happiness etc. out data is probability of success
-    in_data, out_data = datasets.load_svmlight_file(filename)
+    in_data, out_data = datasets.load_svmlight_file(data_set_filepath)
 
 
     print("Dataset Loaded!")
@@ -54,3 +59,21 @@ def train_model_and_save(data_set_filepath, model_filename):
         print(predicted_output)
 
     print("Saving model to: " + model_filename)
+    #Save model in serialised form
+    pickle.dump(trained_model, open(model_filename, 'wb'))
+
+#Code if this file is executed through the command line
+#TO RUN TRAINING CODE
+#Type: python3 modeltrainer.py dataset.txt model.sav
+#Type: python3 modeltrainer.py [DATASET_FILEPATH] [MODEL_FILENAME]
+
+args = sys.argv; #Get arguments
+
+no_of_arguments = len(args) #Get number of arguments note first/0th argument is just run program call
+
+if no_of_arguments == 3:
+    #If the code ran with the correct amount of arguments
+    train_model_and_save(args[1], args[2]) #First argument is just the call to running the program
+else:
+    print("Incorrect number of arguments");
+    print("Use python3 modeltrainer.py [DATASET_FILEPATH] [MODEL_FILENAME]")
