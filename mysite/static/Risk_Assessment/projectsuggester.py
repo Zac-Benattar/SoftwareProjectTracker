@@ -35,7 +35,7 @@ class ProjectSuggester: # evaluating project's pararameters to make suggestions
             if member.project == project:
                 for rolereq in all_RoleRequirements:
                     if member.role == rolereq.role:
-                        # if skills of member != skills required
+                        if rolereq.skillset != member.user.skillset:
                             print(f"Member {member.name} doesn't have the required skills for the role as {member.role.name} in the project {project.name}. Try changing their role to one more adequate.")
 
         return None
@@ -44,15 +44,30 @@ class ProjectSuggester: # evaluating project's pararameters to make suggestions
         # Looking at the mean average of happiness if below a certain threshold
         # The program will warn the project manager team happiness is low. It will suggest common ways to improve this. 
 
+
         return None
 
-    def lacks_comments(self, project):
-        # The program will have a simple function to assess how well documented each file is. 
-        # This program will read files with recognised file extensions. 
-        # If the program finds a file with nocomments this could be a sign of poor documentation and readability.
+
+    def count_comments(self, file_path):
+        # Counting the comments of a python file
         # The program will suggest adding code comments to the file in question.
 
-        return None
+        with open(file_path, "r") as file:
+            lines = file.readlines()
+
+            line_count = len(lines)
+
+            comment_count = 0
+            for line in lines:
+                line = line.strip()
+                if line.startswith("#"):
+                    comment_count += 1
+        
+        if comment_count < line_count / 6:
+            print(f"You may want to consider adding more comments to the file {file_path} to make it more understandable.")
+        
+        return comment_count
+
 
     def completion_ratio(self, project):
         # The program will calculate two values. The ratio of tasks completed. 
@@ -60,12 +75,34 @@ class ProjectSuggester: # evaluating project's pararameters to make suggestions
         # If the time ratio is much higher than the task completion ratio it implies the project may not be completed in time.
         # The program will suggest extending the deadline.
 
+        task_count = 0
+        for task in all_Tasks:
+            if task.project == project:
+                task_count += 1
+
+        completed_task_count = 0
+        for task in all_Tasks:
+            if task.project == project:
+                if task.completionStatus == 'F':
+                    completed_task_count += 1
+            
+        tasks_ratio = completed_task_count / task_count
+        time_ratio = (datetime.date.today() - project.startTime) / project.currentDeadline
+
+        if time_ratio > tasks_ratio:
+            print(f"We suggest extending the deadline for the project {project.name} to complete the remaining taks.")
+
         return None
 
     def low_budget(self, project):
         # The program will create an estimation of a per day running cost. By summing a daily salary and calculating how much money is left.
-        # The program will suggest increasing the budget.
+        # The program will suggest increasing the budget.      
 
+        budget_ratio = project.currentBudget / project.initialBudget
+        time_ratio = (datetime.date.today() - project.startTime) / project.currentDeadline
+
+        if time_ratio > budget_ratio:
+            print(f"We suggest increasing the budget for the project {project.name} to complete the remaining taks.")
 
         return None
 
