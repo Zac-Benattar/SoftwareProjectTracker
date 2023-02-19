@@ -28,6 +28,7 @@ class ProjectEvaluator:
         self.START_MODEL_FILENAME = get_start_model_filename()
         self.IN_PROGRESS_MODEL_FILENAME = get_in_progress_model_filename()
 
+        #Load logistic regression models
         self.start_model = pickle.load(open(self.START_MODEL_FILENAME, 'rb')) #Update this to load in the model
         self.in_progress_model = pickle.load(open(self.IN_PROGRESS_MODEL_FILENAME, 'rb')) #Update this to load in the model
 
@@ -52,18 +53,19 @@ class ProjectEvaluator:
         #Needs to "retrain" the model using refit()
         #Then need to serialize the data and save it again (similar to modeltrainer.py)
 
-
-
-
+        #Refit the model
+        #Make sure warm start is enabled as to not delete all old training data
+        #self.start_model.fit()
+        #self.in_progress_model.fit()
 
         #Save start model
         print("Saving start model to: " + self.START_MODEL_FILENAME)
         #Save model in serialised form
-        pickle.dump(trained_model, open(self.START_MODEL_FILENAME, 'wb'))
+        pickle.dump(self.start_model, open(self.START_MODEL_FILENAME, 'wb'))
         print("Saved!")
 
         #Save in progress model
         print("Saving in progress model to: " + self.IN_PROGRESS_MODEL_FILENAME)
         #Save model in serialised form
-        pickle.dump(trained_model, open(self.IN_PROGRESS_MODEL_FILENAME, 'wb'))
+        pickle.dump(self.in_progress_model, open(self.IN_PROGRESS_MODEL_FILENAME, 'wb'))
         print("Saved!")
