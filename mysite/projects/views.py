@@ -37,6 +37,12 @@ class DetailView(generic.DetailView):
 class PeopleView(generic.ListView):
     model = Member
     template_name = 'projects/people.html'
+    context_object_name = 'members'
+    
+    def get_queryset(self):
+        return Member.objects.filter(
+            project=get_object_or_404(Project, pk=self.kwargs['pk'])
+        ).order_by('-joinedDate')
 
 
 class TasksView(generic.ListView):
