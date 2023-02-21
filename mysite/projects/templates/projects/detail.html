@@ -10,9 +10,11 @@
 </head>
 
 <body>
-    <p>{{ riskevaluation.project }}</p>
-    <p>{{ riskevaluation.project.description }}</p>
-    <p>Risk Score: {{ riskevaluation.riskScore }} ({{ riskevaluation.date }})</p>
+    <h1>{{ context.project.name }}</h1>
+
+    <p>{{ context.project.description }}</p>
+
+    <p>Risk Score: {% firstof context.riskevaluation.riskScore "Not yet evaluated" %} ({% if context.riskevaluation %}{{ context.riskevaluation.date }}{% else %}{% now "M. j, Y, h:i a" %}{% endif %})</p>
 
 
 </body>

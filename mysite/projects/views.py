@@ -24,30 +24,33 @@ class IndexView(generic.ListView):
 
 
 class DetailView(generic.DetailView):
-    model = RiskEvaluation
     template_name = 'projects/detail.html'
-    context_object_name = 'riskevaluation'
+    context_object_name = 'context'
     
     def get_object(self):
-        return RiskEvaluation.objects.filter(
-            project=get_object_or_404(Project, pk=self.kwargs['pk'])
-        ).order_by('-date')[:1][0]
+        context = {
+            'project' : get_object_or_404(Project, pk=self.kwargs['pk']),
+            'riskevaluation' : RiskEvaluation.objects.filter(project=get_object_or_404(Project, pk=self.kwargs['pk'])).order_by('-date').last()
+        }
+        return context
 
 
 class PeopleView(generic.ListView):
-    model = Member
     template_name = 'projects/people.html'
-    context_object_name = 'members'
+    context_object_name = 'context'
     
     def get_queryset(self):
-        return Member.objects.filter(
-            project=get_object_or_404(Project, pk=self.kwargs['pk'])
-        ).order_by('-joinedDate')
+        context = {
+            'project' : get_object_or_404(Project, pk=self.kwargs['pk']),
+            'members' : Member.objects.filter(project=get_object_or_404(Project, pk=self.kwargs['pk'])).order_by('-joinedDate')
+        }
+        return context
 
 
 class TasksView(generic.ListView):
     model = Task
     template_name = 'projects/tasks.html'
+
 
 
 class RecommendationsView(generic.ListView):
