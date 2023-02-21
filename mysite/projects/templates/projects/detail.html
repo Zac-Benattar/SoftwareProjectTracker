@@ -16,6 +16,12 @@
 
     <p>Risk Score: {% firstof context.riskevaluation.riskScore "Not yet evaluated" %} ({% if context.riskevaluation %}{{ context.riskevaluation.date }}{% else %}{% now "M. j, Y, h:i a" %}{% endif %})</p>
 
+    <div>    
+        <a href="{% url 'projects:people' context.project.id %}">People</a>
+        <a href="{% url 'projects:recommendations' context.project.id %}">Recommendations</a>
+        <a href="{% url 'projects:tasks' context.project.id %}">Tasks</a>
+    </div>
+
 
 </body>
 

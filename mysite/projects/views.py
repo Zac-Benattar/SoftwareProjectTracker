@@ -48,12 +48,32 @@ class PeopleView(generic.ListView):
 
 
 class TasksView(generic.ListView):
-    model = Task
     template_name = 'projects/tasks.html'
+    context_object_name = 'context'
+    
+    def get_queryset(self):
+        tasks = Task.objects.filter(project=get_object_or_404(Project, pk=self.kwargs['pk'])).order_by('-createdTime')
+        context = {
+            'project' : get_object_or_404(Project, pk=self.kwargs['pk']),
+            'tasks' : tasks,
+            'tasksCount' : str(len(tasks))
+            
+        }
+        return context
 
 
 
 class RecommendationsView(generic.ListView):
-    model = Recommendation
     template_name = 'projects/recommendations.html'
+    context_object_name = 'context'
+    
+    def get_queryset(self):
+        recommendations = Recommendation.objects.filter(project=get_object_or_404(Project, pk=self.kwargs['pk'])).order_by('-createdTime')
+        context = {
+            'project' : get_object_or_404(Project, pk=self.kwargs['pk']),
+            'recommendations' : recommendations,
+            'recommendationsCount' : str(len(recommendations))
+            
+        }
+        return context
 
