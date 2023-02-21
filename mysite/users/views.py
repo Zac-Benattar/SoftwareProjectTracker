@@ -6,8 +6,6 @@ from django.utils import timezone
 
 from .models import User, Skill
 
-# Create your views here.
-
 
 class IndexView(generic.ListView):
     model = User
@@ -15,22 +13,27 @@ class IndexView(generic.ListView):
     context_object_name = 'latest_users_list'
 
     def get_queryset(self):
-        """
-        Return the last five joined users (not including those set to be join in the future).
+        """Returns all users that have a join_date in the past, 
+        sorted by join_date descending (most recent first)
+
+        Returns:
+            list(User): All users that have a join_date in the past
         """
         return User.objects.filter(
             join_date__lte=timezone.now()
-        ).order_by('-join_date')[:5]
+        ).order_by('-join_date')[:]
 
 
 class DetailView(generic.DetailView):
     model = User
     template_name = 'users/detail.html'
-    def get_queryset(self):
+    def get_object(self):
+        """Returns relevant user
+
+        Returns:
+            User: The user with the pk in the url
         """
-        Excludes any users have not joined yet.
-        """
-        return User.objects.filter(join_date__lte=timezone.now())
+        return get_object_or_404(User, pk=self.kwargs['pk'])
 
 
 class SkillsView(generic.DetailView):
