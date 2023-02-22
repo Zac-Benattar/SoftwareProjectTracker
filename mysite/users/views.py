@@ -1,41 +1,43 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
-from django.views import generic
+from django.views import View
 from django.utils import timezone
 
 from .models import User, Skill
 
 
-class IndexView(generic.ListView):
-    model = User
-    template_name = 'users/index.html'
-    context_object_name = 'latest_users_list'
-
-    def get_queryset(self):
-        """Returns all users that have a join_date in the past, 
-        sorted by join_date descending (most recent first)
+class IndexView(View):
+    def get(self, request):
+        """Returns HttpResonse containing all users who have a account creation date in the past
 
         Returns:
-            list(User): All users that have a join_date in the past
+            HttpResponse: indext.html with context: users
         """
-        return User.objects.filter(
-            join_date__lte=timezone.now()
-        ).order_by('-join_date')[:]
+        users = User.objects.filter(join_date__lte=timezone.now()).order_by('-join_date')[:]
+        context = {'users':users}
+        return render(request, 'users/index.html', context)
 
 
-class DetailView(generic.DetailView):
-    model = User
-    template_name = 'users/detail.html'
-    def get_object(self):
-        """Returns relevant user
+class DetailView(View):
+    def get(self, request, pk):
+        """Returns HttpResponse containing relevant user's basic details
 
         Returns:
-            User: The user with the pk in the url
+            HttpResponse: detail.html with context: user
         """
-        return get_object_or_404(User, pk=self.kwargs['pk'])
+        user = get_object_or_404(User, pk=self.kwargs['pk'])
+        context = {'user':user}
+        return render(request, 'users/detail.html', context)
 
 
-class SkillsView(generic.DetailView):
-    model = User
-    template_name = 'users/skills.html'
+class SkillsView(View):
+    def get(self, request, pk):
+        """Returns HttpResponse containing relevant user's skills and a description of each
+
+        Returns:
+            HttpResponse: detail.html with context: user
+        """
+        user = get_object_or_404(User, pk=self.kwargs['pk'])
+        context = {'user':user}
+        return render(request, 'users/skills.html', context)
