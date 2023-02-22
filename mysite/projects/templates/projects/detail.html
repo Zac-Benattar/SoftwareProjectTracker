@@ -14,7 +14,7 @@
 
     <p>{{ project.description }}</p>
 
-    <p>Risk Score: {% firstof riskevaluation.riskScore "Not yet evaluated" %} ({% if riskevaluation %}{{ riskevaluation.date }}{% else %}{% now "M. j, Y, h:i a" %}{% endif %})</p>
+    <p>Risk Score: {% firstof riskevaluation.success_chance "Not yet evaluated" %} ({% if riskevaluation %}{{ riskevaluation.date }}{% else %}{% now "M. j, Y, h:i a" %}{% endif %})</p>
 
     <div>    
         <a href="{% url 'projects:people' project.id %}">People</a>
