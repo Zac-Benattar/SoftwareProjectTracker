@@ -14,7 +14,7 @@ class IndexView(View):
         Returns:
             HttpResponse: index.html with context: projects
         """
-        projects =  Project.objects.filter(currentDeadline__gte=timezone.now()).order_by('-current_deadline')[:]
+        projects =  Project.objects.filter(current_deadline__gte=timezone.now()).order_by('-current_deadline')[:]
         context = {'projects':projects}
         return render(request, 'projects/index.html', context)
 
