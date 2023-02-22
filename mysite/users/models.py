@@ -4,7 +4,7 @@ from phonenumber_field.modelfields import PhoneNumberField
 from django.db import models
 from django.utils import timezone
 from django.contrib import admin
-from django.contrib.auth.models import User 
+
 
 class Skill(models.Model):
     name = models.CharField(max_length=20, primary_key=True)
@@ -14,9 +14,7 @@ class Skill(models.Model):
         return self.name
 
 
-class UserProfile(models.Model):
-    user = models.OnetoOneField(User, on_delete = models.CASCADE)
-    
+class User(models.Model):
     username = models.CharField(max_length=20)
     forename = models.CharField(max_length=30)
     lastname = models.CharField(max_length=30)
