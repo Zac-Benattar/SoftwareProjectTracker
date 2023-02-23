@@ -2,13 +2,24 @@
 #It includes less data than current evaluation data which inherits from this
 #This is because the project isn't in progress yet and some values would be useless
 #This object can return a matrix containing data for the model to predict a riskiness
+
+import datetime
+
 class StartEvaluationData:
     def __init__(self, initial_budget, num_developers, num_other_team_members, original_deadline, daily_running_cost, num_tasks):
         self.initial_budget = initial_budget
         self.money_spent = 0
         self.num_developers = num_developers
         self.num_other_team_members = num_other_team_members
-        self.days_until_original_deadline = None
+
+        CURRENT_DAY = datetime.date.today()
+
+        TIME_DELTA = original_deadline - CURRENT_DAY;
+
+        self.days_until_original_deadline = TIME_DELTA.days
+
+        print("Days: " + str(TIME_DELTA.days))
+
         self.days_budget_covers_running_costs = (self.initial_budget - self.money_spent) / daily_running_cost
         self.num_tasks = num_tasks
         self.num_completed_tasks = 0
