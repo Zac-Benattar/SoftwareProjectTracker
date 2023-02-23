@@ -1,109 +1,91 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, get_list_or_404, render
 from django.urls import reverse
-from django.views import generic
+from django.views import View
 from django.utils import timezone
 
-from .models import Project, Meeting, Feedback, Task, Role, RoleRequirement, Member, Schedule, TimeWorked, Recommendation, RiskEvaluation
+from .models import Project, Task, Member, Recommendation, RiskEvaluation
 
 
-class IndexView(generic.ListView):
-    model = Project
-    template_name = 'projects/index.html'
-    context_object_name = 'projects_list'
-
-    def get_queryset(self):
-        """Returns list of all projects that are in progress
+class IndexView(View):
+    def get(self, request):
+        """Returns HttpResponse containing index page listing all projects that are in progress
 
         Returns:
-            list(Project): All projects that are in progress
+            HttpResponse: index.html with context: projects
         """
-        return Project.objects.filter(
-            currentDeadline__gte=timezone.now()
-        ).order_by('-currentDeadline')[:]
+        projects =  Project.objects.filter(currentDeadline__gte=timezone.now()).order_by('-currentDeadline')[:]
+        context = {'projects':projects}
+        return render(request, 'projects/index.html', context)
 
 
-class DetailView(generic.DetailView):
-    template_name = 'projects/detail.html'
-    context_object_name = 'context'
-    
-    def get_object(self):
-        """Returns context object containing:
-        The relevant project
+class DetailView(View):    
+    def get(self, request, pk):
+        """Returns HttpResponse containing detail page listing:
+        The relevant project's details
         The relevant project's risk evaluation
 
         Returns:
-            dict: context containing project, riskevaluation
+            HttpResponse: detail.html with context: project, riskevaluation
         """
         context = {
             'project' : get_object_or_404(Project, pk=self.kwargs['pk']),
             'riskevaluation' : RiskEvaluation.objects.filter(project=get_object_or_404(Project, pk=self.kwargs['pk'])).order_by('-date').last()
         }
-        return context
+        return render(request, 'projects/detail.html', context)
 
 
-class PeopleView(generic.ListView):
-    template_name = 'projects/people.html'
-    context_object_name = 'context'
-    
-    def get_queryset(self):
-        """Returns context object containing:
-        The relevant project
-        List of people involved in the relevant project
+class PeopleView(View):
+    def get(self, request, pk):
+        """Returns HttpResponse containing people page listing:
+        The relevant project's basic details
+        The people involved with the project's basic details
 
         Returns:
-            dict: project, members
+            HttpResponse: people.html with context: project, members
         """
         context = {
             'project' : get_object_or_404(Project, pk=self.kwargs['pk']),
             'members' : Member.objects.filter(project=get_object_or_404(Project, pk=self.kwargs['pk'])).order_by('-joinedDate')
         }
-        return context
+        return render(request, 'projects/people.html', context)
 
 
-class TasksView(generic.ListView):
-    template_name = 'projects/tasks.html'
-    context_object_name = 'context'
-    
-    def get_queryset(self):
-        """Returns context object containing:
-        The relevant project
-        List of tasks for the relevant project
-        Number of tasks for the project
+class TasksView(View):    
+    def get(self, request, pk):
+        """Returns HttpResponse containing tasks page listing:
+        The relevant project's basic details
+        The tasks associated with the project
+        The number of tasks associated
 
         Returns:
-            dict: project, tasks, tasksCount
+            HttpResponse: tasks.html with context: project, tasks, tasksCount
         """
         tasks = Task.objects.filter(project=get_object_or_404(Project, pk=self.kwargs['pk'])).order_by('-createdTime')
         context = {
             'project' : get_object_or_404(Project, pk=self.kwargs['pk']),
             'tasks' : tasks,
-            'tasksCount' : str(len(tasks))
-            
+            'tasks_count' : str(len(tasks))
         }
-        return context
+        return render(request, 'projects/tasks.html', context)
 
 
 
-class RecommendationsView(generic.ListView):
-    template_name = 'projects/recommendations.html'
-    context_object_name = 'context'
-    
-    def get_queryset(self):
-        """Returns context object containing:
-        The relevant project
-        List of recommendations for the relevant project
-        Number of recommendations for the project
+class RecommendationsView(View):
+    def get(self, request, pk):
+        """Returns HttpResponse containing recommendations page listing:
+        The relevant project's basic details
+        The relevant project's recommendations
+        The number of recommendations for the project
 
         Returns:
-            dict: project, recommendations, recommendationsCount
+            HttpResponse: detail.html with context: project, recommendations, recommendations_count
         """
         recommendations = Recommendation.objects.filter(project=get_object_or_404(Project, pk=self.kwargs['pk'])).order_by('-createdTime')
         context = {
             'project' : get_object_or_404(Project, pk=self.kwargs['pk']),
             'recommendations' : recommendations,
-            'recommendationsCount' : str(len(recommendations))
-            
+            'recommendations_count' : str(len(recommendations))
         }
-        return context
+        return render(request, 'projects/recommendations.html', context)
 

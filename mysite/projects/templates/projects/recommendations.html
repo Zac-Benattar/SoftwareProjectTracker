@@ -10,15 +10,15 @@
 </head>
 
 <body>
-    <h1>{{ context.project.name }}</h1>
+    <h1>{{ project.name }}</h1>
 
     <h2>Recommendations</h2>
 
     <div>
-        {% if context.recommendations %}
-        <h3>{{ context.recommendationsCount }} Potential Issues</h3>
+        {% if recommendations %}
+        <h3>{{ recommendations_count }} Potential Issues</h3>
         <ul>
-            {% for recommendation in context.recommendations %}
+            {% for recommendation in recommendations %}
             <li>
                 <h3>Issue: {{ recommendation.name }}</h3>
                 <p>Solution: {{ recommendation.description }}</p>
