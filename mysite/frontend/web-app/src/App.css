@@ -1,0 +1,100 @@
+.App {
+  text-align: center;
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background-image: linear-gradient(79deg, #a609e5, rgb(247, 142, 194), #f90909);
+}
+
+
+
+.auth-form-container, .login-form, .register-form{
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-form-container {
+  position: relative;
+  display: block;
+  background-color: #FFF;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+  z-index: 2;
+  border-radius: 8px;
+}
+
+.auth-form-container h2 {
+  color: #888;
+  font-size: 28px;
+  font-weight: 500;
+  margin-bottom: 30px;
+}
+
+.auth-form-container h2:hover {
+  color: #FE4880;
+  cursor: pointer;
+}
+
+
+label {
+  text-align: left;
+  padding: 0.25rem 0;
+  color: #666;
+  font-size: 15px;
+}
+
+
+.auth-form-container:focus-within label{
+  color: #FE4880
+}
+
+input {
+  margin: 0.5rem 0;
+  padding: 1rem;
+  border: none;
+  border-radius: 2px;
+  box-shadow:  0px 0px 3px rgba(0, 0, 0, 0.2);
+}
+
+.login-button, .register-button {
+  display: inline-block;
+  padding: 10px 15px;
+  border-radius: 8px;
+  background-image: linear-gradient(to right, #FFCE00 50%, #FFCE00 50%, #FE4880);
+  background-size: 200%;
+  background-position: 0%;
+  transition: 0.4s;
+  color: black;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  margin-top: 20px;
+  
+}
+
+.login-button:hover,
+.register-button:hover {
+  background-position: 100% 0%;
+}
+
+.link-btn {
+  background: none;
+  color: grey;
+  text-decoration: underline;
+  border: none;
+  margin: 2rem 0;
+}
+
+.link-btn:hover {
+  color: #FE4880;
+  cursor: pointer;
+  
+}
+
+
+
+
+

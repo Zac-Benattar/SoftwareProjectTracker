@@ -5,23 +5,23 @@ from .models import Project, Member, Role, TimeWorked, Recommendation, Schedule,
 
 class ProjectAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Details', {'fields': ('name', 'description', 'methodology', 'gitHubToken')}),
-        ('Deadlines', {'fields': ('initialDeadline', 'currentDeadline')}),
-        ('Finances', {'fields': ('initialBudget', 'currentBudget')}),
+        ('Details', {'fields': ('name', 'description', 'methodology', 'gitHub_token')}),
+        ('Deadlines', {'fields': ('initial_deadline', 'current_deadline')}),
+        ('Finances', {'fields': ('initial_budget', 'current_budget')}),
     ]
     
-    list_display = ('name', 'methodology', 'currentDeadline', 'currentBudget')
-    list_filter = ['currentDeadline']
+    list_display = ('name', 'methodology', 'current_deadline', 'current_budget')
+    list_filter = ['current_deadline']
     search_fields = ['name']
     
     
 class RiskEvaluationAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Details', {'fields': ('project', 'riskScore')}),
+        ('Details', {'fields': ('project', 'success_chance')}),
     ]
     
-    list_display = ('project', 'riskScore', 'date')
-    list_filter = ['project', 'riskScore', 'date']
+    list_display = ('project', 'success_chance', 'date')
+    list_filter = ['project', 'success_chance', 'date']
     search_fields = ['project']
     
     
@@ -37,10 +37,10 @@ class RoleAdmin(admin.ModelAdmin):
 
 class MemberAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Details', {'fields': ('user', 'role', 'project', 'workhours')}),
+        ('Details', {'fields': ('user', 'role', 'project', 'work_hours')}),
     ]
     
-    list_display = ('user', 'role', 'project', 'workhours')
+    list_display = ('user', 'role', 'project', 'work_hours')
     list_filter = ['user', 'role', 'project']
     search_fields = ['user', 'role', 'project']
 
@@ -108,13 +108,13 @@ class FeedbackAdmin(admin.ModelAdmin):
 class TaskAdmin(admin.ModelAdmin):
     fieldsets = [
         ('Details', {'fields': ('name', 'project', 'description')}),
-        ('Status', {'fields': ('completionStatus',)}),
+        ('Status', {'fields': ('completion_status',)}),
         ('Time', {'fields': ('duration',)}),
     ]
     
-    list_display = ('name', 'project', 'completionStatus', 'duration')
-    list_filter = ['name', 'project', 'completionStatus']
-    search_fields = ['name', 'project', 'description', 'completionStatus']   
+    list_display = ('name', 'project', 'completion_status', 'duration')
+    list_filter = ['name', 'project', 'completion_status']
+    search_fields = ['name', 'project', 'description', 'completion_status']   
 
 
 admin.site.register(Project, ProjectAdmin)
