@@ -32,13 +32,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'api.apps.ApiConfig',
     'users.apps.UsersConfig',
     'projects.apps.ProjectsConfig',
-
-    'rest_framework',
-    'corsheaders',
-
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,8 +43,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
-
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -64,8 +57,7 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'] ,
-                #  BASE_DIR / 'react folder name/build'],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -130,21 +122,8 @@ STATIC_URL = 'static/'
 
 # Fucking favicon not working thought this would help
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-                    # BASE_DIR / 'reactname/build/static'
-                                
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-CORS_ALLOWED_ORIGINS = [ "https://localhost:3000"]
-
-# user has to be authenticated to use views
-# REST_FRAMEWORK = { 
-#     'DEFAULT_PERMISSION_CLASSES' : [
-#         'rest_framework.permissions.IsAuthenticated',
-#     ],
-#     'DEFAULT_AUTHENTICATION_CLASSES' : [
-#         'rest_framework.authentication.SessionAuthentication',
-#     ]
-# }

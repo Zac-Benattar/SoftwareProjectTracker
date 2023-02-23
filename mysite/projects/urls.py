@@ -10,5 +10,3 @@ urlpatterns = [
     path('<int:pk>/tasks/', views.TasksView.as_view(), name='tasks'),
     path('<int:pk>/recommendations/', views.RecommendationsView.as_view(), name='recommendations'),
 ]
-
-

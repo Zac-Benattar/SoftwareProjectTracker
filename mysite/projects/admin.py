@@ -37,10 +37,10 @@ class RoleAdmin(admin.ModelAdmin):
 
 class MemberAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Details', {'fields': ('user', 'role', 'project', 'work_hours')}),
+        ('Details', {'fields': ('user', 'role', 'project', 'workhours')}),
     ]
     
-    list_display = ('user', 'role', 'project', 'work_hours')
+    list_display = ('user', 'role', 'project', 'workhours')
     list_filter = ['user', 'role', 'project']
     search_fields = ['user', 'role', 'project']
 
