@@ -28,6 +28,12 @@ class DetailView(View):
         Returns:
             HttpResponse: detail.html with context: project, riskevaluation
         """
+
+        # Here we should load the model, calculate the risk score, create a new risk evaluation,
+        # save the risk evaluation and send it to the page.
+        # It may be neccesary to limit how often the user can calculate a new score, so maybe if there is a recent
+        # enough evaluation e.g. within the last 5 mins we don't recalculate
+        
         context = {
             'project' : get_object_or_404(Project, pk=self.kwargs['pk']),
             'riskevaluation' : RiskEvaluation.objects.filter(project=get_object_or_404(Project, pk=self.kwargs['pk'])).order_by('-date').last()
