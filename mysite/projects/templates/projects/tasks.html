@@ -10,15 +10,15 @@
 </head>
 
 <body>
-    <h1>{{ context.project.name }}</h1>
+    <h1>{{ project.name }}</h1>
 
     <h2>Tasks</h2>
 
     <div>
-        {% if context.tasks %}
-        <h3>{{ context.tasksCount }} Tasks</h3>
+        {% if tasks %}
+        <h3>{{ tasks_count }} Tasks</h3>
         <ul>
-            {% for task in context.tasks %}
+            {% for task in tasks %}
             <li>
                 <h3>Name: {{ task.name }}</h3>
                 <p>Description: {{ task.description }}</p>

@@ -10,16 +10,16 @@
 </head>
 
 <body>
-    <h1>{{ context.project.name }}</h1>
+    <h1>{{ project.name }}</h1>
 
-    <p>{{ context.project.description }}</p>
+    <p>{{ project.description }}</p>
 
-    <p>Risk Score: {% firstof context.riskevaluation.riskScore "Not yet evaluated" %} ({% if context.riskevaluation %}{{ context.riskevaluation.date }}{% else %}{% now "M. j, Y, h:i a" %}{% endif %})</p>
+    <p>Risk Score: {% firstof riskevaluation.riskScore "Not yet evaluated" %} ({% if riskevaluation %}{{ riskevaluation.date }}{% else %}{% now "M. j, Y, h:i a" %}{% endif %})</p>
 
     <div>    
-        <a href="{% url 'projects:people' context.project.id %}">People</a>
-        <a href="{% url 'projects:recommendations' context.project.id %}">Recommendations</a>
-        <a href="{% url 'projects:tasks' context.project.id %}">Tasks</a>
+        <a href="{% url 'projects:people' project.id %}">People</a>
+        <a href="{% url 'projects:recommendations' project.id %}">Recommendations</a>
+        <a href="{% url 'projects:tasks' project.id %}">Tasks</a>
     </div>
 
 

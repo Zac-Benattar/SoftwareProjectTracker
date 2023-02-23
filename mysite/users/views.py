@@ -4,15 +4,15 @@ from django.urls import reverse
 from django.views import View
 from django.utils import timezone
 
-from .models import User, Skill
+from .models import User
 
 
 class IndexView(View):
     def get(self, request):
-        """Returns HttpResonse containing all users who have a account creation date in the past
+        """Returns HttpResonse containing page listing all users who have a account creation date in the past
 
         Returns:
-            HttpResponse: indext.html with context: users
+            HttpResponse: index.html with context: users
         """
         users = User.objects.filter(join_date__lte=timezone.now()).order_by('-join_date')[:]
         context = {'users':users}

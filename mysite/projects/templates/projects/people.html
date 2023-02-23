@@ -11,14 +11,14 @@
 
 <body>
 
-    <h1>{{ context.project.name }}</h1>
+    <h1>{{ project.name }}</h1>
 
     <h2>People</h2>
     
     <div>
-        {% if context.members %}
+        {% if members %}
         <ul>
-            {% for member in context.members %}
+            {% for member in members %}
             <li><a href="{% url 'users:detail' member.user.id %}">{{ member.user.username }}</a></li>
             {% endfor %}
         </ul>
