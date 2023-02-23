@@ -1,6 +1,5 @@
 from startevaluationdata import StartEvaluationData
 from currentevaluationdata import CurrentEvaluationData
-from projectproxy import ProjectProxy
 from projectevaluator import ProjectEvaluator
 import datetime
 
@@ -21,7 +20,7 @@ chance_of_success = evaluator.get_initial_chance_of_success(start_evaluation_dat
 print("Chance_Of_Success: " + str(chance_of_success))
 
 print("RETRAIN MODEL")
-evaluator.update_model(start_evaluation_data, [], -1)
+#evaluator.update_model(start_evaluation_data, [], -1)
 
 chance_of_success = evaluator.get_initial_chance_of_success(start_evaluation_data)
 

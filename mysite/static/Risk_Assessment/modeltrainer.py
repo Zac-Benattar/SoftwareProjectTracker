@@ -23,8 +23,8 @@ def train_model_and_save(data_set_filepath, model_filename):
 
     print("Dataset Loaded!")
     #Logistic Regression Algorithm/Object to load
-    logisitc_regression = linear_model.LogisticRegression(warm_start = True, max_iter = 100) #Warm start makes the model reuse old training data
-
+    logisitc_regression = linear_model.LogisticRegression(warm_start = True, max_iter = 2000) #Warm start makes the model reuse old training data
+    #Maybe use solver='sag' inside
 
     #Seperate training data into a train test Split
     #All this does is take our input data and our output data and split it into a set of training data
