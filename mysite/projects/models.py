@@ -42,7 +42,6 @@ class Task(models.Model):
     name = models.CharField(max_length=30)
     description = models.CharField(max_length=200)
     duration = models.IntegerField()
-    #this should be outside
     NOTSTARTED = 'NS'
     STARTED = 'S'
     FINISHED = 'F'

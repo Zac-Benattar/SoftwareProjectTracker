@@ -10,34 +10,34 @@ from .serializers import *
 def getRoutes(request):
     routes = [
         {
-            "Endpoint" : "/task/",
+            "Endpoint" : "/item/",
             "method"  : "GET",
             'body'     : None, 
-            'description': 'Return an array of tasks'
+            'description': 'Return an array of items'
         },
         {
-            'Endpoint' : '/task/id',
+            'Endpoint' : '/item/id',
             'method'   : 'GET',
             'body'     : None, 
-            'description': 'Return a single task object'
+            'description': 'Return a single item object'
         },
         {
-            'Endpoint' : '/task/create',
+            'Endpoint' : '/item/create',
             'method'   : 'POST',
             'body'     : {'body': "" }, 
-            'description': 'Create new task with data sent in post request'
+            'description': 'Create new item with data sent in post request'
         },
         {
-            'Endpoint' : '/task/id/update',
+            'Endpoint' : '/item/id/update',
             'method'   : 'PUT',
             'body'     : {'body': ""}, 
-            'description': 'Updates an existing note with data sent in post request'
+            'description': 'Updates an existing item with data sent in post request'
         },
         {
-            'Endpoint' : '/task/id/delete',
+            'Endpoint' : '/item/id/delete',
             'method'   : 'DELETE',
             'body'     :  None, 
-            'description': 'Deletes an existing note'
+            'description': 'Deletes an existing item'
         },
     ]
     return Response(routes)
