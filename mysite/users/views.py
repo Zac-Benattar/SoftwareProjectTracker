@@ -1,56 +1,43 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
-from django.views import generic
+from django.views import View
 from django.utils import timezone
 
-from .models import User, Skill
-
-# Create your views here.
+from .models import User
 
 
-class IndexView(generic.ListView):
-    template_name = 'users/index.html'
-    context_object_name = 'latest_users_list'
+class IndexView(View):
+    def get(self, request):
+        """Returns HttpResonse containing page listing all users who have a account creation date in the past
 
-    def get_queryset(self):
+        Returns:
+            HttpResponse: index.html with context: users
         """
-        Return the last five joined users (not including those set to be join in the future).
+        users = User.objects.filter(join_date__lte=timezone.now()).order_by('-join_date')[:]
+        context = {'users':users}
+        return render(request, 'users/index.html', context)
+
+
+class DetailView(View):
+    def get(self, request, pk):
+        """Returns HttpResponse containing relevant user's basic details
+
+        Returns:
+            HttpResponse: detail.html with context: user
         """
-        return User.objects.filter(
-            join_date__lte=timezone.now()
-        ).order_by('-join_date')[:5]
+        user = get_object_or_404(User, pk=self.kwargs['pk'])
+        context = {'user':user}
+        return render(request, 'users/detail.html', context)
 
 
-class DetailView(generic.DetailView):
-    model = User
-    template_name = 'users/detail.html'
-    def get_queryset(self):
+class SkillsView(View):
+    def get(self, request, pk):
+        """Returns HttpResponse containing relevant user's skills and a description of each
+
+        Returns:
+            HttpResponse: detail.html with context: user
         """
-        Excludes any users have not joined yet.
-        """
-        return User.objects.filter(join_date__lte=timezone.now())
-
-
-class SkillsView(generic.DetailView):
-    model = User
-    template_name = 'users/skills.html'
-
-
-# def vote(request, question_id):
-#     question = get_object_or_404(User, pk=question_id)
-#     try:
-#         selected_choice = question.choice_set.get(pk=request.POST['choice'])
-#     except (KeyError, Skill.DoesNotExist):
-#         # Redisplay the question voting form.
-#         return render(request, 'users/detail.html', {
-#             'question': question,
-#             'error_message': "You didn't select a choice.",
-#         })
-#     else:
-#         selected_choice.votes += 1
-#         selected_choice.save()
-#         # Always return an HttpResponseRedirect after successfully dealing
-#         # with POST data. This prevents data from being posted twice if a
-#         # user hits the Back button.
-#         return HttpResponseRedirect(reverse('users:results', args=(question.id,)))
+        user = get_object_or_404(User, pk=self.kwargs['pk'])
+        context = {'user':user}
+        return render(request, 'users/skills.html', context)

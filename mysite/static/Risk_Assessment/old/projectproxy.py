@@ -2,12 +2,10 @@
 from startevaluationdata import StartEvaluationData
 from currentevaluationdata import CurrentEvaluationData
 
-
 class ProjectProxy:
 
-
-    def __init__(self):
-        self.database_key = None
+    def __init__(self, project_id):
+        self.project_id = project_id
 
 
     def get_start_evaluation_data(self):

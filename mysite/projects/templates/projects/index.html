@@ -15,9 +15,9 @@
     <h1>In Progress Projects</h1>
 
     <div>
-        {% if projects_list %}
+        {% if projects %}
         <ul>
-            {% for project in projects_list %}
+            {% for project in projects %}
             <li><a href="{% url 'projects:detail' project.id %}">{{ project.name }}</a></li>
             {% endfor %}
         </ul>
