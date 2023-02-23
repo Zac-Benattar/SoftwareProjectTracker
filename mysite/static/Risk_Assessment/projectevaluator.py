@@ -71,15 +71,26 @@ class ProjectEvaluator:
 
         return combine_scores(self.in_progress_model.classes_, prediction[0]) #Return the prediction
 
-    def update_model(self):
-        #Not sure how to implement this yet will do this at a later point
-        #Needs to "retrain" the model using refit()
+    def update_model(self, new_startevaluationdata, new_currentevaluationdata, result_out):
+        #Needs to "retrain" the model using fit()
+        #Make sure warm start is enabled as to not delete all old training data (called from original train)
         #Then need to serialize the data and save it again (similar to modeltrainer.py)
 
+        CURRENTEVALATION_DATA_SIZE = len(new_currentevaluationdata)
+
+        #Change start data into a matrix
+        new_start_data_in = new_startevaluationdata.get_data_as_matrix()
+        #Loop through all current evaluation data to get the data as a matrix
+        new_in_progress_data_in = [new_currentevaluationdata[i].get_data_as_matrix() for i in range (CURRENTEVALATION_DATA_SIZE)]
+
+        #Get data result/class (the data storing if the project succeeded)
+        new_start_data_out = [result_out]
+        new_in_progress_data_out = [result_out for i in range(CURRENTEVALATION_DATA_SIZE)]
+
         #Refit the model
-        #Make sure warm start is enabled as to not delete all old training data
-        #self.start_model.fit()
-        #self.in_progress_model.fit()
+        self.start_model.fit(new_start_data_in, new_start_data_out) #Start predictor
+        if CURRENTEVALATION_DATA_SIZE > 0: #If there was any in progress data
+            self.in_progress_model.fit(new_in_progress_data_in, new_in_progress_data_out) #In progress project predictor
 
         #Save start model
         print("Saving start model to: " + self.START_MODEL_FILENAME)

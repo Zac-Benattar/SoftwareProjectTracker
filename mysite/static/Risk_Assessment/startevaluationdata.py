@@ -12,7 +12,7 @@ class StartEvaluationData:
         self.num_developers = num_developers
         self.num_other_team_members = num_other_team_members
 
-        CURRENT_DAY = datetime.date.today()
+        CURRENT_DAY = datetime.datetime.today()
 
         TIME_DELTA = original_deadline - CURRENT_DAY;
 
