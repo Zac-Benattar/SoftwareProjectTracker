@@ -46,7 +46,7 @@ class PeopleView(View):
         """
         context = {
             'project' : get_object_or_404(Project, pk=self.kwargs['pk']),
-            'members' : Member.objects.filter(project=get_object_or_404(Project, pk=self.kwargs['pk'])).order_by('-joined_date')
+            'members' : Member.objects.filter(project=get_object_or_404(Project, pk=self.kwargs['pk'])).order_by('-join_date')
         }
         return render(request, 'projects/people.html', context)
 
@@ -61,7 +61,7 @@ class TasksView(View):
         Returns:
             HttpResponse: tasks.html with context: project, tasks, tasksCount
         """
-        tasks = Task.objects.filter(project=get_object_or_404(Project, pk=self.kwargs['pk'])).order_by('-created_date')
+        tasks = Task.objects.filter(project=get_object_or_404(Project, pk=self.kwargs['pk'])).order_by('-creation_date')
         context = {
             'project' : get_object_or_404(Project, pk=self.kwargs['pk']),
             'tasks' : tasks,
@@ -81,7 +81,7 @@ class RecommendationsView(View):
         Returns:
             HttpResponse: detail.html with context: project, recommendations, recommendations_count
         """
-        recommendations = Recommendation.objects.filter(project=get_object_or_404(Project, pk=self.kwargs['pk'])).order_by('-created_date')
+        recommendations = Recommendation.objects.filter(project=get_object_or_404(Project, pk=self.kwargs['pk'])).order_by('-creation_date')
         context = {
             'project' : get_object_or_404(Project, pk=self.kwargs['pk']),
             'recommendations' : recommendations,

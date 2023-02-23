@@ -6,14 +6,22 @@ from users.models import User, Skill
 class Project(models.Model):
     name = models.CharField(max_length=30)
     description = models.CharField(max_length=200)
-    initialBudget = models.DecimalField(max_digits=15, decimal_places=2)
-    currentBudget = models.DecimalField(max_digits=15, decimal_places=2)
-    initialDeadline = models.DateTimeField()
-    currentDeadline = models.DateTimeField()
+    initial_budget = models.DecimalField(max_digits=15, decimal_places=2)
+    current_budget = models.DecimalField(max_digits=15, decimal_places=2)
+    initial_deadline = models.DateTimeField()
+    current_deadline = models.DateTimeField()
     methodology = models.CharField(max_length=30)
-    gitHubToken = models.CharField(max_length=30)
+    gitHub_token = models.CharField(max_length=30)
     def __str__(self):
         return self.name
+
+
+class RiskEvaluation(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    success_chance = models.DecimalField(max_digits=3, decimal_places=2)
+    date = models.DateTimeField(auto_now_add=True)    
+    def __str__(self):
+        return str(self.success_chance)
 
 
 class Meeting(models.Model):
@@ -42,19 +50,19 @@ class Task(models.Model):
     name = models.CharField(max_length=30)
     description = models.CharField(max_length=200)
     duration = models.IntegerField()
-    #this should be outside
+    creation_date = models.DateTimeField(auto_now_add=True)
     NOTSTARTED = 'NS'
     STARTED = 'S'
     FINISHED = 'F'
     NOTAPPLICABLE = 'N/A'
-    statusChoices = [
+    status_choices = [
         (NOTSTARTED, 'Not Started'),
         (STARTED, 'Started'),
         (FINISHED, 'Finished'),
         (NOTAPPLICABLE, 'Not Applicable'),
     ]
-    completionStatus = models.CharField(
-        choices=statusChoices,
+    completion_status = models.CharField(
+        choices=status_choices,
         max_length=3,
         default='Not Applicable'
     )
@@ -73,7 +81,8 @@ class Member(models.Model):
     role = models.ForeignKey(Role, on_delete=models.CASCADE)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    workhours = models.IntegerField()
+    work_hours = models.IntegerField()
+    join_date = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.user.__str__() + ' ' + self.project.__str__() + ' ' + self.role.__str__()
     
@@ -113,5 +122,6 @@ class Recommendation(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
     description = models.CharField(max_length=200)
+    creation_date = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.name
