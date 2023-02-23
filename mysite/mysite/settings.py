@@ -130,7 +130,7 @@ STATIC_URL = 'static/'
 
 # Fucking favicon not working thought this would help
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-                    # BASE_DIR / 'reactname/build/start'
+                    # BASE_DIR / 'reactname/build/static'
                                 
 
 # Default primary key field type
@@ -138,3 +138,13 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOWED_ORIGINS = [ "https://localhost:3000"]
+
+# user has to be authenticated to use views
+# REST_FRAMEWORK = { 
+#     'DEFAULT_PERMISSION_CLASSES' : [
+#         'rest_framework.permissions.IsAuthenticated',
+#     ],
+#     'DEFAULT_AUTHENTICATION_CLASSES' : [
+#         'rest_framework.authentication.SessionAuthentication',
+#     ]
+# }

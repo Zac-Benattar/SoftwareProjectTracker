@@ -3,11 +3,10 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
-
+from django.contrib.auth.forms import UserCreationForm
 from .models import User, Skill
 
 # Create your views here.
-
 
 class IndexView(generic.ListView):
     template_name = 'users/index.html'

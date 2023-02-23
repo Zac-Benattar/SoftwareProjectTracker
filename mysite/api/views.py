@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from projects.models import Project
-from users import models
-from .serializers import ProjectSerializer
+from projects.models import *
+from users.models import *
+from .serializers import *
 
 # Create your views here.
 @api_view(['GET'])
@@ -48,12 +48,34 @@ def getProjects(request):
     serializer = ProjectSerializer(projects, many=True)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def getUser(request):
+    user = User.objects.all()
+    serializer = UserSerializer(user, many=True)
+    return Response(serializer.data)
+
 
 @api_view(['GET'])
 def getProject(request, pk):
     project = Project.objects.get(id = pk)
     serializer = ProjectSerializer(project, many=False)
     return Response(serializer.data)
+
+# @api_view(['POST'])
+# def createProject(request):
+#     data = request.data
+#     project = Project.objects.create(
+#         name = models.CharField(max_length=30)
+#         description = models.CharField(max_length=200)
+#         initialBudget = models.DecimalField(max_digits=15, decimal_places=2)
+#         currentBudget = models.DecimalField(max_digits=15, decimal_places=2)
+#         initialDeadline = models.DateTimeField()
+#         currentDeadline = models.DateTimeField()
+#         methodology = models.CharField(max_length=30)
+#         gitHubToken = models.CharField(max_length=30)
+#     )
+#     serializer = NoteSerializer(project, many = False)
+#     return Response(serializer.data)
 
 @api_view(['PUT'])
 def updateProject(request, pk):
