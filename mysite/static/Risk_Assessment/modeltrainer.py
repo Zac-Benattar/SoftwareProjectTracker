@@ -18,14 +18,19 @@ def get_start_model_filename():
 def get_in_progress_model_filename():
     return COMBINED_MODEL_NAME + IN_PROGRESS_POSTFIX + FILE_EXTENSION
 
+#Filename of start prediction dataset
 START_DATASET_FILENAME = "startevaluationdataset.txt"
-
+#Filename of in progress project prediction dataset
 IN_PROGRESS_DATASET_FILENAME = "inprogressevaluationdataset.txt"
 
-def train_model_and_save(data_set_filepath, model_filename):
-    print("=== Start Training ===")
+#Used to determine how much of the data should normally be used to test the model
+DEFAULT_TEST_TRAIN_SPLIT = 0.2
 
-    print("Loading Dataset from path: " + data_set_filepath)
+def train_model_and_save(data_set_filepath, model_filename, verbose, test_train_split):
+    if verbose == True:
+        print("=== Start Training ===")
+    if verbose == True:
+        print("Loading Dataset from path: " + data_set_filepath)
     #Loads data from a file called dataset.txt
     #(this is actually a svmlight file)
     #this is a file used to represent a sparse matrix (sparse matrix being a matrix with many 0s)
@@ -33,8 +38,8 @@ def train_model_and_save(data_set_filepath, model_filename):
     #in_data is the inputs we'll take and output_data are like the results of the data.
     #Think in data as happiness etc. out data is probability of success
     in_data, out_data = datasets.load_svmlight_file(data_set_filepath)
-
-    print("Dataset Loaded!")
+    if verbose == True:
+        print("Dataset Loaded!")
     #=====================================================================
     #SIMPLE APPROACH USING LogisticRegression()
     #Requires total retraining of model instead of incremental Training
@@ -69,36 +74,44 @@ def train_model_and_save(data_set_filepath, model_filename):
     #Seperate training data into a train test Split
     #All this does is take our input data and our output data and split it into a set of training data
     #and a set of data the model hasn't seen
-    in_train, in_test, out_train, out_test = train_test_split(in_data, out_data, test_size=0.2)
+    if test_train_split == 0:
+        #If no test data
+        #Put all data into training
+        in_train = in_data
+        in_test = [[]]
+        out_train = out_data
+        out_test = [[]]
+    else:
+        #If data put aside to test is wanted
+        in_train, in_test, out_train, out_test = train_test_split(in_data, out_data, test_size=test_train_split)
 
-
-    print("=== Start Training Linear Regression Model ===")
+    if verbose == True:
+        print("=== Start Training Linear Regression Model ===")
     #Train model
     #This function trains on the training data
     #trained_model = logisitc_regression.partial_fit(in_train, out_train, [-1.0, 1.0]);
     trained_model = logisitc_regression.fit(in_train, out_train);
+    if not test_train_split == 0:
+        #make predictions based on the test data
+        predictions = trained_model.predict(in_test)
 
-    #make predictions based on the test data
-    predictions = trained_model.predict(in_test)
-
-    #get the size of the test data for a loop (I bodged this code)
-    size = len(in_test.toarray())
-    #size = in_test.getnnz() #this didn't work
-
-    #This is a bodged output to try and deal with all the crazy matricies
-    #and numpy values and arrays flying around all over the place
-    for i in range(size):
-        #print out predicted values
-        input_values = in_test[i].toarray()
-        expected_output = out_test[i]
-        predicted_output = predictions[i]
-        #print("Values: ")
-        #print(input_values)
-        print("Expected: " + str(expected_output))
-        print("Predicted: " + str(predicted_output))
-        print("")
-
-    print("Saving model to: " + model_filename)
+        #get the size of the test data for a loop (I bodged this code)
+        size = len(in_test.toarray())
+        #size = in_test.getnnz() #this didn't work
+        if verbose == True:
+            #Display test data
+            for i in range(size):
+                #print out predicted values
+                input_values = in_test[i].toarray()
+                expected_output = out_test[i]
+                predicted_output = predictions[i]
+                #print("Values: ")
+                #print(input_values)
+                print("Expected: " + str(expected_output))
+                print("Predicted: " + str(predicted_output))
+                print("")
+    if verbose == True:
+        print("Saving model to: " + model_filename)
     #Save model in serialised form
     pickle.dump(trained_model, open(model_filename, 'wb'))
 
@@ -106,9 +119,16 @@ def train_model_and_save(data_set_filepath, model_filename):
 #Automatic train and test from dataset
 def train_all_models():
     #Train start estimation
-    train_model_and_save(START_DATASET_FILENAME, get_start_model_filename())
+    train_model_and_save(START_DATASET_FILENAME, get_start_model_filename(), True, DEFAULT_TEST_TRAIN_SPLIT)
     #Train in progress estimation
-    train_model_and_save(IN_PROGRESS_DATASET_FILENAME, get_in_progress_model_filename())
+    train_model_and_save(IN_PROGRESS_DATASET_FILENAME, get_in_progress_model_filename(), True, DEFAULT_TEST_TRAIN_SPLIT)
+
+#Automatic TRAIN ONLY from dataset
+def retrain_all_models():
+    #Train start estimation
+    train_model_and_save(START_DATASET_FILENAME, get_start_model_filename(), False, 0)
+    #Train in progress estimation
+    train_model_and_save(IN_PROGRESS_DATASET_FILENAME, get_in_progress_model_filename(), False, 0)
 
 #Used to write new entries into the dataset
 def add_to_dataset(new_startevaluationdata, new_currentevaluationdata, result_out):

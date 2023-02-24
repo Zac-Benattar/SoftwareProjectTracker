@@ -9,11 +9,11 @@ print("Start")
 evaluator = ProjectEvaluator()
 
 #initial_budget, num_developers, num_other_team_members, original_deadline, daily_running_cost, num_tasks
-DEADLINE_DATE = datetime.datetime.now() + datetime.timedelta(days = 100) #What date format should I use?
+DEADLINE_DATE = datetime.datetime.now() + datetime.timedelta(days = 1) #What date format should I use?
 
 
 #initial_budget, num_developers, num_other_team_members, original_deadline, daily_running_cost, num_tasks
-start_evaluation_data = StartEvaluationData(20000, 20, 2, DEADLINE_DATE, 100, 50)
+start_evaluation_data = StartEvaluationData(1000000, 20, 2, DEADLINE_DATE, 100, 100)
 
 chance_of_success = evaluator.get_initial_chance_of_success(start_evaluation_data)
 
@@ -21,7 +21,7 @@ print("Chance_Of_Success: " + str(chance_of_success))
 
 print("RETRAIN MODEL")
 
-evaluator.update_model(start_evaluation_data, [], 1)
+evaluator.update_model(start_evaluation_data, [], -1)
 
 chance_of_success = evaluator.get_initial_chance_of_success(start_evaluation_data)
 

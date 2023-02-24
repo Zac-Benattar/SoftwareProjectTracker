@@ -71,14 +71,14 @@ class ProjectEvaluator:
         #Add new data to dataset
         modeltrainer.add_to_dataset(new_startevaluationdata, new_currentevaluationdata, result_out)
         #Retrain models
-        modeltrainer.train_all_models()
+        modeltrainer.retrain_all_models() #Calling retrain to use all data and not be verbose
         #Reload models
         self.start_model = pickle.load(open(self.START_MODEL_FILENAME, 'rb'))
         self.in_progress_model = pickle.load(open(self.IN_PROGRESS_MODEL_FILENAME, 'rb'))
 
         #=====================================================================
         #ALTERNATIVE APPROACH USING partial_fit() [For models that support it]
-        #Not used as
+        #Not used as couldn't make results reliable
         #=====================================================================
 
         #Needs to "retrain" the model using parital_fit()

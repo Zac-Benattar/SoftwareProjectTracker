@@ -15,7 +15,7 @@ no_of_arguments = len(args) #Get number of arguments note first/0th argument is 
 
 if no_of_arguments == 3:
     #If the code ran with the correct amount of arguments
-    modeltrainer.train_model_and_save(args[1], args[2]) #First argument is just the call to running the program
+    modeltrainer.train_model_and_save(args[1], args[2], True, modeltrainer.DEFAULT_TEST_TRAIN_SPLIT) #First argument is just the call to running the program
 elif no_of_arguments == 1:
     #call function if file is run through command line
     modeltrainer.train_all_models()
