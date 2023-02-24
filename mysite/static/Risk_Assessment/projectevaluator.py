@@ -5,18 +5,9 @@ from sklearn.model_selection import train_test_split
 
 import pickle #Used to serialise the model to be loaded later saves retraining everytime the program is rerun
 
+import modeltrainer
 
-COMBINED_MODEL_NAME = "model"
-FILE_EXTENSION = ".sav"
 
-START_POSTFIX = "start" #The filename for the model to load
-IN_PROGRESS_POSTFIX = "inprogress" #The filename for the model to load
-
-def get_start_model_filename():
-    return COMBINED_MODEL_NAME + START_POSTFIX + FILE_EXTENSION
-
-def get_in_progress_model_filename():
-    return COMBINED_MODEL_NAME + IN_PROGRESS_POSTFIX + FILE_EXTENSION
 
 #Used to turn the models prediction into a score of sorts viewed as a percentage to the user
 def combine_scores(classes, probability):
@@ -35,6 +26,8 @@ def combine_scores(classes, probability):
         #approximately 1 (give or take for floating point innaccuracy)
         sum += percentage_score_of_class * probability[i]
 
+        #print(str(percentage_score_of_class) + " * " + str(probability[i]))
+
     return sum
 
 #Takes in a value between -1 and 1 and converts to a percentage
@@ -48,12 +41,11 @@ class ProjectEvaluator:
     def __init__(self):
 
         #Get filenames for model files
-        self.START_MODEL_FILENAME = get_start_model_filename()
-        self.IN_PROGRESS_MODEL_FILENAME = get_in_progress_model_filename()
-
+        self.START_MODEL_FILENAME = modeltrainer.get_start_model_filename()
+        self.IN_PROGRESS_MODEL_FILENAME = modeltrainer.get_in_progress_model_filename()
         #Load logistic regression models
-        self.start_model = pickle.load(open(self.START_MODEL_FILENAME, 'rb')) #Update this to load in the model
-        self.in_progress_model = pickle.load(open(self.IN_PROGRESS_MODEL_FILENAME, 'rb')) #Update this to load in the model
+        self.start_model = pickle.load(open(self.START_MODEL_FILENAME, 'rb'))
+        self.in_progress_model = pickle.load(open(self.IN_PROGRESS_MODEL_FILENAME, 'rb'))
 
     #This will take in a projects riskiness and return a number between 0 and 1 which can be used as a percentage
     def get_initial_chance_of_success(self, startevaluationdata):
@@ -72,34 +64,51 @@ class ProjectEvaluator:
         return combine_scores(self.in_progress_model.classes_, prediction[0]) #Return the prediction
 
     def update_model(self, new_startevaluationdata, new_currentevaluationdata, result_out):
-        #Needs to "retrain" the model using fit()
+
+        #=====================================================================
+        #SIMPLE APPROACH USING fit() [On the whole dataset again]
+        #=====================================================================
+        #Add new data to dataset
+        modeltrainer.add_to_dataset(new_startevaluationdata, new_currentevaluationdata, result_out)
+        #Retrain models
+        modeltrainer.train_all_models()
+        #Reload models
+        self.start_model = pickle.load(open(self.START_MODEL_FILENAME, 'rb'))
+        self.in_progress_model = pickle.load(open(self.IN_PROGRESS_MODEL_FILENAME, 'rb'))
+
+        #=====================================================================
+        #ALTERNATIVE APPROACH USING partial_fit() [For models that support it]
+        #Not used as
+        #=====================================================================
+
+        #Needs to "retrain" the model using parital_fit()
         #Make sure warm start is enabled as to not delete all old training data (called from original train)
         #Then need to serialize the data and save it again (similar to modeltrainer.py)
 
-        CURRENTEVALATION_DATA_SIZE = len(new_currentevaluationdata)
+        #CURRENTEVALATION_DATA_SIZE = len(new_currentevaluationdata)
 
         #Change start data into a matrix
-        new_start_data_in = new_startevaluationdata.get_data_as_matrix()
+        #new_start_data_in = new_startevaluationdata.get_data_as_matrix()
         #Loop through all current evaluation data to get the data as a matrix
-        new_in_progress_data_in = [new_currentevaluationdata[i].get_data_as_matrix() for i in range (CURRENTEVALATION_DATA_SIZE)]
+        #new_in_progress_data_in = [new_currentevaluationdata[i].get_data_as_matrix() for i in range (CURRENTEVALATION_DATA_SIZE)]
 
         #Get data result/class (the data storing if the project succeeded)
-        new_start_data_out = [result_out]
-        new_in_progress_data_out = [result_out for i in range(CURRENTEVALATION_DATA_SIZE)]
+        #new_start_data_out = [result_out]
+        #new_in_progress_data_out = [result_out for i in range(CURRENTEVALATION_DATA_SIZE)]
 
         #Refit the model
-        self.start_model.fit(new_start_data_in, new_start_data_out) #Start predictor
-        if CURRENTEVALATION_DATA_SIZE > 0: #If there was any in progress data
-            self.in_progress_model.fit(new_in_progress_data_in, new_in_progress_data_out) #In progress project predictor
+        #self.start_model.partial_fit(new_start_data_in, new_start_data_out) #Start predictor
+        #if CURRENTEVALATION_DATA_SIZE > 0: #If there was any in progress data
+        #    self.in_progress_model.partial_fit(new_in_progress_data_in, new_in_progress_data_out) #In progress project predictor
 
         #Save start model
-        print("Saving start model to: " + self.START_MODEL_FILENAME)
+        #print("Saving start model to: " + self.START_MODEL_FILENAME)
         #Save model in serialised form
-        pickle.dump(self.start_model, open(self.START_MODEL_FILENAME, 'wb'))
-        print("Saved!")
+        #pickle.dump(self.start_model, open(self.START_MODEL_FILENAME, 'wb'))
+        #print("Saved!")
 
         #Save in progress model
-        print("Saving in progress model to: " + self.IN_PROGRESS_MODEL_FILENAME)
+        #print("Saving in progress model to: " + self.IN_PROGRESS_MODEL_FILENAME)
         #Save model in serialised form
-        pickle.dump(self.in_progress_model, open(self.IN_PROGRESS_MODEL_FILENAME, 'wb'))
-        print("Saved!")
+        #pickle.dump(self.in_progress_model, open(self.IN_PROGRESS_MODEL_FILENAME, 'wb'))
+        #print("Saved!")

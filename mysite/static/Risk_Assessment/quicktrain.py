@@ -1,8 +1,24 @@
-import modeltrainer
-import projectevaluator
 
-#Automatic train and test from dataset
-#Train start estimation
-modeltrainer.train_model_and_save("startevaluationdataset.txt", projectevaluator.get_start_model_filename())
-#Train in progress estimation
-modeltrainer.train_model_and_save("inprogressevaluationdataset.txt", projectevaluator.get_in_progress_model_filename())
+import modeltrainer #Import trainer to use
+
+import sys #Used to fetch command line arguments
+
+#Code if this file is executed through the command line
+#TO RUN TRAINING CODE
+#Type: python3 modeltrainer.py [DATASET_FILEPATH] [MODEL_FILENAME]
+#TO TRAIN ALL MODELS AT ONCE RUN
+#Type: python3 modeltrainer.py
+
+args = sys.argv; #Get arguments
+
+no_of_arguments = len(args) #Get number of arguments note first/0th argument is just run program call
+
+if no_of_arguments == 3:
+    #If the code ran with the correct amount of arguments
+    modeltrainer.train_model_and_save(args[1], args[2]) #First argument is just the call to running the program
+elif no_of_arguments == 1:
+    #call function if file is run through command line
+    modeltrainer.train_all_models()
+else:
+    print("Incorrect number of arguments");
+    print("Use python3 modeltrainer.py [DATASET_FILEPATH] [MODEL_FILENAME]")
