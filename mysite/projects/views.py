@@ -6,6 +6,7 @@ from django.utils import timezone
 
 from .models import Project, Task, Member, Recommendation, RiskEvaluation
 
+# from static.Risk_Assessment.projectevaluator import ProjectEvaluator
 
 class IndexView(View):
     def get(self, request):
@@ -14,7 +15,7 @@ class IndexView(View):
         Returns:
             HttpResponse: index.html with context: projects
         """
-        projects =  Project.objects.filter(current_deadline__gte=timezone.now()).order_by('-current_deadline')[:]
+        projects = Project.objects.filter(current_deadline__gte=timezone.now()).order_by('-current_deadline')[:]
         context = {'projects':projects}
         return render(request, 'projects/index.html', context)
 
@@ -28,6 +29,9 @@ class DetailView(View):
         Returns:
             HttpResponse: detail.html with context: project, riskevaluation
         """
+        
+        # evaluator = ProjectEvaluator()
+        # evaluator.update_model()
 
         # Here we should load the model, calculate the risk score, create a new risk evaluation,
         # save the risk evaluation and send it to the page.

@@ -64,8 +64,7 @@ ROOT_URLCONF = 'mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'] ,
-                #  BASE_DIR / 'react folder name/build'],
+        'DIRS': [BASE_DIR / 'templates', BASE_DIR / 'frontend/web-app/build'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -129,9 +128,8 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 # Fucking favicon not working thought this would help
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-                    # BASE_DIR / 'reactname/build/static'
-                                
+STATICFILES_DIRS = [BASE_DIR / 'static', BASE_DIR / 'frontend/web-app/build/static']
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
