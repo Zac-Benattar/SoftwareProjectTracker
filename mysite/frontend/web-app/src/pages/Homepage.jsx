@@ -13,7 +13,7 @@ export const Homepage = (props) => {
     }, [])
 
     let getProjects = async () => {
-        let response = await fetch('http://127.0.0.1:8000/api/projects/')
+        let response = await fetch('/api/projects/')
         let data = await response.json()
         console.log('Data:', data)
         setProjects(data)
