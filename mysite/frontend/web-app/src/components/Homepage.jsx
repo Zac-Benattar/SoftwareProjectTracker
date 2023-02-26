@@ -1,102 +1,47 @@
-import React, {useEffect, useState} from "react";
-import {Navigate} from "react-router-dom";
-import "./Homepage.css"; 
-import {Progress_bar} from './ProgressBar';
+import React, { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
+import "./App.css";
+import { Progress_bar } from "./ProgressBar";
 import { Dropdown } from "./Dropdown";
+import { Navbar } from "../components/Navbar";
+import { ProjectListItem } from "../components/ProjectListItem";
 
 export const Homepage = () => {
+  const options = [
+    { value: "green", label: "Green" },
+    { value: "blue", label: "Blue" },
+  ];
 
-    const options = [
-        {value: "green", label:"Green"},
-        {value: "blue", label: "Blue"}
-    ];
+  let [projects, setProjects] = useState([]);
 
-    return (
-        <>
-        {/* <nav className="nav">
-            <a> Homepage </a>
-            <ul>
-                <li>
-                    <a> Logout </a>
-                </li>
-            </ul>
-        </nav> */}
+  useEffect(() => {
+    getProjects();
+  }, []);
 
-        
-        <div className="home-page">
+  let getProjects = async () => {
+    let response = await fetch("/api/projects/");
+    let data = await response.json();
+    console.log("Data:", data);
+    setProjects(data);
+  };
+
+  return (
+    <div>
+      <Navbar />
+
+      <div className="home-page">
         <div className="dropdown-menu">
-
-            <Dropdown placeHolder="Select ..." options={options}/>
-
-        </div>
-      
-     
-        <div className="project_container">
-            
-            <div className="title">
-                <h1>Demo Project</h1>
-            </div>
-            <div className="progress-bar">
-                <Progress_bar progress='30'/>
-            </div>
-            <div className="info_container">
-                <div className="info">
-                    <p>Here there will be some info</p>
-                    <p>Some more info </p>
-                    <p>Some other info</p>
-                </div>
-                <div className="info">
-                    <p>Here there will be some info</p>
-                    <p>Some more info </p>
-                    <p>Some other info</p>
-                </div>
-            </div>
-        </div> 
-        <div className="project_container">
-            <div className="title">
-                <h1>Demo Project</h1>
-            </div>
-            <div className="progress-bar">
-                <Progress_bar progress='100'/>
-            </div>
-            <div className="info_container">
-                <div className="info">
-                    <p>Here there will be some info</p>
-                    <p>Some more info </p>
-                    <p>Some other info</p>
-                </div>
-                <div className="info">
-                    <p>Here there will be some info</p>
-                    <p>Some more info </p>
-                    <p>Some other info</p>
-                </div>
-            </div>
-        </div>  
-        <div className="project_container">
-            <div className="title">
-                <h1>Demo Project</h1>
-            </div>
-            <div className="progress-bar">
-                <Progress_bar progress='70'/>
-            </div>
-            <div className="info_container">
-                <div className="info">
-                    <p>Here there will be some info</p>
-                    <p>Some more info </p>
-                    <p>Some other info</p>
-                </div>
-                <div className="info">
-                    <p>Here there will be some info</p>
-                    <p>Some more info </p>
-                    <p>Some other info</p>
-                </div>
-            </div>
-        </div> 
-
+          <Dropdown placeHolder="Select ..." options={options} />
         </div>
 
-       
-        </>     
-     
-    );
-}
+        <div>
+          <div className="projects-list">
+            {projects.map((project, index) => (
+              <ProjectListItem key={index} project={project} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
