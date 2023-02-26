@@ -4,8 +4,10 @@ from django.urls import reverse
 from django.views import View
 from django.utils import timezone
 
-from .models import User
+from .models import *
 
+from rest_framework.response import Response
+        
 
 class IndexView(View):
     def get(self, request):
@@ -41,3 +43,6 @@ class SkillsView(View):
         user = get_object_or_404(User, pk=self.kwargs['pk'])
         context = {'user':user}
         return render(request, 'users/skills.html', context)
+    
+
+

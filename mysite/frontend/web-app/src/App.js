@@ -1,9 +1,10 @@
 import React, {useState} from "react";
 import logo from './logo.svg';
 import './App.css';
-import {Login} from './components/Login';
-import {Register} from './components/Register';
-import {Homepage} from './components/Homepage';
+import {Login} from './pages/Login';
+import {Register} from './pages/Register';
+import {Homepage} from './pages/Homepage';
+import {Projects} from './pages/Projects';
 
 function App() {
   const [currentForm, setCurrentForm] = useState('login');
