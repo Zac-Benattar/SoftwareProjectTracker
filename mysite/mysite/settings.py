@@ -35,10 +35,8 @@ INSTALLED_APPS = [
     'api.apps.ApiConfig',
     'users.apps.UsersConfig',
     'projects.apps.ProjectsConfig',
-
     'rest_framework',
     'corsheaders',
-
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -49,7 +47,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
-
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -58,6 +55,10 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+REST_FRAMEWORK = {'DEFAULT_PERMISSION_CLASSES':['rest_framework.permissions.AllowAny']}
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'mysite.urls'
 
@@ -127,7 +128,6 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-# Fucking favicon not working thought this would help
 STATICFILES_DIRS = [BASE_DIR / 'static', BASE_DIR / 'frontend/web-app/build/static']
 
 
@@ -135,7 +135,7 @@ STATICFILES_DIRS = [BASE_DIR / 'static', BASE_DIR / 'frontend/web-app/build/stat
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-CORS_ALLOWED_ORIGINS = [ "https://localhost:3000"]
+CORS_ALLOWED_ORIGINS = ["https://localhost:3000"]
 
 # user has to be authenticated to use views
 # REST_FRAMEWORK = { 
