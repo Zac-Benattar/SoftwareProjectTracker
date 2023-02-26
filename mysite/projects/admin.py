@@ -110,6 +110,7 @@ class TaskAdmin(admin.ModelAdmin):
         ('Details', {'fields': ('name', 'project', 'description')}),
         ('Status', {'fields': ('completion_status',)}),
         ('Time', {'fields': ('duration',)}),
+        ('Dependencies', {'fields': ('dependent_tasks',)}),
     ]
     
     list_display = ('name', 'project', 'completion_status', 'duration')

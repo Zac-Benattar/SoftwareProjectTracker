@@ -51,7 +51,7 @@ class Task(models.Model):
     description = models.CharField(max_length=200)
     duration = models.IntegerField()
     creation_date = models.DateTimeField(auto_now_add=True)
-    dependent_tasks = models.ManyToManyField('self', symmetrical=False, related_name='prerequisites')
+    dependent_tasks = models.ManyToManyField('self', symmetrical=False, related_name='prerequisites', blank=True)
     NOTSTARTED = 'NS'
     STARTED = 'S'
     FINISHED = 'F'
