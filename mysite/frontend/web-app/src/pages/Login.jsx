@@ -26,7 +26,7 @@ export const Login = (props) => {
         // page gets reloaded and state gets lost
         e.preventDefault()
 
-        if (email == adminUser.email && password == adminUser.password) {
+        if (email === adminUser.email && password === adminUser.password) {
             setAuthenticated(true)
             localStorage.setItem("authenticated",true);
             navigate("/homepage")
@@ -43,7 +43,7 @@ export const Login = (props) => {
         <div className="auth-form-container">
             <form className="login-form" onSubmit = {handleSubmit}>
                 <h2> Login Page! </h2>
-                {(error!="") ? (<div className="error">{error}</div>) : ""}
+                {(error!=="") ? (<div className="error">{error}</div>) : ""}
             
                 <label htmlfor="email">Email:</label>
                 <input value={email} onChange={(e)=>setEmail(e.target.value)}
