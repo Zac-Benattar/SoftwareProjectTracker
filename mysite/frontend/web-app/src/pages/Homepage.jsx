@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import "./App.css";
+import "./Homepage.css";
 import { Dropdown } from "../components/Dropdown";
 import { Navbar } from "../components/Navbar";
 import { ProjectListItem } from "../components/ProjectListItem";
