@@ -1,22 +1,43 @@
 import React, {useEffect, useState} from "react";
 import {Navigate} from "react-router-dom";
 import "./Homepage.css"; 
+import {Progress_bar} from './ProgressBar';
+import { Dropdown } from "./Dropdown";
 
 export const Homepage = () => {
+
+    const options = [
+        {value: "green", label:"Green"},
+        {value: "blue", label: "Blue"}
+    ];
+
     return (
         <>
-        <nav className="nav">
+        {/* <nav className="nav">
             <a> Homepage </a>
             <ul>
                 <li>
                     <a> Logout </a>
                 </li>
             </ul>
-        </nav>
+        </nav> */}
 
+        
+        <div className="home-page">
+        <div className="dropdown-menu">
+
+            <Dropdown placeHolder="Select ..." options={options}/>
+
+        </div>
+      
+     
         <div className="project_container">
+            
             <div className="title">
                 <h1>Demo Project</h1>
+            </div>
+            <div className="progress-bar">
+                <Progress_bar progress='30'/>
             </div>
             <div className="info_container">
                 <div className="info">
@@ -34,6 +55,9 @@ export const Homepage = () => {
         <div className="project_container">
             <div className="title">
                 <h1>Demo Project</h1>
+            </div>
+            <div className="progress-bar">
+                <Progress_bar progress='100'/>
             </div>
             <div className="info_container">
                 <div className="info">
@@ -52,6 +76,9 @@ export const Homepage = () => {
             <div className="title">
                 <h1>Demo Project</h1>
             </div>
+            <div className="progress-bar">
+                <Progress_bar progress='70'/>
+            </div>
             <div className="info_container">
                 <div className="info">
                     <p>Here there will be some info</p>
@@ -65,6 +92,10 @@ export const Homepage = () => {
                 </div>
             </div>
         </div> 
+
+        </div>
+
+       
         </>     
      
     );
