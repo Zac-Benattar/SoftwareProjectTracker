@@ -13,10 +13,8 @@ class Skill(models.Model):
     def __str__(self):
         return self.name
 
-
 class User(models.Model):
     # user = models.OnetoOneField(User, on_delete = models.CASCADE)
-    
     username = models.CharField(max_length=20)
     forename = models.CharField(max_length=30)
     lastname = models.CharField(max_length=30)
