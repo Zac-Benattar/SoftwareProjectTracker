@@ -9,6 +9,8 @@ import { Login }from "./pages/Login";
 import { Homepage } from './pages/Homepage';
 import { Register } from './pages/Register';
 import { Project } from './pages/Project';
+import  {Projects } from './pages/Projects';
+import { PeopleView } from './pages/PeopleView';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -20,6 +22,9 @@ root.render(
         <Route path="homepage" element={<Homepage />} />
         <Route path="register" element={<Register />} />
         <Route path="project/:id" element={<Project />} />
+        <Route path="project" element = {<Projects/>}/>
+        <Route path = "people" element = {<PeopleView/>}/>
+        
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

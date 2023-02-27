@@ -5,6 +5,8 @@ import { Dropdown } from "../components/Dropdown";
 import { Navbar } from "../components/Navbar";
 import { ProjectListItem } from "../components/ProjectListItem";
 import {ProgressBar} from '../components/ProgressBar';
+import Calendar from "react-calendar";
+import 'react-calendar/dist/Calendar.css';
 
 // export const Homepage = () => {
 //   const options = [
@@ -56,6 +58,7 @@ export const Homepage = () => {
       {value: "progress", label: "Progress completed"}
   ];
 
+  const [date,setDate] = useState(new Date());
   let [projects, setProjects] = useState([]);
 
   useEffect(() => {
@@ -73,29 +76,48 @@ export const Homepage = () => {
       <>
       <div className="home-page">
 
-      <div className="user-profile"> 
+      <div className="left_side">
 
-      This will contain some user information
+        <div className="user-profile"> 
+
+            <h2 className="user-title">
+
+                Welcome, Username
+
+            </h2>
+
+            <p className="user-info">
+                Role in project: Role
+            </p>
+        </div>
 
 
+        <div className="calander-container">
+            <Calendar onChange={setDate} value={date}/>
+        </div>
+
+        <p className='text-center'>
+            <span className='bold'>Selected Date:</span>{' '}
+            {date.toDateString()}
+        </p>
       </div>
 
+
+      <div className="all_projects">
+
      
+
+      
       <div className="top-of-page"> 
 
           <h2 className="dropdown-title"> 
               ORDER BY:
           </h2>
           <div className="dropdown-menu">
-
               <Dropdown placeHolder="Select ..." options={options}/>
-
           </div>
-
       </div>
-
-
-
+      
         
       <div className="projects-list">
         {projects.map((project, index) => (
@@ -103,70 +125,10 @@ export const Homepage = () => {
         ))}
       </div>
 
-      <div className="project_container">
-          
-          <div className="title">
-              <h1>Demo Project</h1>
-          </div>
-          <div className="progress-bar">
-              <ProgressBar progress='30'/>
-          </div>
-          
-          <div className="info_container">
-              <div className="info">
-                  <p>Here there will be some info</p>
-                  <p>Some more info </p>
-                  <p>Some other info</p>
-              </div>
-              <div className="info">
-                  <p>Here there will be some info</p>
-                  <p>Some more info </p>
-                  <p>Some other info</p>
-              </div>
-          </div>
-      </div> 
-      <div className="project_container">
-          <div className="title">
-              <h1>Demo Project</h1>
-          </div>
-          <div className="progress-bar">
-              <ProgressBar progress='100'/>
-          </div>
-          <div className="info_container">
-              <div className="info">
-                  <p>Here there will be some info</p>
-                  <p>Some more info </p>
-                  <p>Some other info</p>
-              </div>
-              <div className="info">
-                  <p>Here there will be some info</p>
-                  <p>Some more info </p>
-                  <p>Some other info</p>
-              </div>
-          </div>
-      </div>  
-      <div className="project_container">
-          <div className="title">
-              <h1>Demo Project</h1>
-          </div>
-          <div className="progress-bar">
-              <ProgressBar progress='70'/>
-          </div>
-          <div className="info_container">
-              <div className="info">
-                  <p>Here there will be some info</p>
-                  <p>Some more info </p>
-                  <p>Some other info</p>
-              </div>
-              <div className="info">
-                  <p>Here there will be some info</p>
-                  <p>Some more info </p>
-                  <p>Some other info</p>
-              </div>
-          </div>
-      </div> 
+      </div>
 
       </div>
+
 
      
       </>     
