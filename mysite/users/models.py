@@ -7,7 +7,7 @@ from django.contrib import admin
 from django.contrib.auth.models import User 
 
 class Skill(models.Model):
-    name = models.CharField(max_length=20, primary_key=True)
+    name = models.CharField(max_length=20)
     description = models.CharField(max_length=200, blank=True)
     pass 
     def __str__(self):
@@ -36,7 +36,3 @@ class User(models.Model):
     def joined_recently(self):
         now = timezone.now()
         return now - datetime.timedelta(days=1) <= self.join_date <= now
-    
-class UserSkill(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    skill = models.ForeignKey(Skill, on_delete=models.CASCADE)
