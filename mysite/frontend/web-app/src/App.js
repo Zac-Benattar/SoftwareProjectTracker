@@ -4,20 +4,18 @@ import LoginPage from "./pages/LoginPage";
 import Register from "./pages/Register";
 import Homepage from "./pages/Homepage";
 import Navbar from "./components/Navbar";
-import AuthProvider from "./context/AuthContext";
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+import { BrowserRouter, Route, Routes} from "react-router-dom";
 import PrivateRoute from "./utils/PrivateRoute";
 
 const App = () => {
   return (
     <div className="App">
       <BrowserRouter>
-      
         <AuthProvider>
           <Navbar />
           <Routes>
             <Route
-              location={useLocation()}
               exact
               path="/"
               element={

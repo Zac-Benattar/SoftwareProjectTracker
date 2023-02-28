@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import "./Homepage.css";
 
@@ -11,15 +11,15 @@ const LoginPage = (props) => {
       <form className="login-form" onSubmit={loginUser}>
         <h2> Login Page! </h2>
 
-        <label htmlfor="email">Email:</label>
+        <label htmlFor="username">Username:</label>
         <input
-          type="email"
-          placeholder="example@gmail.com"
-          id="email"
-          name="email"
+          type="username"
+          placeholder="username"
+          id="username"
+          name="username"
         />
 
-        <label htmlfor="password">Password:</label>
+        <label htmlFor="password">Password:</label>
         <input
           type="password"
           placeholder="********"

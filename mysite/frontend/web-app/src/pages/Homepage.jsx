@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import "../App.css";
 import Dropdown from "../components/Dropdown";
-import Navbar from "../components/Navbar";
 import ProjectListItem from "../components/ProjectListItem";
 import AuthContext from "../context/AuthContext";
 
@@ -19,11 +18,11 @@ const Homepage = () => {
   }, []);
 
   let getProjects = async () => {
-    let response = await fetch("/api/projects/", {
+    let response = await fetch("http://127.0.0.1:8000/api/projects/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorisation: "Bearer" + String * authTokens.access,
+        "Authorization": "Bearer " + String(authTokens.access),
       },
     });
     let data = await response.json();
@@ -31,14 +30,12 @@ const Homepage = () => {
     if (response.status === 200) {
       setProjects(data);
     } else if (response.statusText === "Unauthorized") {
-      logoutUser()
+      logoutUser();
     }
   };
 
   return (
     <div>
-      <Navbar />
-
       <div className="home-page">
         <div className="dropdown-menu">
           <Dropdown placeHolder="Select ..." options={options} />
