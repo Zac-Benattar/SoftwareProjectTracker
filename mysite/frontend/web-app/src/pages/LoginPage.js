@@ -4,36 +4,6 @@ import AuthContext from "../context/AuthContext";
 import "./Homepage.css";
 
 const LoginPage = (props) => {
-  // const [email, setEmail] = useState("");
-  // const [password, setPass] = useState("");
-
-  // const [authenticated, setAuthenticated] = useState(
-  //   localStorage.getItem("authenticated") || false
-  // );
-
-  // const [error, setError] = useState("");
-
-  // const navigate = useNavigate();
-
-  // // Temporary user
-  // const adminUser = {
-  //   email: "admin@admin.com",
-  //   password: "admin123",
-  // };
-
-  // const handleSubmit = (e) => {
-  //   // page gets reloaded and state gets lost
-  //   e.preventDefault();
-
-  //   if (email === adminUser.email && password === adminUser.password) {
-  //     setAuthenticated(true);
-  //     localStorage.setItem("authenticated", true);
-  //     navigate("/homepage");
-  //   } else {
-  //     setError("Details do not match!");
-  //   }
-  // };
-
   let { loginUser } = useContext(AuthContext);
 
   return (
@@ -43,25 +13,21 @@ const LoginPage = (props) => {
 
         <label htmlfor="email">Email:</label>
         <input
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
           type="email"
-          placeholder="youremail@gmail.com"
+          placeholder="example@gmail.com"
           id="email"
           name="email"
         />
 
         <label htmlfor="password">Password:</label>
         <input
-          value={password}
-          onChange={(e) => setPass(e.target.value)}
           type="password"
           placeholder="********"
           id="password"
           name="password"
         />
 
-        <button className="login-button"> Log-in </button>
+        <button className="login-button" type="submit"> Log-in </button>
       </form>
       <button
         className="link-btn"

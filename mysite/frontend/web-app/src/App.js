@@ -1,5 +1,4 @@
-import React, { Fragment, useState } from "react";
-import logo from "./logo.svg";
+import React, { Fragment } from "react";
 import "./App.css";
 import LoginPage from "./pages/LoginPage";
 import Register from "./pages/Register";
