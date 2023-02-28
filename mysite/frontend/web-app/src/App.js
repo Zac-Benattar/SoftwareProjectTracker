@@ -1,4 +1,4 @@
-import React, { Fragment, useState} from "react";
+import React, { Fragment, useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import LoginPage from "./pages/LoginPage";
@@ -10,7 +10,7 @@ import AuthProvider from "./context/AuthContext";
 import { BrowserRouter as Route, Routes, Router } from "react-router-dom";
 import PrivateRoute from "./utils/PrivateRoute";
 
-const App = ({ location, isAuthenticated }) => (
+const App = ({ isAuthenticated }) => (
   <div className="App">
     <Router>
       <Fragment>
@@ -18,7 +18,6 @@ const App = ({ location, isAuthenticated }) => (
         <Routes>
           <AuthProvider>
             <Route
-              location={location}
               exact
               path="/"
               element={
@@ -28,24 +27,9 @@ const App = ({ location, isAuthenticated }) => (
                 </PrivateRoute>
               }
             />
-            <Route
-              location={location}
-              exact
-              path="/login"
-              element={<LoginPage />}
-            />
-            <Route
-              location={location}
-              exact
-              path="/register"
-              element={<Register />}
-            />
-            <Route
-              location={location}
-              exact
-              path="/project:"
-              element={<Project />}
-            />
+            <Route exact path="/login" element={<LoginPage />} />
+            <Route exact path="/register" element={<Register />} />
+            <Route exact path="/project:" element={<Project />} />
           </AuthProvider>
         </Routes>
       </Fragment>
