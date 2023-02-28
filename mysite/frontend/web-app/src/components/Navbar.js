@@ -1,16 +1,13 @@
 import React from "react";
-import {Navigate} from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 
 export const Navbar = () => {
   return (
     <div>
       <nav className="nav">
-        <a> Homepage </a>
-        <ul>
-          <li>
-            <a> Logout </a>
-          </li>
-        </ul>
+        <Link to="/">Home</Link>
+        <span></span>
+        <Link to="/login">Logout</Link>
       </nav>
     </div>
   );
