@@ -12,22 +12,27 @@ const Homepage = () => {
   ];
 
   let [projects, setProjects] = useState([]);
-  let {authTokens} = useContext(AuthContext)
+  let { authTokens, logoutUser } = useContext(AuthContext);
 
   useEffect(() => {
     getProjects();
   }, []);
 
   let getProjects = async () => {
-    let response = await fetch('/api/projects/', {
-      method:'GET',
-      headers:{
-        'Content-Type':'application/json',
-        'Authorisation':'Bearer' + String*(authTokens.access)
-      }
+    let response = await fetch("/api/projects/", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorisation: "Bearer" + String * authTokens.access,
+      },
     });
     let data = await response.json();
-    setProjects(data);
+
+    if (response.status === 200) {
+      setProjects(data);
+    } else if (response.statusText === "Unauthorized") {
+      logoutUser()
+    }
   };
 
   return (

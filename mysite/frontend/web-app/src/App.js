@@ -9,30 +9,24 @@ import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import PrivateRoute from "./utils/PrivateRoute";
 
 const App = () => {
-  const location = useLocation();
-
   return (
     <div className="App">
       <BrowserRouter>
+      
         <AuthProvider>
           <Navbar />
           <Routes>
             <Route
+              location={useLocation()}
               exact
               path="/"
               element={
                 <PrivateRoute>
-                  {" "}
-                  <Homepage />{" "}
+                  <Homepage />
                 </PrivateRoute>
               }
             />
-            <Route
-              location={location}
-              exact
-              path="/login"
-              element={<LoginPage />}
-            />
+            <Route exact path="/login" element={<LoginPage />} />
             <Route exact path="/register" element={<Register />} />
           </Routes>
         </AuthProvider>
