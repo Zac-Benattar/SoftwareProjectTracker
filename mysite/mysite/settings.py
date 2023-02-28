@@ -22,7 +22,6 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'api.apps.ApiConfig',
-    'users.apps.UsersConfig',
     'projects.apps.ProjectsConfig',
     'rest_framework',
     'rest_framework_simplejwt',

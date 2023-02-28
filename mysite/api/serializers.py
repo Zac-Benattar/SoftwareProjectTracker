@@ -1,7 +1,7 @@
-#converts python model objects to json 
+# converts python model objects to json
 from rest_framework.serializers import ModelSerializer
-from projects.models import * 
-from users.models import *
+from projects.models import *
+
 
 class ProjectSerializer(ModelSerializer):
     class Meta:
@@ -9,11 +9,6 @@ class ProjectSerializer(ModelSerializer):
         fields = '__all__'
        # fields = ['name', 'description']
 
-class UserSerializer(ModelSerializer):
-    class Meta:
-        model = User
-        fields = '__all__'
-       # fields = ['name', 'description']
 
 class TaskSerializer(ModelSerializer):
     class Meta:
