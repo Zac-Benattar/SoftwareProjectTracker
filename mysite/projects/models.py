@@ -42,6 +42,7 @@ class UserProfile(models.Model):
     # https://django-phonenumber-field.readthedocs.io/en/latest/
     phone = PhoneNumberField(null=False, blank=False, unique=True)
     skillset = models.ManyToManyField(Skill, blank=True)
+    projects = models.ManyToManyField(Project, blank=True)
 
     def __str__(self):
         return self.username + " (" + self.forename + " " + self.lastname + ")"

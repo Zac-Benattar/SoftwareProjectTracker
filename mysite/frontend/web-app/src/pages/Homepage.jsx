@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "../App.css";
 import Dropdown from "../components/Dropdown";
 import Navbar from "../components/Navbar";
 import ProjectListItem from "../components/ProjectListItem";
+import AuthContext from "../context/AuthContext";
 
 const Homepage = () => {
   const options = [
@@ -11,15 +12,21 @@ const Homepage = () => {
   ];
 
   let [projects, setProjects] = useState([]);
+  let {authTokens} = useContext(AuthContext)
 
   useEffect(() => {
     getProjects();
   }, []);
 
   let getProjects = async () => {
-    let response = await fetch("/api/projects/");
+    let response = await fetch('/api/projects/', {
+      method:'GET',
+      headers:{
+        'Content-Type':'application/json',
+        'Authorisation':'Bearer' + String*(authTokens.access)
+      }
+    });
     let data = await response.json();
-    console.log("Data:", data);
     setProjects(data);
   };
 

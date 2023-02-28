@@ -1,21 +1,22 @@
-import React, { Fragment } from "react";
+import React from "react";
 import "./App.css";
 import LoginPage from "./pages/LoginPage";
 import Register from "./pages/Register";
 import Homepage from "./pages/Homepage";
-import Project from "./pages/Project";
 import Navbar from "./components/Navbar";
 import AuthProvider from "./context/AuthContext";
-import { BrowserRouter as Route, Routes, Router } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import PrivateRoute from "./utils/PrivateRoute";
 
-const App = ({ isAuthenticated }) => (
-  <div className="App">
-    <Router>
-      <Fragment>
-        <Navbar />
-        <Routes>
-          <AuthProvider>
+const App = () => {
+  const location = useLocation();
+
+  return (
+    <div className="App">
+      <BrowserRouter>
+        <AuthProvider>
+          <Navbar />
+          <Routes>
             <Route
               exact
               path="/"
@@ -26,14 +27,18 @@ const App = ({ isAuthenticated }) => (
                 </PrivateRoute>
               }
             />
-            <Route exact path="/login" element={<LoginPage />} />
+            <Route
+              location={location}
+              exact
+              path="/login"
+              element={<LoginPage />}
+            />
             <Route exact path="/register" element={<Register />} />
-            <Route exact path="/project:" element={<Project />} />
-          </AuthProvider>
-        </Routes>
-      </Fragment>
-    </Router>
-  </div>
-);
+          </Routes>
+        </AuthProvider>
+      </BrowserRouter>
+    </div>
+  );
+};
 
 export default App;
