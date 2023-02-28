@@ -6,7 +6,7 @@ import Register from "./pages/Register";
 import Homepage from "./pages/Homepage";
 import Project from "./pages/Project";
 import Navbar from "./components/Navbar";
-import AuthProvider from "./context/Authcontext";
+import AuthProvider from "./context/AuthContext";
 import { BrowserRouter as Route, Routes, Router } from "react-router-dom";
 import PrivateRoute from "./utils/PrivateRoute";
 
