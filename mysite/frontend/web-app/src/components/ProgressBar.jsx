@@ -1,6 +1,6 @@
 import React from "react";
 
-export const Progress_bar = ({ progress }) => {
+const ProgressBar = ({ progress }) => {
   const Parentdiv = {
     height: 30,
     width: "100%",
@@ -30,3 +30,5 @@ export const Progress_bar = ({ progress }) => {
     </div>
   );
 };
+
+export default ProgressBar;

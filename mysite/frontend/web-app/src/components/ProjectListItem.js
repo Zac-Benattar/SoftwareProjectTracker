@@ -1,14 +1,14 @@
 import React from "react";
-import { Progress_bar } from "./ProgressBar";
+import ProgressBar from "./ProgressBar";
 
-export const ProjectListItem = ({ project }) => {
+const ProjectListItem = ({ project }) => {
   return (
     <div className="project_container">
       <div className="title">
         <h1>{project.name}</h1>
       </div>
       <div>
-        <Progress_bar progress="100" />
+        <ProgressBar progress="100" />
       </div>
       <div className="info_container">
         <div className="info">
@@ -25,3 +25,5 @@ export const ProjectListItem = ({ project }) => {
     </div>
   );
 };
+
+export default ProjectListItem;

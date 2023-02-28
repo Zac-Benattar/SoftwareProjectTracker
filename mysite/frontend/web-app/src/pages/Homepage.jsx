@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import "../App.css";
-import { Dropdown } from "../components/Dropdown";
-import { Navbar } from "../components/Navbar";
-import { ProjectListItem } from "../components/ProjectListItem";
+import Dropdown from "../components/Dropdown";
+import Navbar from "../components/Navbar";
+import ProjectListItem from "../components/ProjectListItem";
 
-export const Homepage = () => {
+const Homepage = () => {
   const options = [
     { value: "green", label: "Green" },
     { value: "blue", label: "Blue" },
@@ -44,3 +44,5 @@ export const Homepage = () => {
     </div>
   );
 };
+
+export default Homepage;
