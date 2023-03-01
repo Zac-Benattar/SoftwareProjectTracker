@@ -24,7 +24,6 @@ class Project(models.Model):
 class Skill(models.Model):
     name = models.CharField(max_length=20, primary_key=True)
     description = models.CharField(max_length=200, blank=True)
-    pass
 
     def __str__(self):
         return self.name
@@ -40,15 +39,15 @@ class UserProfile(models.Model):
     skillset = models.ManyToManyField(Skill, blank=True)
     projects = models.ManyToManyField(Project, blank=True)
 
-    def __str__(self):
-        return self.user.username
-
     # Tells admin panel how to display model
     @admin.display(
         boolean=True,
         ordering='join_date',
         description='New User?',
     )
+    def __str__(self):
+        return self.user.username
+
     def get_first_name(self):
         return self.user.first_name
 
@@ -145,7 +144,7 @@ class Member(models.Model):
     join_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.user.__str__() + ' ' + self.project.__str__() + ' ' + self.role.__str__()
+        return self.user_profile.__str__() + ' ' + self.project.__str__() + ' ' + self.role.__str__()
 
 
 # Joins roles and skills
