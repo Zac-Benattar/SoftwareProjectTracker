@@ -32,8 +32,7 @@ class Skill(models.Model):
 
 class UserProfile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    join_date = models.DateTimeField('date joined')
-    email = models.EmailField()
+    # Should probably find a better way to do this - maybe make a new user class that inherits from the django built in one
     # Using a library for phone number, if you want the string
     # representation use phone.as_e164
     # https://django-phonenumber-field.readthedocs.io/en/latest/
@@ -50,9 +49,24 @@ class UserProfile(models.Model):
         ordering='join_date',
         description='New User?',
     )
+    def get_first_name(self):
+        return self.user.first_name
+
+    def get_last_name(self):
+        return self.user.last_name
+
+    def get_date_joined(self):
+        return self.user.date_joined
+
+    def get_email(self):
+        return self.user.email
+
+    def get_username(self):
+        return self.user.username
+
     def joined_recently(self):
         now = timezone.now()
-        return now - datetime.timedelta(days=1) <= self.join_date <= now
+        return now - datetime.timedelta(days=1) <= self.get_date_joined() <= now
 
 
 class RiskEvaluation(models.Model):
