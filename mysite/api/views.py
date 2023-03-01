@@ -5,7 +5,6 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from projects.models import *
 from .serializers import *
-from rest_framework import viewsets
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
@@ -34,10 +33,12 @@ def getRoutes(request):
 
     return Response(routes)
 
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getProjects(request):
-    user_profile = get_object_or_404(UserProfile, user = request.user)
+    user = get_object_or_404(User, username = request.user)
+    user_profile = get_object_or_404(UserProfile, user = user)
     projects = user_profile.projects
     serializer = ProjectSerializer(projects, many=True)
     return Response(serializer.data)

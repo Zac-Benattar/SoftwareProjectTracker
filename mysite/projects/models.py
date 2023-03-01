@@ -32,9 +32,6 @@ class Skill(models.Model):
 
 class UserProfile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    username = models.CharField(max_length=20)
-    forename = models.CharField(max_length=30)
-    lastname = models.CharField(max_length=30)
     join_date = models.DateTimeField('date joined')
     email = models.EmailField()
     # Using a library for phone number, if you want the string
@@ -45,7 +42,7 @@ class UserProfile(models.Model):
     projects = models.ManyToManyField(Project, blank=True)
 
     def __str__(self):
-        return self.username + " (" + self.forename + " " + self.lastname + ")"
+        return self.user.username
 
     # Tells admin panel how to display model
     @admin.display(

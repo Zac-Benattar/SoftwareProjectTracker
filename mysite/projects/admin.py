@@ -18,14 +18,14 @@ class ProjectAdmin(admin.ModelAdmin):
 
 class UserProfileAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Details', {'fields': ('user', 'username',
-         'forename', 'lastname', 'email', 'phone')}),
+        ('Details', {'fields': ('user', 'email', 'phone')}),
         ('Join Date', {'fields': ('join_date',)}),
+        ('Projects', {'fields': ('projects',)}),
     ]
 
-    list_display = ('username', 'email', 'lastname', 'forename', 'joined_recently')
-    list_filter = ['username', 'join_date', 'lastname', 'forename']
-    search_fields = ['username', 'lastname', 'forename', 'email', 'phone']
+    list_display = ('user', 'email', 'joined_recently')
+    list_filter = ['join_date',]
+    search_fields = [ 'email', 'phone']
 
 
 class SkillAdmin(admin.ModelAdmin):
