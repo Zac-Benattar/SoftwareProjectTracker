@@ -10,6 +10,7 @@ import { Homepage } from './pages/Homepage';
 import { Register } from './pages/Register';
 import { Project } from './pages/Project';
 
+// Most of this will soon move to App.js
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
