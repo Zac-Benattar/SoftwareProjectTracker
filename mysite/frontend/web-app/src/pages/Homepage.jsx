@@ -8,47 +8,6 @@ import {ProgressBar} from '../components/ProgressBar';
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 
-// export const Homepage = () => {
-//   const options = [
-//     {value: "name", label:"Project Name"},
-//     {value: "deadline_date", label: "Deadline"},
-//     {value: "start_date", label: "Start Date"},
-//     {value: "progress", label: "Progress completed"}
-// ];
-
-//   let [projects, setProjects] = useState([]);
-
-//   useEffect(() => {
-//     getProjects();
-//   }, []);
-
-//   let getProjects = async () => {
-//     let response = await fetch("/api/projects/");
-//     let data = await response.json();
-//     console.log("Data:", data);
-//     setProjects(data);
-//   };
-
-//   return (
-//     <div>
-//       <Navbar />
-
-//       <div className="home-page">
-//         <div className="dropdown-menu">
-//           <Dropdown placeHolder="Select ..." options={options} />
-//         </div>
-
-//         <div>
-//           <div className="projects-list">
-//             {projects.map((project, index) => (
-//               <ProjectListItem key={index} project={project} />
-//             ))}
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
 export const Homepage = () => {
 
   const options = [

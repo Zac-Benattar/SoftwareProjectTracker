@@ -5,11 +5,17 @@ import "../pages/Homepage.css";
 import {Link} from "react-router-dom";
 
 export const ProjectListItem = ({ project }) => {
+
+ 
+  const passing_data = {
+    name: project.name,
+  };
+
   return (
     
 
       <div className="project_container">
-        <Link to="/project">
+        <Link to="/project" state = {passing_data}>
           <div className="title">
             <h1>{project.name}</h1>
           </div>
