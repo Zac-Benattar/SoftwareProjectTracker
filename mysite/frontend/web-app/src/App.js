@@ -7,6 +7,8 @@ import {Homepage} from './pages/Homepage';
 import {Project} from './pages/Project';
 
 function App() {
+  // This will soon all be replaced with a new structure from the Authentication branch
+  // Routers from index.js will be moved here for simplicity
   const [currentForm, setCurrentForm] = useState('login');
 
   const toggleForm = (formName) => {

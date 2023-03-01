@@ -12,6 +12,7 @@ import { Project } from './pages/Project';
 import  {Projects } from './pages/Projects';
 import { PeopleView } from './pages/PeopleView';
 
+// Most of this will soon move to App.js
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
