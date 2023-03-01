@@ -1,5 +1,5 @@
 import datetime
-from users.models import Project, Task, Member, Role, RoleRequirement
+from users.models import Project, Task, Member, Role, RoleRequirement, Feedback
 
 # retrieve all instances
 all_Projects = Project.objects.all()
@@ -7,6 +7,7 @@ all_Tasks = Task.objects.all()
 all_Members = Member.objects.all()
 all_Roles = Role.objects.all()
 all_RoleRequirements = RoleRequirement.objects.all()
+all_Feedback = Feedback.objects.all()
 
 class ProjectSuggester: # evaluating project's pararameters to make suggestions
 
@@ -42,7 +43,20 @@ class ProjectSuggester: # evaluating project's pararameters to make suggestions
 
     def average_happiness(self, project):
         # Looking at the mean average of happiness if below a certain threshold
-        # The program will warn the project manager team happiness is low. It will suggest common ways to improve this. 
+        # The program will warn the project manager team happiness is low. 
+
+        avg_happiness = 0
+        count = 0
+
+        for f in all_Feedback:
+            if f.project.name == project.name:
+                avg_happiness += f.emotion
+                count += 1
+        
+        avg_happiness = avg_happiness / count
+
+        if avg_happiness <= 2.5: #half of the max happiness value
+            print(f"The average happiness of the members of the project {project.name} is low: {avg_happiness}.")
 
 
         return None
