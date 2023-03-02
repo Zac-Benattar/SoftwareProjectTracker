@@ -3,6 +3,7 @@ import "../App.css";
 import Dropdown from "../components/Dropdown";
 import ProjectListItem from "../components/ProjectListItem";
 import AuthContext from "../context/AuthContext";
+import Navbar from "../components/Navbar";
 
 const Homepage = () => {
   const options = [
@@ -22,7 +23,7 @@ const Homepage = () => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer " + String(authTokens.access),
+        Authorization: "Bearer " + String(authTokens.access),
       },
     });
     let data = await response.json();
@@ -37,6 +38,7 @@ const Homepage = () => {
   return (
     <div>
       <div className="home-page">
+        <Navbar />
         <div className="dropdown-menu">
           <Dropdown placeHolder="Select ..." options={options} />
         </div>

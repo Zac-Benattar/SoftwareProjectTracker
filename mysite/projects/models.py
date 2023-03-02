@@ -101,6 +101,7 @@ class Feedback(models.Model):
 # instead I think multiple people should be able to
 # participate in a task
 class Task(models.Model):
+    members = models.ManyToManyField('Member')
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
     description = models.CharField(max_length=200)

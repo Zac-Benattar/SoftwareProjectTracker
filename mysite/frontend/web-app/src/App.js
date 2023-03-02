@@ -13,7 +13,6 @@ const App = () => {
     <div className="App">
       <BrowserRouter>
         <AuthProvider>
-          <Navbar />
           <Routes>
             <Route
               exact

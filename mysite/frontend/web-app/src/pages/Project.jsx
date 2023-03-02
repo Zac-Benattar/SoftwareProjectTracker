@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState, useContext } from "react";
+import "../App.css";
+import AuthContext from "../context/AuthContext";
 
 const Homepage = () => {
     return (

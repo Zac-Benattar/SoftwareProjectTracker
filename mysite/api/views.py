@@ -43,6 +43,7 @@ def getProjects(request):
     serializer = ProjectSerializer(projects, many=True)
     return Response(serializer.data)
 
+
 # class Project(viewsets.ModelViewSet):
 #     queryset = Project.objects.all()
 #     serializer_class = ProjectSerializer
