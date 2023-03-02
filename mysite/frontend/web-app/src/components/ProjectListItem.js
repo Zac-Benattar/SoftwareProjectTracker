@@ -10,6 +10,12 @@ export const ProjectListItem = ({ project }) => {
   const passing_data = {
     name: project.name,
     id: project.id,
+    description: project.description,
+    i_budget: project.initial_budget,
+    c_budget: project.current_budget,
+    i_deadline: project.initial_deadline,
+    c_deadline: project.current_deadline,
+    methodology: project.methodology,
   };
 
   return (
