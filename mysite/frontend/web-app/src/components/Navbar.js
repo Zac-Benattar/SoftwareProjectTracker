@@ -1,16 +1,30 @@
 import React from 'react';
-import {  Link } from "react-router-dom";
+import {  Link, useLocation } from "react-router-dom";
 import './NavbarElems';
 
 
-export const Navbar= () =>{
+export const Navbar = (props) => {
+  const location = useLocation();
+  const state = location.state;
+
+  const passing_data = {
+    name: state.name,
+    id: state.id,
+    description: state.description,
+    i_budget: state.initial_budget,
+    c_budget: state.current_budget,
+    i_deadline: state.initial_deadline,
+    c_deadline: state.current_deadline,
+    methodology: state.methodology,
+  };
+
   return (
   <div>
     <li>
-      <Link to="/">Home</Link>
+      <Link to="/homepage">Home</Link>
     </li>
     <li>
-      <Link to="/overview">Overview</Link>
+      <Link to="/project" state = {passing_data}>Project Overview</Link>
     </li>
     <li>
       <Link to="/suggestions">Suggestions</Link>
@@ -19,7 +33,7 @@ export const Navbar= () =>{
       <Link to="/tasks">Tasks</Link>
     </li>
     <li>
-      <Link to="/people">People</Link>
+      <Link to="/people" state = {passing_data}> People </Link>
     </li>
     <li>
       <Link to="/signin">Logout</Link>

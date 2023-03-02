@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import "./Homepage.css";
 import { ListPeople } from "../components/ListPeople";
 import {Link, useLocation} from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 
 export const PeopleView = (props) => {
@@ -28,6 +29,8 @@ export const PeopleView = (props) => {
 
     return (
         <>
+
+        <Navbar/>
 
         <div className="home-page">
 

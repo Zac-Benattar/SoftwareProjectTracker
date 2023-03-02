@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
 import "./Homepage.css";
 import { Dropdown } from "../components/Dropdown";
-import { Navbar } from "../components/Navbar";
 import { ProjectListItem } from "../components/ProjectListItem";
-import {ProgressBar} from '../components/ProgressBar';
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 
@@ -64,9 +61,6 @@ export const Homepage = () => {
 
       <div className="all_projects">
 
-     
-
-      
       <div className="top-of-page"> 
 
           <h2 className="dropdown-title"> 

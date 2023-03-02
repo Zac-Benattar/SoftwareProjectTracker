@@ -8,7 +8,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Login }from "./pages/Login";
 import { Homepage } from './pages/Homepage';
 import { Register } from './pages/Register';
-import { Project } from './pages/Project';
 import  {Projects } from './pages/Projects';
 import { PeopleView } from './pages/PeopleView';
 import { OverviewForm } from './pages/Overview';
@@ -23,9 +22,8 @@ root.render(
         <Route path="login" element={<Login />} />
         <Route path="homepage" element={<Homepage />} />
         <Route path="register" element={<Register />} />
-        <Route path="project/:id" element={<Project />} />
         <Route path="project" element = {<Projects/>}/>
-        <Route path = "people" element = {<PeopleView/>}/>
+        <Route path="people" element = {<PeopleView/>}/>
         <Route path="overview" element = {<OverviewForm/>}/>
         
       </Routes>

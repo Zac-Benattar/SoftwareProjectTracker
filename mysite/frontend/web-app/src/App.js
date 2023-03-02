@@ -3,8 +3,6 @@ import logo from './logo.svg';
 import './App.css';
 import {Login} from './pages/Login';
 import {Register} from './pages/Register';
-import {Homepage} from './pages/Homepage';
-import {Project} from './pages/Project';
 
 function App() {
   // This will soon all be replaced with a new structure from the Authentication branch
