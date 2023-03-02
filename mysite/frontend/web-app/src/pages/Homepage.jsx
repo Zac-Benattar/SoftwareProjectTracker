@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import "../App.css";
+import "./Homepage.css";
 import Dropdown from "../components/Dropdown";
 import ProjectListItem from "../components/ProjectListItem";
 import AuthContext from "../context/AuthContext";
@@ -41,9 +41,7 @@ const Homepage = () => {
   };
 
   return (
-    <div>
-      <Navbar />
-
+    <>
       <div className="home-page">
         <div className="left_side">
           <div className="user-profile">
@@ -54,15 +52,12 @@ const Homepage = () => {
 
           <div className="calander-container">
             <Calendar onChange={setDate} value={date} />
-            <Navbar />
-            <div className="dropdown-menu">
-              <Dropdown placeHolder="Select ..." options={options} />
-            </div>
 
             <p className="text-center">
               <span className="bold">Selected Date:</span> {date.toDateString()}
             </p>
           </div>
+        </div>
 
           <div className="all_projects">
             <div className="top-of-page">
@@ -78,9 +73,9 @@ const Homepage = () => {
               ))}
             </div>
           </div>
-        </div>
+
       </div>
-    </div>
+    </>
   );
 };
 

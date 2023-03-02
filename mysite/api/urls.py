@@ -4,6 +4,7 @@ from rest_framework_nested import routers
 from api.views import * 
 from rest_framework_simplejwt.views import TokenRefreshView
 
+
 router = routers.DefaultRouter()
 router.register(r'projects', ProjectViewSet, basename='projects')
 router.register(r'users', UserViewSet)
@@ -58,6 +59,6 @@ urlpatterns = [
     path('', include(meeting_router.urls)),
     path('', include(feedback_router.urls)),
     path('', include(recommendation_router.urls)),
-    path('tokens/', MyTokenObtainPairView.as_view()),
-    path('tokens/refresh/', TokenRefreshView.as_view()),
+    path('token/', MyTokenObtainPairView.as_view()),
+    path('token/refresh/', TokenRefreshView.as_view()),
 ]
