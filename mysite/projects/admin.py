@@ -132,6 +132,7 @@ class TaskAdmin(admin.ModelAdmin):
     fieldsets = [
         ('Details', {'fields': ('name', 'project', 'description')}),
         ('Status', {'fields': ('completion_status',)}),
+        ('Members', {'fields': ('members',)}),
         ('Time', {'fields': ('duration',)}),
         ('Dependencies', {'fields': ('dependent_tasks',)}),
     ]
