@@ -16,6 +16,7 @@ const Homepage = () => {
   ];
 
   const [date, setDate] = useState(new Date());
+  
   let [projects, setProjects] = useState([]);
   let { authTokens, logoutUser } = useContext(AuthContext);
 
