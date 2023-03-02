@@ -49,9 +49,6 @@ role_requirement_router.register(r'rolerequirement', RoleRequirementViewSet, bas
 userSkill_router = routers.NestedDefaultRouter( router, r'users', lookup = 'user')
 userSkill_router.register( r'skill', UserSkillViewSet, basename='user-userSkill')
 
-
-
-
 urlpatterns = [
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls')),
