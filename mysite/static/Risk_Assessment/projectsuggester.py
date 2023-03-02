@@ -15,21 +15,24 @@ class ProjectSuggester: # evaluating project's pararameters to make suggestions
         pass
 
     def past_deadline(self, project): 
-        # For all uncompleted task, If currentDate > taskDeadline
-        # The program will suggest allocating more people to that task
+        # For all uncompleted task, If currentDate > taskDeadline.
+        # The program will suggest allocating more people to that task.
 
         # iterate over the tasks in the project that are uncompleted
         for task in all_Tasks:  
             if task.project == project:
                 if task.completionStatus != 'F':
                     if datetime.date.today() > (task.createdTime + task.duration):
-                        print(f"You've run out of time to complete the task {task.name}. Try allocating more people to the task.")
+                        print(f"You've run out of time to complete the task {task.name}.\
+                                Try allocating more people to the task.")
 
         return None
     
+    
     def changing_roles(self, project):
-        # For all member of a project if any are assigned a role for which they don’t have all the skills
-        # The program will suggest changing their role
+        # For all member of a project if any are assigned a role for which they don’t have
+        # all the skills.
+        # The program will suggest changing their role.
 
         # iterate over all the memebers in the project 
         for member in all_Members:
@@ -37,7 +40,10 @@ class ProjectSuggester: # evaluating project's pararameters to make suggestions
                 for rolereq in all_RoleRequirements:
                     if member.role == rolereq.role:
                         if rolereq.skillset != member.user.skillset:
-                            print(f"Member {member.name} doesn't have the required skills for the role as {member.role.name} in the project {project.name}. Try changing their role to one more adequate.")
+                            print(f"Member {member.name} doesn't have the required skills \
+                                    for the role as {member.role.name} in the project \
+                                    {project.name}. Try changing their role to one \
+                                    more adequate.")
 
         return None
 
@@ -49,15 +55,15 @@ class ProjectSuggester: # evaluating project's pararameters to make suggestions
         count = 0
 
         for f in all_Feedback:
-            if f.project.name == project.name:
+            if f.project == project:
                 avg_happiness += f.emotion
                 count += 1
         
         avg_happiness = avg_happiness / count
 
         if avg_happiness <= 2.5: #half of the max happiness value
-            print(f"The average happiness of the members of the project {project.name} is low: {avg_happiness}.")
-
+            print(f"The average happiness of the members of the project {project.name} \
+                    is low: {avg_happiness}.")
 
         return None
 
@@ -78,7 +84,8 @@ class ProjectSuggester: # evaluating project's pararameters to make suggestions
                     comment_count += 1
         
         if comment_count < line_count / 6:
-            print(f"You may want to consider adding more comments to the file {file_path} to make it more understandable.")
+            print(f"You may want to consider adding more comments to the file {file_path} \
+                    to make it more understandable.")
         
         return comment_count
 
@@ -86,7 +93,8 @@ class ProjectSuggester: # evaluating project's pararameters to make suggestions
     def completion_ratio(self, project):
         # The program will calculate two values. The ratio of tasks completed. 
         # And also a ratio of the time used from the start date to the current deadline.
-        # If the time ratio is much higher than the task completion ratio it implies the project may not be completed in time.
+        # If the time ratio is much higher than the task completion ratio it implies the
+        # project may not be completed in time.
         # The program will suggest extending the deadline.
 
         task_count = 0
@@ -103,20 +111,24 @@ class ProjectSuggester: # evaluating project's pararameters to make suggestions
         tasks_ratio = completed_task_count / task_count
         time_ratio = (datetime.date.today() - project.startTime) / project.currentDeadline
 
-        if time_ratio > tasks_ratio:
-            print(f"We suggest extending the deadline for the project {project.name} to complete the remaining taks.")
+        if time_ratio < tasks_ratio:
+            print(f"We suggest extending the deadline for the project {project.name} to \
+                    complete the remaining taks.")
 
         return None
 
+
     def low_budget(self, project):
-        # The program will create an estimation of a per day running cost. By summing a daily salary and calculating how much money is left.
+        # The program will create an estimation of a per day running cost. By summing 
+        # a daily salary and calculating how much money is left.
         # The program will suggest increasing the budget.      
 
         budget_ratio = project.currentBudget / project.initialBudget
         time_ratio = (datetime.date.today() - project.startTime) / project.currentDeadline
 
         if time_ratio > budget_ratio:
-            print(f"We suggest increasing the budget for the project {project.name} to complete the remaining taks.")
+            print(f"We suggest increasing the budget for the project {project.name} to \
+                    complete the remaining taks.")
 
         return None
 
