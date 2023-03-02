@@ -1,7 +1,19 @@
 # converts python model objects to json
-#converts python model objects to json inkedId
 from rest_framework.serializers import ModelSerializer
 from projects.models import *
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        # Add custom claims
+        token['username'] = user.username
+        # ...
+
+        return token
 
 
 class ProjectSerializer(ModelSerializer):

@@ -4,7 +4,6 @@ import Dropdown from "../components/Dropdown";
 import ProjectListItem from "../components/ProjectListItem";
 import AuthContext from "../context/AuthContext";
 import Navbar from "../components/Navbar";
-import { ProgressBar } from "../components/ProgressBar";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 

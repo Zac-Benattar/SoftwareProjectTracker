@@ -1,6 +1,5 @@
 import React from "react";
-import { ProgressBar } from "./ProgressBar";
-import { Homepage } from "../pages/Homepage";
+import ProgressBar  from "./ProgressBar";
 import "../pages/Homepage.css";
 import {Link} from "react-router-dom";
 

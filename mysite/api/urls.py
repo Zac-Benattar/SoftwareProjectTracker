@@ -5,15 +5,11 @@ from api.views import *
 from rest_framework_simplejwt.views import TokenRefreshView
 
 router = routers.DefaultRouter()
-router.register(r'projects', ProjectViewSet)
+router.register(r'projects', ProjectViewSet, basename='projects')
 router.register(r'users', UserViewSet)
 router.register(r'roles', RoleViewSet)
 router.register(r'skills', SkillViewSet)
-router.register(r'tokens', MyTokenObtainPairView.as_view())
 
-
-token_router = routers.NestedDefaultRouter( router, r'tokens', lookup = 'token_obtain_pair')
-token_router.register( r'refresh', TokenRefreshView.as_view(), basename='token_refresh')
 
 # project routers , api call : /api/projects/pk/model_name/pk
 member_router = routers.NestedDefaultRouter( router, r'projects', lookup = 'project')
@@ -62,5 +58,6 @@ urlpatterns = [
     path('', include(meeting_router.urls)),
     path('', include(feedback_router.urls)),
     path('', include(recommendation_router.urls)),
-    path('', include(token_router.urls)),
+    path('tokens/', MyTokenObtainPairView.as_view()),
+    path('tokens/refresh/', TokenRefreshView.as_view()),
 ]
