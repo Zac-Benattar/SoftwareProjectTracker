@@ -1,128 +1,40 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "./Homepage.css";
+import { ListPeople } from "../components/ListPeople";
+import {Link, useLocation} from "react-router-dom";
 
 
-export const PeopleView = () => {
+export const PeopleView = (props) => {
+
+
+    const location = useLocation();
+    const state = location.state;
+
+
+    let [people, setPeople] = useState([]);
+
+    useEffect(() => {
+        getPeople();
+    }, []);
+
+    let getPeople = async () => {
+        let response = await fetch('/api/projects/'+state.id+'/members/');
+        let data = await response.json();
+        console.log("Data:", data);
+        setPeople(data);
+    };
+
+
+
     return (
         <>
 
         <div className="home-page">
 
             <div className="all-containers">
-                <div className="people-container">
-                    <div className="people-info">
-                        <h2> Name </h2>
-                        <h3> Role in Project </h3>
-                        
-                        <ul className="all-skills">
-                            <li className="skill">
-                                Skill 1
-                            </li>
-                            <li className="skill">
-                                Skill 2
-                            </li>
-                            <li className="skill">
-                                Skill 2
-                            </li>
-                            <li className="skill">
-                                Skill 2
-                            </li>
-                            <li className="skill">
-                                Skill 2
-                            </li>
-                        </ul>
-                    
-                        <p>Phone number</p>
-                        <p>Email</p>                    
-                    </div>
-                </div>
-
-
-                <div className="people-container">
-                    <div className="people-info">
-                        <h2> Name </h2>
-                        <h3> Role in Project </h3>
-                        
-                        <ul className="all-skills">
-                            <li className="skill">
-                                Skill 1
-                            </li>
-                            <li className="skill">
-                                Skill 2
-                            </li>
-                            <li className="skill">
-                                Skill 2
-                            </li>
-                            <li className="skill">
-                                Skill 2
-                            </li>
-                            <li className="skill">
-                                Skill 2
-                            </li>
-                        </ul>
-                    
-                        <p>Phone number</p>
-                        <p>Email</p>                    
-                    </div>
-                </div>
-
-                <div className="people-container">
-                    <div className="people-info">
-                        <h2> Name </h2>
-                        <h3> Role in Project </h3>
-                        
-                        <ul className="all-skills">
-                            <li className="skill">
-                                Skill 1
-                            </li>
-                            <li className="skill">
-                                Skill 2
-                            </li>
-                            <li className="skill">
-                                Skill 2
-                            </li>
-                            <li className="skill">
-                                Skill 2
-                            </li>
-                            <li className="skill">
-                                Skill 2
-                            </li>
-                        </ul>
-                    
-                        <p>Phone number</p>
-                        <p>Email</p>                    
-                    </div>
-                </div>
-
-
-                <div className="people-container">
-                    <div className="people-info">
-                        <h2> Name </h2>
-                        <h3> Role in Project </h3>
-                        
-                        <ul className="all-skills">
-                            <li className="skill">
-                                Skill 1
-                            </li>
-                            <li className="skill">
-                                Skill 2
-                            </li>
-                            <li className="skill">
-                                Skill 2
-                            </li>
-                            <li className="skill">
-                                Skill 2
-                            </li>
-                        </ul>
-                    
-                        <p>Phone number</p>
-                        <p>Email</p>                    
-                    </div>
-                </div>
-
-               
-
-
+                {people.map((people, index) => (
+                <ListPeople key={index} member={people} />
+                ))}
             </div>
 
 

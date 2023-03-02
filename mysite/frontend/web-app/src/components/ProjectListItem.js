@@ -9,6 +9,7 @@ export const ProjectListItem = ({ project }) => {
  
   const passing_data = {
     name: project.name,
+    id: project.id,
   };
 
   return (
