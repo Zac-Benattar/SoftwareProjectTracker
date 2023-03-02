@@ -16,9 +16,9 @@ const Homepage = () => {
   ];
 
   const [date, setDate] = useState(new Date());
-  
+
   let [projects, setProjects] = useState([]);
-  let { authTokens, logoutUser } = useContext(AuthContext);
+  let { authTokens, logoutUser, user } = useContext(AuthContext);
 
   useEffect(() => {
     getProjects();
@@ -41,14 +41,13 @@ const Homepage = () => {
     }
   };
 
+
   return (
     <>
       <div className="home-page">
         <div className="left_side">
           <div className="user-profile">
-            <h2 className="user-title">Welcome, Username</h2>
-
-            <p className="user-info">Role in project: Role</p>
+            <h2 className="user-title">Welcome, {user.username}</h2>
           </div>
 
           <div className="calander-container">
@@ -60,21 +59,20 @@ const Homepage = () => {
           </div>
         </div>
 
-          <div className="all_projects">
-            <div className="top-of-page">
-              <h2 className="dropdown-title">ORDER BY:</h2>
-              <div className="dropdown-menu">
-                <Dropdown placeHolder="Select ..." options={options} />
-              </div>
-            </div>
-
-            <div className="projects-list">
-              {projects.map((project, index) => (
-                <ProjectListItem key={index} project={project} />
-              ))}
+        <div className="all_projects">
+          <div className="top-of-page">
+            <h2 className="dropdown-title">ORDER BY:</h2>
+            <div className="dropdown-menu">
+              <Dropdown placeHolder="Select ..." options={options} />
             </div>
           </div>
 
+          <div className="projects-list">
+            {projects.map((project, index) => (
+              <ProjectListItem key={index} project={project} />
+            ))}
+          </div>
+        </div>
       </div>
     </>
   );

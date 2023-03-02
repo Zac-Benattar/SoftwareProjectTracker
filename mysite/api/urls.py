@@ -46,6 +46,10 @@ role_requirement_router.register(r'rolerequirement', RoleRequirementViewSet, bas
 userSkill_router = routers.NestedDefaultRouter( router, r'users', lookup = 'user')
 userSkill_router.register( r'skill', UserSkillViewSet, basename='user-userSkill')
 
+# user routers , api call : /api/users/myaccount
+userAccount_router = routers.NestedDefaultRouter( router, r'users', lookup = 'user')
+userAccount_router.register( r'myaccount', MyAccountViewSet, basename='user-myAccount')
+
 urlpatterns = [
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls')),
@@ -59,6 +63,7 @@ urlpatterns = [
     path('', include(meeting_router.urls)),
     path('', include(feedback_router.urls)),
     path('', include(recommendation_router.urls)),
+    path('', include(userAccount_router.urls)),
     path('token/', MyTokenObtainPairView.as_view()),
     path('token/refresh/', TokenRefreshView.as_view()),
 ]

@@ -13,11 +13,30 @@ class MyTokenObtainPairView(TokenObtainPairView):
 
 class ProjectViewSet(viewsets.ModelViewSet):
     serializer_class = ProjectSerializer
+
     def get_queryset(self):
+        '''Gets list of projects that the logged in user is involved in
+
+        Returns:
+            list(projects)
+        '''
         user = get_object_or_404(User, username=self.request.user)
         user_profile = get_object_or_404(UserProfile, user=user)
         projects = user_profile.projects
         return projects
+
+
+class MyAccountViewSet(viewsets.ModelViewSet):
+    serializer_class = UserSerializer
+
+    def get_queryset(self):
+        '''Gets list of projects that the logged in user is involved in
+
+        Returns:
+            list(user)
+        '''
+        user = get_object_or_404(User, username=self.request.user)
+        return user
 
 
 class UserViewSet(viewsets.ModelViewSet):
