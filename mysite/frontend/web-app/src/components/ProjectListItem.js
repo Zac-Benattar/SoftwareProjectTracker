@@ -47,3 +47,5 @@ export const ProjectListItem = ({ project }) => {
   
   );
 };
+
+export default ProjectListItem;

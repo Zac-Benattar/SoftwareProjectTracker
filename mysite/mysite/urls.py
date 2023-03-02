@@ -17,13 +17,11 @@ from django.contrib import admin
 from django.urls import include, path
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.views.generic.base import RedirectView
-from users.views import *
 #from django.views.generic import TemplateView
 
 urlpatterns = [
     # Not working yet
     path("favicon.ico", RedirectView.as_view(url=staticfiles_storage.url("favicon.png")),),
-    path('users/', include('users.urls')),
     path('projects/', include('projects.urls')),
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),

@@ -2,12 +2,18 @@ from django.urls import path , include
 from . import views 
 from rest_framework_nested import routers
 from api.views import * 
+from rest_framework_simplejwt.views import TokenRefreshView
 
 router = routers.DefaultRouter()
 router.register(r'projects', ProjectViewSet)
 router.register(r'users', UserViewSet)
 router.register(r'roles', RoleViewSet)
 router.register(r'skills', SkillViewSet)
+router.register(r'tokens', MyTokenObtainPairView.as_view())
+
+
+token_router = routers.NestedDefaultRouter( router, r'tokens', lookup = 'token_obtain_pair')
+token_router.register( r'refresh', TokenRefreshView.as_view(), basename='token_refresh')
 
 # project routers , api call : /api/projects/pk/model_name/pk
 member_router = routers.NestedDefaultRouter( router, r'projects', lookup = 'project')
@@ -44,8 +50,11 @@ userSkill_router = routers.NestedDefaultRouter( router, r'users', lookup = 'user
 userSkill_router.register( r'skill', UserSkillViewSet, basename='user-userSkill')
 
 
+
+
 urlpatterns = [
     path('', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls')),
     path('', include(userSkill_router.urls)),
     path('', include(role_requirement_router.urls)),
     path('', include(timeWorked_router.urls)),
@@ -56,4 +65,5 @@ urlpatterns = [
     path('', include(meeting_router.urls)),
     path('', include(feedback_router.urls)),
     path('', include(recommendation_router.urls)),
+    path('', include(token_router.urls)),
 ]

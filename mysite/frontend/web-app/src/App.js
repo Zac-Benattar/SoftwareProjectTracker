@@ -1,27 +1,35 @@
-import React, {useState} from "react";
-import logo from './logo.svg';
-import './App.css';
-import {Login} from './pages/Login';
-import {Register} from './pages/Register';
-import {Homepage} from './pages/Homepage';
-import {Project} from './pages/Project';
+import React from "react";
+import "./App.css";
+import LoginPage from "./pages/LoginPage";
+import Register from "./pages/Register";
+import Homepage from "./pages/Homepage";
+import Navbar from "./components/Navbar";
+import { AuthProvider } from "./context/AuthContext";
+import { BrowserRouter, Route, Routes} from "react-router-dom";
+import PrivateRoute from "./utils/PrivateRoute";
 
-function App() {
-  // This will soon all be replaced with a new structure from the Authentication branch
-  // Routers from index.js will be moved here for simplicity
-  const [currentForm, setCurrentForm] = useState('login');
-
-  const toggleForm = (formName) => {
-    setCurrentForm(formName);
-  }
-
+const App = () => {
   return (
     <div className="App">
-      {
-        currentForm === "login" ? <Login onFormSwitch={toggleForm}/> : <Register onFormSwitch={toggleForm}/>
-      }
+      <BrowserRouter>
+        <AuthProvider>
+          <Routes>
+            <Route
+              exact
+              path="/"
+              element={
+                <PrivateRoute>
+                  <Homepage />
+                </PrivateRoute>
+              }
+            />
+            <Route exact path="/login" element={<LoginPage />} />
+            <Route exact path="/register" element={<Register />} />
+          </Routes>
+        </AuthProvider>
+      </BrowserRouter>
     </div>
   );
-}
+};
 
 export default App;
