@@ -1,3 +1,4 @@
+
 from django.shortcuts import get_list_or_404, get_object_or_404, render
 from rest_framework import permissions, viewsets
 from rest_framework.response import Response
@@ -37,7 +38,15 @@ class MyAccountViewSet(viewsets.ModelViewSet):
         '''
         user = get_object_or_404(User, username=self.request.user)
         return user
-
+    
+    
+# class MyTasksView(viewsets.ModelViewSet):
+#     serializer_class = TaskSerializer
+    
+#     def get_queryset(self):
+        
+#         user = get_object_or_404(User, username=self.request.user)
+#         tasks = get_list_or_404(Task, members=)        
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()

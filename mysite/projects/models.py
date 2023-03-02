@@ -9,13 +9,13 @@ import datetime
 
 class Project(models.Model):
     name = models.CharField(max_length=30)
-    description = models.CharField(max_length=200)
+    description = models.CharField(max_length=200, blank=True)
     initial_budget = models.DecimalField(max_digits=15, decimal_places=2)
     current_budget = models.DecimalField(max_digits=15, decimal_places=2)
     initial_deadline = models.DateTimeField()
-    current_deadline = models.DateTimeField()
+    current_deadline = models.DateTimeField(default=initial_deadline)
     methodology = models.CharField(max_length=30)
-    gitHub_token = models.CharField(max_length=30)
+    gitHub_token = models.CharField(max_length=30, blank=True)
 
     def __str__(self):
         return self.name
@@ -35,7 +35,7 @@ class UserProfile(models.Model):
     # Using a library for phone number, if you want the string
     # representation use phone.as_e164
     # https://django-phonenumber-field.readthedocs.io/en/latest/
-    phone = PhoneNumberField(null=False, blank=False, unique=True)
+    phone = PhoneNumberField(null=False, blank=True, unique=True)
     skillset = models.ManyToManyField(Skill, blank=True)
     projects = models.ManyToManyField(Project, blank=True)
 
@@ -79,9 +79,9 @@ class RiskEvaluation(models.Model):
 
 class Meeting(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    attendence = models.IntegerField()
-    date = models.DateTimeField()
-    duration = models.IntegerField()
+    attendence = models.IntegerField(default=0)
+    date = models.DateTimeField(default=timezone.now())
+    duration = models.IntegerField(default=0)
 
     def __str__(self):
         return self.project.__str__() + ' ' + self.date.__str__()
@@ -89,9 +89,9 @@ class Meeting(models.Model):
 
 class Feedback(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    confidence = models.IntegerField()
-    emotion = models.IntegerField()
-    date = models.DateTimeField()
+    confidence = models.IntegerField(default=0)
+    emotion = models.IntegerField(default=0)
+    date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.project.__str__() + ' Feedback ' + str(self.pk)
@@ -101,11 +101,11 @@ class Feedback(models.Model):
 # instead I think multiple people should be able to
 # participate in a task
 class Task(models.Model):
-    members = models.ManyToManyField('Member')
+    members = models.ManyToManyField('Member', blank=True)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
-    description = models.CharField(max_length=200)
-    duration = models.IntegerField()
+    description = models.CharField(max_length=200, blank=True)
+    duration = models.IntegerField(default=0)
     creation_date = models.DateTimeField(auto_now_add=True)
     dependent_tasks = models.ManyToManyField(
         'self', symmetrical=False, related_name='prerequisites', blank=True)
@@ -131,7 +131,7 @@ class Task(models.Model):
 
 class Role(models.Model):
     name = models.CharField(max_length=20)
-    description = models.CharField(max_length=200)
+    description = models.CharField(max_length=200, blank=True)
 
     def __str__(self):
         return self.name
@@ -141,7 +141,7 @@ class Member(models.Model):
     role = models.ForeignKey(Role, on_delete=models.CASCADE)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     user_profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-    work_hours = models.IntegerField()
+    work_hours = models.IntegerField(default=0)
     join_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -165,7 +165,7 @@ class RoleRequirement(models.Model):
 class Schedule(models.Model):
     member = models.ForeignKey(Member, on_delete=models.CASCADE)
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
-    hours = models.IntegerField()
+    hours = models.IntegerField(default=0)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -185,7 +185,7 @@ class TimeWorked(models.Model):
 class Recommendation(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
-    description = models.CharField(max_length=200)
+    description = models.CharField(max_length=200, blank=True)
     creation_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
