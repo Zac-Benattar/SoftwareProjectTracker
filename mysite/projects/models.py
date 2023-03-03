@@ -15,14 +15,16 @@ class Project(models.Model):
     initial_deadline = models.DateTimeField()
     current_deadline = models.DateTimeField(default=initial_deadline)
     methodology = models.CharField(max_length=30)
-    gitHub_token = models.CharField(max_length=30, blank=True)
+    gitHub = models.CharField(max_length=150, blank=True)
+    members = models.ManyToManyField('Member', related_name='+')
 
     def __str__(self):
         return self.name
 
 
 class Skill(models.Model):
-    name = models.CharField(max_length=20, primary_key=True)
+    # Please stop overwriting this with previous versions, name should NOT be the primary key
+    name = models.CharField(max_length=20)
     description = models.CharField(max_length=200, blank=True)
 
     def __str__(self):
@@ -80,7 +82,7 @@ class RiskEvaluation(models.Model):
 class Meeting(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     attendence = models.IntegerField(default=0)
-    date = models.DateTimeField(default=timezone.now())
+    date = models.DateTimeField(auto_now_add=True, blank=True)
     duration = models.IntegerField(default=0)
 
     def __str__(self):
