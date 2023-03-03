@@ -121,7 +121,7 @@ class MeetingAdmin(admin.ModelAdmin):
 
 class FeedbackAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Details', {'fields': ('project', 'confidence', 'emotion', 'date')}),
+        ('Details', {'fields': ('project', 'confidence', 'emotion')}),
     ]
 
     list_display = ('project', 'confidence', 'emotion', 'date')

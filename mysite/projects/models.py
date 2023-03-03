@@ -8,7 +8,7 @@ import datetime
 
 
 def return_week_in_future():
-    return timezone.now() + timezone.timedelta(days=10)
+    return timezone.now() + timezone.timedelta(days=7)
 
 
 class Project(models.Model):
