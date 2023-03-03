@@ -20,7 +20,10 @@ export const Navbar = (props) => {
 
   return (
   <div>
+    <nav className="nav">
+      <ul>
     <li>
+      
       <Link to="/homepage">Home</Link>
     </li>
     <li>
@@ -35,9 +38,12 @@ export const Navbar = (props) => {
     <li>
       <Link to="/people" state = {passing_data}> People </Link>
     </li>
-    <li>
+    <li className='logout'>
       <Link to="/signin">Logout</Link>
     </li>
+    </ul>
+    
+    </nav>
   </div>
   );
 }
