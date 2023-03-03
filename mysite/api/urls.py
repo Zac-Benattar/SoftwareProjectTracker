@@ -11,6 +11,8 @@ router.register(r'users', UserViewSet)
 router.register(r'roles', RoleViewSet)
 router.register(r'skills', SkillViewSet)
 
+# add a specific project router
+
 
 # project routers , api call : /api/projects/pk/model_name/pk
 member_router = routers.NestedDefaultRouter( router, r'projects', lookup = 'project')
