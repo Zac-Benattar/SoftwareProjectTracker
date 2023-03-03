@@ -7,13 +7,17 @@ from django.utils import timezone
 import datetime
 
 
+def return_week_in_future():
+    return timezone.now() + timezone.timedelta(days=10)
+
+
 class Project(models.Model):
     name = models.CharField(max_length=30)
     description = models.CharField(max_length=200, blank=True)
     initial_budget = models.DecimalField(max_digits=15, decimal_places=2)
     current_budget = models.DecimalField(max_digits=15, decimal_places=2)
-    initial_deadline = models.DateTimeField()
-    current_deadline = models.DateTimeField(default=initial_deadline)
+    initial_deadline = models.DateTimeField(default=return_week_in_future())
+    current_deadline = models.DateTimeField(default=return_week_in_future())
     methodology = models.CharField(max_length=30)
     gitHub = models.CharField(max_length=150, blank=True)
     members = models.ManyToManyField('Member', related_name='+')
@@ -82,7 +86,7 @@ class RiskEvaluation(models.Model):
 class Meeting(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     attendence = models.IntegerField(default=0)
-    date = models.DateTimeField(auto_now_add=True, blank=True)
+    date = models.DateTimeField(default=return_week_in_future())
     duration = models.IntegerField(default=0)
 
     def __str__(self):

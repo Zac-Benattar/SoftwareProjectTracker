@@ -17,11 +17,13 @@ export const ProjectListItem = ({ project }) => {
     methodology: project.methodology,
   };
 
+  const projectRoute = "/projects/".concat(passing_data.id)
+
   return (
     
 
       <div className="project_container">
-        <Link to="/project" state = {passing_data}>
+        <Link to={projectRoute} state = {passing_data}>
           <div className="title">
             <h1>{project.name}</h1>
           </div>

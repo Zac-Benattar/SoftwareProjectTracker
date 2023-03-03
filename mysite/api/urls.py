@@ -1,5 +1,4 @@
-from django.urls import path , include
-from . import views 
+from django.urls import path, include
 from rest_framework_nested import routers
 from api.views import * 
 from rest_framework_simplejwt.views import TokenRefreshView

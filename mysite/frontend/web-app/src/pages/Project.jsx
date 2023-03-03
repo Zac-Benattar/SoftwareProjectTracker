@@ -13,7 +13,7 @@ const Homepage = () => {
   }, []);
 
   let getProject = async (e) => {
-    let response = await fetch("http://127.0.0.1:8000/api/projects/" + toString(slug), {
+    let response = await fetch("http://127.0.0.1:8000/api/projects/".concat(slug), {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

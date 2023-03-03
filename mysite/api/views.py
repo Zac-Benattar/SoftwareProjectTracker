@@ -1,8 +1,6 @@
 
-from django.shortcuts import get_list_or_404, get_object_or_404, render
-from rest_framework import permissions, viewsets
-from rest_framework.response import Response
-from rest_framework.decorators import api_view, permission_classes
+from django.shortcuts import get_list_or_404, get_object_or_404
+from rest_framework import viewsets
 from projects.models import *
 from .serializers import *
 from rest_framework_simplejwt.views import TokenObtainPairView
