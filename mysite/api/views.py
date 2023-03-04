@@ -144,9 +144,6 @@ class MemberViewSet(viewsets.ModelViewSet):
 
 
 class TaskViewSet(viewsets.ModelViewSet):
-    queryset = Task.objects.all().select_related(
-        'project'
-    ).all()
 
     serializer_class = TaskSerializer
 
@@ -154,9 +151,10 @@ class TaskViewSet(viewsets.ModelViewSet):
         project_id = self.kwargs.get("project_pk")
         try:
             project = Project.objects.get(id=project_id)
+            queryset = RiskEvaluation.objects.filter(project=project).order_by('-date').last()
         except Project.DoesNotExist:
             raise NotFound('A project with this id does not exist')
-        return self.queryset.filter(project=project)
+        return queryset
 
 
 class RiskEvaluationViewSet(viewsets.ModelViewSet):
@@ -169,11 +167,10 @@ class RiskEvaluationViewSet(viewsets.ModelViewSet):
     def get_queryset(self, *args, **kwargs):
         project_id = self.kwargs.get("project_pk")
         try:
-            # RiskEvaluation.objects.filter(project=get_object_or_404(Project, pk=self.kwargs['pk'])).order_by('-date').last()
             project = Project.objects.get(id=project_id)
         except Project.DoesNotExist:
             raise NotFound('A project with this id does not exist')
-        return self.queryset.filter(project=project)
+        return self.queryset.filter(project=project).order_by('-date')
 
 
 class MeetingViewSet(viewsets.ModelViewSet):

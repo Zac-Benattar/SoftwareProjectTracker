@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import "../App.css";
+import SuccessChanceDisplay from "../components/SuccessChanceDisplay";
 import AuthContext from "../context/AuthContext";
 
 const Homepage = () => {
@@ -46,7 +47,9 @@ const Homepage = () => {
   // Obtaining the specific project's most recent risk evaulation via a GET request to the api referencing our authorisation token
   let getRiskEvaluation = async (e) => {
     let response = await fetch(
-      "http://127.0.0.1:8000/api/projects/".concat(slug).concat("/riskevaluation"),
+      "http://127.0.0.1:8000/api/projects/"
+        .concat(slug)
+        .concat("/riskevaluation"),
       {
         method: "GET",
         headers: {
@@ -71,7 +74,12 @@ const Homepage = () => {
   return (
     <div>
       <h1>Project: {project.name}</h1>
-      <h1>Success chance: {riskEvaluation.success_chance}</h1>
+      {}
+      <div>
+        {riskEvaluation.map((riskEvaluation, index) => (
+          <SuccessChanceDisplay key={index} risk_evaluation={riskEvaluation} />
+        ))}
+      </div>
     </div>
   );
 };

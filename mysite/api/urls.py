@@ -16,6 +16,7 @@ router.register(r'skills', SkillViewSet)
 # project routers , api call : /api/projects/pk/model_name/pk
 member_router = routers.NestedDefaultRouter( router, r'projects', lookup = 'project')
 member_router.register( r'members', MemberViewSet, basename='project-member')
+
 # maybe task in members ?
 task_router = routers.NestedDefaultRouter( router, r'projects', lookup = 'project')
 task_router.register( r'tasks', TaskViewSet, basename='project-task')
