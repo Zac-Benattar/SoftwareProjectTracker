@@ -27,14 +27,12 @@ const LoginPage = (props) => {
           name="password"
         />
 
-        <button className="login-button" type="submit"> Log-in </button>
+        <button className="login-button" type="submit">
+          {" "}
+          Log-in{" "}
+        </button>
       </form>
-      <button
-        className="link-btn"
-        onClick={() => props.onFormSwitch("register")}
-      >
-        Register here
-      </button>
+      <Link className="link-btn" to="/register">Register</Link>
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Register = (props) => {
   const [email, setEmail] = useState("");
@@ -47,9 +48,7 @@ const Register = (props) => {
           Register
         </button>
       </form>
-      <button className="link-btn" onClick={() => props.onFormSwitch("login")}>
-        Already have an acccount? Log-in here
-      </button>
+      <Link className="link-btn" to="/login">Have an account? Login Here</Link>
     </div>
   );
 };

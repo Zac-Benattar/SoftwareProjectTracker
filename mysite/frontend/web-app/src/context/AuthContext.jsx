@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("authTokens", JSON.stringify(data));
       navigate("/");
     } else {
-      alert("Something went wrong!");
+      alert("Details do not match!");
     }
   };
 
