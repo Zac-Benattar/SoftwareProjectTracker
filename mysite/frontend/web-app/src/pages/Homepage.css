@@ -303,7 +303,7 @@ body {
 }
 
 
-.modal {
+.modal, .new-role-modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     border: none;
@@ -333,12 +333,26 @@ body {
   }
 
 
+  .role-modal-content {
+    background-color:  rgb(138, 73, 202);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-top: 60px;
+    width: 80%;
+    margin-left:10%; /* 15% from the top and centered */
+    padding: 3%;
+    border-radius: 20px;
+    color: black;
+
+  }
+
+
   .modal-content>h1{
     font-size:30;
     color:rgb(138, 73, 202);
     text-align: center;
     padding:2%;
-
   }
 
   .inputLabels{
@@ -349,6 +363,14 @@ body {
     font-size: 20px;
   }
 
+  .role-input-labels{
+    display: flex;
+    margin-left: 10%;
+    transform: translate(0%, 150%);
+    color:rgb(255, 255, 255);
+    font-size: 20px;
+  }
+  
   .projectInputs{
     /* display: flex; */
     margin-left: 30%;
@@ -363,6 +385,24 @@ body {
     margin-right: 0%;
     cursor: pointer;
     color:rgb(138, 73, 202);
+  }
+
+.add-proj-drop {
+    color: black;
+    font-size: 30px;
+
+}
+
+
+.role-close {
+    color: black;
+    float: right;
+    font-size: 38px;
+    font-weight: bold;
+    margin-top: -1%;
+    margin-right: 0%;
+    cursor: pointer;
+    color:rgb(255, 255, 255);
   }
 
 
