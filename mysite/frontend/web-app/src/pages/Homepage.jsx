@@ -6,6 +6,7 @@ import AuthContext from "../context/AuthContext";
 import Navbar from "../components/Navbar";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import { Nav } from "../components/NavbarElems";
 
 const Homepage = () => {
   // Defining options for the order by dropdown
@@ -51,6 +52,7 @@ const Homepage = () => {
   return (
     <>
       <div className="home-page">
+        <Navbar />
         <div className="left_side">
           <div className="user-profile">
             <h2 className="user-title">Welcome, {user.username}</h2>

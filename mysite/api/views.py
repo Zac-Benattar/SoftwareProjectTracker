@@ -10,7 +10,7 @@ class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
 
-class ProjectViewSet(viewsets.ModelViewSet):
+class ProjectsViewSet(viewsets.ModelViewSet):
     serializer_class = ProjectSerializer
 
     def get_queryset(self):
@@ -169,6 +169,7 @@ class RiskEvaluationViewSet(viewsets.ModelViewSet):
     def get_queryset(self, *args, **kwargs):
         project_id = self.kwargs.get("project_pk")
         try:
+            # RiskEvaluation.objects.filter(project=get_object_or_404(Project, pk=self.kwargs['pk'])).order_by('-date').last()
             project = Project.objects.get(id=project_id)
         except Project.DoesNotExist:
             raise NotFound('A project with this id does not exist')
