@@ -5,7 +5,7 @@ from .models import Project, UserProfile, Skill, Member, Role, TimeWorked, Recom
 class ProjectAdmin(admin.ModelAdmin):
     fieldsets = [
         ('Details', {'fields': ('name', 'description',
-         'methodology', 'gitHub')}),
+         'methodology', 'gitHub', 'client_name')}),
         ('Deadlines', {'fields': ('initial_deadline', 'current_deadline')}),
         ('Finances', {'fields': ('initial_budget', 'current_budget')}),
         ('Members', {'fields': ('members',)}),

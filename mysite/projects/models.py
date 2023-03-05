@@ -14,6 +14,7 @@ def return_week_in_future():
 class Project(models.Model):
     name = models.CharField(max_length=30)
     description = models.CharField(max_length=3000, blank=True)
+    client_name = models.CharField(max_length=50, blank=True)
     initial_budget = models.DecimalField(max_digits=15, decimal_places=2)
     current_budget = models.DecimalField(max_digits=15, decimal_places=2)
     initial_deadline = models.DateTimeField(default=return_week_in_future())
