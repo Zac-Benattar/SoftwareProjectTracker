@@ -31,6 +31,9 @@ export const Homepage = () => {
   const [membersList, setMembersList] = useState([{member: ""}]); 
 
 
+  const[rolesList, setRolesList] = useState([{role:""}]);
+
+
   
 
   console.log(membersList);
@@ -49,6 +52,10 @@ export const Homepage = () => {
     const list = [...membersList];
     list[index][name]=value;
     setMembersList(list);
+  }
+
+  const handleRoleAdd = (role) => {
+    setRolesList.push(role);
   }
 
 
@@ -81,10 +88,13 @@ export const Homepage = () => {
     setRoles(data);
   };
 
+  // Creates a list of role names from the role object.
   const roleNames = 
   allRoles.map(role =>( { key:role.id}, {label:role.name} ));
 
   console.log(roleNames);
+
+  console.log(membersList);
 
 
   const addProject = () => {
@@ -101,6 +111,8 @@ export const Homepage = () => {
     }
 
   }
+
+  
   const addRole = () => {
     var modal = document.getElementById("add-role-modal");
     var span = document.getElementsByClassName("role-close")[0];

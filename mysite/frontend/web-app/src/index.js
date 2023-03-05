@@ -11,6 +11,8 @@ import { Register } from './pages/Register';
 import  {Projects } from './pages/Projects';
 import { PeopleView } from './pages/PeopleView';
 import { OverviewForm } from './pages/Overview';
+import Tasks from './pages/Tasks';
+import SuggestionsForm from './pages/Suggestions';
 
 // Most of this will soon move to App.js
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -25,6 +27,9 @@ root.render(
         <Route path="project" element = {<Projects/>}/>
         <Route path="people" element = {<PeopleView/>}/>
         <Route path="overview" element = {<OverviewForm/>}/>
+        <Route path="tasks" element = {<Tasks/>}/>
+        <Route path="suggestions" element = {<SuggestionsForm/>}/>
+        
         
       </Routes>
     </BrowserRouter>

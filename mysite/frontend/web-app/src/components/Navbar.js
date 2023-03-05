@@ -22,26 +22,25 @@ export const Navbar = (props) => {
   <div>
     <nav className="nav">
       <ul>
-    <li>
-      
-      <Link to="/homepage">Home</Link>
-    </li>
-    <li>
-      <Link to="/project" state = {passing_data}>Project Overview</Link>
-    </li>
-    <li>
-      <Link to="/suggestions">Suggestions</Link>
-    </li>
-    <li>
-      <Link to="/tasks">Tasks</Link>
-    </li>
-    <li>
-      <Link to="/people" state = {passing_data}> People </Link>
-    </li>
-    <li className='logout'>
-      <Link to="/signin">Logout</Link>
-    </li>
-    </ul>
+          <li>
+            <Link to="/homepage">Home</Link>
+          </li>
+          <li>
+            <Link to="/project" state = {passing_data}>Project Overview</Link>
+          </li>
+          <li>
+            <Link to="/suggestions">Suggestions</Link>
+          </li>
+          <li>
+            <Link to="/tasks">Tasks</Link>
+          </li>
+          <li>
+            <Link to="/people" state = {passing_data}> People </Link>
+          </li>
+          <li className='logout'>
+            <Link to="/signin">Logout</Link>
+          </li>
+      </ul>
     
     </nav>
   </div>
