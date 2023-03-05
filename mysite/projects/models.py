@@ -149,6 +149,7 @@ class Member(models.Model):
     user_profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     work_hours = models.IntegerField(default=0)
     join_date = models.DateTimeField(auto_now_add=True)
+    project_manager = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user_profile.__str__() + ' ' + self.project.__str__() + ' ' + self.role.__str__()
@@ -193,6 +194,7 @@ class Recommendation(models.Model):
     name = models.CharField(max_length=30)
     description = models.CharField(max_length=200, blank=True)
     creation_date = models.DateTimeField(auto_now_add=True)
+    dismissed = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name

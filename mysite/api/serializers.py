@@ -153,5 +153,3 @@ class RecommendationSerializer(ModelSerializer):
     class Meta:
         model = Recommendation
         fields = '__all__'
-
-

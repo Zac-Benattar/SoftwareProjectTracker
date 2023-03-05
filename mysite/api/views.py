@@ -1,17 +1,52 @@
 
 from django.shortcuts import get_list_or_404, get_object_or_404
-from rest_framework import viewsets
+from rest_framework import permissions, viewsets
 from projects.models import *
 from .serializers import *
 from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework.exceptions import NotFound
+from rest_framework.decorators import permission_classes
 
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
+    
+
+# read permissions for authenticated users 
+class IsOwnerOrCoWorker(permissions.BasePermission) :
+    message = 'Editing this field is restricted to the owners only'
+    def has_object_permission(self,request,view,obj):
+        # Only allow read permissions to members of the project
+        if request.method in permissions.SAFE_METHODS:
+            return True 
+        # Only allow write permissions to members involved in the task 
+        if obj.members.filter(user_profile = request.user.id ).exists():
+            return True
+
+        return False
+
+
+class ProjectReadAndWritePermission(permissions.BasePermission) :
+    message = 'Editing projects is restricted to the project manager only'
+
+    def has_object_permission(self,request,view,obj):
+        # Only allow read permissions for members of the project
+        if request.method in permissions.SAFE_METHODS:
+            return True
+
+        # Only allow write permissions to project manager
+        user = get_object_or_404(User, username=request.user)
+        user_profile = get_object_or_404(UserProfile, user = user)
+        query_set = Member.objects.filter(user_profile = user_profile, project = obj.id, project_manager = True)
+        if query_set.exists():
+            return True
+
+        return False
 
 
 class ProjectsViewSet(viewsets.ModelViewSet):
     serializer_class = ProjectSerializer
+    permission_classes = [ProjectReadAndWritePermission]
 
     def get_queryset(self):
         '''Gets list of projects that the logged in user is involved in
@@ -136,17 +171,19 @@ class MemberViewSet(viewsets.ModelViewSet):
 
 
 class TaskViewSet(viewsets.ModelViewSet):
-
+    queryset = Task.objects.all().select_related(
+        'project'
+    ).all()
     serializer_class = TaskSerializer
+    permission_classes = [IsOwnerOrCoWorker]
 
     def get_queryset(self, *args, **kwargs):
         project_id = self.kwargs.get("project_pk")
         try:
             project = Project.objects.get(id=project_id)
-            queryset = RiskEvaluation.objects.filter(project=project).order_by('-date').last()
         except Project.DoesNotExist:
             raise NotFound('A project with this id does not exist')
-        return queryset
+        return self.queryset.filter(project=project)
 
 
 class RiskEvaluationViewSet(viewsets.ModelViewSet):

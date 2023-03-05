@@ -61,7 +61,7 @@ class RoleAdmin(admin.ModelAdmin):
 class MemberAdmin(admin.ModelAdmin):
     fieldsets = [
         ('Details', {'fields': ('user_profile',
-         'role', 'project', 'work_hours')}),
+         'role', 'project', 'work_hours', 'project_manager')}),
     ]
 
     list_display = ('role', 'project', 'work_hours')
@@ -81,7 +81,7 @@ class TimeWorkedAdmin(admin.ModelAdmin):
 
 class RecommendationAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Details', {'fields': ('project', 'name', 'description')}),
+        ('Details', {'fields': ('project', 'name', 'description', 'dismissed')}),
     ]
 
     list_display = ('project', 'name')
