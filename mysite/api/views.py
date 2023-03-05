@@ -6,6 +6,20 @@ from .serializers import *
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.exceptions import NotFound
 from rest_framework.decorators import permission_classes
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        # Add custom claims
+        token['username'] = user.username
+        # ...
+
+        return token
 
 
 class MyTokenObtainPairView(TokenObtainPairView):
@@ -77,11 +91,9 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = UserProfile.objects.all()
     serializer_class = UserSerializer
 
-
 class SkillViewSet(viewsets.ModelViewSet):
     queryset = Skill.objects.all()
     serializer_class = SkillSerializer
-
 
 class UserSkillViewSet(viewsets.ModelViewSet):
     queryset = Skill.objects.all().prefetch_related(
@@ -93,60 +105,56 @@ class UserSkillViewSet(viewsets.ModelViewSet):
     def get_queryset(self, *args, **kwargs):
         user_id = self.kwargs.get('user_pk')
         try:
-            user = User.objects.get(id=user_id)
+            user = User.objects.get(id = user_id)
         except User.DoesNotExist:
             raise NotFound('A user with this id does not exist')
         return self.queryset.filter(userprofile=user_id)
-
 
 class RoleViewSet(viewsets.ModelViewSet):
     queryset = Role.objects.all()
     serializer_class = RoleSerializer
 
-
 class ScheduleViewSet(viewsets.ModelViewSet):
     queryset = Schedule.objects.all().select_related(
         'member'
-    ).all()
+    ).all() 
 
     serializer_class = ScheduleSerializer
 
     def get_queryset(self, *args, **kwargs):
         member_id = self.kwargs.get("member_pk")
         try:
-            member = Member.objects.get(id=member_id)
+            member = Member.objects.get(id = member_id)
         except Member.DoesNotExist:
             raise NotFound('A member with this id does not exist')
         return self.queryset.filter(member=member)
 
-
 class TimeWorkedViewSet(viewsets.ModelViewSet):
     queryset = TimeWorked.objects.all().select_related(
         'member'
-    ).all()
+    ).all() 
 
     serializer_class = TimeWorkedSerializer
 
     def get_queryset(self, *args, **kwargs):
         member_id = self.kwargs.get("member_pk")
         try:
-            member = Member.objects.get(id=member_id)
+            member = Member.objects.get(id = member_id)
         except Member.DoesNotExist:
             raise NotFound('A member with this id does not exist')
         return self.queryset.filter(member=member)
 
-
 class RoleRequirementViewSet(viewsets.ModelViewSet):
     queryset = RoleRequirement.objects.all().select_related(
         'role'
-    ).all()
+    ).all() 
 
     serializer_class = RoleRequirementSerializer
 
     def get_queryset(self, *args, **kwargs):
         role_id = self.kwargs.get("role_pk")
         try:
-            role = Role.objects.get(id=role_id)
+            role = Role.objects.get(id = role_id)
         except Role.DoesNotExist:
             raise NotFound('A role with this id does not exist')
         return self.queryset.filter(role=role)
@@ -157,18 +165,17 @@ class RoleRequirementViewSet(viewsets.ModelViewSet):
 class MemberViewSet(viewsets.ModelViewSet):
     queryset = Member.objects.all().select_related(
         'project'
-    ).all()
+    ).all() 
 
     serializer_class = MemberSerializer
 
     def get_queryset(self, *args, **kwargs):
         project_id = self.kwargs.get("project_pk")
         try:
-            project = Project.objects.get(id=project_id)
+            project = Project.objects.get(id = project_id)
         except Project.DoesNotExist:
             raise NotFound('A project with this id does not exist')
         return self.queryset.filter(project=project)
-
 
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all().select_related(
@@ -180,71 +187,67 @@ class TaskViewSet(viewsets.ModelViewSet):
     def get_queryset(self, *args, **kwargs):
         project_id = self.kwargs.get("project_pk")
         try:
-            project = Project.objects.get(id=project_id)
+            project = Project.objects.get(id = project_id)
         except Project.DoesNotExist:
             raise NotFound('A project with this id does not exist')
         return self.queryset.filter(project=project)
 
-
 class RiskEvaluationViewSet(viewsets.ModelViewSet):
     queryset = RiskEvaluation.objects.all().select_related(
         'project'
-    ).all()
+    ).all() 
 
     serializer_class = RiskEvaluationSerializer
 
     def get_queryset(self, *args, **kwargs):
         project_id = self.kwargs.get("project_pk")
         try:
-            project = Project.objects.get(id=project_id)
+            project = Project.objects.get(id = project_id)
         except Project.DoesNotExist:
             raise NotFound('A project with this id does not exist')
         return self.queryset.filter(project=project).order_by('-date')
 
-
 class MeetingViewSet(viewsets.ModelViewSet):
     queryset = Meeting.objects.all().select_related(
         'project'
-    ).all()
+    ).all() 
 
     serializer_class = MeetingSerializer
 
     def get_queryset(self, *args, **kwargs):
         project_id = self.kwargs.get("project_pk")
         try:
-            project = Project.objects.get(id=project_id)
+            project = Project.objects.get(id = project_id)
         except Project.DoesNotExist:
             raise NotFound('A project with this id does not exist')
         return self.queryset.filter(project=project)
 
-
 class FeedbackViewSet(viewsets.ModelViewSet):
     queryset = Feedback.objects.all().select_related(
         'project'
-    ).all()
+    ).all() 
 
     serializer_class = FeedbackSerializer
 
     def get_queryset(self, *args, **kwargs):
         project_id = self.kwargs.get("project_pk")
         try:
-            project = Project.objects.get(id=project_id)
+            project = Project.objects.get(id = project_id)
         except Project.DoesNotExist:
             raise NotFound('A project with this id does not exist')
         return self.queryset.filter(project=project)
 
-
 class RecommendationViewSet(viewsets.ModelViewSet):
     queryset = Recommendation.objects.all().select_related(
         'project'
-    ).all()
+    ).all() 
 
     serializer_class = RecommendationSerializer
 
     def get_queryset(self, *args, **kwargs):
         project_id = self.kwargs.get("project_pk")
         try:
-            project = Project.objects.get(id=project_id)
+            project = Project.objects.get(id = project_id)
         except Project.DoesNotExist:
             raise NotFound('A project with this id does not exist')
         return self.queryset.filter(project=project)

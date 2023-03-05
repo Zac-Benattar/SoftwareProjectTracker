@@ -1,7 +1,6 @@
 #converts python model objects to json inkedId
 from rest_framework.serializers import ModelSerializer
 from projects.models import * 
-from users.models import *
 
 class ProjectSerializer(ModelSerializer):
     class Meta:
@@ -102,4 +101,10 @@ class FeedbackSerializer(ModelSerializer):
 class RecommendationSerializer(ModelSerializer):
     class Meta:
         model = Recommendation
+        fields = '__all__'
+        
+
+class TaskSerializer(ModelSerializer):
+    class Meta:
+        model = Task
         fields = '__all__'

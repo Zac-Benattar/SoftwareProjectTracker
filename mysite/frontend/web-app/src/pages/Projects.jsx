@@ -7,7 +7,7 @@ import Navbar from "../components/Navbar";
 
 
 
-export const Projects = (props) => {
+const Projects = (props) => {
 
 
 
@@ -97,3 +97,5 @@ export const Projects = (props) => {
     //     </div>
     // )
 }
+
+export default Projects

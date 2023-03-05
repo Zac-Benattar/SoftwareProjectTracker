@@ -5,7 +5,7 @@ import {Link, useLocation} from "react-router-dom";
 import Navbar from "../components/Navbar";
 
 
-export const PeopleView = (props) => {
+const PeopleView = (props) => {
 
 
     const location = useLocation();
@@ -50,3 +50,5 @@ export const PeopleView = (props) => {
 
     )
 }
+
+export default PeopleView;

@@ -1,23 +1,27 @@
-import React from 'react';
-import {  Link, useLocation } from "react-router-dom";
-import './NavbarElems';
-
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import "./NavbarElems";
+import AuthContext from "../context/AuthContext";
 
 export const HomeNavbar = () => {
- 
- 
+  let { user, logoutUser } = useContext(AuthContext);
   return (
-  <div>
-    <nav className="home-nav">
-      <ul>
-    <li className='logout'>
-      <Link to="/signin">Logout</Link>
-    </li>
-    </ul>
-    
-    </nav>
-  </div>
+    <div>
+      <nav className="home-nav">
+        <ul>
+          <li>
+            {user ? (
+              <p onClick={logoutUser}>Logout</p>
+            ) : (
+              <Link to="/login">Login</Link>
+            )}
+
+            {user && <p>Hello {user.username}</p>}
+          </li>
+        </ul>
+      </nav>
+    </div>
   );
-}
+};
 
 export default HomeNavbar;
