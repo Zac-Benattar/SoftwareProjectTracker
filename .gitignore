@@ -1,3 +1,5 @@
+# IF YOU MAKE ANY CHANGES TO THIS FILE PLEASE ENSURE YOU SAVE IT IN ANSI ENCODING
+
 # ignore ALL .log files
 *.log
 # ignore ALL files in ANY directory named temp
