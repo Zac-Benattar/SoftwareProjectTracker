@@ -5,18 +5,18 @@ import AuthContext from "../context/AuthContext";
 
 export const HomeNavbar = () => {
   let { user, logoutUser } = useContext(AuthContext);
+  const userProfileRoute = "/users/".concat(user.user_id);
+
   return (
     <div>
       <nav className="home-nav">
         <ul>
           <li>
-            {user ? (
               <p onClick={logoutUser}>Logout</p>
-            ) : (
-              <Link to="/login">Login</Link>
-            )}
           </li>
-          <li>{user && <p>{user.username}</p>}</li>
+          <li>
+            <Link to={userProfileRoute}>{user.username}</Link>
+          </li>
         </ul>
       </nav>
     </div>
