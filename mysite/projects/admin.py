@@ -21,6 +21,7 @@ class UserProfileAdmin(admin.ModelAdmin):
     fieldsets = [
         ('Details', {'fields': ('user', 'phone')}),
         ('Projects', {'fields': ('projects',)}),
+        ('Skillset', {'fields': ('skillset',)}),
     ]
 
     list_display = ('user', 'get_username', 'get_email', 'joined_recently')

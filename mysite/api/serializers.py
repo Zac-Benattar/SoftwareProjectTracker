@@ -52,7 +52,7 @@ class RoleRequirementSerializer(ModelSerializer):
 
 class UserSerializer(ModelSerializer):
     class Meta:
-        model = User
+        model = UserProfile
         fields ='__all__'
 
 class SkillSerializer(ModelSerializer):
@@ -78,24 +78,6 @@ class TimeWorkedSerializer(ModelSerializer):
 class ScheduleSerializer(ModelSerializer):
     class Meta:
         model = Schedule
-        fields = '__all__'
-
-
-class SkillSerializer(ModelSerializer):
-    class Meta:
-        model = Skill
-        fields = '__all__'
-
-
-class UserSkillSerializer(ModelSerializer):
-    class Meta:
-        model = Skill
-        fields = '__all__'
-
-
-class MemberSerializer(ModelSerializer):
-    class Meta:
-        model = Member
         fields = '__all__'
 
 

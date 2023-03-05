@@ -45,8 +45,8 @@ role_requirement_router = routers.NestedDefaultRouter(router, r'roles', lookup =
 role_requirement_router.register(r'rolerequirement', RoleRequirementViewSet, basename = 'role-roleRequirement')
 
 # user routers , api call : /api/users/pk/skill/pk
-userSkill_router = routers.NestedDefaultRouter( router, r'users', lookup = 'user')
-userSkill_router.register( r'skill', UserSkillViewSet, basename='user-userSkill')
+userSkills_router = routers.NestedDefaultRouter( router, r'users', lookup = 'user')
+userSkills_router.register( r'skills', UserSkillViewSet, basename='user-userSkill')
 
 # user routers , api call : /api/users/myaccount
 userAccount_router = routers.NestedDefaultRouter( router, r'users', lookup = 'user')
@@ -55,7 +55,7 @@ userAccount_router.register( r'myaccount', MyAccountViewSet, basename='user-myAc
 urlpatterns = [
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls')),
-    path('', include(userSkill_router.urls)),
+    path('', include(userSkills_router.urls)),
     path('', include(role_requirement_router.urls)),
     path('', include(timeWorked_router.urls)),
     path('', include(member_router.urls)),

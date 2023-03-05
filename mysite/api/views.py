@@ -74,7 +74,7 @@ class MyAccountViewSet(viewsets.ModelViewSet):
          
 
 class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
+    queryset = UserProfile.objects.all()
     serializer_class = UserSerializer
 
 
@@ -85,18 +85,18 @@ class SkillViewSet(viewsets.ModelViewSet):
 
 class UserSkillViewSet(viewsets.ModelViewSet):
     queryset = Skill.objects.all().prefetch_related(
-        'user_set'
+        'userprofile_set'
     ).all()
 
     serializer_class = UserSkillSerializer
 
     def get_queryset(self, *args, **kwargs):
-        user_id = self.kwargs.get("user_pk")
+        user_id = self.kwargs.get('user_pk')
         try:
             user = User.objects.get(id=user_id)
         except User.DoesNotExist:
             raise NotFound('A user with this id does not exist')
-        return self.queryset.filter(user=user)
+        return self.queryset.filter(userprofile=user_id)
 
 
 class RoleViewSet(viewsets.ModelViewSet):
