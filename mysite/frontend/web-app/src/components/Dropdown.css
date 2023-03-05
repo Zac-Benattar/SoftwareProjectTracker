@@ -21,7 +21,8 @@
     width: 150px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: #fff;
+    background-color: #acacac;
+    color: black;
 }
 
 .dropdown-item {

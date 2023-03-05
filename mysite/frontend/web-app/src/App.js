@@ -8,7 +8,8 @@ import { AuthProvider } from "./context/AuthContext";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PrivateRoute from "./utils/PrivateRoute";
 
-const App = () => {
+function App() {
+
   return (
     <div className="App">
       <BrowserRouter>
@@ -31,6 +32,6 @@ const App = () => {
       </BrowserRouter>
     </div>
   );
-};
+}
 
 export default App;

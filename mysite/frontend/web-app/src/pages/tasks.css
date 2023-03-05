@@ -1,0 +1,21 @@
+.addTask_Container {
+    position: "absolute";
+    background-color:  "#FFF";
+    padding: "15px";
+    z-index: "1000";
+    width: "35%";
+    border-Radius: ".5em";
+  };
+
+.modal_container  {
+    position: "fixed";
+    display: "flex";
+    justify-content: "center";
+    top: "0";
+    left: "0";
+    width: "100%";
+    height: "100%";
+    background-Color: "rgba(0,0,0, .8)";
+    z-index: "1000";
+    overflow-y: "auto";
+  };

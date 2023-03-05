@@ -49,56 +49,35 @@ export const Projects = (props) => {
     return (
         <>
         <Navbar/>
-        <div>
-        <div className="project_container">
-            <div className="info">
-                    <p>Methodology</p>
-                    <select value={methodology} onChange={() => setMethodology(this.selectedOption)}>
-                        <option>Waterfall</option>
-                        <option>Agile</option>
-                    </select>
-            </div>
-            <div className="info">
-                    <p>Client</p>
-                    <input value={clientName} onChange={(e)=>setName(e.target.value)} 
-                     type="text" placeholder="Client Name" id="clientname" name="clientname"/>
-            </div>
-            <div className="info">
-                    <p>Release Date</p>
-                    <input value={releaseDate} onChange={(e)=>setDate(e.target.value)} 
-                     type="date" id="releaseDate" name="releaseDate"/>
-            </div>
-        </div> 
-        <div className="project_container">
-            <div className="title">
-                <h1>{state.name}</h1>
-            </div>
-            <div className="info_container">
-                <div className="info">
-                    <p>{state.description}</p>
-                </div>
-                <br/>
-                <div className="info">
-                    <ul>
-                        <li> Requirements: {requirements}% Complete </li>
-                        <li> Design: {design}% Complete </li>
-                        <li> Implementation: {implementation}% Complete </li>
-                        <li> Unit Testing: {unittesting}% Complete </li>
-                        <li> Integration Testing: {integration}% Complete </li>
-                    </ul>
+        <div className="home-page">
+        <div className="risk-info-container">
+                <div className="project-risk-score">
+                    <p> This project has a {riskScore}% chance of success.</p>
+                    <p> Your project currently has 0 recommendations. </p>
                 </div>
             </div>
-        </div>  
-            <div className="info_container">
-                <div className="info">
-                    <p> Risk Score: {riskScore}% Success Chance</p>
+            <div className="project-info-container">
+                <div className="project-name">
+                    <h1>{state.name}</h1>
                 </div>
-            </div>
-            <button>Pause project</button>
-            <button>Push back project</button>
+                <div className="project-description">
+                    <h3 className="des-title"> Project Description: </h3>
+                    <p className="des">{state.description}</p>
+                    <h3 className="des-title"> Project methodology: </h3>
+                    <p  className="des">{state.methodology}</p>
+                    <h3 className="des-title"> Project budget: </h3>
+                    <p className="des">  {state.i_budget}</p>
+                    <h3 className="des-title"> Project deadine: </h3>
+                    <p className="des"> {state.i_deadline}</p>
+
+                </div>
+
+                <button className="proj-button">Pause project progress</button>
+                <button className="proj-button">Push back project deadline</button>
+            </div>  
+           
         </div>
         </>     
-     
     );
 
       
