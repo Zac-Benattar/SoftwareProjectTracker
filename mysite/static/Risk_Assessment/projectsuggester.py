@@ -1,5 +1,5 @@
 import datetime
-from users.models import Project, Task, Member, Role, RoleRequirement, Feedback
+from projects.models import Project, Task, Member, Role, RoleRequirement, Feedback
 
 # retrieve all instances
 all_Projects = Project.objects.all()
@@ -21,8 +21,8 @@ class ProjectSuggester: # evaluating project's pararameters to make suggestions
         # iterate over the tasks in the project that are uncompleted
         for task in all_Tasks:  
             if task.project == project:
-                if task.completionStatus != 'F':
-                    if datetime.date.today() > (task.createdTime + task.duration):
+                if task.completion_status != 'F':
+                    if datetime.date.today() > (task.creation_date + task.duration):
                         print(f"You've run out of time to complete the task {task.name}.\
                                 Try allocating more people to the task.")
 
@@ -39,13 +39,14 @@ class ProjectSuggester: # evaluating project's pararameters to make suggestions
             if member.project == project:
                 for rolereq in all_RoleRequirements:
                     if member.role == rolereq.role:
-                        if rolereq.skillset != member.user.skillset:
-                            print(f"Member {member.name} doesn't have the required skills \
+                        if rolereq.skillset != member.user_profile.skillset:
+                            print(f"Member {member.user_profile.get_username()} doesn't have the required skills \
                                     for the role as {member.role.name} in the project \
                                     {project.name}. Try changing their role to one \
                                     more adequate.")
 
         return None
+
 
     def average_happiness(self, project):
         # Looking at the mean average of happiness if below a certain threshold
@@ -105,11 +106,11 @@ class ProjectSuggester: # evaluating project's pararameters to make suggestions
         completed_task_count = 0
         for task in all_Tasks:
             if task.project == project:
-                if task.completionStatus == 'F':
+                if task.completion_status == 'F':
                     completed_task_count += 1
             
         tasks_ratio = completed_task_count / task_count
-        time_ratio = (datetime.date.today() - project.startTime) / project.currentDeadline
+        time_ratio = (datetime.date.today() - project.start_date) / project.current_deadline
 
         if time_ratio < tasks_ratio:
             print(f"We suggest extending the deadline for the project {project.name} to \
@@ -123,8 +124,8 @@ class ProjectSuggester: # evaluating project's pararameters to make suggestions
         # a daily salary and calculating how much money is left.
         # The program will suggest increasing the budget.      
 
-        budget_ratio = project.currentBudget / project.initialBudget
-        time_ratio = (datetime.date.today() - project.startTime) / project.currentDeadline
+        budget_ratio = project.current_budget / project.initial_budget
+        time_ratio = (datetime.date.today() - project.start_date) / project.current_deadline
 
         if time_ratio > budget_ratio:
             print(f"We suggest increasing the budget for the project {project.name} to \

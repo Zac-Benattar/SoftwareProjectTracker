@@ -7,6 +7,10 @@ from django.utils import timezone
 import datetime
 
 
+def return_today_datetime():
+    return timezone.now()
+
+
 def return_week_in_future():
     return timezone.now() + timezone.timedelta(days=7)
 
@@ -17,6 +21,7 @@ class Project(models.Model):
     client_name = models.CharField(max_length=50, blank=True)
     initial_budget = models.DecimalField(max_digits=15, decimal_places=2)
     current_budget = models.DecimalField(max_digits=15, decimal_places=2)
+    start_date = models.DateTimeField(default=return_today_datetime())
     initial_deadline = models.DateTimeField(default=return_week_in_future())
     current_deadline = models.DateTimeField(default=return_week_in_future())
     methodology = models.CharField(max_length=30)

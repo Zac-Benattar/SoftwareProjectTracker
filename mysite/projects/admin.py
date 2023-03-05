@@ -6,7 +6,7 @@ class ProjectAdmin(admin.ModelAdmin):
     fieldsets = [
         ('Details', {'fields': ('name', 'description',
          'methodology', 'gitHub', 'client_name')}),
-        ('Deadlines', {'fields': ('initial_deadline', 'current_deadline')}),
+        ('Important Dates', {'fields': ('start_date', 'initial_deadline', 'current_deadline')}),
         ('Finances', {'fields': ('initial_budget', 'current_budget')}),
         ('Members', {'fields': ('members',)}),
     ]
