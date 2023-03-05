@@ -159,7 +159,7 @@ const Homepage = () => {
               <h1>Create New Project</h1>
 
               <span className = "project_name">
-                  <label forHtml = "project_name" className = "inputLabels">Project Name: </label>
+                  <label forhtml = "project_name" className = "inputLabels">Project Name: </label>
                   <input 
                   type = "text" 
                   required id = "project_name" 
@@ -171,7 +171,7 @@ const Homepage = () => {
               </span>
 
                 <span className = "project_description">
-                    <label forHtml = "project_description" className = "inputLabels">Project Description: </label>
+                    <label forhtml = "project_description" className = "inputLabels">Project Description: </label>
                     <input 
                     type = "text" 
                     required id = "project_description" 
@@ -185,7 +185,7 @@ const Homepage = () => {
                 <span className = "project_budget">
                     
                     <label 
-                          forHtml = "project_budget"
+                          forhtml = "project_budget"
                           className = "inputLabels">
                             Project Budget: 
                     </label>
@@ -203,7 +203,7 @@ const Homepage = () => {
                 <span className = "project_deadline">
                     
                     <label 
-                          forHtml = "project_deadine"
+                          forhtml = "project_deadine"
                           className = "inputLabels">
                             Project Deadline: 
                     </label>
@@ -221,7 +221,7 @@ const Homepage = () => {
                 <span className = "project_start">
                     
                     <label 
-                          forHtml = "project_start"
+                          forhtml = "project_start"
                           className = "inputLabels">
                             Project Start Date: 
                     </label>
@@ -248,7 +248,7 @@ const Homepage = () => {
                   <button onClick={handleServiceAdd}> <span> Add a member </span></button>
                   )}
 
-                  <Dropdown classname="add-proj-drop" placeHolder="Select Role" options={roleNames}/>
+                  <Dropdown key={index} classname="add-proj-drop" placeHolder="Select Role" options={roleNames}/>
 
                   <button onClick={addRole}> Role not here? Add a new one. </button>
                   </div>
@@ -274,7 +274,7 @@ const Homepage = () => {
               
               <span className="role-close">&times;</span>
               <span className = "role-name">
-                  <label forHtml = "role-name" className = "role-input-labels">Role Name: </label>
+                  <label forhtml = "role-name" className = "role-input-labels">Role Name: </label>
                   <input 
                   type = "text" 
                   required id = "role_name" 
@@ -286,7 +286,7 @@ const Homepage = () => {
               </span>
 
                 <span className = "role-description">
-                    <label forHtml = "role-description" className = "role-input-labels">Role Description: </label>
+                    <label forhtml = "role-description" className = "role-input-labels">Role Description: </label>
                     <input 
                     type = "text" 
                     required id = "role_description" 

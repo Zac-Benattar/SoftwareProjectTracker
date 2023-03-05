@@ -159,7 +159,6 @@ class RoleRequirementViewSet(viewsets.ModelViewSet):
             raise NotFound('A role with this id does not exist')
         return self.queryset.filter(role=role)
 
-
 # select_related and prefetch_related are database function. select_related is used to select a single object ( Foreign Key ),
 # prefetch_related gets back a set of things,
 class MemberViewSet(viewsets.ModelViewSet):

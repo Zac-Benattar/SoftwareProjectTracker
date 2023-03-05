@@ -11,17 +11,6 @@ const Navbar = (props) => {
   const location = useLocation();
   const state = location.state;
 
-  const passing_data = {
-    name: state.name,
-    id: state.id,
-    description: state.description,
-    i_budget: state.initial_budget,
-    c_budget: state.current_budget,
-    i_deadline: state.initial_deadline,
-    c_deadline: state.current_deadline,
-    methodology: state.methodology,
-  };
-
   return (
     <div>
       <nav className="nav">
@@ -30,9 +19,7 @@ const Navbar = (props) => {
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/project" state={passing_data}>
-              Project Overview
-            </Link>
+            <Link to="/project">Project Overview</Link>
           </li>
           <li>
             <Link to="/suggestions">Suggestions</Link>
@@ -41,19 +28,12 @@ const Navbar = (props) => {
             <Link to="/tasks">Tasks</Link>
           </li>
           <li>
-            <Link to="/people" state={passing_data}>
-              People
-            </Link>
+            <Link to="/people">People</Link>
           </li>
           <li className="logout">
-            {user ? (
-              // This needs styling in css like a link to hide the fact its a paragraph
-              <p className="logout-button" onClick={logoutUser}>
-                Logout
-              </p>
-            ) : (
-              <Link to="/login">Login</Link>
-            )}
+            <p className="logout-button" onClick={logoutUser}>
+              Logout
+            </p>
           </li>
           <li>
             <Link to={userProfileRoute}>{user.username}</Link>
