@@ -2,3 +2,5 @@
 *.log
 # ignore ALL files in ANY directory named temp
 temp/
+# ignore ALL node cache files
+node_modules/.cache

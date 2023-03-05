@@ -76,6 +76,11 @@ const Homepage = () => {
       <h1>Project: {project.name}</h1>
       {}
       <div>
+        {/* This is not a good implementation, but had to be done to make it work quickly
+        This maps the list of risk evaluations returned by the API call for the project and 
+        maps each to a SuccessChanceDisplay object. There will only ever be one in the list
+        so it is the only one returned. A better implementation will need changes in the API,
+        then it will be possible to just do project.recent_evaluation.success_chance */}
         {riskEvaluation.map((riskEvaluation, index) => (
           <SuccessChanceDisplay key={index} risk_evaluation={riskEvaluation} />
         ))}
