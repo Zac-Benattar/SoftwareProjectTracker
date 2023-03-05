@@ -15,9 +15,8 @@ export const HomeNavbar = () => {
             ) : (
               <Link to="/login">Login</Link>
             )}
-
-            {user && <p>Hello {user.username}</p>}
           </li>
+          <li>{user && <p>{user.username}</p>}</li>
         </ul>
       </nav>
     </div>

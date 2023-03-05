@@ -319,9 +319,6 @@ const Homepage = () => {
 
             </h2>
 
-            <p className="user-info">
-                Role in project: Role
-            </p>
         </div>
 
 
