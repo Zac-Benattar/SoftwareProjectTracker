@@ -3,4 +3,6 @@
 # ignore ALL files in ANY directory named temp
 temp/
 # ignore ALL node cache files
-node_modules/.cache
+node_modules/.cache/
+# ignore ALL babel-loader files
+.cache/babel-loader/
