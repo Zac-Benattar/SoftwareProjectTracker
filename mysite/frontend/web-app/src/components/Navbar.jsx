@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import "./NavbarElems";
 import "../pages/Homepage.css";
 import AuthContext from "../context/AuthContext";
@@ -20,9 +20,17 @@ const Navbar = (props) => {
     i_deadline: state.initial_deadline,
     c_deadline: state.current_deadline,
     methodology: state.methodology,
-  };
+  };  
+  const { slug } = useParams();
+  const baseRoute="/projects/".concat(slug)
+  const suggestionsRoute=baseRoute.concat("/suggestions")
+  const tasksRoute=baseRoute.concat("/tasks")
+  const peopleRoute=baseRoute.concat("/people")
+  const meetingsRoute = baseRoute.concat("/meetings")
+
 
   return (
+    
     <div>
       <nav className="nav">
         <ul>
@@ -30,23 +38,21 @@ const Navbar = (props) => {
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/project" state={passing_data}>
+            <Link to={baseRoute}>
               Project Overview
             </Link>
           </li>
           <li>
-            <Link to="/suggestions">Suggestions</Link>
+            <Link to={suggestionsRoute}>Suggestions</Link>
           </li>
           <li>
-            <Link to="/tasks">Tasks</Link>
+            <Link to={tasksRoute}>Tasks</Link>
           </li>
           <li>
-            <Link to="/people" state={passing_data}>
-              People
-            </Link>
+            <Link to={peopleRoute}>People</Link>
           </li>
           <li>
-            <Link to="/meetings">
+            <Link to={meetingsRoute}>
               Meetings
             </Link>
           </li>

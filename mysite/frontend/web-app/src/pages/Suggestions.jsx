@@ -1,9 +1,13 @@
 import { indexOf } from 'lodash';
 import React from 'react';
-// import Navbar from "../components/Navbar";
+import Navbar from "../components/Navbar";
+
+
 //QUERY - are critical actions classified separately from normal suggestions?
 //how does dismissing suggestions work
-const criticalActions=0;
+
+export const SuggestionsForm = () => {
+  const criticalActions=0;
 const suggestiondata = [
   {
     suggestionid: '1',
@@ -38,11 +42,10 @@ function RenderingSuggestions(){
         </div>
     )
   }
-
-export const SuggestionsForm = () => {
   return (
     <>
-    {/* <Navbar /> */}
+    
+    <Navbar />
     <div className='main_container'>
       <p className='sug-title'>Suggestions</p>
       <div className='menu_container'>

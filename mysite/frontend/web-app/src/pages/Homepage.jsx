@@ -3,11 +3,7 @@ import "./Homepage.css";
 import AuthContext from "../context/AuthContext";
 import { Dropdown } from "../components/Dropdown";
 import { ProjectListItem } from "../components/ProjectListItem";
-import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
-import { Nav } from "../components/NavbarElems";
 import HomeNavbar from "../components/HomeNavbar";
-import MemberInput from "../components/MemberInput";
 
 
 const Homepage = () => {
@@ -270,17 +266,7 @@ const Homepage = () => {
                 <div className="projects-list">
                   {projects.map((project, index) => (
                     <ProjectListItem key={index} project={project} />
-                  ))}
-                  {projects.map((project, index) => (
-                    <ProjectListItem key={index} project={project} />
-                  ))}
-                  {projects.map((project, index) => (
-                    <ProjectListItem key={index} project={project} />
-                  ))}
-                  {projects.map((project, index) => (
-                    <ProjectListItem key={index} project={project} />
-                  ))}
-                  
+                  ))}                 
                   
                 </div>
                 
