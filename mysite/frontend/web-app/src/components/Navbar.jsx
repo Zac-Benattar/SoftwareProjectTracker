@@ -1,17 +1,23 @@
 import React, { useContext } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import "./NavbarElems";
-import "../App.css";
+import "../pages/Homepage.css";
 import AuthContext from "../context/AuthContext";
 
 const Navbar = (props) => {
   let { user, logoutUser } = useContext(AuthContext);
   const userProfileRoute = "/users/".concat(user.user_id);
 
-  const location = useLocation();
-  const state = location.state;
+  const { slug } = useParams();
+  const baseRoute="/projects/".concat(slug)
+  const suggestionsRoute=baseRoute.concat("/suggestions/")
+  const tasksRoute=baseRoute.concat("/tasks/")
+  const peopleRoute=baseRoute.concat("/people/")
+  const meetingsRoute = baseRoute.concat("/meetings")
+
 
   return (
+    
     <div>
       <nav className="nav">
         <ul>
@@ -19,24 +25,26 @@ const Navbar = (props) => {
             <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/project">Project Overview</Link>
+            <Link to={baseRoute}>
+              Project Overview
+            </Link>
           </li>
           <li>
-            <Link to="/suggestions">Suggestions</Link>
+            <Link to={suggestionsRoute}>Suggestions</Link>
           </li>
           <li>
-            <Link to="/tasks">Tasks</Link>
+            <Link to={tasksRoute}>Tasks</Link>
           </li>
           <li>
-            <Link to="/people">People</Link>
+            <Link to={peopleRoute}>People</Link>
           </li>
-          <li className="logout">
-            <p className="logout-button" onClick={logoutUser}>
+          <li>
+            <Link to={meetingsRoute}>
+              Meetings
+            </Link>
+          </li>
+          <li onClick={logoutUser}>
               Logout
-            </p>
-          </li>
-          <li>
-            <Link to={userProfileRoute}>{user.username}</Link>
           </li>
         </ul>
       </nav>
@@ -45,3 +53,4 @@ const Navbar = (props) => {
 };
 
 export default Navbar;
+

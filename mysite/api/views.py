@@ -257,7 +257,7 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
             # ===========================
             # DO NOT LET THIS SLIP THROUGH THE NET!!!!!!!
             # ===========================
-            original_deadline = project.initial_deadline #FIX THISSSSSS 
+            original_deadline = project.initial_deadline #FIX THISSSSSS
 
             daily_running_cost = 100 #Left as a placeholder for no
             # ===========================
