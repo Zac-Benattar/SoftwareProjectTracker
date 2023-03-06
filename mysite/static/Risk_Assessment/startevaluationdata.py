@@ -3,7 +3,8 @@
 #This is because the project isn't in progress yet and some values would be useless
 #This object can return a matrix containing data for the model to predict a riskiness
 
-import datetime #Import to get the current date and time
+from datetime import datetime #Import to get the current date and time
+from datetime import timezone
 
 class StartEvaluationData:
     def __init__(self, initial_budget, num_developers, num_other_team_members, original_deadline, daily_running_cost, num_tasks):
@@ -12,7 +13,7 @@ class StartEvaluationData:
         self.num_developers = num_developers
         self.num_other_team_members = num_other_team_members
 
-        CURRENT_DAY = datetime.datetime.today()
+        CURRENT_DAY = datetime.now(timezone.utc)
 
         TIME_DELTA = original_deadline - CURRENT_DAY
 

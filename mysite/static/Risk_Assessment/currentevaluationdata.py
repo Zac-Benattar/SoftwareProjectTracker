@@ -4,7 +4,8 @@ from startevaluationdata import StartEvaluationData
 #This object can return a matrix containing data for the model to predict a riskiness
 
 
-import datetime #Import to get the current date and time
+from datetime import datetime #Import to get the current date and time
+from datetime import timezone
 
 class CurrentEvaluationData(StartEvaluationData): #CurrentEvaluationData inherits from StartEvaluationData
     #Overrides StartEvaluationData init
@@ -20,7 +21,7 @@ class CurrentEvaluationData(StartEvaluationData): #CurrentEvaluationData inherit
         self.num_team_left = num_team_left
 
 
-        CURRENT_DAY = datetime.datetime.today()
+        CURRENT_DAY = datetime.now(timezone.utc)
 
         TIME_DELTA_ORIGINAL = original_deadline - CURRENT_DAY
         TIME_DELTA_CURRENT = current_deadline - CURRENT_DAY

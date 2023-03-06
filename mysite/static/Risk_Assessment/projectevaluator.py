@@ -41,11 +41,11 @@ class ProjectEvaluator:
     def __init__(self):
 
         #Get filenames for model files
-        self.START_MODEL_FILENAME = modeltrainer.get_start_model_filename()
-        self.IN_PROGRESS_MODEL_FILENAME = modeltrainer.get_in_progress_model_filename()
+        self.START_MODEL_FILE_PATH = modeltrainer.START_MODEL_FILE_PATH
+        self.IN_PROGRESS_MODEL_FILE_PATH = modeltrainer.IN_PROGRESS_MODEL_FILE_PATH
         #Load logistic regression models
-        self.start_model = pickle.load(open(self.START_MODEL_FILENAME, 'rb'))
-        self.in_progress_model = pickle.load(open(self.IN_PROGRESS_MODEL_FILENAME, 'rb'))
+        self.start_model = pickle.load(open(self.START_MODEL_FILE_PATH, 'rb'))
+        self.in_progress_model = pickle.load(open(self.IN_PROGRESS_MODEL_FILE_PATH, 'rb'))
 
     #This will take in a projects riskiness and return a number between 0 and 1 which can be used as a percentage
     def get_initial_chance_of_success(self, startevaluationdata):
@@ -73,8 +73,8 @@ class ProjectEvaluator:
         #Retrain models
         modeltrainer.retrain_all_models() #Calling retrain to use all data and not be verbose
         #Reload models
-        self.start_model = pickle.load(open(self.START_MODEL_FILENAME, 'rb'))
-        self.in_progress_model = pickle.load(open(self.IN_PROGRESS_MODEL_FILENAME, 'rb'))
+        self.start_model = pickle.load(open(self.START_MODEL_FILE_PATH, 'rb'))
+        self.in_progress_model = pickle.load(open(self.IN_PROGRESS_MODEL_FILE_PATH, 'rb'))
 
         #=====================================================================
         #ALTERNATIVE APPROACH USING partial_fit() [For models that support it]

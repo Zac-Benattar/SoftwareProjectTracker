@@ -6,27 +6,35 @@ from sklearn.model_selection import train_test_split
 
 import pickle #Used to serialise the model to be loaded later saves retraining everytime the program is rerun
 
+from os import path
+
 COMBINED_MODEL_NAME = "model"
 FILE_EXTENSION = ".sav"
 
 START_POSTFIX = "start" #The filename for the model to load
 IN_PROGRESS_POSTFIX = "inprogress" #The filename for the model to load
 
-def get_start_model_filename():
-    return COMBINED_MODEL_NAME + START_POSTFIX + FILE_EXTENSION
+BASEPATH = path.dirname(__file__)
 
-def get_in_progress_model_filename():
-    return COMBINED_MODEL_NAME + IN_PROGRESS_POSTFIX + FILE_EXTENSION
+START_DATASET_FILENAME = "startevaluationdataset.txt" #Filename of start prediction dataset
+IN_PROGRESS_DATASET_FILENAME = "inprogressevaluationdataset.txt" #Filename of in progress project prediction dataset
 
-#Filename of start prediction dataset
-START_DATASET_FILENAME = "startevaluationdataset.txt"
-#Filename of in progress project prediction dataset
-IN_PROGRESS_DATASET_FILENAME = "inprogressevaluationdataset.txt"
+START_DATASET_FILE_PATH = path.abspath(path.join(BASEPATH, START_DATASET_FILENAME))
+IN_PROGRESS_DATASET_FILE_PATH = path.abspath(path.join(BASEPATH, IN_PROGRESS_DATASET_FILENAME))
+
+
+START_MODEL_FILENAME = COMBINED_MODEL_NAME + START_POSTFIX + FILE_EXTENSION
+IN_PROGRESS_MODEL_FILENAME = COMBINED_MODEL_NAME + IN_PROGRESS_POSTFIX + FILE_EXTENSION
+
+START_MODEL_FILE_PATH = path.abspath(path.join(BASEPATH, START_MODEL_FILENAME))
+IN_PROGRESS_MODEL_FILE_PATH = path.abspath(path.join(BASEPATH, IN_PROGRESS_MODEL_FILENAME))
+
+
 
 #Used to determine how much of the data should normally be used to test the model
 DEFAULT_TEST_TRAIN_SPLIT = 0.2
 
-def train_model_and_save(data_set_filepath, model_filename, verbose, test_train_split):
+def train_model_and_save(data_set_filepath, model_file_path, verbose, test_train_split):
     if verbose == True:
         print("=== Start Training ===")
     if verbose == True:
@@ -108,29 +116,29 @@ def train_model_and_save(data_set_filepath, model_filename, verbose, test_train_
                 print("Predicted: " + str(predicted_output))
                 print("")
     if verbose == True:
-        print("Saving model to: " + model_filename)
+        print("Saving model to: " + model_file_path)
     #Save model in serialised form
-    pickle.dump(trained_model, open(model_filename, 'wb'))
+    pickle.dump(trained_model, open(model_file_path, 'wb'))
 
 
 #Automatic train and test from dataset
 def train_all_models():
     #Train start estimation
-    train_model_and_save(START_DATASET_FILENAME, get_start_model_filename(), True, DEFAULT_TEST_TRAIN_SPLIT)
+    train_model_and_save(START_DATASET_FILE_PATH, START_MODEL_FILE_PATH, True, DEFAULT_TEST_TRAIN_SPLIT)
     #Train in progress estimation
-    train_model_and_save(IN_PROGRESS_DATASET_FILENAME, get_in_progress_model_filename(), True, DEFAULT_TEST_TRAIN_SPLIT)
+    train_model_and_save(IN_PROGRESS_DATASET_FILE_PATH, IN_PROGRESS_MODEL_FILE_PATH, True, DEFAULT_TEST_TRAIN_SPLIT)
 
 #Automatic TRAIN ONLY from dataset
 def retrain_all_models():
     #Train start estimation
-    train_model_and_save(START_DATASET_FILENAME, get_start_model_filename(), False, 0)
+    train_model_and_save(START_DATASET_FILE_PATH, START_MODEL_FILE_PATH, False, 0)
     #Train in progress estimation
-    train_model_and_save(IN_PROGRESS_DATASET_FILENAME, get_in_progress_model_filename(), False, 0)
+    train_model_and_save(IN_PROGRESS_DATASET_FILE_PATH, IN_PROGRESS_MODEL_FILE_PATH, False, 0)
 
 #Used to write new entries into the dataset
 def add_to_dataset(new_startevaluationdata, new_currentevaluationdata, result_out):
-    start_dataset_file = open(START_DATASET_FILENAME, 'a') # Open file in append mode
-    in_progress_dataset_file = open(IN_PROGRESS_DATASET_FILENAME, 'a') # Open file in append mode
+    start_dataset_file = open(START_DATASET_FILE_PATH, 'a') # Open file in append mode
+    in_progress_dataset_file = open(IN_PROGRESS_DATASET_FILE_PATH, 'a') # Open file in append mode
 
     CURRENTEVALATION_DATA_SIZE = len(new_currentevaluationdata)
 

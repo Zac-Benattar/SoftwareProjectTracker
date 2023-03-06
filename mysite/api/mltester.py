@@ -2,7 +2,9 @@ import sys #Import system file to add extra imports from outside file
 
 import pathlib
 
-path = str(pathlib.Path(__file__).parent.parent.joinpath("static/Risk_Assessment").resolve())
+path = pathlib.Path(__file__).parent.parent.joinpath('static/Risk_Assessment')
+
+print(sys.path)
 
 sys.path.append(path)
 

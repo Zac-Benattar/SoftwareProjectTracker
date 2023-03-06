@@ -6,7 +6,7 @@ export const SuccessChanceDisplay = ({ risk_evaluation }) => {
     <div className="risk-info-container">
       <div className="project-risk-score">
         <p>
-          This project has a {risk_evaluation.success_chance * 100}% chance of
+          This project has a {risk_evaluation.success_chance}% chance of
           success as of {risk_evaluation.date}.
         </p>
         <p> Your project currently has 0 recommendations. </p>
