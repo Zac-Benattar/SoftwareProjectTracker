@@ -55,7 +55,7 @@ const Homepage = () => {
    }
 
 
-        let [allRoles, setRoles] = useState([]);
+      let [allRoles, setRoles] = useState([]);
 
       useEffect(() => {
         getRoles();
@@ -115,6 +115,9 @@ const Homepage = () => {
       logoutUser();
     }
   };
+
+  console.log("projects",projects);
+  
  
 
   return (

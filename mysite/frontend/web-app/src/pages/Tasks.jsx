@@ -6,21 +6,58 @@ import ListView from '../components/ListView';
 import BoardView from '../components/BoardView';
 import "./tasks.css";
 import {useLocation} from "react-router-dom";
+import AuthContext from "../context/AuthContext";
 
 export const TasksForm = () => {
+
+  // Deconstructing the relevent sections from AuthContext
+  // let { authTokens, logoutUser, user } = useContext(AuthContext);
+  // const { slug } = useParams();
+  // let [tasks, setTasks] = useState([]);
+
+
+  // // Setting up states
+  // useEffect(() => {
+  //   getTasks();
+  // }, []);
+
+
+  // // Obtaining the projects the user is involved in via a GET request to the api referencing our authorisation token
+  // // Need to check this URLSS
+  // let getTasks = async (e) => {
+  //   let response = await fetch("http://127.0.0.1:8000/api/tasks/".concat(slug), {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: "Bearer " + String(authTokens.access),
+  //     },
+  //   });
+  //   let data = await response.json();
+
+  //   // If the response is good - set the state of projects to be the result of the GET request
+  //   if (response.status === 200) {
+  //     setProjects(data);
+  //     // If the respose is unauthorised, log out the user using the imported AuthContext method
+  //   } else if (response.statusText === "Unauthorized") {
+  //     logoutUser();
+  //   }
+  // };
+
+  // console.log("projects",projects);
+  
+
+
+
+
+
+
   const [checkedtasks, setCheckedTasks] = useState([]);
   let [dependencies, setDependencies] = useState(['task1 ','task2','task3']);
 
-  useEffect(() => {
-      getDependencies();
-  }, []);
 
-  let getDependencies = async () => {
-      let response = await fetch('/api/projects/'+state.id+'/tasks/');
-      let data = await response.json();
-      console.log("Data:", data);
-      setDependencies(data);
-  };
+
+
+
   const [checked, setChecked] = useState([]);
   const handleCheck = (event,checked,setChecked) => {
     var updatedList = [...checked];
@@ -31,19 +68,7 @@ export const TasksForm = () => {
     }
     setChecked(updatedList);
   };
-  let [people, setPeople] = useState(['aPPLE ','ORANGE','PEAR']);
-  const location = useLocation();
-  const state = location.state;
-  useEffect(() => {
-      getPeople();
-  }, []);
 
-  let getPeople = async () => {
-      let response = await fetch('/api/projects/'+state.id+'/members/');
-      let data = await response.json();
-      console.log("Data:", data);
-      setPeople(data);
-  };
 const [modalstate,setmodalstate] =useState( {
   isOpen: false
 });
@@ -82,6 +107,7 @@ function View() {
 }
 return(
 <>
+<div className="home-page">
 <Navbar />
 <div className="main_container">
   <p className="title">Task Tracker</p>
@@ -123,12 +149,12 @@ return(
           <div className="checkList">
     <label>Add team members:</label>
     <div className="list-container">
-      {people.map((item, index) => (
+      {/* {people.map((item, index) => (
          <div key={index}>
          <input value={item} type="checkbox" onChange={handleCheck}/>
          <span className={isChecked(item)}>{item}</span>
-       </div>
-      ))}
+       </div> */}
+      {/* ))} */}
     </div>
   </div>
           </div>
@@ -154,6 +180,7 @@ return(
   <div className="mainbody_container">
       <View />
   </div>
+</div>
 </div>
 </>
 )

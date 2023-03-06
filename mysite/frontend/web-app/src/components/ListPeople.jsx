@@ -7,18 +7,20 @@ import {Link} from "react-router-dom";
 export const ListPeople = ({ member }) => {
 
 
-    let [users, setUsers] = useState([]);
+    // let [users, setUsers] = useState([]);
 
-    useEffect(() => {
-        getUsers();
-    }, []);
+    // useEffect(() => {
+    //     getUsers();
+    // }, []);
 
-    let getUsers = async () => {
-        let response = await fetch('/api/users/'+member.id+'/');
-        let data = await response.json();
-        console.log("Data:", data);
-        setUsers(data);
-    };
+    // let getUsers = async () => {
+    //     let response = await fetch('/api/users/'+member.id+'/');
+    //     let data = await response.json();
+    //     console.log("Data:", data);
+    //     setUsers(data);
+    // };
+
+    console.log("member");
 
 
   return (
@@ -27,17 +29,17 @@ export const ListPeople = ({ member }) => {
 
         <div className="people-container">
             <div className="people-info">
-                <h2> {users.forename} {users.lastname} </h2>
-                <h3> {member.role} </h3>
+               
+                <h3> {member.role} </h3> 
                         
-                    <ul className="all-skills">
+                     <ul className="all-skills">
                         <li className="skill">
-                            {users.skillset}
+                            {member.skillset}
                         </li>
                     </ul>
-                    
-                    <p>{users.phone}</p>
-                    <p>{users.email}</p>                    
+                     
+                    <p>{member.phone}</p>
+                    <p>{member.email}</p>                    
             </div>
 
         </div>

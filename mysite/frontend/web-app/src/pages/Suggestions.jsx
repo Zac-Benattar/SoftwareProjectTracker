@@ -44,7 +44,8 @@ function RenderingSuggestions(){
   }
   return (
     <>
-    
+    <div className='home-page'>
+
     <Navbar />
     <div className='main_container'>
       <p className='sug-title'>Suggestions</p>
@@ -54,6 +55,7 @@ function RenderingSuggestions(){
     <RenderingSuggestions />  
     </div>
 
+    </div>
     </>
   );
 };

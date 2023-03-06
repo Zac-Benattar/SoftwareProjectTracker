@@ -16,6 +16,7 @@ const Projects = () => {
 
   // Defining the states
   let [project, setProject] = useState([]);
+  
   let [riskEvaluation, setRiskEvaluation] = useState([]);
 
   // Get slug parameter given when Project is referenced in router
@@ -50,6 +51,8 @@ const Projects = () => {
     }
   };
 
+  console.log(project);
+
   // Obtaining the specific project's most recent risk evaulation via a GET request to the api referencing our authorisation token
   let getRiskEvaluation = async (e) => {
     let response = await fetch(
@@ -78,9 +81,13 @@ const Projects = () => {
   const success_chance = 0;
 
     
-    return (      
-        <div className="projects-page-page">
-          <Navbar/>
+    return (
+      <>
+      <div className="home-page">
+
+      <Navbar/>   
+        <div className="projects-page-content">
+         
             {riskEvaluation.map((riskEvaluation, index) => (
             <SuccessChanceDisplay key={index} risk_evaluation={riskEvaluation} />
             ))}
@@ -100,10 +107,17 @@ const Projects = () => {
 
                 </div>
 
+                <div className="project-buttons">
+
+                <button className="proj-button">Pause project progress</button>
+                <button className="proj-button">Push back project deadline</button>
+                </div>
+
                 </div>
 
             </div>
-                
+            </div>
+    </>
     
            
     );
