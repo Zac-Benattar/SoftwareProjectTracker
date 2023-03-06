@@ -1,8 +1,10 @@
+# IF YOU MAKE ANY CHANGES TO THIS FILE PLEASE ENSURE YOU SAVE IT IN ANSI ENCODING
+
 # ignore ALL .log files
 *.log
 # ignore ALL files in ANY directory named temp
 temp/
-
+# ignore ALL files in ANY directory called node_modules
 node_modules/
-
-.cache/babel-loader/
+# ignore ALL files in ANY directory called cache
+.cache/

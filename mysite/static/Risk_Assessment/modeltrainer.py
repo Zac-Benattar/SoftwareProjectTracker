@@ -63,9 +63,6 @@ def train_model_and_save(data_set_filepath, model_filename, verbose, test_train_
     #alpha = 0.001, #makes probabilities more uncertain
     #)
 
-
-
-
     #NOTES FOR ML
     #Could also modified_huber
     #used to use LinearRegression this was not a good idea
@@ -148,20 +145,23 @@ def add_to_dataset(new_startevaluationdata, new_currentevaluationdata, result_ou
     fields = new_startevaluationdata_matrix[0]
     NUM_FIELDS = len(fields)
     for i in range(NUM_FIELDS):
+        #Join field to string
         index = i + 1
         line += " " + str(index) + ":" + str(fields[i])
-    start_dataset_file.write("\n" + line)
+    start_dataset_file.write("\n" + line) #Write line
 
     #Write to in_progress_dataset_file
     for line_index in range(CURRENTEVALATION_DATA_SIZE):
+        #Loop through all new data points for lines
         line = ""
         line += str(result_out)
         fields = new_currentevaluationdata_matrix[line_index][0]
         NUM_FIELDS = len(fields)
         for i in range(NUM_FIELDS):
+            #Join field to string
             index = i + 1
             line += " " + str(index) + ":" + str(fields[i])
-        in_progress_dataset_file.write("\n" + line)
+        in_progress_dataset_file.write("\n" + line) #Write line
 
     start_dataset_file.close()
     in_progress_dataset_file.close()

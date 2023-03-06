@@ -7,6 +7,7 @@ import AuthContext from "../context/AuthContext";
 export const HomeNavbar = () => {
   let { user, logoutUser } = useContext(AuthContext);
   const userProfileRoute = "/users/".concat(user.user_id);
+
   return (
       
       <nav className="home-nav">

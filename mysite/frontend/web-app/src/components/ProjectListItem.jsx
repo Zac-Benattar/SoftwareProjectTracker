@@ -4,28 +4,16 @@ import "../pages/Homepage.css";
 import { Link } from "react-router-dom";
 
 export const ProjectListItem = ({ project }) => {
-  const passing_data = {
-    name: project.name,
-    id: project.id,
-    description: project.description,
-    i_budget: project.initial_budget,
-    c_budget: project.current_budget,
-    i_deadline: project.initial_deadline,
-    c_deadline: project.current_deadline,
-    methodology: project.methodology,
-  };
 
-  const projectRoute = "/projects/".concat(passing_data.id);
+  const projectRoute = "/projects/".concat(project.id);
 
   return (
-    <Link to={projectRoute} state={passing_data}>
+    <Link to={projectRoute}>
     <div className="project_container">
-     
         <div className="title">
           <h1>{project.name}</h1>
         </div>
-      
-
+  
       <div className="progress-bar">
         <ProgressBar progress="30" />
       </div>

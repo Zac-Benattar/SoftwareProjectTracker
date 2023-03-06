@@ -120,8 +120,6 @@ const Homepage = () => {
   return (
     
       <>
-
-
     <div id="add-project-modal" className="modal">
             <div className="modal-content"> 
                   
