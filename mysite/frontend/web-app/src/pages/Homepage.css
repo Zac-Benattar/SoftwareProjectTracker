@@ -5,40 +5,86 @@
 
 body {
     margin: 0;
-    background-image: linear-gradient(40deg, rgb(65, 206, 245), #9c00fd);
+    padding-bottom: 5%;
+    background-repeat: no-repeat;
 }
 
-.nav {
-    background-color:white;
-    opacity: 80%;
+
+.nav{
+    background:white;
+    width: 100%;
+    padding-top:1%;
+    padding-bottom: 1%;
+    font-size: 20px;
     color: #9c00fd;
-    border-bottom: solid 2px #9c00fd;
-    gap: 6rem;
     display: flex;
     width: 100%;
-    flex-wrap: wrap;
     position: fixed;
     justify-content: center;
-    padding: 1rem 0rem;
-    align-items: stretch;
-    backdrop-filter: blur(20px);
 }
 
-.home-nav {
-    background-color:white;
-    opacity: 80%;
-    color: #9c00fd;
-    border-bottom: solid 2px #9c00fd;
-    gap: 6rem;
+
+.home-nav{
+    overflow: hidden;
+    border-bottom: solid white;
+    padding-top: 20px;
+    color: white;
     display: flex;
     width: 100%;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 1rem 0rem;
-    align-items: stretch;
-    backdrop-filter: blur(20px);
+    z-index: 2;
+    justify-content: space-between;
+    align-items: center;
+    top: 0;
+    background-color: white;
+}
+.home-nav-menu{
+    width:30%;
+    float: right;
+    margin-right: 15%;
+}
+.user-title{
+    width: 20%;
+    margin-left:15%;
+    padding: 1%;
+    color:#9c00fd;
+    float: left;
+    margin-top: -10px;
+    border: solid #9c00fd;
+    border-radius: 10px;;
+    font-size:25px;
 }
 
+.user-title:hover, title:hover {
+    background-color: #9c00fd;
+    color: white;
+}
+
+.home-nav ul{
+    padding: 0;
+    list-style: none;
+    display: flex;
+}
+
+.home-nav a{
+    text-decoration: none;
+    color: inherit;
+}
+
+.home-nav-menu li{
+    border-radius: 10px;
+    width:30%;
+    margin:0 10%;
+    padding: 10px 20px;
+    cursor:pointer;
+    transition: all 0.15s ease-in;
+    color: #9c00fd;
+    font-size: 25px;
+}
+
+.home-nav-menu>ul>li:hover{
+    background-color:#9c00fd;
+    color:white;
+}
 .logout{
     margin-left:100px;
     color:white;
@@ -47,7 +93,7 @@ body {
     padding: 0px 20px;
 }
 
-.nav ul {
+.nav ul, ul {
     padding: 0;
     margin: 0;
     display: flex;
@@ -59,100 +105,135 @@ body {
 .nav a {
     color: inherit;
     text-decoration: none;
-    height: 100%;
-    display: flex;
-    padding: .25rem;
-    font-size: 20px;
+    display: inline;
+    padding: 1rem;
+    font-size: 25px;
 }
 
-.nav li:active {
-    background-color:rgb(65, 206, 245);
-    
+.nav li{
+    border-radius: 10px;
+    padding: 5px 5px;
+    cursor:pointer;
+    transition: all 0.15s ease-in;
+    color: #9c00fd;
+    font-size: 25px;
 }
 
-
-.nav-button {
-    border:solid 2px;
-    border-radius: 30px;
-}
-
-
-.nav-button:hover {
-    background-color: rgb(65, 206, 245);
-    cursor: pointer;
-}
 
 .nav li:hover{
     background-color: rgb(138, 73, 202);
-    cursor: pointer;
-    color: white;
-    border-radius: 30px;        
+    color: white;    
 }
 
-.home-page {
-    padding-top: 5%;
+.home-page, .projects-home-page{
+    background-image: linear-gradient(40deg, rgb(65, 206, 245), #9c00fd);
+    position: absolute;
+    top:0;
+    width:100%;
+    display: block;
     padding-bottom: 5%;
 }
 
-.left_side{
-    width: 30%;
-    display:inline-block;
-    vertical-align: top;
-    margin-left: 2.5%;
-    align-items: center;
-    text-align: center;
+.projects-page-content {
+    padding-top: 7%;
+    width: 80%;
+    margin-left: 10%;
 }
 
-.all_projects{
-    width:60%;
+.home-page-content{
+    width: 80%;
+    margin-left: 10%;
+}
+
+.home-page-menu{
+    width: 100%;
+    display: block;
+    margin-top: 60px;
+    text-align: left;
+}
+
+
+
+.home-page-menu>button{
+    padding: 20px;
+    border-radius: 10px;
+    border: none;
+    background-color: white;
+    color:#9c00fd;
+    cursor: pointer;
+    left:0;
     display: inline-block;
-    padding: 2%;
-    margin-left: 6%;
+    margin-left: 3%;
 }
-
+.home-page-menu>button:hover{
+    opacity: 70%;
+}
+.all_projects{
+    margin-top: 100px;
+    width:100%;
+    display: block;
+}
+.projects-list{
+    display: block;
+    width:100%;
+}
 .project_container{
     border:solid 4px;
     border-color: rgb(232, 232, 232);
     background-color:  rgb(232, 232, 232);
-    width:100%;
-    margin-top: 10%;
-    display: block;
-    /* margin-bottom: 10%; */
-    border-radius: 30px;
+    width:28%;
+    align-items: left;
+    margin: 2.5% 2.5%;
+    border-radius: 10px;
+    float: left;
+}
+
+.project_container:hover {
+    background-color: white;
+    cursor: pointer;
 }
 
 .title{
     display: inline-block;
-    border: solid 2px;
+    border-bottom: solid 4px;
     border-color: rgb(138, 73, 202);
-    border-radius: 30px;
-    width:30%;
+    width:95%;
     margin:2.5%;
     text-align: center;
     color: rgb(138, 73, 202);
     text-decoration: none;
 }
 
-.title:hover{
-    cursor: pointer;
-    background-color: rgb(201, 194, 194);
-}
 
 .info{
     display:inline-block;
-    width:25%;
-    padding: 2%;
+    width:100%;
+    margin:10px 0;
 }
 
+.info>h3, .info>p{
+    display: inline;
+}
+
+.project-description>h3, .project-description>p {
+    display: inline;
+}
+
+.info>h3{
+    color: rgb(138, 73, 202);
+
+}
+
+
 .info_container{
-    text-align: right;
-    margin-right: 5%;
+    width: 100%;
+    text-align: left;
+    margin-left: 10%;
 }
 
 .progress-bar {
     display: inline-block;
-    width:40%;
-    margin-left:17%;
+    width:90%;
 }
 
 .top-of-page {
@@ -161,11 +242,7 @@ body {
 }
 
 
-.dropdown-title{
-    color: white;
-    font-size: 20;
-    display: inline-block;
-}
+
 
 
 .user-profile {
@@ -174,12 +251,7 @@ body {
     
 }
 
-.user-title{
-    border: solid 2px white;
-    border-radius: 30px;
-    padding: 1%;
-    color: white;
-}
+
 
 .user-info {
     color: white;
@@ -221,10 +293,11 @@ body {
 }
 
 .project-info-container {
+    display: inline-block;
+    width: 40%;
     background-color:  rgb(247, 247, 247);
     padding: 3%;
     border-radius: 30px;
-    /* margin: 2%; */
     margin-left: 10%;
     margin-right: 10%;
     margin-top: 5%;
@@ -233,16 +306,18 @@ body {
 .project-name {
     color: rgb(138, 73, 202);
     margin-top:-2%;
-    text-align: center;
+    padding: 2%;
+    text-align: left;
     text-decoration: underline;
 }
 
 .project-description{
     padding: 2.5%;
     margin-top: -4%;
-
-    
+    text-align: left;
 }
+
+
 
 .des-title {
     color: rgb(138, 73, 202); 
@@ -267,10 +342,10 @@ body {
 
   .proj-button {
     display: block;
-    padding: 1%;
-    margin: 1%;
-    margin-left: 40%;
-    width: 20%;
+    padding: 3%;
+    margin-top: 4%;
+    margin-left: 30%;
+    width: 40%;
   }
 
   .create-project-btn {
@@ -287,13 +362,21 @@ body {
 }
 
 .risk-info-container{
+    display: inline-block;
+    width: 20%;
+}
+
+.project-risk-score {
+    display: block;
+    width:100%;
     background-color:  rgb(232, 160, 160);
     border-radius: 30px;
-    margin-left: 10%;
-    margin-right: 10%;
-
-    padding: 0.5%
+    padding: 0.5%;
+    font-size: 25px;
+    font-weight: 700;
+    margin-bottom: 25%;
 }
+
 
 
 .button {

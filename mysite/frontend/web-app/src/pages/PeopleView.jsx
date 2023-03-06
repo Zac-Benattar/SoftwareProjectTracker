@@ -26,21 +26,16 @@ const PeopleView = (props) => {
     };
 
 
-
     return (
         <>
 
-        <Navbar/>
-
         <div className="home-page">
-
+        <Navbar/>
             <div className="all-containers">
                 {people.map((people, index) => (
                 <ListPeople key={index} member={people} />
                 ))}
             </div>
-
-
         </div>
         
         

@@ -51,21 +51,31 @@
   }
   
   .miniEvent {
-    background: #1f86ef;
+    background: #32759c;
     color: white;
     padding: 3px;
     font-size: 1em;
     cursor: pointer;
   }
   
+  
+  .miniEvent.design {
+    background: #808380;
+  }
+  
+  .miniEvent.client {
+    background: #5b2263;
+  }
+  
   .miniEvent.holiday {
-    background: #3fb73f;
+    background: #32349c;
   }
-  
-  .miniEvent.busy {
-    background: #e7713c;
+  .miniEvent.business {
+    background: #486a7e;
   }
-  
+  .miniEvent.weekly {
+    background: #b67d94;
+  }
   .navigation {
     width: 100%;
     padding: 10px 8px 14px 8px;
@@ -86,7 +96,7 @@
     text-decoration: none;
     display: inline-block;
     padding: 0 10px;
-    background: #27bc27;
+    background: #7427bc;
     border-radius: 5px;
     color: white;
     margin-left: 10px;
@@ -123,8 +133,8 @@
     display: block;
     text-align: center;
     width: 100%;
-    background: #3fb73f;
-    border-bottom: 2px solid green;
+    background: #413fb7;
+    border-bottom: 2px solid rgb(37, 9, 100);
     color: white;
     padding: 10px;
   }
@@ -150,10 +160,10 @@
   }
   
   button {
-    width: 15%;
-    background: #0e28be;
+    width: 100%;
+    background: #5f3fb7;
     border: 0;
-    border-bottom: 3px solid rgb(128, 0, 117);
+    border-bottom: 3px solid rgb(28, 0, 128);
     color: white;
     padding: 10px;
     cursor: pointer;
@@ -238,8 +248,8 @@
       left: 5%;
       text-align: center;
       bottom: 5%;
-      background: #3fb73f;
-      border-bottom: 3px solid green;
+      background: #693fb7;
+      border-bottom: 3px solid rgb(38, 0, 128);
       border-radius: 5px;
       text-align: center;
       color: white;

@@ -4,7 +4,7 @@ import "./NavbarElems";
 import "../pages/Homepage.css";
 import AuthContext from "../context/AuthContext";
 
-const Navbar = (props) => {
+const Navbar = () => {
   let { user, logoutUser } = useContext(AuthContext);
   const userProfileRoute = "/users/".concat(user.user_id);
 

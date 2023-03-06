@@ -1,12 +1,11 @@
 import React, {useState, useEffect} from "react";
-import {Modal, Button} from "react-bootstrap";
+import {Modal} from "react-bootstrap";
+import Navbar from "../components/Navbar";
 import GanttChart from '../components/GanttChart';
 import ListView from '../components/ListView';
-import Calendar from '../components/CalendarView';
 import BoardView from '../components/BoardView';
-// import Navbar from "../components/Navbar";
 import "./tasks.css";
-import {Link, useLocation} from "react-router-dom";
+import {useLocation} from "react-router-dom";
 
 export const TasksForm = () => {
   const [checkedtasks, setCheckedTasks] = useState([]);
@@ -52,7 +51,7 @@ const [modalstate,setmodalstate] =useState( {
 const openModal = () => setmodalstate({isOpen: true});
 const closeModal = () => setmodalstate({isOpen: false});
 
-const viewoptions = ['Gantt Chart', 'List View', 'Board View', 'Calendar View'];
+const viewoptions = ['Gantt Chart', 'List View', 'Board View'];
 const [viewStyle, setviewStyle] = useState(viewoptions[0]);
 const [inputs, setInputs] = useState({});
 const handleChange = (e) => 
@@ -73,19 +72,17 @@ const isChecked = (item) =>
 
 function View() {
   
-  if (viewStyle == viewoptions[0]) {
-    return <GanttChart />;
-  }else if (viewStyle==viewoptions[1]) {
+  if (viewStyle === viewoptions[0]) {
+    return <GanttChart/>;
+  }else if (viewStyle===viewoptions[1]) {
     return <ListView />;
-  }else if (viewStyle==viewoptions[2]) {
-    return <BoardView />;
   }else {
-    <Calendar />
-  }
+    return <BoardView />;
+  }  
 }
 return(
 <>
-{/* <Navbar /> */}
+<Navbar />
 <div className="main_container">
   <p className="title">Task Tracker</p>
   <div className="menu_container"> 
@@ -95,7 +92,6 @@ return(
         <option> {viewoptions[0]}</option>
         <option> {viewoptions[1]}</option>
         <option> {viewoptions[2]}</option>
-        <option> {viewoptions[3]}</option>
       </select>
     </div>
       <button onClick={openModal}> Add Task </button>
@@ -105,22 +101,22 @@ return(
 
         <form onSubmit={handleSubmit}>
           <div className="addTaskField_container">
-          <label className="inputLabels"> Task name:</label>
-          <input className="taskInputs" type="text" name="taskname" value={inputs.taskname || ""} onChange={handleChange}/>
+          <label> Task name:</label>
+          <input type="text" name="taskname" value={inputs.taskname || ""} onChange={handleChange}/>
           </div>
           <br/>
           <div className="addTaskField_container">
-          <label  className="inputLabels"> Task description:</label>
-          <input className="taskInputs" type="text" name="taskdescription" value={inputs.taskdescription || ""} onChange={handleChange}/>
+          <label> Task description:</label>
+          <input type="text" name="taskdescription" value={inputs.taskdescription || ""} onChange={handleChange}/>
           </div>
           <br/>
           <div className="addTaskField_container">
-          <label  className="inputLabels"> Task name:</label>
-          <input  className="taskInputs" type="date" name="startdate" value={inputs.startdate || ""} onChange={handleChange}/>
+          <label> Task name:</label>
+          <input type="date" name="startdate" value={inputs.startdate || ""} onChange={handleChange}/>
           </div>
           <div className="addTaskField_container">
-          <label  className="inputLabels"> Duration:</label>
-          <input className="taskInputs" type="text" name="duration" value={inputs.duration || ""} onChange={handleChange}/>
+          <label> Duration:</label>
+          <input type="text" name="duration" value={inputs.duration || ""} onChange={handleChange}/>
           </div>
           <br/>
           <div className="addTaskField_container">
@@ -164,3 +160,16 @@ return(
 }
 
 export default TasksForm
+
+
+
+
+// if (viewStyle == viewoptions[0]) {
+//   return <GanttChart />;
+// }else if (viewStyle==viewoptions[1]) {
+//   return <ListView />;
+// }else if (viewStyle==viewoptions[2]) {
+//   return <BoardView />;
+// }else {
+//   <Calendar />
+// }

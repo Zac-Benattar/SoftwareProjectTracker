@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./NavbarElems";
+import "../pages/Homepage.css";
 import AuthContext from "../context/AuthContext";
 
 export const HomeNavbar = () => {
@@ -8,18 +9,18 @@ export const HomeNavbar = () => {
   const userProfileRoute = "/users/".concat(user.user_id);
 
   return (
-    <div>
+      
       <nav className="home-nav">
-        <ul>
-          <li>
-              <p onClick={logoutUser}>Logout</p>
-          </li>
-          <li>
-            <Link to={userProfileRoute}>{user.username}</Link>
-          </li>
-        </ul>
+        <h2 className="user-title">
+          Welcome {user.username}
+        </h2>
+        <div className="home-nav-menu">
+          <ul>
+          <li><Link to={userProfileRoute}>Profile</Link></li>
+          <li onClick={logoutUser}>Logout</li> 
+          </ul>
+        </div>
       </nav>
-    </div>
   );
 };
 

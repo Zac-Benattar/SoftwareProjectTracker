@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
-import { ListPeople }from "../components/ListPeople";
 import Navbar from "../components/Navbar";
 import SuccessChanceDisplay from "../components/SuccessChanceDisplay";
 import AuthContext from "../context/AuthContext";
@@ -76,28 +75,12 @@ const Projects = () => {
     }
   };
 
-    // const passing_data = {
-    //     name: state.name,
-    //     id: state.id,
-    // };
-
-
-
-    // const [clientName, setName] = useState('');
-    // const [releaseDate, setDate] = useState();
-    // const [methodology, setMethodology] = '';
-    // const requirements = 0;
-    // const design = 0;
-    // const implementation = 0;
-    // const unittesting = 0;
-    // const integration = 0;
-    const success_chance = 0;
+  const success_chance = 0;
 
     
-    return (
-        <>
-        <Navbar/>
-        <div className="home-page">
+    return (      
+        <div className="projects-page-page">
+          <Navbar/>
             {riskEvaluation.map((riskEvaluation, index) => (
             <SuccessChanceDisplay key={index} risk_evaluation={riskEvaluation} />
             ))}
@@ -117,13 +100,73 @@ const Projects = () => {
 
                 </div>
 
-                <button className="proj-button">Pause project progress</button>
-                <button className="proj-button">Push back project deadline</button>
-            </div>  
+                </div>
+
+            </div>
+                
+    
            
-        </div>
-        </>     
     );
 }
 
 export default Projects;
+
+
+
+  {/* <Navbar/>
+                    <div className="projects-page-content"> 
+
+
+                <div className="project-info-container">
+
+                    <div className="project-name">
+                        <h1>{state.name}</h1>
+                    </div>
+
+                    <div className="project-description">
+                        <br/>
+                        <h3 className="des-title"> Project Description: </h3>
+                        <p className="des">{state.description}</p>
+                        <br/>
+                        <br/>
+                        <h3 className="des-title"> Project methodology: </h3>
+                        <p  className="des">{state.methodology}</p>
+                        <br/>
+                        <br/>
+                        <h3 className="des-title"> Project budget: </h3>
+                        <p className="des">  {state.i_budget}</p>
+                        <br/>
+                        <br/>
+
+                        <h3 className="des-title"> Project deadine: </h3>
+                        <p className="des"> {state.i_deadline}</p>
+
+                        <br/>
+                        <br/>
+
+                        <h3 className="des-title"> Client: </h3>
+                        <p className="des"> client </p>
+
+
+                    </div>
+                    <div className="project-buttons">
+
+                    <button className="proj-button">Pause project progress</button>
+                    <button className="proj-button">Push back project deadline</button>
+                    </div>
+                </div>  
+
+                <div className="risk-info-container">
+                        <div className="project-risk-score">
+                            <p> Your project has a {riskScore}% chance of success.</p>
+                        </div>
+
+                        <div className="project-risk-score">
+                            <p> Your project has 0 incomplete tasks. </p>
+                        </div>               
+
+                
+                        <div className="project-risk-score">
+                            <p> Your project has 0 suggestions. </p>
+                        </div>
+                </div> */}

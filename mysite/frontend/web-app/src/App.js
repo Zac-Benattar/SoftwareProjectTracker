@@ -7,6 +7,7 @@ import Projects from "./pages/Projects";
 import PeopleView from "./pages/PeopleView";
 import SuggestionsForm from "./pages/Suggestions";
 import Tasks from "./pages/Tasks";
+import MeetingsForm from "./components/MeetingView";
 import { AuthProvider } from "./context/AuthContext";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PrivateRoute from "./utils/PrivateRoute";
@@ -32,6 +33,7 @@ function App() {
             <Route path="/projects/:slug/people" element={<PeopleView />} />
             <Route path="/projects/:slug/tasks" element={<Tasks />} />
             <Route path="/projects/:slug/suggestions" element={<SuggestionsForm />} />
+            <Route path="/projects/:slug/meetings" element={<MeetingsForm/>}/>
           </Routes>
         </AuthProvider>
       </BrowserRouter>
@@ -39,4 +41,5 @@ function App() {
   );
 }
 
+// NEED TO CHANGE ROUTES TO SLUG - COULD NOT GET THIS WROK
 export default App;

@@ -1,11 +1,7 @@
 // Sample events calendar build, explained and detailed over at
 // https://justacoding.blog/react-calendar-component-example-with-events/
-import React, {ReactDOM} from 'react';
-import "./CalandarView.css"; 
-
-
-const { useState, useEffect, Fragment } = React
-
+import React, { useState, useEffect, Fragment } from 'react';
+import './Calendar.css';
 // Some config for convenience
 const MOCK_LOADING_TIME = 1000
 const SAMPLE_META = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
@@ -37,11 +33,24 @@ const toStartOfDay = (date) => {
   return newDate
 }
 
-
+const pad = (input) => {
+	return input < 10 ? "0" + input : input
+}
 
 // I'm using default <input type="datepick-local">,
 // so a specific date format is required
-
+const dateToInputFormat = (date) => {
+	if (!date) {
+  	return null
+  }
+  
+	const month = pad(date.getMonth() + 1)
+  const day = pad(date.getDate())
+  const hours = pad(date.getHours())
+  const minutes = pad(date.getMinutes())
+  
+  return `${date.getFullYear()}-${month}-${day}T${hours}:${minutes}`
+}
 
 
 // Could be used to filter out invalid events data also
@@ -146,7 +155,48 @@ const Event = ({ event, setViewingEvent, setShowingEventForm, deleteEvent }) => 
 // In a real implementation, we'd have some frontend
 // validation and also the equivalent in our 
 // backend service...
+const EventForm = ({ setShowingEventForm, addEvent, editEvent, withEvent, setViewingEvent, preselectedDate }) => {
+  const newEvent = withEvent || {}
+  if (!withEvent && !!preselectedDate) {
+    newEvent.dateFrom = dateToInputFormat(preselectedDate)
+  }
+  const [event, setEvent] = useState(newEvent)
 
+  return (
+    <Modal onClose={() => setShowingEventForm({ visible: false })} title={`${withEvent ? "Edit event" : "Add a new event"}`}>
+      <div className="form">
+        <label>Name
+          <input type="text" placeholder="ie. Weekly Meeting" defaultValue={event.name} onChange={(e) => setEvent({ ...event, name: e.target.value })} />
+        </label>
+
+        <label>Date from
+          <input type="datetime-local" defaultValue={event.dateFrom || dateToInputFormat(preselectedDate)} onChange={(e) => setEvent({ ...event, dateFrom: e.target.value })} />
+        </label>
+
+        <label>Date to
+          <input type="datetime-local" defaultValue={event.dateTo} onChange={(e) => setEvent({ ...event, dateTo: e.target.value })} />
+        </label>
+
+        {withEvent ? (
+        	<Fragment>
+            <button onClick={() => editEvent(event)}>Edit event</button>
+            <a className="close" href="javascript:;" onClick={() => {
+            	setShowingEventForm({ visible: false })
+            	setViewingEvent(event)}
+            }>
+              Cancel (go back to event view)
+            </a>
+          </Fragment>
+        ) : (
+        	<Fragment>
+            <button onClick={() => addEvent(event)}>Add event to calendar</button>
+            <a className="close" href="javascript:;" onClick={() => setShowingEventForm({ visible: false })}>Cancel (go back to calendar)</a>
+          </Fragment>
+        )}
+      </div>
+    </Modal>
+  )
+}
 
 // Generic component - modal to present children within
 const Modal = ({ children, onClose, title, className }) => {
@@ -253,7 +303,44 @@ const Calendar = ({ month, year, preloadedEvents = [] }) => {
   	console.log("Date has changed... Let's load some fresh data")
   }, [date])
 
- 
+  const addEvent = (event) => {
+    setIsLoading(true)
+    setShowingEventForm({ visible: false })
+
+		// These timeouts are to imitate HTTP requests
+    // So in a real impementation, you'd interact
+    // with your backend service here and handle
+    // the result accordingly...
+    // Likewise for `editEvent` and `deleteEvent`
+    // below
+    setTimeout(() => {
+      const parsedEvents = parseEvents([event])
+      
+      const updatedEvents = [...events]
+      updatedEvents.push(parsedEvents[0])
+
+      setEvents(updatedEvents)
+      setIsLoading(false)
+      showFeedback({ message: "Event created successfully", type: "success" })
+    }, MOCK_LOADING_TIME)
+  }
+
+  const editEvent = (event) => {
+    setIsLoading(true)
+    setShowingEventForm({ visible: false })
+
+    setTimeout(() => {
+      const parsedEvent = parseEvents([event])
+      
+      const updatedEvents = [...events].map(updatedEvent => {
+        return updatedEvent.id === event.id ? parsedEvent[0] : updatedEvent
+      })
+
+      setEvents(updatedEvents)
+      setIsLoading(false)
+      showFeedback({ message: "Event edited successfully", type: "success" })
+    }, MOCK_LOADING_TIME)
+  }
 
   const deleteEvent = (event) => {
     setIsLoading(true)
@@ -311,69 +398,109 @@ const Calendar = ({ month, year, preloadedEvents = [] }) => {
         />
       }
 
-     
+      {showingEventForm && showingEventForm.visible &&
+        <EventForm 
+          withEvent={showingEventForm.withEvent}
+          preselectedDate={showingEventForm.preselectedDate}
+          setShowingEventForm={setShowingEventForm} 
+          addEvent={addEvent}
+          editEvent={editEvent}
+          setViewingEvent={setViewingEvent}
+        />
+      }
     </div>
   )
 }
 
-export const CalendarView = () =>{
-return(
-<>
-<Calendar 
-    month={3} 
-    year={2023} 
-    preloadedEvents={[
-      {
-        id: 1,
-        name: "Holiday",
-        dateFrom: "2021-09-29T12:00",
-        dateTo: "2021-10-03T08:45",
-        meta: SAMPLE_META,
-        type: "Holiday"
-      },
-      {
-        id: 2,
-        name: "Meeting",
-        dateFrom: "2021-10-01T09:45",
-        dateTo: "2021-10-04T22:00",
-        meta: SAMPLE_META,
-        type: "Standard"
-      },
-      {
-        id: 3,
-        name: "Away",
-        dateFrom: "2021-10-01T01:00",
-        dateTo: "2021-10-01T23:59",
-        meta: SAMPLE_META,
-        type: "Busy"
-      },
-      {
-        id: 4,
-        name: "Inspection",
-        dateFrom: "2021-10-19T07:30",
-        dateTo: "2021-10-21T23:59",
-        meta: SAMPLE_META,
-        type: "Standard"
-      },
-      {
-        id: 5,
-        name: "Holiday - Greece",
-        dateFrom: "2021-10-14T08:00",
-        dateTo: "2021-10-16T23:59",
-        meta: SAMPLE_META,
-        type: "Holiday"
-      },
-      {
-        id: 6,
-        name: "Holiday - Spain",
-        dateFrom: "2021-10-29T08:00",
-        dateTo: "2021-10-31T23:59",
-        meta: SAMPLE_META,
-        type: "Holiday"
-      }
-    ]} 
+export const CalendarView = () =>
+{
+  //get meetings from database
+  //need name, start date + end date, meta=description, type enables colour categorisation
+  //add type field to database? 
+  const d = new Date();
+  let thismonth = d.getMonth() + 1;
+  let thisyear = d.getFullYear();
+  const meetings = [
+    {
+      id: 1,
+      name: "Design",
+      dateFrom: "2023-02-29T12:00",
+      dateTo: "2023-03-03T08:45",
+      meta: SAMPLE_META,
+      type: "Design"
+    },
+    {
+      id: 2,
+      name: "Client",
+      dateFrom: "2023-03-01T09:45",
+      dateTo: "2023-03-04T22:00",
+      meta: SAMPLE_META,
+      type: "Client"
+    },
+    {
+      id: 3,
+      name: "Weekly",
+      dateFrom: "2023-03-01T01:00",
+      dateTo: "2023-03-01T23:59",
+      meta: SAMPLE_META,
+      type: "Weekly"
+    },
+    {
+      id: 4,
+      name: "Inspection",
+      dateFrom: "2023-03-19T07:30",
+      dateTo: "2023-03-21T23:59",
+      meta: SAMPLE_META,
+      type: "Standard"
+    },
+    {
+      id: 5,
+      name: "Holiday",
+      dateFrom: "2023-03-14T08:00",
+      dateTo: "2023-03-16T23:59",
+      meta: SAMPLE_META,
+      type: "Holiday"
+    },
+    {
+      id: 6,
+      name: "Business",
+      dateFrom: "2023-03-29T08:00",
+      dateTo: "2023-03-31T23:59",
+      meta: SAMPLE_META,
+      type: "Business"
+    },
+    {
+      id: 7,
+      name: "Weekly",
+      dateFrom: "2023-03-08T01:00",
+      dateTo: "2023-03-08T23:59",
+      meta: SAMPLE_META,
+      type: "Weekly"
+    },
+    {
+      id: 8,
+      name: "Weekly",
+      dateFrom: "2023-03-15T01:00",
+      dateTo: "2023-03-15T23:59",
+      meta: SAMPLE_META,
+      type: "Weekly"
+    },
+    {
+      id: 9,
+      name: "Weekly",
+      dateFrom: "2023-03-22T01:00",
+      dateTo: "2023-03-22T23:59",
+      meta: SAMPLE_META,
+      type: "Weekly"
+    }
+  ]
+  return(
+  <Calendar 
+    month={thismonth} 
+    year={thisyear} 
+    preloadedEvents={meetings} 
   />
-  </>
-)
+  )
 }
+
 export default CalendarView;

@@ -8,29 +8,28 @@ export const ProjectListItem = ({ project }) => {
   const projectRoute = "/projects/".concat(project.id);
 
   return (
+    <Link to={projectRoute}>
     <div className="project_container">
-      <Link to={projectRoute}>
         <div className="title">
           <h1>{project.name}</h1>
         </div>
-      </Link>
-
+  
       <div className="progress-bar">
         <ProgressBar progress="30" />
       </div>
       <div className="info_container">
         <div className="info">
-          <p>Current Budget: £{project.current_budget}</p>
-          <p>Current Deadline: {project.current_deadline}</p>
-          <p>Methodology: {project.methodology}</p>
-        </div>
-        <div className="info">
-          <p>Here there will be some info</p>
-          <p>Some more info </p>
-          <p>Some other info</p>
+          <h3>Current Budget:</h3> <p> £{project.current_budget}</p>
+          <br/>
+          <br/>
+          <h3>Current Deadline:</h3><p> {project.current_deadline}</p>
+          <br/>
+          <br/>
+          <h3>Methodology: </h3><p>{project.methodology}</p>
         </div>
       </div>
     </div>
+    </Link>
   );
 };
 
