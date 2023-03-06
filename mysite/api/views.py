@@ -23,6 +23,12 @@ from startevaluationdata import StartEvaluationData
 from currentevaluationdata import CurrentEvaluationData
 from projectevaluator import ProjectEvaluator
 
+# ======================
+# Generate a ProjectEvaluator object
+# Used to get project evaluations
+# ======================
+PROJECT_EVALUATOR = ProjectEvaluator()
+
 sys.path = originalPath
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -278,7 +284,7 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
             num_tasks)
 
             #Evaluate data
-            success_chance = evaluator.get_initial_chance_of_success(start_evaluation_data)
+            success_chance = PROJECT_EVALUATOR.get_initial_chance_of_success(start_evaluation_data)
         else:
             #Load in data
             initial_budget = project.initial_budget
@@ -327,7 +333,7 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
             average_confidence)
 
             #Evaulate Data
-            success_chance = evaluator.get_current_chance_of_success(start_evaluation_data)
+            success_chance = PROJECT_EVALUATOR.get_current_chance_of_success(start_evaluation_data)
 
         risk_evaluation = RiskEvaluation(project = project, success_chance = success_chance)
         risk_evaluation.save()
