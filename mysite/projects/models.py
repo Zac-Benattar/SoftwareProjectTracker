@@ -26,7 +26,6 @@ class Project(models.Model):
     current_deadline = models.DateTimeField(default=return_week_in_future())
     methodology = models.CharField(max_length=30)
     gitHub = models.CharField(max_length=150, blank=True)
-    members = models.ManyToManyField('Member', related_name='+')
 
     def __str__(self):
         return self.name
@@ -82,7 +81,7 @@ class UserProfile(models.Model):
 
 class RiskEvaluation(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    success_chance = models.DecimalField(max_digits=3, decimal_places=2)
+    success_chance = models.DecimalField(max_digits=13, decimal_places=10)
     date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

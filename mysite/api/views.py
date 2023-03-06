@@ -252,7 +252,7 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
 
 
 
-        success_chance = 0 #Initialize success chance
+        success_chance_estimate = 0 #Initialize success chance
 
         #Get chance of success
         if generate_initial_prediction == True:
@@ -285,7 +285,7 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
             num_tasks)
 
             #Evaluate data
-            success_chance = PROJECT_EVALUATOR.get_initial_chance_of_success(start_evaluation_data)
+            success_chance_estimate = PROJECT_EVALUATOR.get_initial_chance_of_success(start_evaluation_data)
         else:
             #Load in data
             initial_budget = float(project.initial_budget)
@@ -334,9 +334,10 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
             average_confidence)
 
             #Evaulate Data
-            success_chance = PROJECT_EVALUATOR.get_current_chance_of_success(start_evaluation_data)
+            success_chance_estimate = PROJECT_EVALUATOR.get_current_chance_of_success(start_evaluation_data)
 
-        risk_evaluation = RiskEvaluation(project = project, success_chance = Decimal(success_chance))
+        print(success_chance_estimate)
+        risk_evaluation = RiskEvaluation(project = project, success_chance = float(success_chance_estimate))
         risk_evaluation.save()
         return risk_evaluation
 
