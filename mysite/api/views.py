@@ -5,7 +5,7 @@ from projects.models import *
 from .serializers import *
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.exceptions import NotFound
-from rest_framework.decorators import permission_classes
+from rest_framework.decorators import permission_classes, action
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
@@ -216,7 +216,8 @@ class RiskEvaluationViewSet(viewsets.ModelViewSet):
             project = Project.objects.get(id=project_id)
         except Project.DoesNotExist:
             raise NotFound('A project with this id does not exist')
-        return self.queryset.filter(project=project).order_by('-date')
+        set = RiskEvaluation.objects.filter(project=project).order_by('-date')
+        return set[0:1]
 
 
 class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
