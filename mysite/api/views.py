@@ -9,6 +9,21 @@ from rest_framework.decorators import permission_classes, action
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
+
+import sys #Import system file to add extra imports from outside file
+
+import pathlib #Import the libary to modify paths
+
+#Add the Risk_Assessment folder to the path
+path = str(pathlib.Path(__file__).parent.parent.joinpath("static/Risk_Assessment").resolve())
+sys.path.append(path)
+
+#Import files to handle machine learning
+from startevaluationdata import StartEvaluationData
+from currentevaluationdata import CurrentEvaluationData
+from projectevaluator import ProjectEvaluator
+
+
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
@@ -221,15 +236,104 @@ class RiskEvaluationViewSet(viewsets.ModelViewSet):
 
 class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
     serializer_class = RiskEvaluationSerializer
-    
+
     def generate_risk_evaluation(self, project):
-        success_chance = 0
+
+
+        generate_initial_prediction = True
+
+
+
+        success_chance = 0 #Initialize success chance
+
+        #Get chance of success
+        if generate_initial_prediction == True:
+
+            #Load in data
+            initial_budget = project.initial_budget
+
+            num_developers = len(Members.objects.filter(project = project, developer = True))
+            num_other_team_members = len(Members.objects.filter(project = project, developer = False))
+            # ===========================
+            # DO NOT LET THIS SLIP THROUGH THE NET!!!!!!!
+            # ===========================
+            original_deadline = project.initial_deadline #FIX THISSSSSS
+
+            daily_running_cost = 100 #Left as a placeholder for no
+            # ===========================
+            # DO NOT LET THIS SLIP THROUGH THE NET!!!!!!!
+            # ===========================
+
+            num_tasks = len(Tasks.objects.filter(project = project))
+
+            #Generate evaluation stats
+            #initial_budget, num_developers, num_other_team_members, original_deadline, daily_running_cost, num_tasks
+            start_evaluation_data = StartEvaluationData(
+            initial_budget,
+            num_developers,
+            num_other_team_members,
+            original_deadline,
+            daily_running_cost,
+            num_tasks)
+
+            #Evaluate data
+            success_chance = evaluator.get_initial_chance_of_success(start_evaluation_data)
+        else:
+            #Load in data
+            initial_budget = project.initial_budget
+            current_budget = project.current_budget
+            # ===========================
+            # DO NOT LET THIS SLIP THROUGH THE NET!!!!!!!
+            # ===========================
+            money_spent = 0
+
+            num_developers = len(Members.objects.filter(project = project, developer = True))
+            num_other_team_members = len(Members.objects.filter(project = project, developer = False))
+            # ===========================
+            # DO NOT LET THIS SLIP THROUGH THE NET!!!!!!!
+            # ===========================
+            num_team_left = 0
+            # ===========================
+            # DO NOT LET THIS SLIP THROUGH THE NET!!!!!!!
+            # ===========================
+            original_deadline = project.initial_deadline #FIX THISSSSSS
+            current_deadline = project.current_deadline #FIX THISSSSSS
+
+            daily_running_cost = 100
+            # ===========================
+            # DO NOT LET THIS SLIP THROUGH THE NET!!!!!!!
+            # ===========================
+            num_tasks = len(Tasks.objects.filter(project = project))
+            completed_tasks = 0
+            average_happiness = 0
+            average_confidence = 0
+
+            #Generate evaluation stats
+            #initial_budget, current_budget, money_spent, num_developers, num_other_team_members, num_team_left, original_deadline, current_deadline, daily_running_cost, num_tasks, completed_tasks, average_happiness, average_confidence
+            current_evaluation_data = CurrentEvaluationData(
+            initial_budget,
+            current_budget,
+            money_spent,
+            num_developers,
+            num_other_team_members,
+            num_team_left,
+            original_deadline,
+            current_deadline,
+            daily_running_cost,
+            num_tasks,
+            completed_tasks,
+            average_happiness,
+            average_confidence)
+
+            #Evaulate Data
+            success_chance = evaluator.get_current_chance_of_success(start_evaluation_data)
+
         risk_evaluation = RiskEvaluation(project = project, success_chance = success_chance)
         risk_evaluation.save()
         return risk_evaluation
 
     def get_queryset(self, *args, **kwargs):
-        
+
         project_id = self.kwargs.get("project_pk")
 
         try:
