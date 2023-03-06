@@ -1,11 +1,13 @@
 import unittest
 import datetime
-from users.models import Project, Task, Member, Role, RoleRequirement, Feedback
+from django.db import models
+from users.models import Project, Task, Member, Role, RoleRequirement, Feedback, User, Skill
+from phonenumber_field.modelfields import PhoneNumberField
 from projectsuggester import ProjectSuggester
 
-## function will return FALSE if a suggestion has to be displayed
+from django.test import TestCase
 
-class tester():
+class tester(TestCase):
     # CREATING A PROJECT
     name = "SE_project"
     description = "this project aims to ..."
@@ -14,7 +16,7 @@ class tester():
     initial_deadline = '2023-05-21 23:59:59'
     current_deadline = '2023-05-21 23:59:59'
 
-    project = Project(name, description, initial_budget, current_budget, initial_deadline, current_deadline)
+    project = Project.objects.create(name, description, initial_budget, current_budget, initial_deadline, current_deadline)
 
 
     # CREATING A TASK
@@ -24,37 +26,59 @@ class tester():
     creation_date = datetime.date.today()
     completion_status = 'S'
 
-    task1 = Task(project, name, description, duration, creation_date, completion_status)
+    task1 = Task.objects.create(project, name, description, duration, creation_date, completion_status)
 
 
     # CREATING A ROLE
     name = "Project Manager"
     description = "The Project Manager is in charge of ..."
 
-    role1 = Role(name, description)
+    role1 = Role.objects.create(name, description)
 
+
+    # CREATING SKILLS
+    name ="Leadership"
+    description = "a good leader and able to inspire, motivate, and guide the team towards the project goals"
+    skill1 = Skill.objects.create(name, description)
+
+    name ="Communication"
+    description = "Clear and effective communication skills. This includes written, verbal, and nonverbal communication"
+    skill2 = Skill.objects.create(name, description)
+
+    name ="Problem Solving"
+    description = "excellent problem-solving skills to be able to identify issues and develop strategies to overcome them."
+    skill3 = Skill.objects.create(name, description)
+
+    name ="Planning and Organization"
+    description = "be able to develop a project plan, including scheduling, resource allocation, and budgeting."
+    skill4 = Skill.objects.create(name, description)
+
+    name ="Team Management"
+    description = " be able to manage a team effectively, including delegating tasks, resolving conflicts, and providing feedback."
+    skill5 = Skill.objects.create(name, description)
 
     # CREATING A USER
-    username = models.CharField(max_length=20)
-    forename = models.CharField(max_length=30)
-    lastname = models.CharField(max_length=30)
-    join_date = models.DateTimeField('date joined')
-    email = models.EmailField()
-    # Using a library for phone number, if you want the string 
-    # representation use phone.as_e164
-    # https://django-phonenumber-field.readthedocs.io/en/latest/
-    phone = PhoneNumberField(null=False, blank=False, unique=True)
-    skillset = models.ManyToManyField(Skill)
+    username = "andrew.smith"
+    forename = "Andrew"
+    lastname = "Smith"
+    join_date = '2023-01-01'
+    email = 'andrew.smith74@gmail.com'
+    phone = '+15555555555'
+
+    user1 = User.objects.create(username, forename, lastname, join_date, email, phone)
+    user1.skillset.add(skill1, skill2, skill3, skill4, skill5)
 
     # CREATING A MEMBER
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    work_hours = models.IntegerField()
-    join_date = models.DateTimeField(auto_now_add=True)
+    work_hours = 40
 
-    member1 = Member(role1, project)
+    member1 = Member.objects.create(role1, project, user1, work_hours, user1.join_date)
 
 
     # TESTING 
+
+    # PAST DEADLINE FUNCTION
+    ## function will return TRUE if the suggestion has to be displayed
+
     def test_past_deadline(self, project):
         test = ProjectSuggester(project)
         self.assertEqual(test.past_deadline(), True, 'The fuction is wrong.')
