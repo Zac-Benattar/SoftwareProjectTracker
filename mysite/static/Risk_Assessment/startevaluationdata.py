@@ -3,7 +3,7 @@
 #This is because the project isn't in progress yet and some values would be useless
 #This object can return a matrix containing data for the model to predict a riskiness
 
-import datetime
+import datetime #Import to get the current date and time
 
 class StartEvaluationData:
     def __init__(self, initial_budget, num_developers, num_other_team_members, original_deadline, daily_running_cost, num_tasks):
@@ -14,12 +14,12 @@ class StartEvaluationData:
 
         CURRENT_DAY = datetime.datetime.today()
 
-        TIME_DELTA = original_deadline - CURRENT_DAY;
+        TIME_DELTA = original_deadline - CURRENT_DAY
 
         self.days_until_original_deadline = TIME_DELTA.days
 
-        print("Days: " + str(TIME_DELTA.days))
-
+        #Find an approximate guess at how long the money in the company will last based on
+        #Cost estimates
         self.days_budget_covers_running_costs = (self.initial_budget - self.money_spent) / daily_running_cost
         self.num_tasks = num_tasks
         self.num_completed_tasks = 0

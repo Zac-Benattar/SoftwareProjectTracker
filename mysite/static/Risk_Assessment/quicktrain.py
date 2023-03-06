@@ -20,5 +20,6 @@ elif no_of_arguments == 1:
     #call function if file is run through command line
     modeltrainer.train_all_models()
 else:
-    print("Incorrect number of arguments");
-    print("Use python3 modeltrainer.py [DATASET_FILEPATH] [MODEL_FILENAME]")
+    print("Incorrect number of arguments")
+    print("Use: python3 modeltrainer.py")
+    print("or use: python3 modeltrainer.py [DATASET_FILEPATH] [MODEL_FILENAME]")

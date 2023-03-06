@@ -2,6 +2,10 @@
 from startevaluationdata import StartEvaluationData
 #Class used to store all the relevant project data during development
 #This object can return a matrix containing data for the model to predict a riskiness
+
+
+import datetime #Import to get the current date and time
+
 class CurrentEvaluationData(StartEvaluationData): #CurrentEvaluationData inherits from StartEvaluationData
     #Overrides StartEvaluationData init
     def __init__(self, initial_budget, current_budget, money_spent, num_developers, num_other_team_members, num_team_left, original_deadline, current_deadline, daily_running_cost, num_tasks, completed_tasks, average_happiness, average_confidence):
@@ -15,9 +19,17 @@ class CurrentEvaluationData(StartEvaluationData): #CurrentEvaluationData inherit
 
         self.num_team_left = num_team_left
 
-        self.days_until_original_deadline = None
-        self.days_until_current_deadline = None
 
+        CURRENT_DAY = datetime.datetime.today()
+
+        TIME_DELTA_ORIGINAL = original_deadline - CURRENT_DAY
+        TIME_DELTA_CURRENT = current_deadline - CURRENT_DAY
+
+        self.days_until_original_deadline = TIME_DELTA_ORIGINAL.days
+        self.days_until_current_deadline = TIME_DELTA_CURRENT.days
+
+        #Find an approximate guess at how long the money in the company will last based on
+        #Cost estimates
         self.days_budget_covers_running_costs = (self.current_budget - self.money_spent) / daily_running_cost
 
         self.num_tasks = num_tasks
@@ -44,7 +56,7 @@ class CurrentEvaluationData(StartEvaluationData): #CurrentEvaluationData inherit
         self.current_average_confidence
         ]]
 
-        return array #Return 1xn matrix
+        return matrix #Return 1xn matrix
 
     #Inherits methods from StartEvaluationData
 
