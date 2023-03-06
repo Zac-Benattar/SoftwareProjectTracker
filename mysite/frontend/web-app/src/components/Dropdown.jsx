@@ -34,6 +34,7 @@ export const Dropdown = ({ placeHolder, options}) => {
     return placeHolder;
   };
 
+  // Sets value selected to variable "selectedValue"
   const onItemClick = (option) => {
     setSelectedValue(option);
   };
@@ -44,6 +45,8 @@ export const Dropdown = ({ placeHolder, options}) => {
     }
     return selectedValue.value === option.value;
   }
+
+  console.log(selectedValue);
 
   return (
     <div className="dropdown-container">
@@ -62,10 +65,10 @@ export const Dropdown = ({ placeHolder, options}) => {
 
             <div 
             onClick={()=>onItemClick(option)}
-            key = {option.value} 
             className={'dropdown-item ${isSelected(option) && "selected"}'}>
                 {option.label}
             </div>
+            
 
         ))} 
 
