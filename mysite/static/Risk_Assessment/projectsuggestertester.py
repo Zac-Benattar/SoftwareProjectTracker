@@ -1,13 +1,15 @@
 import unittest
 import datetime
+
+from django.test import TestCase
 from django.db import models
-from users.models import Project, Task, Member, Role, RoleRequirement, Feedback, User, Skill
+from django.contrib.auth.models import User
+from models import Project, Task, Member, Role, RoleRequirement, Feedback, User, Skill
 from phonenumber_field.modelfields import PhoneNumberField
 from projectsuggester import ProjectSuggester
 
-from django.test import TestCase
 
-class tester(TestCase):
+class tester(unittest.TestCase):
     # CREATING A PROJECT
     name = "SE_project"
     description = "this project aims to ..."
@@ -16,7 +18,7 @@ class tester(TestCase):
     initial_deadline = '2023-05-21 23:59:59'
     current_deadline = '2023-05-21 23:59:59'
 
-    project = Project.objects.create(name, description, initial_budget, current_budget, initial_deadline, current_deadline)
+    project1 = Project.objects.create(name, description, initial_budget, current_budget, initial_deadline, current_deadline)
 
 
     # CREATING A TASK
@@ -26,7 +28,15 @@ class tester(TestCase):
     creation_date = datetime.date.today()
     completion_status = 'S'
 
-    task1 = Task.objects.create(project, name, description, duration, creation_date, completion_status)
+    task1 = Task.objects.create(project1, name, description, duration, creation_date, completion_status)
+
+
+    # CREATING FEEDBACK 
+    confidence = 5
+    emotion = 5
+    date = datetime.date.today()
+
+    feedback1 = Feedback.objects.create(project1, confidence, emotion, date)
 
 
     # CREATING A ROLE
@@ -57,6 +67,12 @@ class tester(TestCase):
     description = " be able to manage a team effectively, including delegating tasks, resolving conflicts, and providing feedback."
     skill5 = Skill.objects.create(name, description)
 
+
+    # CREATING ROLE REQUIREMENT
+    PM = RoleRequirement.objects.create(role1)
+    PM.skillset.add(skill1, skill2, skill3, skill4, skill5)
+
+
     # CREATING A USER
     username = "andrew.smith"
     forename = "Andrew"
@@ -66,22 +82,56 @@ class tester(TestCase):
     phone = '+15555555555'
 
     user1 = User.objects.create(username, forename, lastname, join_date, email, phone)
-    user1.skillset.add(skill1, skill2, skill3, skill4, skill5)
+    user1.skillset.add(skill1, skill2, skill3, skill4)
+
 
     # CREATING A MEMBER
     work_hours = 40
 
-    member1 = Member.objects.create(role1, project, user1, work_hours, user1.join_date)
+    member1 = Member.objects.create(role1, project1, user1, work_hours, user1.join_date)
+
+
+    # CREATING FILEPATH OF A CODE
+    file_path = "C:\Users\alexp\Documents\GitHub\SoftwareProjectTracker\mysite\test\test.py"
 
 
     # TESTING 
 
     # PAST DEADLINE FUNCTION
     ## function will return TRUE if the suggestion has to be displayed
-
     def test_past_deadline(self, project):
         test = ProjectSuggester(project)
         self.assertEqual(test.past_deadline(), True, 'The fuction is wrong.')
 
-        if __name__ == '__main__':
-            unittest.main()
+        # if __name__ == '__main__':
+        #     unittest.main()
+
+    # CHANGING ROLES FUNCTION
+    ## function will return TRUE if the suggestion has to be displayed
+    def test_changing_roles(self, project):
+        test = ProjectSuggester(project)
+        self.assertEqual(test.changing_roles(), True, 'The fuction is wrong.')
+
+    # AVERAGE HAPPINESS FUNCTION
+    ## function will return the average happiness
+    def test_average_happiness(self, project):
+        test = ProjectSuggester(project)
+        self.assertEqual(test.average_happiness(), 5, 'The fuction is wrong.')
+
+    # COUNT COMMENTS FUNCTION
+    ## function will return the number of comments
+    def test_count_comments(self, file_path):
+        test = ProjectSuggester(file_path)
+        self.assertEqual(test.count_comments(), 1, 'The fuction is wrong.')
+
+    # COMPLETION RATIO FUNCTION
+    ## function will return TRUE if the suggestion has to be displayed
+    def test_completion_ratio(self, project):
+        test = ProjectSuggester(project)
+        self.assertEqual(test.changing_roles(), True, 'The fuction is wrong.')
+ 
+    # LOW BUDGET FUNCTION
+    ## function will return TRUE if the suggestion has to be displayed
+    def test_low_budget(self, project):
+        test = ProjectSuggester(project)
+        self.assertEqual(test.low_budget(), True, 'The fuction is wrong.')
