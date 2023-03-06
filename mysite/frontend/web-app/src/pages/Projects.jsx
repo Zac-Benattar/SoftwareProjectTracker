@@ -1,120 +1,129 @@
-import React from "react";
-import {Link, useLocation} from "react-router-dom";
-import { useEffect, useState } from "react";
-import {ListPeople }from "../components/ListPeople";
-
+import React, { useEffect, useState, useContext } from "react";
+import { Link, useLocation, useParams } from "react-router-dom";
+import { ListPeople }from "../components/ListPeople";
 import Navbar from "../components/Navbar";
+import SuccessChanceDisplay from "../components/SuccessChanceDisplay";
+import AuthContext from "../context/AuthContext";
 
 
 
-export const Projects = (props) => {
-
-
+const Projects = () => {
 
     const location = useLocation();
     const state = location.state;
-    let [projects, setProjects] = useState([]);
 
-    
-    
-    useEffect(() => {
-        getProjects();
-    }, []);
+    // Deconstructing the relevent sections from AuthContext
+    let { authTokens, logoutUser, user } = useContext(AuthContext);
 
-    let getProjects = async () => {
-        let response = await fetch('/api/projects/'+state.id+'/members/');
-        let data = await response.json();
-        console.log("Data:", data);
-        setProjects(data);
-    };
+  // Defining the states
+  let [project, setProject] = useState([]);
+  let [riskEvaluation, setRiskEvaluation] = useState([]);
 
-    const passing_data = {
-        name: state.name,
-        id: state.id,
-    };
+  // Get slug parameter given when Project is referenced in router
+  const { slug } = useParams();
+
+  // Setting up states
+  useEffect(() => {
+    getProject();
+    getRiskEvaluation();
+  }, []);
+
+  // Obtaining the specific project via a GET request to the api referencing our authorisation token
+  let getProject = async (e) => {
+    let response = await fetch(
+      "http://127.0.0.1:8000/api/projects/".concat(slug),
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+      }
+    );
+    let data = await response.json();
+
+    // If the response is good - set the state of project to be the result of the GET request
+    if (response.status === 200) {
+      setProject(data);
+      // If the respose is unauthorised, log out the user using the imported AuthContext method
+    } else if (response.statusText === "Unauthorized") {
+      logoutUser();
+    }
+  };
+
+  // Obtaining the specific project's most recent risk evaulation via a GET request to the api referencing our authorisation token
+  let getRiskEvaluation = async (e) => {
+    let response = await fetch(
+      "http://127.0.0.1:8000/api/projects/"
+        .concat(slug)
+        .concat("/riskevaluation"),
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+      }
+    );
+    let data = await response.json();
+
+    // If the response is good - set the state of riskevaluation to be the result of the GET request
+    if (response.status === 200) {
+      setRiskEvaluation(data);
+      // If the respose is unauthorised, log out the user using the imported AuthContext method
+    } else if (response.statusText === "Unauthorized") {
+      logoutUser();
+    }
+  };
+
+    // const passing_data = {
+    //     name: state.name,
+    //     id: state.id,
+    // };
 
 
 
-    const [clientName, setName] = useState('');
-    const [releaseDate, setDate] = useState();
-    const [methodology, setMethodology] = '';
-    const requirements = 0;
-    const design = 0;
-    const implementation = 0;
-    const unittesting = 0;
-    const integration = 0;
-    const riskScore = 0;
+    // const [clientName, setName] = useState('');
+    // const [releaseDate, setDate] = useState();
+    // const [methodology, setMethodology] = '';
+    // const requirements = 0;
+    // const design = 0;
+    // const implementation = 0;
+    // const unittesting = 0;
+    // const integration = 0;
+    const success_chance = 0;
 
     
     return (
         <>
         <Navbar/>
-        <div>
-        <div className="project_container">
-            <div className="info">
-                    <p>Methodology</p>
-                    <select value={methodology} onChange={() => setMethodology(this.selectedOption)}>
-                        <option>Waterfall</option>
-                        <option>Agile</option>
-                    </select>
-            </div>
-            <div className="info">
-                    <p>Client</p>
-                    <input value={clientName} onChange={(e)=>setName(e.target.value)} 
-                     type="text" placeholder="Client Name" id="clientname" name="clientname"/>
-            </div>
-            <div className="info">
-                    <p>Release Date</p>
-                    <input value={releaseDate} onChange={(e)=>setDate(e.target.value)} 
-                     type="date" id="releaseDate" name="releaseDate"/>
-            </div>
-        </div> 
-        <div className="project_container">
-            <div className="title">
-                <h1>{state.name}</h1>
-            </div>
-            <div className="info_container">
-                <div className="info">
-                    <p>{state.description}</p>
+        <div className="home-page">
+            {riskEvaluation.map((riskEvaluation, index) => (
+            <SuccessChanceDisplay key={index} risk_evaluation={riskEvaluation} />
+            ))}
+            <div className="project-info-container">
+                <div className="project-name">
+                    <h1>{project.name}</h1>
                 </div>
-                <br/>
-                <div className="info">
-                    <ul>
-                        <li> Requirements: {requirements}% Complete </li>
-                        <li> Design: {design}% Complete </li>
-                        <li> Implementation: {implementation}% Complete </li>
-                        <li> Unit Testing: {unittesting}% Complete </li>
-                        <li> Integration Testing: {integration}% Complete </li>
-                    </ul>
+                <div className="project-description">
+                    <h3 className="des-title"> Project Description: </h3>
+                    <p className="des">{project.description}</p>
+                    <h3 className="des-title"> Project methodology: </h3>
+                    <p  className="des">{project.methodology}</p>
+                    <h3 className="des-title"> Project budget: </h3>
+                    <p className="des">  {project.initial_budget}</p>
+                    <h3 className="des-title"> Project deadine: </h3>
+                    <p className="des"> {project.initial_deadline}</p>
+
                 </div>
-            </div>
-        </div>  
-            <div className="info_container">
-                <div className="info">
-                    <p> Risk Score: {riskScore}% Success Chance</p>
-                </div>
-            </div>
-            <button>Pause project</button>
-            <button>Push back project</button>
+
+                <button className="proj-button">Pause project progress</button>
+                <button className="proj-button">Push back project deadline</button>
+            </div>  
+           
         </div>
         </>     
-     
     );
-
-      
-    //     <div> 
-
-    //         <h2> 
-    //             This is the projects page for {state.name}!
-    //         </h2>
-
-    //         <h3>
-    //             <Link to="/people" state={passing_data}>
-    //                 People
-    //             </Link>
-    //         </h3>
-                
-
-    //     </div>
-    // )
 }
+
+export default Projects;

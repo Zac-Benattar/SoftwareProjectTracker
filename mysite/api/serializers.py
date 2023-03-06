@@ -1,7 +1,6 @@
 #converts python model objects to json inkedId
 from rest_framework.serializers import ModelSerializer
 from projects.models import * 
-from users.models import *
 
 class ProjectSerializer(ModelSerializer):
     class Meta:
@@ -20,7 +19,7 @@ class RoleRequirementSerializer(ModelSerializer):
 
 class UserSerializer(ModelSerializer):
     class Meta:
-        model = User
+        model = UserProfile
         fields ='__all__'
 
 class SkillSerializer(ModelSerializer):
@@ -48,9 +47,40 @@ class ScheduleSerializer(ModelSerializer):
         model = Schedule
         fields = '__all__'
 
-class TaskSerializer(ModelSerializer):
+
+class TimeWorkedSerializer(ModelSerializer):
     class Meta:
-        model = Task
+        model = TimeWorked
+        fields = '__all__'
+
+
+class ScheduleSerializer(ModelSerializer):
+    class Meta:
+        model = Schedule
+        fields = '__all__'
+
+
+class RiskEvaluationSerializer(ModelSerializer):
+    class Meta:
+        model = RiskEvaluation
+        fields = '__all__'
+
+
+class MeetingSerializer(ModelSerializer):
+    class Meta:
+        model = Meeting
+        fields = '__all__'
+
+
+class FeedbackSerializer(ModelSerializer):
+    class Meta:
+        model = Feedback
+        fields = '__all__'
+
+
+class RecommendationSerializer(ModelSerializer):
+    class Meta:
+        model = Recommendation
         fields = '__all__'
 
 class RiskEvaluationSerializer(ModelSerializer):
@@ -72,4 +102,9 @@ class RecommendationSerializer(ModelSerializer):
     class Meta:
         model = Recommendation
         fields = '__all__'
+        
 
+class TaskSerializer(ModelSerializer):
+    class Meta:
+        model = Task
+        fields = '__all__'
