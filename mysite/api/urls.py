@@ -24,6 +24,9 @@ task_router.register( r'tasks', TaskViewSet, basename='project-task')
 risk_evaluation_router = routers.NestedDefaultRouter( router, r'projects', lookup = 'project')
 risk_evaluation_router.register( r'riskevaluation', RiskEvaluationViewSet, basename='project-riskEvaluation')
 
+generate_risk_evaluation_router = routers.NestedDefaultRouter( router, r'projects', lookup = 'project')
+generate_risk_evaluation_router.register( r'generateriskevaluation', RiskEvaluationGeneratorViewSet, basename='project-generateRiskEvaluation')
+
 meeting_router = routers.NestedDefaultRouter( router, r'projects', lookup = 'project')
 meeting_router.register( r'meeting', MeetingViewSet, basename='project-meeting')
 
@@ -62,6 +65,7 @@ urlpatterns = [
     path('', include(schedule_router.urls)),
     path('', include(task_router.urls)),
     path('', include(risk_evaluation_router.urls)),
+    path('', include(generate_risk_evaluation_router.urls)),
     path('', include(meeting_router.urls)),
     path('', include(feedback_router.urls)),
     path('', include(recommendation_router.urls)),
