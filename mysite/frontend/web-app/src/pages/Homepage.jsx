@@ -9,60 +9,88 @@ import { Nav } from "../components/NavbarElems";
 import HomeNavbar from "../components/HomeNavbar";
 import MemberInput from "../components/MemberInput";
 
-const Homepage = () => {
-  // Defining options for the order by dropdown
-  const options = [
-      {value: "name", label:"Project Name"},
-      {value: "deadline_date", label: "Deadline"},
-      {value: "start_date", label: "Start Date"},
-      {value: "progress", label: "Progress completed"}
-  ];
 
-  // Defining the states
+const Homepage = () => {
+  // Sets variables 
   const [projectName, setProjectName] = useState("");
   const [projectDescription, setProjectDescription] = useState("");
   const [projectBudget, setProjectBudget] = useState("");
   const [projectStart, setProjectStart] = useState("");
   const [projectDeadline, setProjectDeadline] = useState("");
   const [projectMembers, setProjectMembers] = useState("");
-  const [roleName, setRoleName] = useState("");
-  const [roleDescription, setRoleDescription] = useState("");
-
-  // list to store members in a project
-  const [membersList, setMembersList] = useState([{member: ""}]); 
-
-
-  const[rolesList, setRolesList] = useState([{role:""}]);
-
-
   
-
-  console.log(membersList);
-  const handleServiceAdd = () => {
-    setMembersList([...membersList, {member:""}]);
-  }
-
-  const handleServiceRemove = (index) => {
-    const list = [...membersList];
-    list.splice(index, 1);
-    setMembersList(list);
-  }
-
-  const handleServiveChange = (e,  index) => {
-    const {name, value} = e.target; 
-    const list = [...membersList];
-    list[index][name]=value;
-    setMembersList(list);
-  }
-
-  const handleRoleAdd = (role) => {
-    setRolesList.push(role);
-  }
-
-
-  const [date,setDate] = useState(new Date());
-
   let [projects, setProjects] = useState([]);
+
+
+   // list to store members in a project
+   const [membersList, setMembersList] = useState([{member: ""}]); 
+
+   console.log(membersList);
+   const handleServiceAdd = () => {
+     setMembersList([...membersList, {member:""}]);
+   }
+ 
+   const handleServiceRemove = (index) => {
+     const list = [...membersList];
+     list.splice(index, 1);
+     setMembersList(list);
+   }
+ 
+   const handleServiveChange = (e,  index) => {
+     const {name, value} = e.target; 
+     const list = [...membersList];
+     list[index][name]=value;
+     setMembersList(list);
+   }
+
+   const addProject = () => {
+       var modal = document.getElementById("add-project-modal");
+       var span = document.getElementsByClassName("close")[0];
+       modal.style.display = "block";
+       span.onclick = function() {
+         modal.style.display = "none";
+       }
+       window.onclick = function(event) {
+         if (event.target === modal) {
+           modal.style.display = "none";
+         }
+       }
+   
+   }
+
+
+        let [allRoles, setRoles] = useState([]);
+
+      useEffect(() => {
+        getRoles();
+      }, []);
+
+      let getRoles = async () => {
+        let response = await fetch("/api/roles/");
+        let data = await response.json();
+        console.log("Data:", data);
+        setRoles(data);
+      };
+
+      // Creates a list of role names from the role object.
+      const roleNames = 
+      allRoles.map(role =>( { key:role.id}, {label:role.name} ));
+
+      
+      const addRole = () => {
+        var modal = document.getElementById("add-role-modal");
+        var span = document.getElementsByClassName("role-close")[0];
+        modal.style.display = "block";
+        span.onclick = function() {
+          modal.style.display = "none";
+        }
+        window.onclick = function(event) {
+          if (event.target === modal) {
+            modal.style.display = "none";
+          }
+        }
+
+      }
 
   // Deconstructing the relevent sections from AuthContext
   let { authTokens, logoutUser, user } = useContext(AuthContext);
@@ -91,101 +119,173 @@ const Homepage = () => {
       logoutUser();
     }
   };
-
-
-  let [allRoles, setRoles] = useState([]);
-
-  useEffect(() => {
-    getRoles();
-  }, []);
-
-  let getRoles = async () => {
-    let response = await fetch("/api/roles/");
-    let data = await response.json();
-    console.log("Data:", data);
-    setRoles(data);
-  };
-
-  // Creates a list of role names from the role object.
-  const roleNames = 
-  allRoles.map(role =>( { key:role.id}, {label:role.name} ));
-
-  console.log(roleNames);
-
-  console.log(membersList);
-
-
-  const addProject = () => {
-    var modal = document.getElementById("add-project-modal");
-    var span = document.getElementsByClassName("close")[0];
-    modal.style.display = "block";
-    span.onclick = function() {
-      modal.style.display = "none";
-    }
-    window.onclick = function(event) {
-      if (event.target === modal) {
-        modal.style.display = "none";
-      }
-    }
-
-  }
-
-  
-  const addRole = () => {
-    var modal = document.getElementById("add-role-modal");
-    var span = document.getElementsByClassName("role-close")[0];
-    modal.style.display = "block";
-    span.onclick = function() {
-      modal.style.display = "none";
-    }
-    window.onclick = function(event) {
-      if (event.target === modal) {
-        modal.style.display = "none";
-      }
-    }
-
-  }
-  
+ 
 
   return (
     
       <>
-      <div className="home-page">
-          <HomeNavbar/> 
-          <div className="home-page-content">
-            <div className="home-page-menu">
-              
-                <button  
-                  className= "add-proj-btn" 
-                  onClick = {addProject}> 
-                  Add Project 
-                </button>
-            
-                  <button 
-                  className="add-proj-btn">
-                    Edit Skillset
-                  </button>
+
+
+    <div id="add-project-modal" className="modal">
+            <div className="modal-content"> 
                   
+                  <span className="close">&times;</span>
+
+                  <h1>Create New Project</h1>
+
+                  <span className = "project_name">
+                      <label forHtml = "project_name" className = "inputLabels">Project Name: </label>
+                      <input 
+                      type = "text" 
+                      required id = "project_name" 
+                      name = "project_name" 
+                      placeholder = "Project Name" 
+                      className = "projectInputs" 
+                      onChange={event=> setProjectName(event.target.value)}>
+                      </input>
+                  </span>
+
+                    <span className = "project_description">
+                        <label forHtml = "project_description" className = "inputLabels">Project Description: </label>
+                        <input 
+                        type = "text" 
+                        required id = "project_description" 
+                        name = "project_description" 
+                        placeholder = "Project Description" 
+                        className = "projectInputs" 
+                        onChange = {event => setProjectDescription(event.target.value)}>
+                        </input>
+                    </span>
+
+                    <span className = "project_budget">
+                        
+                        <label 
+                              forHtml = "project_budget"
+                              className = "inputLabels">
+                                Project Budget: 
+                        </label>
+                        
+                        <input 
+                          type = "text" 
+                          required id = "project_budget" 
+                          name = "project_budget" 
+                          placeholder = "Project Budget" 
+                          className = "projectInputs" 
+                          onChange = {event => setProjectBudget(event.target.value)}>
+                        </input>
+                    </span>
+
+                    <span className = "project_deadline">
+                        
+                        <label 
+                              forHtml = "project_deadine"
+                              className = "inputLabels">
+                                Project Deadline: 
+                        </label>
+                        
+                        <input 
+                          type = "text" 
+                          required id = "project_deadline" 
+                          name = "project_deadline" 
+                          placeholder = "Project Deadline" 
+                          className = "projectInputs" 
+                          onChange = {event => setProjectDeadline(event.target.value)}>
+                        </input>
+                    </span>
+
+                    <span className = "project_start">
+                        
+                        <label 
+                              forHtml = "project_start"
+                              className = "inputLabels">
+                                Project Start Date: 
+                        </label>
+                        
+                        <input 
+                          type = "text" 
+                          required id = "project_start" 
+                          name = "project_start" 
+                          placeholder = "Project Start" 
+                          className = "projectInputs" 
+                          onChange = {event => setProjectStart(event.target.value)}>
+                        </input>
+                    </span>           
+
+                    <label htmlFor="member"> Member(s) </label>
+                    {membersList.map((singleMember,index) => (
+                      <>                  
+                      <div key = {index} className="members">
+                      <input name="member" type="text" id="member" placeholder="Member Username" required
+                      value = {singleMember.member}
+                      onChange={(e)=>handleServiveChange(e, index )}/>
+                      {membersList.length - 1 === index   && 
+                      (
+                      <button onClick={handleServiceAdd}> <span> Add a member </span></button>
+                      )}
+
+                      <Dropdown classname="add-proj-drop" placeHolder="Select Role" options={roleNames}/>
+
+                      <button onClick={addRole}> Role not here? Add a new one. </button>
+                      </div>
+                      
+                      <div className="second-div">
+                        <button onClick={()=>handleServiceRemove(index)}> <span> Remove Button </span></button>
+                      </div>
+                      </>
+                      
+                    ))}
+    
+                    <span>
+                      <button className="create-project-btn">Create Project</button>
+                    </span>
+                    
             </div>
-            <div className="projects-list">
-              {projects.map((project, index) => (
-                <ProjectListItem key={index} project={project} />
-              ))}
-              {projects.map((project, index) => (
-                <ProjectListItem key={index} project={project} />
-              ))}
-              {projects.map((project, index) => (
-                <ProjectListItem key={index} project={project} />
-              ))}
-              {projects.map((project, index) => (
-                <ProjectListItem key={index} project={project} />
-              ))}
-              
-              
-            </div>
-            
           </div>
-        </div>
+
+
+
+
+
+
+
+
+
+          <div className="home-page">
+              <HomeNavbar/> 
+              <div className="home-page-content">
+                <div className="home-page-menu">
+                  
+                    <button  
+                      className= "add-proj-btn" 
+                      onClick = {addProject}> 
+                      Add Project 
+                    </button>
+                
+                      <button 
+                      className="add-proj-btn">
+                        Edit Skillset
+                      </button>
+                      
+                </div>
+                <div className="projects-list">
+                  {projects.map((project, index) => (
+                    <ProjectListItem key={index} project={project} />
+                  ))}
+                  {projects.map((project, index) => (
+                    <ProjectListItem key={index} project={project} />
+                  ))}
+                  {projects.map((project, index) => (
+                    <ProjectListItem key={index} project={project} />
+                  ))}
+                  {projects.map((project, index) => (
+                    <ProjectListItem key={index} project={project} />
+                  ))}
+                  
+                  
+                </div>
+                
+              </div>
+            </div>
 
         
     
@@ -197,6 +297,8 @@ const Homepage = () => {
 }
 
 export default Homepage;
+
+
 
 
  {/* <div id="add-project-modal" className="modal">
