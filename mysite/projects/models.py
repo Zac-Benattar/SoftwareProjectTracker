@@ -156,6 +156,7 @@ class Member(models.Model):
     work_hours = models.IntegerField(default=0)
     join_date = models.DateTimeField(auto_now_add=True)
     project_manager = models.BooleanField(default=False)
+    developer = models.BooleanField(default=True)
 
     def __str__(self):
         return self.user_profile.__str__() + ' ' + self.project.__str__() + ' ' + self.role.__str__()
