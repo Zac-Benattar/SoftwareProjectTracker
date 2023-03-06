@@ -11,18 +11,19 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 
 
 import sys #Import system file to add extra imports from outside file
-
 import pathlib #Import the libary to modify paths
 
 #Add the Risk_Assessment folder to the path
-path = str(pathlib.Path(__file__).parent.parent.joinpath("static/Risk_Assessment").resolve())
-sys.path.append(path)
+originalPath = sys.path
+folderpath = str(pathlib.Path(__file__).parent.parent.joinpath('static\Risk_Assessment').resolve())
+sys.path.append(folderpath)
 
 #Import files to handle machine learning
 from startevaluationdata import StartEvaluationData
 from currentevaluationdata import CurrentEvaluationData
 from projectevaluator import ProjectEvaluator
 
+sys.path = originalPath
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
