@@ -8,6 +8,7 @@ from rest_framework.exceptions import NotFound
 from rest_framework.decorators import permission_classes, action
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
+from decimal import Decimal
 
 
 import sys #Import system file to add extra imports from outside file
@@ -257,10 +258,10 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
         if generate_initial_prediction == True:
 
             #Load in data
-            initial_budget = project.initial_budget
+            initial_budget = float(project.initial_budget)
 
-            num_developers = len(Members.objects.filter(project = project, developer = True))
-            num_other_team_members = len(Members.objects.filter(project = project, developer = False))
+            num_developers = len(Member.objects.filter(project = project, developer = True))
+            num_other_team_members = len(Member.objects.filter(project = project, developer = False))
             # ===========================
             # DO NOT LET THIS SLIP THROUGH THE NET!!!!!!!
             # ===========================
@@ -271,7 +272,7 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
             # DO NOT LET THIS SLIP THROUGH THE NET!!!!!!!
             # ===========================
 
-            num_tasks = len(Tasks.objects.filter(project = project))
+            num_tasks = len(Task.objects.filter(project = project))
 
             #Generate evaluation stats
             #initial_budget, num_developers, num_other_team_members, original_deadline, daily_running_cost, num_tasks
@@ -287,15 +288,15 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
             success_chance = PROJECT_EVALUATOR.get_initial_chance_of_success(start_evaluation_data)
         else:
             #Load in data
-            initial_budget = project.initial_budget
-            current_budget = project.current_budget
+            initial_budget = float(project.initial_budget)
+            current_budget = float(project.current_budget)
             # ===========================
             # DO NOT LET THIS SLIP THROUGH THE NET!!!!!!!
             # ===========================
-            money_spent = 0
+            money_spent = float(0)
 
-            num_developers = len(Members.objects.filter(project = project, developer = True))
-            num_other_team_members = len(Members.objects.filter(project = project, developer = False))
+            num_developers = len(Member.objects.filter(project = project, developer = True))
+            num_other_team_members = len(Member.objects.filter(project = project, developer = False))
             # ===========================
             # DO NOT LET THIS SLIP THROUGH THE NET!!!!!!!
             # ===========================
@@ -310,7 +311,7 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
             # ===========================
             # DO NOT LET THIS SLIP THROUGH THE NET!!!!!!!
             # ===========================
-            num_tasks = len(Tasks.objects.filter(project = project))
+            num_tasks = len(Task.objects.filter(project = project))
             completed_tasks = 0
             average_happiness = 0
             average_confidence = 0
@@ -335,7 +336,7 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
             #Evaulate Data
             success_chance = PROJECT_EVALUATOR.get_current_chance_of_success(start_evaluation_data)
 
-        risk_evaluation = RiskEvaluation(project = project, success_chance = success_chance)
+        risk_evaluation = RiskEvaluation(project = project, success_chance = Decimal(success_chance))
         risk_evaluation.save()
         return risk_evaluation
 
