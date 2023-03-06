@@ -25,8 +25,8 @@ class ProjectSuggester: # evaluating project's pararameters to make suggestions
                     if datetime.date.today() > (task.createdTime + task.duration):
                         print(f"You've run out of time to complete the task {task.name}.\
                                 Try allocating more people to the task.")
-                        return False
-        return True
+                        return True
+        return False
     
     
     def changing_roles(self, project):
