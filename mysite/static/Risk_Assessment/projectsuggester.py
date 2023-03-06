@@ -44,8 +44,9 @@ class ProjectSuggester: # evaluating project's pararameters to make suggestions
                                     for the role as {member.role.name} in the project \
                                     {project.name}. Try changing their role to one \
                                     more adequate.")
-
-        return None
+                            return True
+        return False
+    
 
 
     def average_happiness(self, project):
@@ -66,7 +67,7 @@ class ProjectSuggester: # evaluating project's pararameters to make suggestions
             print(f"The average happiness of the members of the project {project.name} \
                     is low: {avg_happiness}.")
 
-        return None
+        return avg_happiness
 
 
     def count_comments(self, file_path):
@@ -115,8 +116,9 @@ class ProjectSuggester: # evaluating project's pararameters to make suggestions
         if time_ratio < tasks_ratio:
             print(f"We suggest extending the deadline for the project {project.name} to \
                     complete the remaining taks.")
-
-        return None
+            return True
+        
+        return False
 
 
     def low_budget(self, project):
@@ -130,8 +132,9 @@ class ProjectSuggester: # evaluating project's pararameters to make suggestions
         if time_ratio > budget_ratio:
             print(f"We suggest increasing the budget for the project {project.name} to \
                     complete the remaining taks.")
-
-        return None
+            return True
+        
+        return False
 
 
 
