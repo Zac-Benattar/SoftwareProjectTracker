@@ -148,10 +148,58 @@ const Homepage = () => {
   
 
   return (
-    <div>
+    
       <>
-      <HomeNavbar/> 
-      <div id="add-project-modal" className="modal">
+      <div className="home-page">
+          <HomeNavbar/> 
+          <div className="home-page-content">
+            <div className="home-page-menu">
+              
+                <button  
+                  className= "add-proj-btn" 
+                  onClick = {addProject}> 
+                  Add Project 
+                </button>
+            
+                  <button 
+                  className="add-proj-btn">
+                    Edit Skillset
+                  </button>
+                  
+            </div>
+            <div className="projects-list">
+              {projects.map((project, index) => (
+                <ProjectListItem key={index} project={project} />
+              ))}
+              {projects.map((project, index) => (
+                <ProjectListItem key={index} project={project} />
+              ))}
+              {projects.map((project, index) => (
+                <ProjectListItem key={index} project={project} />
+              ))}
+              {projects.map((project, index) => (
+                <ProjectListItem key={index} project={project} />
+              ))}
+              
+              
+            </div>
+            
+          </div>
+        </div>
+
+        
+    
+
+     
+      </>     
+   
+  );
+}
+
+export default Homepage;
+
+
+ {/* <div id="add-project-modal" className="modal">
         <div className="modal-content"> 
               
               <span className="close">&times;</span>
@@ -306,68 +354,4 @@ const Homepage = () => {
           </div>
         </div>
       </div>
-      
-      <div className="home-page">
-
-      <div className="left_side">
-
-        <div className="user-profile"> 
-
-            <h2 className="user-title">
-
-                Welcome, {user.username}
-
-            </h2>
-
-        </div>
-
-
-        <div className="calander-container">
-            <Calendar onChange={setDate} value={date}/>
-        </div>
-
-        <p className='text-center'>
-            <span className='bold'>Selected Date:</span>{' '}
-            {date.toDateString()}
-        </p>
-      </div>
-         
-
-      <div className="all_projects">
-          <div className="top-of-page"> 
-
-              <button  
-              className= "add-proj-btn" 
-              onClick = {addProject}> 
-              Add Project 
-              </button>
-              
-              <h2 className="dropdown-title"> 
-                  ORDER BY:
-              </h2>
-              
-              <div className="dropdown-menu">
-                  <Dropdown placeHolder="Select ..." options={options}/>
-              </div>
-          
-
-          </div>      
-        
-      <div className="projects-list">
-        {projects.map((project, index) => (
-          <ProjectListItem key={index} project={project} />
-        ))}
-      </div>
-
-      </div>
-
-      </div>
-
-
-     
-      </>     
-   </div>
-  );
-}
-
-export default Homepage;
+       */}

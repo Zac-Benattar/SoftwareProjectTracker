@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./NavbarElems";
-import "../App.css";
+import "../pages/Homepage.css";
 import AuthContext from "../context/AuthContext";
 
 const Navbar = (props) => {
@@ -45,15 +45,8 @@ const Navbar = (props) => {
               People
             </Link>
           </li>
-          <li className="logout">
-            {user ? (
-              // This needs styling in css like a link to hide the fact its a paragraph
-              <p className="logout-button" onClick={logoutUser}>
-                Logout
-              </p>
-            ) : (
-              <Link to="/login">Login</Link>
-            )}
+          <li className="logout" onClick={logoutUser}>
+            Logout
           </li>
           <li>
             <Link to={userProfileRoute}>{user.username}</Link>

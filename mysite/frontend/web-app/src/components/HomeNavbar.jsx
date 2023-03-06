@@ -1,25 +1,25 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./NavbarElems";
+import "../pages/Homepage.css";
 import AuthContext from "../context/AuthContext";
 
 export const HomeNavbar = () => {
   let { user, logoutUser } = useContext(AuthContext);
+  const userProfileRoute = "/users/".concat(user.user_id);
   return (
-    <div>
+      
       <nav className="home-nav">
-        <ul>
-          <li>
-            {user ? (
-              <p onClick={logoutUser}>Logout</p>
-            ) : (
-              <Link to="/login">Login</Link>
-            )}
-          </li>
-          <li>{user && <p>{user.username}</p>}</li>
-        </ul>
+        <h2 className="user-title">
+          Welcome {user.username}
+        </h2>
+        <div className="home-nav-menu">
+          <ul>
+          <li><Link to={userProfileRoute}>Profile</Link></li>
+          <li onClick={logoutUser}>Logout</li> 
+          </ul>
+        </div>
       </nav>
-    </div>
   );
 };
 

@@ -1,8 +1,6 @@
 // Sample events calendar build, explained and detailed over at
 // https://justacoding.blog/react-calendar-component-example-with-events/
 import React, {ReactDOM} from 'react';
-import "./CalandarView.css"; 
-
 
 const { useState, useEffect, Fragment } = React
 
