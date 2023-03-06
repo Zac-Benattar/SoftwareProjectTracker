@@ -18,12 +18,13 @@ export const ProjectListItem = ({ project }) => {
   const projectRoute = "/projects/".concat(passing_data.id);
 
   return (
+    <Link to={projectRoute} state={passing_data}>
     <div className="project_container">
-      <Link to={projectRoute} state={passing_data}>
+     
         <div className="title">
           <h1>{project.name}</h1>
         </div>
-      </Link>
+      
 
       <div className="progress-bar">
         <ProgressBar progress="30" />
@@ -40,6 +41,7 @@ export const ProjectListItem = ({ project }) => {
         </div>
       </div>
     </div>
+    </Link>
   );
 };
 

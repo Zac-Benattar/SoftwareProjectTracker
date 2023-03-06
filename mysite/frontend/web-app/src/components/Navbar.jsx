@@ -45,11 +45,13 @@ const Navbar = (props) => {
               People
             </Link>
           </li>
-          <li className="logout" onClick={logoutUser}>
-            Logout
-          </li>
           <li>
-            <Link to={userProfileRoute}>{user.username}</Link>
+            <Link to="/meetings">
+              Meetings
+            </Link>
+          </li>
+          <li onClick={logoutUser}>
+              Logout
           </li>
         </ul>
       </nav>

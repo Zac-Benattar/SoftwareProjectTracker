@@ -8,22 +8,22 @@ body {
     padding-bottom: 5%;
     background-repeat: no-repeat;
 }
+
+
 .nav{
-    background:transparent;
+    background:white;
+    width: 100%;
+    padding-top:1%;
+    padding-bottom: 1%;
+    font-size: 20px;
     color: #9c00fd;
-    border-bottom: solid 2px #9c00fd;
-    gap: 6rem;
     display: flex;
     width: 100%;
-    flex-wrap: wrap;
     position: fixed;
-    top: 0;
-    overflow: hidden;
-    z-index: 2;
     justify-content: center;
-    align-items: stretch;
-    backdrop-filter: blur(20px);
 }
+
+
 .home-nav{
     overflow: hidden;
     border-bottom: solid white;
@@ -105,38 +105,27 @@ body {
 .nav a {
     color: inherit;
     text-decoration: none;
-    height: 100%;
-    display: flex;
-    padding: .25rem;
-    font-size: 20px;
+    display: inline;
+    padding: 1rem;
+    font-size: 25px;
 }
 
-.nav li:active,
-.home-nav li:active {
-    background-color:rgb(11, 150, 189);
-    
+.nav li{
+    border-radius: 10px;
+    padding: 5px 5px;
+    cursor:pointer;
+    transition: all 0.15s ease-in;
+    color: #9c00fd;
+    font-size: 25px;
 }
 
-
-.nav-button {
-    border:solid 2px;
-    border-radius: 30px;
-}
-
-
-.nav-button:hover{
-    background-color: rgb(65, 206, 245);
-    cursor: pointer;
-}
 
 .nav li:hover{
     background-color: rgb(138, 73, 202);
-    cursor: pointer;
-    color: white;
-    border-radius: 30px;        
+    color: white;    
 }
 
-.home-page {
+.home-page, .projects-home-page{
     background-image: linear-gradient(40deg, rgb(65, 206, 245), #9c00fd);
     position: absolute;
     top:0;
@@ -144,6 +133,13 @@ body {
     display: block;
     padding-bottom: 5%;
 }
+
+.projects-page-content {
+    padding-top: 7%;
+    width: 80%;
+    margin-left: 10%;
+}
+
 .home-page-content{
     width: 80%;
     margin-left: 10%;
@@ -216,6 +212,10 @@ body {
 }
 
 .info>h3, .info>p{
+    display: inline;
+}
+
+.project-description>h3, .project-description>p {
     display: inline;
 }
 
@@ -293,10 +293,11 @@ body {
 }
 
 .project-info-container {
+    display: inline-block;
+    width: 40%;
     background-color:  rgb(247, 247, 247);
     padding: 3%;
     border-radius: 30px;
-    /* margin: 2%; */
     margin-left: 10%;
     margin-right: 10%;
     margin-top: 5%;
@@ -305,16 +306,18 @@ body {
 .project-name {
     color: rgb(138, 73, 202);
     margin-top:-2%;
-    text-align: center;
+    padding: 2%;
+    text-align: left;
     text-decoration: underline;
 }
 
 .project-description{
     padding: 2.5%;
     margin-top: -4%;
-
-    
+    text-align: left;
 }
+
+
 
 .des-title {
     color: rgb(138, 73, 202); 
@@ -339,10 +342,10 @@ body {
 
   .proj-button {
     display: block;
-    padding: 1%;
-    margin: 1%;
-    margin-left: 40%;
-    width: 20%;
+    padding: 3%;
+    margin-top: 4%;
+    margin-left: 30%;
+    width: 40%;
   }
 
   .create-project-btn {
@@ -359,13 +362,21 @@ body {
 }
 
 .risk-info-container{
+    display: inline-block;
+    width: 20%;
+}
+
+.project-risk-score {
+    display: block;
+    width:100%;
     background-color:  rgb(232, 160, 160);
     border-radius: 30px;
-    margin-left: 10%;
-    margin-right: 10%;
-
-    padding: 0.5%
+    padding: 0.5%;
+    font-size: 25px;
+    font-weight: 700;
+    margin-bottom: 25%;
 }
+
 
 
 .button {

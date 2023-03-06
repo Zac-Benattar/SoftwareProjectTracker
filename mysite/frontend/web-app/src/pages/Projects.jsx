@@ -1,14 +1,11 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
-import { ListPeople }from "../components/ListPeople";
 import Navbar from "../components/Navbar";
 import AuthContext from "../context/AuthContext";
 
 
 
 const Projects = (props) => {
-
-
 
     const location = useLocation();
     const state = location.state;
@@ -51,35 +48,70 @@ const Projects = (props) => {
     
     return (
         <>
-        <Navbar/>
-        <div className="home-page">
-        <div className="risk-info-container">
-                <div className="project-risk-score">
-                    <p> This project has a {riskScore}% chance of success.</p>
-                    <p> Your project currently has 0 recommendations. </p>
+            <div className="projects-home-page">
+                <Navbar/>
+                    <div className="projects-page-content"> 
+
+
+                <div className="project-info-container">
+
+                    <div className="project-name">
+                        <h1>{state.name}</h1>
+                    </div>
+
+                    <div className="project-description">
+                        <br/>
+                        <h3 className="des-title"> Project Description: </h3>
+                        <p className="des">{state.description}</p>
+                        <br/>
+                        <br/>
+                        <h3 className="des-title"> Project methodology: </h3>
+                        <p  className="des">{state.methodology}</p>
+                        <br/>
+                        <br/>
+                        <h3 className="des-title"> Project budget: </h3>
+                        <p className="des">  {state.i_budget}</p>
+                        <br/>
+                        <br/>
+
+                        <h3 className="des-title"> Project deadine: </h3>
+                        <p className="des"> {state.i_deadline}</p>
+
+                        <br/>
+                        <br/>
+
+                        <h3 className="des-title"> Client: </h3>
+                        <p className="des"> client </p>
+
+
+                    </div>
+                    <div className="project-buttons">
+
+                    <button className="proj-button">Pause project progress</button>
+                    <button className="proj-button">Push back project deadline</button>
+                    </div>
+                </div>  
+
+                <div className="risk-info-container">
+                        <div className="project-risk-score">
+                            <p> Your project has a {riskScore}% chance of success.</p>
+                        </div>
+
+                        <div className="project-risk-score">
+                            <p> Your project has 0 incomplete tasks. </p>
+                        </div>               
+
+                
+                        <div className="project-risk-score">
+                            <p> Your project has 0 suggestions. </p>
+                        </div>
                 </div>
-            </div>
-            <div className="project-info-container">
-                <div className="project-name">
-                    <h1>{state.name}</h1>
-                </div>
-                <div className="project-description">
-                    <h3 className="des-title"> Project Description: </h3>
-                    <p className="des">{state.description}</p>
-                    <h3 className="des-title"> Project methodology: </h3>
-                    <p  className="des">{state.methodology}</p>
-                    <h3 className="des-title"> Project budget: </h3>
-                    <p className="des">  {state.i_budget}</p>
-                    <h3 className="des-title"> Project deadine: </h3>
-                    <p className="des"> {state.i_deadline}</p>
 
                 </div>
 
-                <button className="proj-button">Pause project progress</button>
-                <button className="proj-button">Push back project deadline</button>
-            </div>  
-           
-        </div>
+                </div>
+                
+    
         </>     
     );
 }
