@@ -164,6 +164,7 @@ body {
     left:0;
     display: inline-block;
     margin-left: 3%;
+    width:10%;
 }
 .home-page-menu>button:hover{
     opacity: 70%;
@@ -328,7 +329,7 @@ body {
 }
 
 
-.proj-button, .create-project-btn {
+.proj-button, .create-project-btn, .member-button {
     border-radius: 8px;
     background-image: linear-gradient(to right, rgb(65, 206, 245) 50%, rgb(65, 206, 245) 50%, #9c00fd);
     background-size: 200%;
@@ -349,15 +350,22 @@ body {
   }
 
   .create-project-btn {
-    display: flex;
-    padding: 1%;
-    margin-left: 10%;
-    margin-top: 5%;
+    display: block;
+    padding:2%;
+    width:30%;
+}
+
+  .member-button{
+    display: inline;
+    padding:3%;
+    width:25%;
+    margin:2%;
   }
 
 
   .proj-button:hover, 
-  .create-project-btn:hover{
+  .create-project-btn:hover,
+  .member-button:hover{
   background-position: 0%;
 }
 
@@ -375,14 +383,6 @@ body {
     font-size: 25px;
     font-weight: 700;
     margin-bottom: 25%;
-}
-
-
-
-.button {
-    display: inline-block;
-    margin-right: 30px;
-    
 }
 
 
