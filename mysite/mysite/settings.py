@@ -79,6 +79,8 @@ DATABASES = {
     }
 }
 
+# Our custom user requires auth setup
+AUTH_USER_MODEL = 'projects.CustomUser'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
