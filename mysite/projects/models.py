@@ -32,14 +32,18 @@ class Project(models.Model):
         return self.name
     
     def get_members_count(self):
-        return len(Member.objects.get(project=self))
+        return len(Member.objects.filter(project=self))
     
     def get_total_salary_expenses(self):
-        members = Member.objects.get(project=self)
-        salaries_total = 0
-        for m in members:
-            salaries_total += m.salary
-        return salaries_total
+        if Member.objects.count() > 0:
+            members = Member.objects.filter(project=self)
+            salaries_total = 0
+            for m in members:
+                salaries_total += m.salary
+            return salaries_total
+        else:
+            return 0
+
     
     def get_daily_running_cost(self):
         days_running = (self.current_deadline - self.start_date).days
@@ -49,11 +53,14 @@ class Project(models.Model):
             return 0
     
     def has_just_started(self):
-        feedbacks = Feedback.objects.get(project=self)
-        return len(feedbacks) == 0
+        if Feedback.objects.count() > 0:
+            feedbacks = Feedback.objects.filter(project=self)
+            return len(feedbacks) == 0
+        else:
+            return True
     
     def get_average_happiness(self):
-        feedbacks = Feedback.objects.get(project=self)
+        feedbacks = Feedback.objects.filter(project=self)
         total_happiness = 0
         for f in feedbacks:
             total_happiness += f.emotion
@@ -61,7 +68,7 @@ class Project(models.Model):
             return total_happiness / self.get_members_count()
         
     def get_average_confidence(self):
-        feedbacks = Feedback.objects.get(project=self)
+        feedbacks = Feedback.objects.filter(project=self)
         total_confidence = 0
         for f in feedbacks:
             total_confidence += f.confidence
@@ -161,7 +168,7 @@ class Role(models.Model):
 class Member(models.Model):
     role = models.ForeignKey(Role, on_delete=models.CASCADE)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    user_profile = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     work_hours = models.IntegerField(default=0)
     join_date = models.DateTimeField(auto_now_add=True)
     project_manager = models.BooleanField(default=False)
@@ -169,7 +176,7 @@ class Member(models.Model):
     salary = models.DecimalField(max_digits=15, decimal_places=2)
 
     def __str__(self):
-        return self.user_profile.__str__() + ' ' + self.project.__str__() + ' ' + self.role.__str__()
+        return self.user.__str__() + ' ' + self.project.__str__() + ' ' + self.role.__str__()
 
 
 # Joins roles and skills

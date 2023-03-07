@@ -18,13 +18,6 @@ class SkillAdmin(admin.ModelAdmin):
 
 
 class ProjectAdmin(admin.ModelAdmin):
-    fieldsets = [
-        ('Details', {'fields': ('name', 'description',
-         'methodology', 'gitHub', 'client_name')}),
-        ('Important Dates', {'fields': ('start_date', 'initial_deadline', 'current_deadline')}),
-        ('Finances', {'fields': ('initial_budget', 'current_budget')}),
-    ]
-
     list_display = ('name', 'methodology',
                     'current_deadline', 'current_budget')
     list_filter = ['current_deadline']
@@ -52,12 +45,7 @@ class RoleAdmin(admin.ModelAdmin):
 
 
 class MemberAdmin(admin.ModelAdmin):
-    fieldsets = [
-        ('Details', {'fields': ('user',
-         'role', 'project', 'work_hours', 'project_manager')}),
-    ]
-
-    list_display = ('role', 'project', 'work_hours')
+    list_display = ('user', 'role', 'project', 'work_hours')
     list_filter = ['role', 'project']
     search_fields = ['role', 'project']
 

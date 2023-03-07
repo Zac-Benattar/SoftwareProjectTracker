@@ -252,7 +252,7 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
 
         original_deadline = project.initial_deadline #Get the deadline
 
-        daily_running_cost = project.get_daily_running_cost() #Get the running cost of the project
+        daily_running_cost = float(project.get_daily_running_cost()) #Get the running cost of the project
 
         num_tasks = len(Task.objects.filter(project = project)) #Get the number of tasks
 
@@ -291,8 +291,8 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
 
             completed_tasks = len(Task.objects.filter(project = project, completion_status = 'F')) #Number of tasks finished
 
-            average_happiness = project.get_average_happiness() #The average happiness of developers
-            average_confidence = project.get_average_confidence() #The average confidence of the project from developers
+            average_happiness = float(project.get_average_happiness()) #The average happiness of developers
+            average_confidence = float(project.get_average_confidence()) #The average confidence of the project from developers
 
             #Generate evaluation stats
             #initial_budget, current_budget, money_spent, num_developers, num_other_team_members, num_team_left, original_deadline, current_deadline, daily_running_cost, num_tasks, completed_tasks, average_happiness, average_confidence
