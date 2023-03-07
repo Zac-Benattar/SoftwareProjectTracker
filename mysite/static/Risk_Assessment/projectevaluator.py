@@ -8,7 +8,6 @@ import pickle #Used to serialise the model to be loaded later saves retraining e
 import modeltrainer
 
 
-
 #Used to turn the models prediction into a score of sorts viewed as a percentage to the user
 def combine_scores(classes, probability):
     NO_OF_CLASSES = len(classes)
