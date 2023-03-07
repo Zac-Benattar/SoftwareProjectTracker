@@ -254,10 +254,7 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
 
         original_deadline = project.initial_deadline #Get the deadline
 
-        daily_running_cost = 100 #Left as a placeholder for no
-        # ===========================
-        # DO NOT LET THIS SLIP THROUGH THE NET!!!!!!!
-        # ===========================
+        daily_running_cost = project.get_daily_running_cost() #Get the running cost of the project
 
         num_tasks = len(Task.objects.filter(project = project)) #Get the number of tasks
 
@@ -279,7 +276,7 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
             #If the project is in progress add in extra stats
             #Load in more data
             current_budget = float(project.current_budget) #Cast from decimal to a float
-            money_spent = float(0) #Cast from decimal to a float
+            money_spent = float(project.amount_spent) #Cast from decimal to a float
 
             # ===========================
             # DO NOT LET THIS SLIP THROUGH THE NET!!!!!!!
@@ -288,7 +285,8 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
 
             current_deadline = project.current_deadline #Get the deadline
 
-            completed_tasks = 0
+            completed_tasks = len(Task.objects.filter(project = project, completion_status = 'F')) #Number of tasks finished
+
             average_happiness = 0
             average_confidence = 0
 
