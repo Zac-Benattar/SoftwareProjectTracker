@@ -258,6 +258,9 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
 
         #Get chance of success
         if GENERATE_INITIAL_PREDICTION == True:
+            print("==============================")
+            print("GETTING AN INITIAL PREDICTION")
+            print("")
             #Generate evaluation stats
             #initial_budget, num_developers, num_other_team_members, original_deadline, daily_running_cost, num_tasks
             start_evaluation_data = StartEvaluationData(
@@ -271,6 +274,9 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
             #Evaluate data
             success_chance_estimate = PROJECT_EVALUATOR.get_initial_chance_of_success(start_evaluation_data)
         else:
+            print("==============================")
+            print("GETTING AN ONGOING PREDICTION")
+            print("")
             #If the project is in progress add in extra stats
             #Load in more data
             current_budget = float(project.current_budget) #Cast from decimal to a float
@@ -285,8 +291,8 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
 
             completed_tasks = len(Task.objects.filter(project = project, completion_status = 'F')) #Number of tasks finished
 
-            average_happiness = 0
-            average_confidence = 0
+            average_happiness = project.get_average_happiness() #The average happiness of developers
+            average_confidence = project.get_average_confidence() #The average confidence of the project from developers
 
             #Generate evaluation stats
             #initial_budget, current_budget, money_spent, num_developers, num_other_team_members, num_team_left, original_deadline, current_deadline, daily_running_cost, num_tasks, completed_tasks, average_happiness, average_confidence
@@ -308,6 +314,8 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
             #Evaulate Data
             success_chance_estimate = PROJECT_EVALUATOR.get_current_chance_of_success(current_evaluation_data)
 
+        print("RESULT: " + str(success_chance))
+        print("==============================")
         risk_evaluation = RiskEvaluation(project = project, success_chance = float(success_chance_estimate))
         risk_evaluation.save()
         return risk_evaluation
