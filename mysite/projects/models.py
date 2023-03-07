@@ -21,14 +21,62 @@ class Project(models.Model):
     client_name = models.CharField(max_length=50, blank=True)
     initial_budget = models.DecimalField(max_digits=15, decimal_places=2)
     current_budget = models.DecimalField(max_digits=15, decimal_places=2)
+    amount_spent = models.DecimalField(max_digits=15, decimal_places=2)
     start_date = models.DateTimeField(default=return_today_datetime())
     initial_deadline = models.DateTimeField(default=return_week_in_future())
     current_deadline = models.DateTimeField(default=return_week_in_future())
     methodology = models.CharField(max_length=30)
     gitHub = models.CharField(max_length=150, blank=True)
-
+    
     def __str__(self):
         return self.name
+    
+    def get_members_count(self):
+        return len(Member.objects.filter(project=self))
+    
+    def get_total_salary_expenses(self):
+        if Member.objects.count() > 0:
+            members = Member.objects.filter(project=self)
+            salaries_total = 0
+            for m in members:
+                salaries_total += m.salary
+            return salaries_total
+        else:
+            return 0
+
+    
+    def get_daily_running_cost(self):
+        days_running = (self.current_deadline - self.start_date).days
+        if days_running != 0:
+            return self.get_total_salary_expenses() / days_running
+        else:
+            return 0
+    
+    def has_just_started(self):
+        if Feedback.objects.count() > 0:
+            feedbacks = Feedback.objects.filter(project=self)
+            return len(feedbacks) == 0
+        else:
+            return True
+    
+    def get_average_happiness(self):
+        feedbacks = Feedback.objects.filter(project=self)
+        total_happiness = 0
+        for f in feedbacks:
+            total_happiness += f.emotion
+        if total_happiness > 0:
+            return total_happiness / self.get_members_count()
+        
+    def get_average_confidence(self):
+        feedbacks = Feedback.objects.filter(project=self)
+        total_confidence = 0
+        for f in feedbacks:
+            total_confidence += f.confidence
+        if total_confidence > 0:
+            return total_confidence / self.get_members_count()
+
+            
+        
 
 
 class Skill(models.Model):
@@ -120,14 +168,15 @@ class Role(models.Model):
 class Member(models.Model):
     role = models.ForeignKey(Role, on_delete=models.CASCADE)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    user_profile = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     work_hours = models.IntegerField(default=0)
     join_date = models.DateTimeField(auto_now_add=True)
     project_manager = models.BooleanField(default=False)
     developer = models.BooleanField(default=True)
+    salary = models.DecimalField(max_digits=15, decimal_places=2)
 
     def __str__(self):
-        return self.user_profile.__str__() + ' ' + self.project.__str__() + ' ' + self.role.__str__()
+        return self.user.__str__() + ' ' + self.project.__str__() + ' ' + self.role.__str__()
 
 
 # Joins roles and skills

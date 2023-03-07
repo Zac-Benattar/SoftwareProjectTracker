@@ -239,34 +239,28 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
     serializer_class = RiskEvaluationSerializer
 
     def generate_risk_evaluation(self, project):
-        generate_initial_prediction = True
+
+        GENERATE_INITIAL_PREDICTION = project.has_just_started() #checks is the project has only just been started
+
         success_chance_estimate = 0 #Initialize success chance
 
+        #Load in data
+        initial_budget = float(project.initial_budget) #Cast from decimal to a float
+
+        num_developers = len(Member.objects.filter(project = project, developer = True)) #Get number of developers
+        num_other_team_members = len(Member.objects.filter(project = project, developer = False)) #Get number of team leaders etc.
+
+        original_deadline = project.initial_deadline #Get the deadline
+
+        daily_running_cost = float(project.get_daily_running_cost()) #Get the running cost of the project
+
+        num_tasks = len(Task.objects.filter(project = project)) #Get the number of tasks
+
         #Get chance of success
-        if generate_initial_prediction == True:
-
-            #Load in data
-            initial_budget = float(project.initial_budget)
-
-            num_developers = len(Member.objects.filter(project = project, developer = True))
-            num_other_team_members = len(Member.objects.filter(project = project, developer = False))
-            # ===========================
-            # DO NOT LET THIS SLIP THROUGH THE NET!!!!!!!
-            # ===========================
-            original_deadline = project.initial_deadline #FIX THISSSSS
- 
-            # This is probably not how its meant to work
-            days_running = project.current_deadline - project.start_date
-            daily_running_cost = 0
-            if project.current_budget > 0:
-                daily_running_cost = float(project.current_budget) / days_running.days #Left as a placeholder for no
-
-            # ===========================
-            # DO NOT LET THIS SLIP THROUGH THE NET!!!!!!!
-            # ===========================
-
-            num_tasks = len(Task.objects.filter(project = project))
-
+        if GENERATE_INITIAL_PREDICTION == True:
+            print("==============================")
+            print("GETTING AN INITIAL PREDICTION")
+            print("")
             #Generate evaluation stats
             #initial_budget, num_developers, num_other_team_members, original_deadline, daily_running_cost, num_tasks
             start_evaluation_data = StartEvaluationData(
@@ -280,34 +274,25 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
             #Evaluate data
             success_chance_estimate = PROJECT_EVALUATOR.get_initial_chance_of_success(start_evaluation_data)
         else:
-            #Load in data
-            initial_budget = float(project.initial_budget)
-            current_budget = float(project.current_budget)
-            # ===========================
-            # DO NOT LET THIS SLIP THROUGH THE NET!!!!!!!
-            # ===========================
-            money_spent = float(0)
+            print("==============================")
+            print("GETTING AN ONGOING PREDICTION")
+            print("")
+            #If the project is in progress add in extra stats
+            #Load in more data
+            current_budget = float(project.current_budget) #Cast from decimal to a float
+            money_spent = float(project.amount_spent) #Cast from decimal to a float
 
-            num_developers = len(Member.objects.filter(project = project, developer = True))
-            num_other_team_members = len(Member.objects.filter(project = project, developer = False))
             # ===========================
             # DO NOT LET THIS SLIP THROUGH THE NET!!!!!!!
             # ===========================
             num_team_left = 0
-            # ===========================
-            # DO NOT LET THIS SLIP THROUGH THE NET!!!!!!!
-            # ===========================
-            original_deadline = project.initial_deadline #FIX THISSSSSS
-            current_deadline = project.current_deadline #FIX THISSSSSS
 
-            daily_running_cost = 100
-            # ===========================
-            # DO NOT LET THIS SLIP THROUGH THE NET!!!!!!!
-            # ===========================
-            num_tasks = len(Task.objects.filter(project = project))
-            completed_tasks = 0
-            average_happiness = 0
-            average_confidence = 0
+            current_deadline = project.current_deadline #Get the deadline
+
+            completed_tasks = len(Task.objects.filter(project = project, completion_status = 'F')) #Number of tasks finished
+
+            average_happiness = float(project.get_average_happiness()) #The average happiness of developers
+            average_confidence = float(project.get_average_confidence()) #The average confidence of the project from developers
 
             #Generate evaluation stats
             #initial_budget, current_budget, money_spent, num_developers, num_other_team_members, num_team_left, original_deadline, current_deadline, daily_running_cost, num_tasks, completed_tasks, average_happiness, average_confidence
@@ -327,8 +312,10 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
             average_confidence)
 
             #Evaulate Data
-            success_chance_estimate = PROJECT_EVALUATOR.get_current_chance_of_success(start_evaluation_data)
+            success_chance_estimate = PROJECT_EVALUATOR.get_current_chance_of_success(current_evaluation_data)
 
+        print("RESULT: " + str(success_chance_estimate))
+        print("==============================")
         risk_evaluation = RiskEvaluation(project = project, success_chance = float(success_chance_estimate))
         risk_evaluation.save()
         return risk_evaluation
