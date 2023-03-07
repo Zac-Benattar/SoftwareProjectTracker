@@ -164,6 +164,7 @@ body {
     left:0;
     display: inline-block;
     margin-left: 3%;
+    width: 10%;
 }
 .home-page-menu>button:hover{
     opacity: 70%;
@@ -328,7 +329,7 @@ body {
 }
 
 
-.proj-button, .create-project-btn {
+.proj-button, .create-project-btn, .member-button {
     border-radius: 8px;
     background-image: linear-gradient(to right, rgb(65, 206, 245) 50%, rgb(65, 206, 245) 50%, #9c00fd);
     background-size: 200%;
@@ -340,24 +341,33 @@ body {
     border: none;
   }
 
-  .proj-button {
+.proj-button {
     display: block;
     padding: 3%;
     margin-top: 4%;
     margin-left: 30%;
     width: 40%;
-  }
-
-  .create-project-btn {
-    display: flex;
-    padding: 1%;
-    margin-left: 10%;
-    margin-top: 5%;
-  }
+}
 
 
-  .proj-button:hover, 
-  .create-project-btn:hover{
+
+
+.create-project-btn {
+    display: block;
+    padding:2%;
+    width:30%;
+}
+
+.member-button{
+    display: inline;
+    padding:3%;
+    width: 25%;
+    margin: 2%;
+}
+
+.proj-button:hover, 
+.create-project-btn:hover,
+.member-button:hover{
   background-position: 0%;
 }
 
@@ -378,12 +388,6 @@ body {
 }
 
 
-
-.button {
-    display: inline-block;
-    margin-right: 30px;
-    
-}
 
 
 .modal, .new-role-modal {
@@ -475,6 +479,8 @@ body {
     font-size: 30px;
 
 }
+
+
 
 
 .role-close {

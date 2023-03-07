@@ -53,7 +53,7 @@ const listviewdata = [
     startdate: new Date(2015, 0, 1),
     enddate: new Date(2015, 0, 5),
     duration: null,
-    completionstatus: null
+    completionstatus: 100
   }
 ]
 

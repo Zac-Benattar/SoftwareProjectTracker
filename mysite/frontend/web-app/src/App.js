@@ -8,11 +8,17 @@ import PeopleView from "./pages/PeopleView";
 import SuggestionsForm from "./pages/Suggestions";
 import Tasks from "./pages/Tasks";
 import MeetingsForm from "./components/MeetingView";
+import UserProfile from "./pages/UserProfile";
 import { AuthProvider } from "./context/AuthContext";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PrivateRoute from "./utils/PrivateRoute";
+import { useContext} from "react";
+import AuthContext from "./context/AuthContext";
+
 
 function App() {
+  // let { user, logoutUser } = useContext(AuthContext);
+  // const userProfileRoute = "/users/".concat(user.user_id);
   return (
     <div className="App">
       <BrowserRouter>
@@ -34,6 +40,7 @@ function App() {
             <Route path="/projects/:slug/tasks" element={<Tasks />} />
             <Route path="/projects/:slug/suggestions" element={<SuggestionsForm />} />
             <Route path="/projects/:slug/meetings" element={<MeetingsForm/>}/>
+            <Route path= "/users/:slug"  element={<UserProfile/>}/>
           </Routes>
         </AuthProvider>
       </BrowserRouter>

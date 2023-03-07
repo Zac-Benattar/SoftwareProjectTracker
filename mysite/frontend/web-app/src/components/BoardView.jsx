@@ -52,12 +52,20 @@ const started =[
 
 const completed = [
   {
+    taskid: 'Testing',
+    taskname: 'Testing backend',
+    startdate: new Date(2015, 0, 11),
+    enddate: new Date(2015, 0, 15),
+    duration: null,
+    completionstatus: 16
+  },
+  {
     taskid: 'Development',
     taskname: 'Develop backend',
     startdate: new Date(2015, 0, 1),
     enddate: new Date(2015, 0, 5),
     duration: null,
-    completionstatus: null
+    completionstatus: 100
   }
 ]
 
