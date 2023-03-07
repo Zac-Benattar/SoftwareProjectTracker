@@ -121,10 +121,10 @@ class SkillViewSet(viewsets.ModelViewSet):
 
 class UserSkillViewSet(viewsets.ModelViewSet):
     queryset = Skill.objects.all().prefetch_related(
-        'userprofile_set'
+        'customuser_set'
     ).all()
 
-    serializer_class = UserSkillSerializer
+    serializer_class = SkillSerializer
 
     def get_queryset(self, *args, **kwargs):
         user_id = self.kwargs.get('user_pk')
@@ -132,7 +132,7 @@ class UserSkillViewSet(viewsets.ModelViewSet):
             user = CustomUser.objects.get(id=user_id)
         except CustomUser.DoesNotExist:
             raise NotFound('A user with this id does not exist')
-        return self.queryset.filter(userprofile=user_id)
+        return self.queryset.filter(customuser=user)
 
 
 class RoleViewSet(viewsets.ModelViewSet):

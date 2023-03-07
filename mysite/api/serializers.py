@@ -35,10 +35,6 @@ class SkillSerializer(ModelSerializer):
         model = Skill
         fields = '__all__'
 
-class UserSkillSerializer(ModelSerializer):
-    class Meta:
-        model = Skill
-        fields = '__all__'
 
 class MemberSerializer(ModelSerializer):
     class Meta:
