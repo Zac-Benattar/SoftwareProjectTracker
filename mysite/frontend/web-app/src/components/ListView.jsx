@@ -64,12 +64,15 @@ function RenderingListofTasks({ tasks }) {
         <td>{task.id}</td>
         <td>{task.name}</td>
         <td>{task.completion_status}</td>
+        <td>{task.duration}</td>
+        <td>{task.startdate}</td>
       </tr>
     );
   });
   return <tbody>{tableRows}</tbody>;
 }
-export const ListView = ({ tasks }) => {
+
+const ListView = ({ tasks }) => {
   return (
     <div>
       <div>
@@ -85,6 +88,8 @@ export const ListView = ({ tasks }) => {
               <th> Task id</th>
               <th> Task name</th>
               <th> Completion status</th>
+              <th> Duration </th>
+              <th> Startdate </th>
             </tr>
           </thead>
           <RenderingListofTasks tasks={tasks} />
@@ -93,4 +98,5 @@ export const ListView = ({ tasks }) => {
     </div>
   );
 };
+
 export default ListView;
