@@ -10,20 +10,16 @@ export const HomeNavbar = () => {
 
   return (
       
-      <nav className="home-nav">       
+      <nav className="home-nav">
         <h2 className="user-title">
-          <Link to="/">
-            Welcome {user.username}
-          </Link>` 
+          Welcome {user.username}
         </h2>
-      
         <div className="home-nav-menu">
           <ul>
-            <li><Link to={userProfileRoute}>Profile</Link></li>
-            <li onClick={logoutUser}>Logout</li> 
+          <li><Link to={userProfileRoute}>Profile</Link></li>
+          <li onClick={logoutUser}>Logout</li> 
           </ul>
         </div>
-
       </nav>
   );
 };

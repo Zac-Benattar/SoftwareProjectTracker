@@ -55,7 +55,7 @@ const Homepage = () => {
    }
 
 
-        let [allRoles, setRoles] = useState([]);
+      let [allRoles, setRoles] = useState([]);
 
       useEffect(() => {
         getRoles();
@@ -116,7 +116,8 @@ const Homepage = () => {
     }
   };
 
-
+  console.log("projects",projects);
+  
  
 
   return (
@@ -207,46 +208,27 @@ const Homepage = () => {
                         </input>
                     </span>           
 
-                    <label className="inputLabels" htmlFor="member"> Member(s) </label>
                     <label htmlFor="member"> Member(s) </label>
                     {/* This needs to be turned into a component for simplicity and to remove errors */}
                     {membersList.map((singleMember,index) => (
                       <>                  
                       <div key = {index} className="members">
+                      <input name="member" type="text" id="member" placeholder="Member Username" required
+                      value = {singleMember.member}
+                      onChange={(e)=>handleServiveChange(e, index )}/>
+                      {membersList.length - 1 === index   && 
+                      (
+                      <button onClick={handleServiceAdd}> <span> Add a member </span></button>
+                      )}
 
-                        <input className= "projectInputs"
-                              name="member" 
-                              type="text" 
-                              id="member" 
-                              placeholder="Member Username" required
-                              value = {singleMember.member}
-                              onChange={(e)=>handleServiveChange(e, index )}
-                        />
+                      <Dropdown classname="add-proj-drop" placeHolder="Select Role" options={roleNames}/>
 
-                        <input className= "projectInputs"
-                              name="role" 
-                              type="text" 
-                              id="role" 
-                              placeholder="Member Role" required
-                              value = {singleMember.member}
-                              onChange={(e)=>handleServiveChange(e, index )}
-                        />
-
-                        <div className="projectInputs">  
-                          {membersList.length - 1 === index   && 
-                          (
-                          <button className="member-button" onClick={handleServiceAdd}> <span> Add a member </span></button>
-                          )}
-
-
-                          <button className="member-button" onClick={()=>handleServiceRemove(index)}> <span> Remove a member </span></button>
-                          
-                        </div>
-                        
-
+                      <button onClick={addRole}> Role not here? Add a new one. </button>
                       </div>
-                    
-
+                      
+                      <div className="second-div">
+                        <button onClick={()=>handleServiceRemove(index)}> <span> Remove Button </span></button>
+                      </div>
                       </>
                       
                     ))}

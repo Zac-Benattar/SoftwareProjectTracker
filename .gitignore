@@ -8,3 +8,5 @@ temp/
 node_modules/
 # ignore ALL files in ANY directory called cache
 .cache/
+# ignore ALL files in ANY directory called __pycache__
+__pycache__/

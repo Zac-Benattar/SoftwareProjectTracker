@@ -8,7 +8,6 @@ from rest_framework.exceptions import NotFound
 from rest_framework.decorators import permission_classes, action
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
-from decimal import Decimal
 
 
 import sys #Import system file to add extra imports from outside file
@@ -184,10 +183,9 @@ class RoleRequirementViewSet(viewsets.ModelViewSet):
             raise NotFound('A role with this id does not exist')
         return self.queryset.filter(role=role)
 
+
 # select_related and prefetch_related are database function. select_related is used to select a single object ( Foreign Key ),
 # prefetch_related gets back a set of things,
-
-
 class MemberViewSet(viewsets.ModelViewSet):
     queryset = Member.objects.all().select_related(
         'project'
@@ -310,7 +308,6 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
             #Evaulate Data
             success_chance_estimate = PROJECT_EVALUATOR.get_current_chance_of_success(current_evaluation_data)
 
-        print(success_chance_estimate)
         risk_evaluation = RiskEvaluation(project = project, success_chance = float(success_chance_estimate))
         risk_evaluation.save()
         return risk_evaluation
@@ -321,7 +318,6 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
 
         try:
             project = Project.objects.get(id=project_id)
-            print(project)
             risk_evaluation = self.generate_risk_evaluation(project)
         except Project.DoesNotExist:
             raise NotFound('A project with this id does not exist')
