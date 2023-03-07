@@ -314,7 +314,7 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
             #Evaulate Data
             success_chance_estimate = PROJECT_EVALUATOR.get_current_chance_of_success(current_evaluation_data)
 
-        print("RESULT: " + str(success_chance))
+        print("RESULT: " + str(success_chance_estimate))
         print("==============================")
         risk_evaluation = RiskEvaluation(project = project, success_chance = float(success_chance_estimate))
         risk_evaluation.save()
