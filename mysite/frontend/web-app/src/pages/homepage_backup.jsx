@@ -121,13 +121,11 @@ const Homepage = () => {
  
 
   return (
-    
-      <>
-    <div id="add-project-modal" className="modal">
-            <div className="modal-content"> 
-                  
-                  <span className="close">&times;</span>
 
+      <div id="add-project-modal" className="modal">
+            <div className="modal-content"> 
+                  <span className="close">&times;</span>
+                 
                   <h1>Create New Project</h1>
 
                   <span className = "project_name">
@@ -209,57 +207,72 @@ const Homepage = () => {
                     </span>           
 
                     <label 
-                    className="inputLabels" htmlFor="member"> Member(s) </label>
-                    {/* This needs to be turned into a component for simplicity and to remove errors */}
-                    {membersList.map((singleMember,index) => (
-                      <>                  
-                      <div key = {index} className="members">
-                      <input className="projectInputs" name="member" type="text" id="member" placeholder="Member Username" required
-                      value = {singleMember.member}
-                      onChange={(e)=>handleServiveChange(e, index )}/>
+                      className="inputLabels"
+                      htmlFor="member"> 
+                       Add Member(s) 
+                    </label>
 
-                      <input className="projectInputs" name="role" type="text" id="role" placeholder="Member Role" required
-                      // value = {singleMember.member}
-                      onChange={(e)=>handleServiveChange(e, index )}/>
+                          {membersList.map((singleMember,index) => (
 
-                      <div className="projectInputs">
-                      {membersList.length - 1 === index   && 
-                      (
-                      <button className="member-button" onClick={handleServiceAdd}> <span> Add a member </span></button>
-                      )}
-
-                      
-                      <button className="member-button" onClick={()=>handleServiceRemove(index)}> <span> Remove Member </span></button>
+                          
                      
 
+                                <div key = {index} className="members">
 
 
-                      </div>
+                                      <input className= "projectInputs"
+                                        name="member" 
+                                        type="text" 
+                                        id="member" 
+                                        placeholder="Member Username" required
+                                        value = {singleMember.member}
+                                        onChange={(e)=>handleServiveChange(e, index )}
+                                      />
 
+
+
+                                      <input className= "projectInputs"
+                                          name="role" 
+                                          type="text" 
+                                          id="role" 
+                                          placeholder="Member Role" required
+                                          value = {singleMember.member}
+                                          onChange={(e)=>handleServiveChange(e, index )}
+                                      />
+
+
+
+                                    <div className="projectInputs">  
+                                        {membersList.length - 1 === index   && 
+                                        (
+                                        <button className="member-button" onClick={handleServiceAdd}> <span> Add a member </span></button>
+                                        )}
+
+                                        <button className="member-button" onClick={()=>handleServiceRemove(index)}> <span> Remove a member </span></button>
+                                      
+                                    </div>
+
+
+
+                                  </div>
                       
 
-                      
-                      </div>
+                          ))}
+
                     
-                      </>
-                      
-                    ))}
-    
+                          
+                  
+                     
+                
                     <span>
                       <button className="create-project-btn">Create Project</button>
                     </span>
                     
-            </div>
+            
           </div>
 
 
-
-
-
-
-
-
-
+     
           <div className="home-page">
               <HomeNavbar/> 
               <div className="home-page-content">
@@ -283,17 +296,12 @@ const Homepage = () => {
                   ))}                 
                   
                 </div>
-                
+                </div>
               </div>
             </div>
-
-        
     
-
-     
-      </>     
    
-  );
-}
+  )}
+
 
 export default Homepage;
