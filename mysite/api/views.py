@@ -88,8 +88,12 @@ class ProjectsViewSet(viewsets.ModelViewSet):
             list(projects)
         '''
         user = get_object_or_404(CustomUser, username=self.request.user)
-        projects = user.projects
-        return projects
+        members = Member.objects.filter(user=user)
+        queryset = Project.objects.all()
+        for m in members:
+            queryset.union(Project.objects.filter(id=m.project.id))
+
+        return queryset
 
 
 class MyAccountViewSet(viewsets.ModelViewSet):

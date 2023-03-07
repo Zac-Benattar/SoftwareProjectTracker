@@ -1,10 +1,8 @@
 from django.db import models
 from django.utils import timezone
-from django.contrib import admin
 from django.contrib.auth.models import AbstractUser
 from phonenumber_field.modelfields import PhoneNumberField
 from django.utils import timezone
-import datetime
 
 
 def return_today_datetime():
@@ -93,7 +91,6 @@ class CustomUser(AbstractUser):
     # https://django-phonenumber-field.readthedocs.io/en/latest/
     phone = PhoneNumberField(null=False, blank=True, unique=True)
     skillset = models.ManyToManyField(Skill, blank=True)
-    projects = models.ManyToManyField(Project, blank=True)
 
 
 class RiskEvaluation(models.Model):
