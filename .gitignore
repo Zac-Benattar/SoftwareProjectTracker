@@ -10,3 +10,5 @@ node_modules/
 .cache/
 # ignore ALL files in ANY directory called __pycache__
 __pycache__/
+# ignore all .pyc files
+.pyc
