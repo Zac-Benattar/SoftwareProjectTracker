@@ -1,62 +1,52 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useContext} from "react";
 import {Modal} from "react-bootstrap";
 import Navbar from "../components/Navbar";
 import GanttChart from '../components/GanttChart';
 import ListView from '../components/ListView';
 import BoardView from '../components/BoardView';
 import "./tasks.css";
-import {useLocation} from "react-router-dom";
+import {useParams, useLocation} from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 
 export const TasksForm = () => {
 
   // Deconstructing the relevent sections from AuthContext
-  // let { authTokens, logoutUser, user } = useContext(AuthContext);
-  // const { slug } = useParams();
-  // let [tasks, setTasks] = useState([]);
+  let { authTokens, logoutUser, user } = useContext(AuthContext);
+  const { slug } = useParams();
+  let [tasks, setTasks] = useState([]);
 
 
-  // // Setting up states
-  // useEffect(() => {
-  //   getTasks();
-  // }, []);
+  // Setting up states
+  useEffect(() => {
+    getTasks();
+  }, []);
 
 
-  // // Obtaining the projects the user is involved in via a GET request to the api referencing our authorisation token
-  // // Need to check this URLSS
-  // let getTasks = async (e) => {
-  //   let response = await fetch("http://127.0.0.1:8000/api/tasks/".concat(slug), {
-  //     method: "GET",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: "Bearer " + String(authTokens.access),
-  //     },
-  //   });
-  //   let data = await response.json();
+  // Obtaining the projects the user is involved in via a GET request to the api referencing our authorisation token
+  // Need to check this URLSS
+  let getTasks = async (e) => {
+    let response = await fetch("http://127.0.0.1:8000/api/projects/".concat(slug).concat("/tasks/"), {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access),
+      },
+    });
+    let data = await response.json();
 
-  //   // If the response is good - set the state of projects to be the result of the GET request
-  //   if (response.status === 200) {
-  //     setProjects(data);
-  //     // If the respose is unauthorised, log out the user using the imported AuthContext method
-  //   } else if (response.statusText === "Unauthorized") {
-  //     logoutUser();
-  //   }
-  // };
+    // If the response is good - set the state of projects to be the result of the GET request
+    if (response.status === 200) {
+      setTasks(data);
+      // If the respose is unauthorised, log out the user using the imported AuthContext method
+    } else if (response.statusText === "Unauthorized") {
+      logoutUser();
+    }
+  };
 
   // console.log("projects",projects);
-  
-
-
-
-
-
 
   const [checkedtasks, setCheckedTasks] = useState([]);
   let [dependencies, setDependencies] = useState(['task1 ','task2','task3']);
-
-
-
-
 
   const [checked, setChecked] = useState([]);
   const handleCheck = (event,checked,setChecked) => {
@@ -100,7 +90,7 @@ function View() {
   if (viewStyle === viewoptions[0]) {
     return <GanttChart/>;
   }else if (viewStyle===viewoptions[1]) {
-    return <ListView />;
+    return <ListView tasks = {tasks}/>;
   }else {
     return <BoardView />;
   }  
@@ -186,7 +176,7 @@ return(
 )
 }
 
-export default TasksForm
+export default TasksForm;
 
 
 
