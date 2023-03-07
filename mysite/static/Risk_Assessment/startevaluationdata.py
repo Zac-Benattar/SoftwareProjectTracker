@@ -21,7 +21,10 @@ class StartEvaluationData:
 
         #Find an approximate guess at how long the money in the company will last based on
         #Cost estimates
-        self.days_budget_covers_running_costs = (self.initial_budget - self.money_spent) / daily_running_cost
+        if daily_running_cost > 0:
+            self.days_budget_covers_running_costs = (self.initial_budget - self.money_spent) / daily_running_cost
+        else:
+            self.days_budget_covers_running_costs = 0
         self.num_tasks = num_tasks
         self.num_completed_tasks = 0
 
