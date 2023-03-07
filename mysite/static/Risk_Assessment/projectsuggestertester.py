@@ -2,11 +2,25 @@ import unittest
 import datetime
 
 from django.test import TestCase
-from django.db import models
-from django.contrib.auth.models import User
-from models import Project, Task, Member, Role, RoleRequirement, Feedback, User, Skill
+#from django.db import models
+#from django.contrib.auth.models import User
+import sys
+import pathlib
+originalpath=sys.path
+folderPath = str(pathlib.Path(__file__).parent.parent.parent.joinpath("projects").resolve())
+sys.path.append(folderPath)
+print("==================== PATHS =============")
+print(sys.path)
+print("   ")
+
+import models
+#from models import Project, Task, Member, Role, RoleRequirement, Feedback, User, Skill
 from phonenumber_field.modelfields import PhoneNumberField
 from projectsuggester import ProjectSuggester
+
+
+sys.path=originalpath
+
 
 
 class tester(unittest.TestCase):
@@ -92,7 +106,7 @@ class tester(unittest.TestCase):
 
 
     # CREATING FILEPATH OF A CODE
-    file_path = "C:\Users\alexp\Documents\GitHub\SoftwareProjectTracker\mysite\test\test.py"
+    file_path = r"C:\Users\alexp\Documents\GitHub\SoftwareProjectTracker\mysite\test\test.py"
 
 
     # TESTING 
@@ -103,8 +117,8 @@ class tester(unittest.TestCase):
         test = ProjectSuggester(project)
         self.assertEqual(test.past_deadline(), True, 'The fuction is wrong.')
 
-        # if __name__ == '__main__':
-        #     unittest.main()
+        if __name__ == '__main__':
+            unittest.main()
 
     # CHANGING ROLES FUNCTION
     ## function will return TRUE if the suggestion has to be displayed
@@ -112,11 +126,17 @@ class tester(unittest.TestCase):
         test = ProjectSuggester(project)
         self.assertEqual(test.changing_roles(), True, 'The fuction is wrong.')
 
+        if __name__ == '__main__':
+            unittest.main()
+
     # AVERAGE HAPPINESS FUNCTION
     ## function will return the average happiness
     def test_average_happiness(self, project):
         test = ProjectSuggester(project)
         self.assertEqual(test.average_happiness(), 5, 'The fuction is wrong.')
+
+        if __name__ == '__main__':
+            unittest.main()
 
     # COUNT COMMENTS FUNCTION
     ## function will return the number of comments
@@ -124,14 +144,23 @@ class tester(unittest.TestCase):
         test = ProjectSuggester(file_path)
         self.assertEqual(test.count_comments(), 1, 'The fuction is wrong.')
 
+        if __name__ == '__main__':
+            unittest.main()
+
     # COMPLETION RATIO FUNCTION
     ## function will return TRUE if the suggestion has to be displayed
     def test_completion_ratio(self, project):
         test = ProjectSuggester(project)
         self.assertEqual(test.changing_roles(), True, 'The fuction is wrong.')
  
+        if __name__ == '__main__':
+            unittest.main()
+
     # LOW BUDGET FUNCTION
     ## function will return TRUE if the suggestion has to be displayed
     def test_low_budget(self, project):
         test = ProjectSuggester(project)
         self.assertEqual(test.low_budget(), True, 'The fuction is wrong.')
+
+        if __name__ == '__main__':
+            unittest.main()
