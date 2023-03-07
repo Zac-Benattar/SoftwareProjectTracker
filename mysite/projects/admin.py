@@ -1,34 +1,12 @@
 from django.contrib import admin
-from .models import Project, UserProfile, Skill, Member, Role, TimeWorked, Recommendation, Schedule, RoleRequirement, Meeting, Feedback, Task, RiskEvaluation
+from .models import *
 
+class CustomUserAdmin(admin.ModelAdmin):
+    list_display = ('username', 'email')
+    list_filter = ['username','first_name','last_name']
+    search_fields = ['first_name', 'last_name', 'username', 'email', 'phone']
 
-class ProjectAdmin(admin.ModelAdmin):
-    fieldsets = [
-        ('Details', {'fields': ('name', 'description',
-         'methodology', 'gitHub', 'client_name')}),
-        ('Important Dates', {'fields': ('start_date', 'initial_deadline', 'current_deadline')}),
-        ('Finances', {'fields': ('initial_budget', 'current_budget')}),
-        ('Members', {'fields': ('members',)}),
-    ]
-
-    list_display = ('name', 'methodology',
-                    'current_deadline', 'current_budget')
-    list_filter = ['current_deadline']
-    search_fields = ['name']
-
-
-class UserProfileAdmin(admin.ModelAdmin):
-    fieldsets = [
-        ('Details', {'fields': ('user', 'phone')}),
-        ('Projects', {'fields': ('projects',)}),
-        ('Skillset', {'fields': ('skillset',)}),
-    ]
-
-    list_display = ('user', 'get_username', 'get_email', 'joined_recently')
-    list_filter = ['user',]
-    search_fields = ['get_first_name', 'get_last_name', 'get_username', 'get_email', 'phone']
-
-
+    
 class SkillAdmin(admin.ModelAdmin):
     fieldsets = [
         ('Details', {'fields': ('name', 'description')}),
@@ -37,6 +15,20 @@ class SkillAdmin(admin.ModelAdmin):
     list_display = ('name',)
     list_filter = ['name']
     search_fields = ['name', 'description']
+
+
+class ProjectAdmin(admin.ModelAdmin):
+    fieldsets = [
+        ('Details', {'fields': ('name', 'description',
+         'methodology', 'gitHub', 'client_name')}),
+        ('Important Dates', {'fields': ('start_date', 'initial_deadline', 'current_deadline')}),
+        ('Finances', {'fields': ('initial_budget', 'current_budget')}),
+    ]
+
+    list_display = ('name', 'methodology',
+                    'current_deadline', 'current_budget')
+    list_filter = ['current_deadline']
+    search_fields = ['name']
 
 
 class RiskEvaluationAdmin(admin.ModelAdmin):
@@ -61,7 +53,7 @@ class RoleAdmin(admin.ModelAdmin):
 
 class MemberAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Details', {'fields': ('user_profile',
+        ('Details', {'fields': ('user',
          'role', 'project', 'work_hours', 'project_manager')}),
     ]
 
@@ -145,7 +137,7 @@ class TaskAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Project, ProjectAdmin)
-admin.site.register(UserProfile, UserProfileAdmin)
+admin.site.register(CustomUser, CustomUserAdmin)
 admin.site.register(Skill, SkillAdmin)
 admin.site.register(Role, RoleAdmin)
 admin.site.register(Member, MemberAdmin)

@@ -131,7 +131,7 @@ const Homepage = () => {
                   <h1>Create New Project</h1>
 
                   <span className = "project_name">
-                      <label forHtml = "project_name" className = "inputLabels">Project Name: </label>
+                      <label forhtml = "project_name" className = "inputLabels">Project Name: </label>
                       <input 
                       type = "text" 
                       required id = "project_name" 
@@ -143,7 +143,7 @@ const Homepage = () => {
                   </span>
 
                     <span className = "project_description">
-                        <label forHtml = "project_description" className = "inputLabels">Project Description: </label>
+                        <label forhtml = "project_description" className = "inputLabels">Project Description: </label>
                         <input 
                         type = "text" 
                         required id = "project_description" 
@@ -157,7 +157,7 @@ const Homepage = () => {
                     <span className = "project_budget">
                         
                         <label 
-                              forHtml = "project_budget"
+                              forhtml = "project_budget"
                               className = "inputLabels">
                                 Project Budget: 
                         </label>
@@ -175,7 +175,7 @@ const Homepage = () => {
                     <span className = "project_deadline">
                         
                         <label 
-                              forHtml = "project_deadine"
+                              forhtml = "project_deadine"
                               className = "inputLabels">
                                 Project Deadline: 
                         </label>
@@ -193,7 +193,7 @@ const Homepage = () => {
                     <span className = "project_start">
                         
                         <label 
-                              forHtml = "project_start"
+                              forhtml = "project_start"
                               className = "inputLabels">
                                 Project Start Date: 
                         </label>
@@ -209,6 +209,7 @@ const Homepage = () => {
                     </span>           
 
                     <label htmlFor="member"> Member(s) </label>
+                    {/* This needs to be turned into a component for simplicity and to remove errors */}
                     {membersList.map((singleMember,index) => (
                       <>                  
                       <div key = {index} className="members">

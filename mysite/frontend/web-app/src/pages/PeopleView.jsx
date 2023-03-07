@@ -22,9 +22,9 @@ const PeopleView = () => {
         getMembers();
     }, []);
 
-    // Obtaining the projects the user is involved in via a GET request to the api referencing our authorisation token
+    // Obtaining the members involved in the project via a GET request to the api referencing our authorisation token
     let getMembers = async (e) => {
-            let response = await fetch("http://127.0.0.1:8000/api/projects/".concat(slug).concat("/members"), {
+            let response = await fetch("http://127.0.0.1:8000/api/projects/".concat(slug).concat("/members/"), {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

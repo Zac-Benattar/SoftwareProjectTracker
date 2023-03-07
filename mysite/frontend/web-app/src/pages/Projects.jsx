@@ -8,15 +8,11 @@ import AuthContext from "../context/AuthContext";
 
 const Projects = () => {
 
-    const location = useLocation();
-    const state = location.state;
-
-    // Deconstructing the relevent sections from AuthContext
-    let { authTokens, logoutUser, user } = useContext(AuthContext);
+  // Deconstructing the relevent sections from AuthContext
+  let { authTokens, logoutUser, user } = useContext(AuthContext);
 
   // Defining the states
   let [project, setProject] = useState([]);
-  
   let [riskEvaluation, setRiskEvaluation] = useState([]);
 
   // Get slug parameter given when Project is referenced in router
@@ -78,9 +74,7 @@ const Projects = () => {
     }
   };
 
-  const success_chance = 0;
 
-    
     return (
       <>
       <div className="home-page">

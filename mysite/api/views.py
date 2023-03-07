@@ -36,10 +36,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
-
-        # Add custom claims
         token['username'] = user.username
-        # ...
 
         return token
 
@@ -72,10 +69,9 @@ class ProjectReadAndWritePermission(permissions.BasePermission):
             return True
 
         # Only allow write permissions to project manager
-        user = get_object_or_404(User, username=request.user)
-        user_profile = get_object_or_404(UserProfile, user=user)
+        user = get_object_or_404(CustomUser, username=request.user)
         query_set = Member.objects.filter(
-            user_profile=user_profile, project=obj.id, project_manager=True)
+            user=user, project=obj.id, project_manager=True)
         if query_set.exists():
             return True
 
@@ -92,9 +88,8 @@ class ProjectsViewSet(viewsets.ModelViewSet):
         Returns:
             list(projects)
         '''
-        user = get_object_or_404(User, username=self.request.user)
-        user_profile = get_object_or_404(UserProfile, user=user)
-        projects = user_profile.projects
+        user = get_object_or_404(CustomUser, username=self.request.user)
+        projects = user.projects
         return projects
 
 
@@ -107,12 +102,12 @@ class MyAccountViewSet(viewsets.ModelViewSet):
         Returns:
             list(user)
         '''
-        user = get_object_or_404(User, username=self.request.user)
+        user = get_object_or_404(CustomUser, username=self.request.user)
         return user
 
 
 class UserViewSet(viewsets.ModelViewSet):
-    queryset = UserProfile.objects.all()
+    queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
 
 
@@ -131,8 +126,8 @@ class UserSkillViewSet(viewsets.ModelViewSet):
     def get_queryset(self, *args, **kwargs):
         user_id = self.kwargs.get('user_pk')
         try:
-            user = User.objects.get(id=user_id)
-        except User.DoesNotExist:
+            user = CustomUser.objects.get(id=user_id)
+        except CustomUser.DoesNotExist:
             raise NotFound('A user with this id does not exist')
         return self.queryset.filter(userprofile=user_id)
 
@@ -246,12 +241,7 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
     serializer_class = RiskEvaluationSerializer
 
     def generate_risk_evaluation(self, project):
-
-
         generate_initial_prediction = True
-
-
-
         success_chance_estimate = 0 #Initialize success chance
 
         #Get chance of success

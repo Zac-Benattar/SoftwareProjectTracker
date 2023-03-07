@@ -19,7 +19,7 @@ class RoleRequirementSerializer(ModelSerializer):
 
 class UserSerializer(ModelSerializer):
     class Meta:
-        model = UserProfile
+        model = CustomUser
         fields ='__all__'
 
 class SkillSerializer(ModelSerializer):

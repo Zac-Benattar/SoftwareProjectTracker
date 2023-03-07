@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib import admin
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from phonenumber_field.modelfields import PhoneNumberField
 from django.utils import timezone
 import datetime
@@ -40,43 +40,12 @@ class Skill(models.Model):
         return self.name
 
 
-class UserProfile(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    # Should probably find a better way to do this - maybe make a new user class that inherits from the django built in one
-    # Using a library for phone number, if you want the string
-    # representation use phone.as_e164
+class CustomUser(AbstractUser):
+    # Using a library for phone number, if you want the string representation use phone.as_e164
     # https://django-phonenumber-field.readthedocs.io/en/latest/
     phone = PhoneNumberField(null=False, blank=True, unique=True)
     skillset = models.ManyToManyField(Skill, blank=True)
     projects = models.ManyToManyField(Project, blank=True)
-
-    # Tells admin panel how to display model
-    @admin.display(
-        boolean=True,
-        ordering='join_date',
-        description='New User?',
-    )
-    def __str__(self):
-        return self.user.username
-
-    def get_first_name(self):
-        return self.user.first_name
-
-    def get_last_name(self):
-        return self.user.last_name
-
-    def get_date_joined(self):
-        return self.user.date_joined
-
-    def get_email(self):
-        return self.user.email
-
-    def get_username(self):
-        return self.user.username
-
-    def joined_recently(self):
-        now = timezone.now()
-        return now - datetime.timedelta(days=1) <= self.get_date_joined() <= now
 
 
 class RiskEvaluation(models.Model):
@@ -151,7 +120,7 @@ class Role(models.Model):
 class Member(models.Model):
     role = models.ForeignKey(Role, on_delete=models.CASCADE)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    user_profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    user_profile = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     work_hours = models.IntegerField(default=0)
     join_date = models.DateTimeField(auto_now_add=True)
     project_manager = models.BooleanField(default=False)
