@@ -4,32 +4,17 @@ import datetime
 from django.test import TestCase
 #from django.db import models
 #from django.contrib.auth.models import User
-import sys
-import pathlib
-
-originalpath=sys.path
-folderPath = str(pathlib.Path(__file__).parent.parent.parent.joinpath("projects").resolve())
-sys.path.append(folderPath)
-
-print("==================== PATHS =============")
-print(sys.path)
-print("   ")
 
 
 from models import *
 
 #from models import Project, Task, Member, Role, RoleRequirement, Feedback, User, Skill
-from phonenumber_field.modelfields import PhoneNumberField
 from projectsuggester import ProjectSuggester
-
-
-sys.path=originalpath
 
 
 def test():
     print("Run test!")
     my_tester = tester()
-
 
 
 class tester(unittest.TestCase):

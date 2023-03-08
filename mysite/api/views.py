@@ -25,7 +25,7 @@ sys.path.append(folderpath)
 from startevaluationdata import StartEvaluationData
 from currentevaluationdata import CurrentEvaluationData
 from projectevaluator import ProjectEvaluator
-from projectsuggester import ProjectSuggester
+from projects.projectsuggester import ProjectSuggester
 
 # Generate ProjectEvaluator and ProjectSuggester objects
 # Used to get project evaluations and suggestions
@@ -33,6 +33,7 @@ PROJECT_EVALUATOR = ProjectEvaluator()
 PROJECT_SUGGESTER = ProjectSuggester()
 
 # Revert the import path to the original path
+#  Might not be needed
 sys.path = originalPath
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):

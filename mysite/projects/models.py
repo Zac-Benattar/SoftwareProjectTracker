@@ -19,6 +19,8 @@ def get_in_week_datetime():
     return timezone.now() + timezone.timedelta(days=7)
 
 
+
+
 class Project(models.Model):
     name = models.CharField(max_length=30)
     description = models.CharField(max_length=3000, blank=True)

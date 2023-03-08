@@ -1,19 +1,6 @@
 import datetime
+from .models import *
 
-import sys
-import pathlib
-
-originalpath=sys.path
-folderPath = str(pathlib.Path(__file__).parent.parent.parent.joinpath("projects").resolve())
-sys.path.append(folderPath)
-
-print("==================== PATHS =============")
-print(sys.path)
-print("   ")
-
-from projects.models import *
-
-sys.path = originalpath
 
 # retrieve all instances
 all_projects = Project.objects.all()
@@ -24,7 +11,6 @@ all_rolerequirements = RoleRequirement.objects.all()
 all_feedback = Feedback.objects.all()
 
 generated_recommendations = list()
-
 
 class ProjectSuggester:  # evaluating project's pararameters to make suggestions
 
