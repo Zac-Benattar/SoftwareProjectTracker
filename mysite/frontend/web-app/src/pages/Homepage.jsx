@@ -4,6 +4,7 @@ import AuthContext from "../context/AuthContext";
 import { Dropdown } from "../components/Dropdown";
 import { ProjectListItem } from "../components/ProjectListItem";
 import HomeNavbar from "../components/HomeNavbar";
+import DateTimePicker from 'react-datetime-picker';
 
 
 const Homepage = () => {
@@ -11,8 +12,8 @@ const Homepage = () => {
   const [projectName, setProjectName] = useState("");
   const [projectDescription, setProjectDescription] = useState("");
   const [projectBudget, setProjectBudget] = useState("");
-  const [projectStart, setProjectStart] = useState("");
-  const [projectDeadline, setProjectDeadline] = useState("");
+  const [projectStart, setProjectStart] = useState(new Date());
+  const [projectDeadline, setProjectDeadline] = useState(new Date());
   const [projectMembers, setProjectMembers] = useState("");
   
   let [projects, setProjects] = useState([]);
@@ -116,6 +117,34 @@ const Homepage = () => {
     }
   };
 
+  let createProject = async () => {
+    let response = await fetch("http://127.0.0.1:8000/api/projects/", {
+      method : "POST",
+      headers: {
+        'Content-Type' : 'application/json',
+        Authorization: "Bearer " + String(authTokens.access),
+      },
+      body : JSON.stringify({
+        name : projectName,
+        description : projectDescription,
+        client_name : projectName,
+        initial_budget: projectBudget,
+        current_budget : projectBudget,
+        amount_spent : projectBudget,
+        start_date : projectStart,
+        initial_deadline : projectDeadline,
+        current_deadline :  projectDeadline,
+        methodology : projectName,
+        gitHub_token : projectName,
+      })
+    });
+
+    let data = await response.json();
+    if (response.status === 201) {
+      setProjects([...projects,data]);
+    }
+  }
+
   console.log("projects",projects);
   
  
@@ -170,10 +199,9 @@ const Homepage = () => {
                       Project Start Date:
                     </label>
 
-                    <input
+                    <DateTimePicker
                       className="project-inputs" 
-                      type="date"
-                      onChange={event=>setProjectStart(event.target.value)}
+                      onChange={(newValue) => setProjectStart(newValue)}
                     />
                 </div>
 
@@ -184,10 +212,9 @@ const Homepage = () => {
                       Project Deadline:
                     </label>
 
-                    <input
+                    <DateTimePicker
                       className="project-inputs" 
-                      type="date"
-                      onChange={event=>setProjectDeadline(event.target.value)}
+                      onChange={(newValue) => setProjectDeadline(newValue)}
                     />
                 </div>
 
@@ -268,7 +295,7 @@ const Homepage = () => {
                     ))}
 
                     <span>
-                      <button className="create-project-btn">Create Project</button>
+                      <button onClick = {createProject} className="create-project-btn">Create Project</button>
                     </span>
                    
                 </div>

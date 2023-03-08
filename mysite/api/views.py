@@ -1,4 +1,5 @@
 
+from django.views import View
 from django.shortcuts import get_list_or_404, get_object_or_404
 from rest_framework import permissions, viewsets
 from projects.models import *
@@ -433,7 +434,6 @@ class RetrainView(View):
         if project.projectResult == 'S':
             result = 1
 
-        
         PROJECT_EVALUATOR.update_model(project_start_evaluation_data, all_past_inprogress_evaluation_data, result)
         
         context = {
