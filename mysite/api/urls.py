@@ -38,6 +38,9 @@ risk_evaluations_router.register( r'riskevaluations', RiskEvaluationViewSet, bas
 generate_risk_evaluation_router = routers.NestedDefaultRouter( router, r'projects', lookup = 'project')
 generate_risk_evaluation_router.register( r'generateriskevaluation', RiskEvaluationGeneratorViewSet, basename='project-generateRiskEvaluation')
 
+# retrain_model_router = routers.NestedDefaultRouter( router, r'projects', lookup = 'project')
+# retrain_model_router.register( r'retrainmodel', RetrainView, basename='project-retrainmodel')
+
 meetings_router = routers.NestedDefaultRouter( router, r'projects', lookup = 'project')
 meetings_router.register( r'meetings', MeetingViewSet, basename='project-meetings')
 
@@ -91,4 +94,5 @@ urlpatterns = [
     path('', include(userAccount_router.urls)),
     path('token/', MyTokenObtainPairView.as_view()),
     path('token/refresh/', TokenRefreshView.as_view()),
+    path('retrainmodel/<int:pk>/', RetrainView.as_view()),
 ]

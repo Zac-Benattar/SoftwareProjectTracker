@@ -1,4 +1,5 @@
 
+from django.views import View
 from django.shortcuts import get_list_or_404, get_object_or_404
 from rest_framework import permissions, viewsets
 from projects.models import *
@@ -410,6 +411,35 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
         except Project.DoesNotExist:
             raise NotFound('A project with this id does not exist')
         return (risk_evaluation),
+    
+
+class RetrainView(View):
+    def get(self, request, pk):
+        
+        project = get_object_or_404(Project, pk=self.kwargs['pk'])
+        risk_evaluations = RiskEvaluation.objects.filter(project=project)
+        
+        project_start_evaluation_data = None
+        
+        all_past_inprogress_evaluation_data = list()
+        
+        for r in risk_evaluations:
+            evaluation_data = r.get_project_snapshot()
+            if evaluation_data.is_start_evaluation_data():
+                project_start_evaluation_data = evaluation_data
+            if evaluation_data.is_current_evaluation_data():
+                all_past_inprogress_evaluation_data.append(evaluation_data)
+        
+        result = -1
+        if project.projectResult == 'S':
+            result = 1
+
+        PROJECT_EVALUATOR.update_model(project_start_evaluation_data, all_past_inprogress_evaluation_data, result)
+        
+        context = {
+            'result' : 'success'
+        }
+        return context
 
 
 class MeetingViewSet(viewsets.ModelViewSet):
