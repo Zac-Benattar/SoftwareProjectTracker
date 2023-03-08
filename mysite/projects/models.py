@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
 from phonenumber_field.modelfields import PhoneNumberField
 from django.utils import timezone
+import pickle
 
 
 def get_today_datetime():
@@ -154,6 +155,8 @@ class RiskEvaluation(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     success_chance = models.DecimalField(max_digits=13, decimal_places=10)
     date = models.DateTimeField(auto_now_add=True)
+    initial_evaluation = models.BooleanField(default=True)
+    serialized_project_evaluation_data = models.BinaryField(null=True)
 
     def __str__(self):
         '''Gets string representation of the time risk evaluation object
@@ -163,6 +166,10 @@ class RiskEvaluation(models.Model):
             str string representation of the risk evaluation
         ''' 
         return str(self.success_chance)
+    
+    def get_project_snapshot(self):
+        result = pickle.loads(self.serialized_project_evaluation_data)
+        return result
 
 
 class Meeting(models.Model):

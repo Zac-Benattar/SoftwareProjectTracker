@@ -326,6 +326,8 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
 
         num_tasks = len(Task.objects.filter(project = project)) #Get the number of tasks
 
+        evaluation_data = None
+
         #Get chance of success
         # Initial prediction is for projects lacking tasks and feedback data from members.
         # It models projects that are still early on in the planning phase using less data points
@@ -343,6 +345,7 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
             original_deadline,
             daily_running_cost,
             num_tasks)
+            evaluation_data = start_evaluation_data
 
             #Evaluate data
             success_chance_estimate = PROJECT_EVALUATOR.get_initial_chance_of_success(start_evaluation_data)
@@ -383,14 +386,18 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
             completed_tasks,
             average_happiness,
             average_confidence)
+            evaluation_data = current_evaluation_data
 
             #Evaulate Data
             success_chance_estimate = PROJECT_EVALUATOR.get_current_chance_of_success(current_evaluation_data)
 
         print("RESULT: " + str(success_chance_estimate))
         print("==============================")
-        risk_evaluation = RiskEvaluation(project = project, success_chance = float(success_chance_estimate))
+        pickled_date = pickle.dumps(evaluation_data)
+        risk_evaluation = RiskEvaluation(project = project, success_chance = float(success_chance_estimate), serialized_project_evaluation_data=pickled_date)
         risk_evaluation.save()
+        unpickled_data = risk_evaluation.get_project_snapshot()
+        print(unpickled_data.initial_budget)
         return risk_evaluation
 
     def get_queryset(self, *args, **kwargs):
