@@ -7,6 +7,7 @@ import HomeNavbar from "../components/HomeNavbar";
 import DateTimePicker from 'react-datetime-picker';
 
 
+
 const Homepage = () => {
   // Sets variables 
   const [projectName, setProjectName] = useState("");
@@ -219,9 +220,7 @@ const Homepage = () => {
 
     <div className="close"> &times; </div>
            
-              <div className="modal-content">
-
-              
+              <div className="modal-content">             
 
               <h1>Create New Project</h1>
                 <div className="input-div">

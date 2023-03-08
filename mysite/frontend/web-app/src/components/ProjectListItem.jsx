@@ -25,8 +25,6 @@ export const ProjectListItem = ({ project }) => {
       </div>
       <div className="info_container">
 
-
-
         <div className="info">
           
           <h3>Current Budget:</h3> <p> £{project.current_budget}</p>

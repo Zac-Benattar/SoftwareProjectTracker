@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar";
 import SuccessChanceDisplay from "../components/SuccessChanceDisplay";
 import AuthContext from "../context/AuthContext";
 import "./Homepage.css";
+import { FaTrash } from 'react-icons/fa'
 
 
 const Projects = () => {
@@ -327,6 +328,7 @@ const Projects = () => {
 
               
             <div className="project-info-container">
+            <i className="delete-proj-btn"> <FaTrash /> </i>
                 <div className="project-name">
                     <h1>{project.name}</h1>
                 </div>
