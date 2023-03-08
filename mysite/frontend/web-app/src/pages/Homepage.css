@@ -196,9 +196,9 @@ body {
 
 .title{
     display: inline-block;
-    border-bottom: solid 4px;
-    border-color: rgb(138, 73, 202);
     width:95%;
+    border: solid 2px;
+    border-radius: 10px;
     margin:2.5%;
     text-align: center;
     color: rgb(138, 73, 202);
@@ -490,4 +490,10 @@ body {
   }
 
 
- 
+ .delete-proj-button {
+    font-size: 20px;
+    float: right;
+    margin-right: 5%;
+    margin-top: 5%;
+ }
+

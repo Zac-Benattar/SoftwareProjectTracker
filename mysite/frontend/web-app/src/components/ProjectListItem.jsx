@@ -2,6 +2,7 @@ import React from "react";
 import ProgressBar from "./ProgressBar";
 import "../pages/Homepage.css";
 import { Link } from "react-router-dom";
+import { FaTrash } from 'react-icons/fa'
 
 export const ProjectListItem = ({ project }) => {
 
@@ -10,6 +11,12 @@ export const ProjectListItem = ({ project }) => {
   return (
     <Link to={projectRoute}>
     <div className="project_container">
+
+    <div className="delete-proj-button"> <FaTrash/> </div>
+
+    <div className="title-info">
+
+    
         <div className="title">
           <h1>{project.name}</h1>
         </div>
@@ -17,8 +24,14 @@ export const ProjectListItem = ({ project }) => {
       <div className="progress-bar">
         <ProgressBar progress="30" />
       </div>
+
+      </div>
       <div className="info_container">
+
+
+
         <div className="info">
+          
           <h3>Current Budget:</h3> <p> £{project.current_budget}</p>
           <br/>
           <br/>
@@ -26,6 +39,8 @@ export const ProjectListItem = ({ project }) => {
           <br/>
           <br/>
           <h3>Methodology: </h3><p>{project.methodology}</p>
+
+           
         </div>
       </div>
     </div>
