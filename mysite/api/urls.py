@@ -51,10 +51,10 @@ generate_recommendation_router = routers.NestedDefaultRouter( router, r'projects
 generate_recommendation_router.register( r'generaterecommendations', RecommendationViewSet, basename='project-generateRecommendations')
 
 # member routers , api call : /api/projects/pk/members/pk/model_name/pk
-schedules_router = routers.NestedDefaultRouter( member_router, r'members', lookup = 'member')
+schedules_router = routers.NestedDefaultRouter( members_router, r'members', lookup = 'member')
 schedules_router.register( r'schedules', ScheduleViewSet, basename='member-schedules')
 
-timeWorked_router = routers.NestedDefaultRouter( member_router, r'members', lookup = 'member')
+timeWorked_router = routers.NestedDefaultRouter( members_router, r'members', lookup = 'member')
 timeWorked_router.register( r'timeworked', TimeWorkedViewSet, basename='member-timeWorked')
 
 # role routers , api call : /api/roles/pk/model_name/pk

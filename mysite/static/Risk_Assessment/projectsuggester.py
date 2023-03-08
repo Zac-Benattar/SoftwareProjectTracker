@@ -23,7 +23,7 @@ all_roles = Role.objects.all()
 all_rolerequirements = RoleRequirement.objects.all()
 all_feedback = Feedback.objects.all()
 
-generated_recommendations = list(Recommendation)
+generated_recommendations = list()
 
 
 class ProjectSuggester:  # evaluating project's pararameters to make suggestions
