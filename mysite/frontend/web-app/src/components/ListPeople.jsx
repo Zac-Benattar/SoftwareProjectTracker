@@ -50,7 +50,7 @@ export const ListPeople = ({ member }) => {
 
             <div className="people-container">
             <div className="people-info">
-               <h2> Name: {user.first_name} </h2>
+               <h2> Name: {user.first_name} {user.last_name} </h2>
                 <h3> Role: {role.name} </h3> 
                     
                      <ul className="all-skills">
