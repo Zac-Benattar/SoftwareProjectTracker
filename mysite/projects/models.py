@@ -218,7 +218,7 @@ class Task(models.Model):
     duration = models.IntegerField(default=0)
     creation_date = models.DateTimeField(auto_now_add=True)
     start_date = models.DateTimeField(null=True)
-    end_date = models.DateTimeField(null=True)
+    latest_finish = models.DateTimeField(null=True)
     dependent_tasks = models.ManyToManyField(
         'self', symmetrical=False, related_name='prerequisites', blank=True)
     NOTSTARTED = 'NS'

@@ -73,9 +73,6 @@ const TasksForm = () => {
   };
 
 
-
-  console.log("members",members);
-
   const [checkedtasks, setCheckedTasks] = useState([]);
   let [dependencies, setDependencies] = useState(["task1 ", "task2", "task3"]);
 
@@ -238,13 +235,3 @@ const TasksForm = () => {
 };
 
 export default TasksForm;
-
-// if (viewStyle == viewoptions[0]) {
-//   return <GanttChart />;
-// }else if (viewStyle==viewoptions[1]) {
-//   return <ListView />;
-// }else if (viewStyle==viewoptions[2]) {
-//   return <BoardView />;
-// }else {
-//   <Calendar />
-// }
