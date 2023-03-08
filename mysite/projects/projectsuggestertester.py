@@ -89,7 +89,7 @@ class tester(unittest.TestCase):
     email = 'andrew.smith74@gmail.com'
     phone = '+15555555555'
 
-    user1 = User.objects.create(username, forename, lastname, join_date, email, phone)
+    user1 = CustomUser.objects.create(username, forename, lastname, join_date, email, phone)
     user1.skillset.add(skill1, skill2, skill3, skill4)
 
 
