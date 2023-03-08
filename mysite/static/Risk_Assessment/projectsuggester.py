@@ -1,5 +1,19 @@
 import datetime
-from projects.models import Project, Task, Member, Role, RoleRequirement, Feedback
+
+import sys
+import pathlib
+
+originalpath=sys.path
+folderPath = str(pathlib.Path(__file__).parent.parent.parent.joinpath("projects").resolve())
+sys.path.append(folderPath)
+
+print("==================== PATHS =============")
+print(sys.path)
+print("   ")
+
+from models import Project, Task, Member, Role, RoleRequirement, Feedback
+
+sys.path = originalpath
 
 # retrieve all instances
 all_Projects = Project.objects.all()
@@ -14,12 +28,12 @@ class ProjectSuggester: # evaluating project's pararameters to make suggestions
     def __init__(self):
         pass
 
-    def past_deadline(self, project): 
+    def past_deadline(self, project):
         # For all uncompleted task, If currentDate > taskDeadline.
         # The program will suggest allocating more people to that task.
 
         # iterate over the tasks in the project that are uncompleted
-        for task in all_Tasks:  
+        for task in all_Tasks:
             if task.project == project:
                 if task.completion_status != 'F':
                     if datetime.date.today() > (task.creation_date + task.duration):
@@ -27,14 +41,14 @@ class ProjectSuggester: # evaluating project's pararameters to make suggestions
                                 Try allocating more people to the task.")
                         return True
         return False
-    
-    
+
+
     def changing_roles(self, project):
         # For all member of a project if any are assigned a role for which they don’t have
         # all the skills.
         # The program will suggest changing their role.
 
-        # iterate over all the memebers in the project 
+        # iterate over all the memebers in the project
         for member in all_Members:
             if member.project == project:
                 for rolereq in all_RoleRequirements:
@@ -46,12 +60,12 @@ class ProjectSuggester: # evaluating project's pararameters to make suggestions
                                     more adequate.")
                             return True
         return False
-    
+
 
 
     def average_happiness(self, project):
         # Looking at the mean average of happiness if below a certain threshold
-        # The program will warn the project manager team happiness is low. 
+        # The program will warn the project manager team happiness is low.
 
         avg_happiness = 0
         count = 0
@@ -60,7 +74,7 @@ class ProjectSuggester: # evaluating project's pararameters to make suggestions
             if f.project == project:
                 avg_happiness += f.emotion
                 count += 1
-        
+
         avg_happiness = avg_happiness / count
 
         if avg_happiness <= 2.5: #half of the max happiness value
@@ -84,16 +98,16 @@ class ProjectSuggester: # evaluating project's pararameters to make suggestions
                 line = line.strip()
                 if line.startswith("#"):
                     comment_count += 1
-        
+
         if comment_count < line_count / 6:
             print(f"You may want to consider adding more comments to the file {file_path} \
                     to make it more understandable.")
-        
+
         return comment_count
 
 
     def completion_ratio(self, project):
-        # The program will calculate two values. The ratio of tasks completed. 
+        # The program will calculate two values. The ratio of tasks completed.
         # And also a ratio of the time used from the start date to the current deadline.
         # If the time ratio is much higher than the task completion ratio it implies the
         # project may not be completed in time.
@@ -109,7 +123,7 @@ class ProjectSuggester: # evaluating project's pararameters to make suggestions
             if task.project == project:
                 if task.completion_status == 'F':
                     completed_task_count += 1
-            
+
         tasks_ratio = completed_task_count / task_count
         time_ratio = (datetime.date.today() - project.start_date) / project.current_deadline
 
@@ -117,14 +131,14 @@ class ProjectSuggester: # evaluating project's pararameters to make suggestions
             print(f"We suggest extending the deadline for the project {project.name} to \
                     complete the remaining taks.")
             return True
-        
+
         return False
 
 
     def low_budget(self, project):
-        # The program will create an estimation of a per day running cost. By summing 
+        # The program will create an estimation of a per day running cost. By summing
         # a daily salary and calculating how much money is left.
-        # The program will suggest increasing the budget.      
+        # The program will suggest increasing the budget.
 
         budget_ratio = project.current_budget / project.initial_budget
         time_ratio = (datetime.date.today() - project.start_date) / project.current_deadline
@@ -133,8 +147,5 @@ class ProjectSuggester: # evaluating project's pararameters to make suggestions
             print(f"We suggest increasing the budget for the project {project.name} to \
                     complete the remaining taks.")
             return True
-        
+
         return False
-
-
-
