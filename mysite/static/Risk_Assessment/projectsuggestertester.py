@@ -6,20 +6,29 @@ from django.test import TestCase
 #from django.contrib.auth.models import User
 import sys
 import pathlib
+
 originalpath=sys.path
 folderPath = str(pathlib.Path(__file__).parent.parent.parent.joinpath("projects").resolve())
 sys.path.append(folderPath)
+
 print("==================== PATHS =============")
 print(sys.path)
 print("   ")
 
-import models
+
+from models import *
+
 #from models import Project, Task, Member, Role, RoleRequirement, Feedback, User, Skill
 from phonenumber_field.modelfields import PhoneNumberField
 from projectsuggester import ProjectSuggester
 
 
 sys.path=originalpath
+
+
+def test():
+    print("Run test!")
+    my_tester = tester()
 
 
 
@@ -45,7 +54,7 @@ class tester(unittest.TestCase):
     task1 = Task.objects.create(project1, name, description, duration, creation_date, completion_status)
 
 
-    # CREATING FEEDBACK 
+    # CREATING FEEDBACK
     confidence = 5
     emotion = 5
     date = datetime.date.today()
@@ -109,7 +118,7 @@ class tester(unittest.TestCase):
     file_path = r"C:\Users\alexp\Documents\GitHub\SoftwareProjectTracker\mysite\test\test.py"
 
 
-    # TESTING 
+    # TESTING
 
     # PAST DEADLINE FUNCTION
     ## function will return TRUE if the suggestion has to be displayed
@@ -152,7 +161,7 @@ class tester(unittest.TestCase):
     def test_completion_ratio(self, project):
         test = ProjectSuggester(project)
         self.assertEqual(test.changing_roles(), True, 'The fuction is wrong.')
- 
+
         if __name__ == '__main__':
             unittest.main()
 
