@@ -393,13 +393,9 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
             #Evaulate Data
             success_chance_estimate = PROJECT_EVALUATOR.get_current_chance_of_success(current_evaluation_data)
 
-        print("RESULT: " + str(success_chance_estimate))
-        print("==============================")
         pickled_date = pickle.dumps(evaluation_data)
         risk_evaluation = RiskEvaluation(project = project, success_chance = float(success_chance_estimate), serialized_project_evaluation_data=pickled_date)
         risk_evaluation.save()
-        unpickled_data = risk_evaluation.get_project_snapshot()
-        print(unpickled_data.initial_budget)
         return risk_evaluation
 
     def get_queryset(self, *args, **kwargs):
