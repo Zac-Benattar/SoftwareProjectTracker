@@ -14,7 +14,10 @@ const Homepage = () => {
   const [projectBudget, setProjectBudget] = useState("");
   const [projectStart, setProjectStart] = useState(new Date());
   const [projectDeadline, setProjectDeadline] = useState(new Date());
-  const [projectMembers, setProjectMembers] = useState("");
+
+  const [skill, setSkill] = useState("");
+  const [skillDescription, setSkillDescription] = useState("");
+  
   
   let [projects, setProjects] = useState([]);
 
@@ -82,38 +85,20 @@ const Homepage = () => {
     
       }
 
-      let [allRoles, setRoles] = useState([]);
-
-      useEffect(() => {
-        getRoles();
-      }, []);
-
-      let getRoles = async () => {
-        let response = await fetch("/api/roles/");
-        let data = await response.json();
-        console.log("Data:", data);
-        setRoles(data);
-      };
-
-      // Creates a list of role names from the role object.
-      const roleNames = 
-      allRoles.map(role =>( { key:role.id}, {label:role.name} ));
-
-      
-      const addRole = () => {
-        var modal = document.getElementById("add-role-modal");
-        var span = document.getElementsByClassName("role-close")[0];
-        modal.style.display = "block";
-        span.onclick = function() {
+    const addSkill = () => {
+      var modal = document.getElementById("skillset-modal");
+      var span = document.getElementsByClassName("skill-close")[0];
+      modal.style.display = "block";
+      span.onclick = function() {
+        modal.style.display = "none";
+      }
+      window.onclick = function(event) {
+        if (event.target === modal) {
           modal.style.display = "none";
         }
-        window.onclick = function(event) {
-          if (event.target === modal) {
-            modal.style.display = "none";
-          }
-        }
-
       }
+
+    }
 
   // Deconstructing the relevent sections from AuthContext
   let { authTokens, logoutUser, user } = useContext(AuthContext);
@@ -181,11 +166,58 @@ const Homepage = () => {
   return (
     
       <>
+    <div id="skillset-modal" className="skillset-modal">
+
+      <div className="skill-close">  &times; </div>
+          <div className="skillset-modal-content">
+
+
+                <h1>Add to your skillset!</h1>
+                <div className="skill-input-div">
+                    <label 
+                      className="skill-input-labels">
+                      Skill name:
+                    </label>
+
+                    <input 
+                      className="skill-inputs" 
+                      type="text"
+                      placeholder="Enter Skill Name"
+                      onChange={event=>setSkill(event.target.value)}
+                    />
+                </div>
+
+                <div className="skill-input-div">
+                    <label 
+                      className="skill-input-labels">
+                      Skill description:
+                    </label>
+
+                    <textarea 
+                      className="skill-inputs" 
+                      type="text"
+                      placeholder="Enter Skill Description"
+                      onChange={event=>setSkillDescription(event.target.value)}
+                    />
+                </div>
+
+
+                <button onClick = {createProject} className="add-skill-btn">Add skill</button>
+
+
+
+
+          </div>
+
+
+    </div>
+
+
+
+
     <div id="add-project-modal" className="modal">
 
     <div className="close"> &times; </div>
-
-
            
               <div className="modal-content">
 
@@ -337,17 +369,13 @@ const Homepage = () => {
 
               </div>
 
-      </div>
-
-          
-
-      
-
-
+      </div>  
+  
           <div className="home-page">
 
               <HomeNavbar/> 
               <div className="home-page-content">
+
                 <div className="home-page-menu">
                 
                     <button  
@@ -357,7 +385,8 @@ const Homepage = () => {
                     </button>
                 
                       <button 
-                      className="add-proj-btn">
+                      className="add-proj-btn"
+                      onClick={addSkill}>
                         Edit Skillset
                       </button>
                       

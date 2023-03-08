@@ -11,9 +11,6 @@ export const ProjectListItem = ({ project }) => {
   return (
     <Link to={projectRoute}>
     <div className="project_container">
-
-    <div className="delete-proj-button"> <FaTrash/> </div>
-
     <div className="title-info">
 
     
