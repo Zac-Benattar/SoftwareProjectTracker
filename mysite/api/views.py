@@ -13,7 +13,8 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 import sys #Import system file to add extra imports from outside file
 import pathlib #Import the libary to modify paths
 
-#Add the Risk_Assessment folder to the path
+# Add the Risk_Assessment folder to the path
+# Search path needs to be changed to find the files, later reverted
 originalPath = sys.path
 folderpath = str(pathlib.Path(__file__).parent.parent.joinpath('static\Risk_Assessment').resolve())
 sys.path.append(folderpath)
@@ -22,13 +23,14 @@ sys.path.append(folderpath)
 from startevaluationdata import StartEvaluationData
 from currentevaluationdata import CurrentEvaluationData
 from projectevaluator import ProjectEvaluator
+from projectsuggester import ProjectSuggester
 
-# ======================
-# Generate a ProjectEvaluator object
-# Used to get project evaluations
-# ======================
+# Generate ProjectEvaluator and ProjectSuggester objects
+# Used to get project evaluations and suggestions
 PROJECT_EVALUATOR = ProjectEvaluator()
+PROJECT_SUGGESTER = ProjectSuggester()
 
+# Revert the import path to the original path
 sys.path = originalPath
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -449,3 +451,19 @@ class RecommendationViewSet(viewsets.ModelViewSet):
         except Project.DoesNotExist:
             raise NotFound('A project with this id does not exist')
         return self.queryset.filter(project=project)
+
+    
+class RecommendationGeneratorViewSet(viewsets.ModelViewSet):
+    serializer_class = RecommendationSerializer
+    
+    def generate_recommendations(self, project):
+        return PROJECT_SUGGESTER.get_suggestions(project)
+
+    def get_queryset(self, *args, **kwargs):
+        project_id = self.kwargs.get("project_pk")
+        try:
+            project = Project.objects.get(id=project_id)
+            recommendations = self.generate_recommendations(self, project)
+        except Project.DoesNotExist:
+            raise NotFound('A project with this id does not exist')
+        return (recommendations),
