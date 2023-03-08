@@ -9,7 +9,7 @@ export const ListPeople = ({ member }) => {
 
     let [user, setUsers] = useState([]);
     let [role, setRoles] = useState([]);
-    let [skill, setSkills] = useState([]);
+    let [skills, setSkills] = useState([]);
 
     useEffect(() => {
         getUsers();
@@ -32,7 +32,7 @@ export const ListPeople = ({ member }) => {
     };
 
     let getSkills = async () => {
-        let response = await fetch('/api/roles/'+user.skillset+'/');
+        let response = await fetch('/api/users/'+member.id+'/skills');
         let data = await response.json();
         console.log("Data:", data);
         setSkills(data);
@@ -41,29 +41,36 @@ export const ListPeople = ({ member }) => {
 
 
 
-    console.log(user);
+    console.log("user",user);
     console.log("roles",role);
 
-    console.log("skill",skill);
+    console.log("skill",skills);
 
   return (
 
-        <div className="people-container">
+            <div className="people-container">
             <div className="people-info">
                <h2> Name: {user.first_name} </h2>
                 <h3> Role: {role.name} </h3> 
                     
                      <ul className="all-skills">
-                        <li className="skill">
-                            {skill.name}
-                        </li>
+                       
+
+                        {skills.map((skill) => 
+
+                            <li className="skill">
+                                {skill.name}
+                            </li>
+                        
+                        )}
+                       
                     </ul>
                     <p> Work hours: {member.work_hours}</p>
-                    <p>{member.phone}</p>
-                    <p>{member.email}</p>                    
+                    <p>Phone Number: {user.phone}</p>                 
+            </div>
             </div>
 
-        </div>
+       
   
   );
 };
