@@ -14,7 +14,6 @@ const MembersChecklist = ({ index, member }) => {
     // Gets checked elements of a checklist.
     let [checked, setChecked] = useState([]);
 
-
     // Add or remove checked item from list.
     const handleCheck = (event) => {
         var updatedList = [...checked];
@@ -36,9 +35,6 @@ const MembersChecklist = ({ index, member }) => {
     // return classes based on whether item is checked
     var isChecked = (item) => 
     checked.includes(item) ? "checked-item" : "not-checked-item";
-    
-
-  
 
 
     useEffect(() => {
@@ -52,15 +48,15 @@ const MembersChecklist = ({ index, member }) => {
         setUsers(data);
     };   
 
-    console.log("user",user);
+    // This is where all current users are 
+    console.log("checked items", checked)
 
-  return (
-
-            
+    return (
                 <div key="index">
                     <input
                         type="checkbox"
                         value={user.first_name}
+                        onClick={handleCheck}
                       
                     />
 
@@ -70,10 +66,7 @@ const MembersChecklist = ({ index, member }) => {
 
                     <div>
                             {`Items checked are: ${checkedItems}`}
-                    </div>
-                                
-
-                    
+                    </div> 
 
             </div> 
 

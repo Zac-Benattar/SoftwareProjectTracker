@@ -19,42 +19,68 @@ const Homepage = () => {
   let [projects, setProjects] = useState([]);
 
 
-   // list to store members in a project
-   const [membersList, setMembersList] = useState([{member: ""}]); 
+      // list to store members in a project
+    const [membersList, setMembersList] = useState([{member: ""}]); 
+    const [rolesList, setRolesList] = useState([{role: ""}]); 
 
-   console.log(membersList);
-   const addMember = () => {
-     setMembersList([...membersList, {member:""}]);
-   }
- 
-   const removeMember = (index) => {
-     const list = [...membersList];
-     list.splice(index, 1);
-     setMembersList(list);
-   }
- 
-   const changeMember = (e,  index) => {
-     const {name, value} = e.target; 
-     const list = [...membersList];
-     list[index][name]=value;
-     setMembersList(list);
-   }
+    console.log(membersList);
 
-   const addProject = () => {
-       var modal = document.getElementById("add-project-modal");
-       var span = document.getElementsByClassName("close")[0];
-       modal.style.display = "block";
-       span.onclick = function() {
-         modal.style.display = "none";
-       }
-       window.onclick = function(event) {
-         if (event.target === modal) {
-           modal.style.display = "none";
-         }
-       }
-   
-   }
+    const addMember = () => {
+      setMembersList([...membersList, {member:""}]);
+    }
 
+    const addMemberRole = () => {
+      setRolesList([...rolesList, {role:""}]);
+    }
+  
+    const removeMember = (index) => {
+      const list = [...membersList];
+      list.splice(index, 1);
+      setMembersList(list);
+    }
+
+    const removeRole = (index) => {
+      const list = [...rolesList];
+      list.splice(index, 1);
+      setRolesList(list);
+    }
+  
+    const changeMember = (e,  index) => {
+      const {name, value} = e.target; 
+      console.log(name);
+      console.log(value);
+      const list = [...membersList];
+      list[index][name]=value;
+      setMembersList(list);
+    }
+
+    
+
+    const changeRole = (e, index) => {
+      const {name} = e.target;
+      var value = e.target.value;
+      
+      console.log("rolename", name);
+      console.log("role value", value);
+      const list = [...rolesList];
+      list[index]=value;
+      setRolesList(list);
+    }
+
+    const addProject = () => {
+        var modal = document.getElementById("add-project-modal");
+        var span = document.getElementsByClassName("close")[0];
+        modal.style.display = "block";
+        span.onclick = function() {
+          modal.style.display = "none";
+        }
+        window.onclick = function(event) {
+          if (event.target === modal) {
+            modal.style.display = "none";
+          }
+        }
+    
+      }
 
       let [allRoles, setRoles] = useState([]);
 
@@ -147,6 +173,8 @@ const Homepage = () => {
 
   console.log("projects",projects);
   
+  console.log("membersList", membersList);
+  console.log("roleslist", rolesList);
  
 
   return (
@@ -241,8 +269,7 @@ const Homepage = () => {
 
                     {membersList.map((each_member, index) => (
                       
-                      <div key={index} className="members">
-
+                      <div key={index} className="getting_members">
 
                         <input 
                         // need to look at functionality again.
@@ -250,18 +277,22 @@ const Homepage = () => {
                           type="text"
                          // value={each_member.member}
                           placeholder="Member Name"
-                          onChange={(e)=>(changeMember, index)}
-                        />
-
-
-
-                      
+                          name="member"
+                          id="member"
+                          required
+                          value = {each_member.member}
+                          onChange={(e)=>(changeMember(e, index))} 
+                        /> 
+                    
                         <input 
                           //doesn't save role to a varirable yet.
                           className="project-inputs"
                           type="text"
                           placeholder="Member Role"
-                          //onChange={(e)=>addMember(e, index)}
+                          name="role"
+                          id="role"
+                          required
+                          onChange={(e) => (changeRole(e,index))}
 
                         />
 
@@ -271,16 +302,19 @@ const Homepage = () => {
                           (
                             <button 
                                 className="member-button" 
-                                onClick={addMember}> 
+                                onClick={(event)=>{addMember();addMemberRole();}}> 
                                 <span> Add a member </span>
                             </button>
                           )} 
 
+                          {membersList.length > 1 && (
                             <button 
-                                className="member-button"
-                                onClick={()=>removeMember(index)}> 
-                                <span> Remove Member </span>
-                            </button>
+                            className="member-button"
+                            onClick={(event)=>{removeMember(index);removeRole(index);}}> 
+                            <span> Remove Member </span>
+                          </button>                          
+                          )}
+                            
 
                         </div>
 
@@ -300,16 +334,7 @@ const Homepage = () => {
                    
                 </div>
 
-
-                
-
-
-
-
               </div>
-
-
-       
 
       </div>
 
