@@ -85,11 +85,11 @@ const TasksForm = () => {
 
   function View() {
     if (viewStyle === viewoptions[0]) {
-      return <GanttChart />;
+      return <GanttChart tasks={tasks} />;
     } else if (viewStyle === viewoptions[1]) {
       return <ListView tasks={tasks} />;
     } else {
-      return <BoardView tasks={tasks} />;
+      return <BoardView />;
     }
   }
   return (
