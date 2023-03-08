@@ -360,7 +360,7 @@ body {
   .member-button{
     display: inline;
     padding:3%;
-    width:25%;
+    width:30%;
     margin:2%;
   }
 
@@ -406,7 +406,6 @@ body {
 .modal-content {
     background-color:  rgb(247, 247, 247);
     background-position: center;
-    background-repeat: no-repeat;
     background-size: cover;
     margin-top: 60px;
     width: 80%;
@@ -440,10 +439,9 @@ body {
     padding:2%;
   }
 
-  .inputLabels{
-    display: flex;
+  .input-labels{
+    display: inline-block;
     margin-left: 10%;
-    transform: translate(0%, 150%);
     color:rgb(138, 73, 202);
     font-size: 20px;
   }
@@ -456,10 +454,11 @@ body {
     font-size: 20px;
   }
   
-  .projectInputs{
-    /* display: flex; */
-    margin-left: 30%;
+  .project-inputs{
+    display: inline-block;
+    margin-left:10%;
   }
+  
 
   .close {
     color: black;
