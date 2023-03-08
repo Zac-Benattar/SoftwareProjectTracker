@@ -82,9 +82,9 @@ class FeedbackSerializer(ModelSerializer):
         fields = '__all__'
 
 
-class RecommendationSerializer(ModelSerializer):
+class SuggestionSerializer(ModelSerializer):
     class Meta:
-        model = Recommendation
+        model = Suggestion
         fields = '__all__'
 
 class RiskEvaluationSerializer(ModelSerializer):
@@ -101,13 +101,7 @@ class FeedbackSerializer(ModelSerializer):
     class Meta:
         model = Feedback
         fields = '__all__'
-
-class RecommendationSerializer(ModelSerializer):
-    class Meta:
-        model = Recommendation
-        fields = '__all__'
         
-
 class TaskSerializer(ModelSerializer):
     class Meta:
         model = Task
