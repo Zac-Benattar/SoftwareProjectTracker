@@ -1,5 +1,4 @@
 
-from django.views import View
 from django.shortcuts import get_list_or_404, get_object_or_404
 from rest_framework import permissions, viewsets
 from projects.models import *
@@ -9,6 +8,8 @@ from rest_framework.exceptions import NotFound
 from rest_framework.decorators import permission_classes, action
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 
 import sys #Import system file to add extra imports from outside file
@@ -24,7 +25,7 @@ sys.path.append(folderpath)
 from startevaluationdata import StartEvaluationData
 from currentevaluationdata import CurrentEvaluationData
 from projectevaluator import ProjectEvaluator
-from projectsuggester import ProjectSuggester
+from projects.projectsuggester import ProjectSuggester
 
 # Generate ProjectEvaluator and ProjectSuggester objects
 # Used to get project evaluations and suggestions
@@ -32,6 +33,7 @@ PROJECT_EVALUATOR = ProjectEvaluator()
 PROJECT_SUGGESTER = ProjectSuggester()
 
 # Revert the import path to the original path
+#  Might not be needed
 sys.path = originalPath
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -392,13 +394,9 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
             #Evaulate Data
             success_chance_estimate = PROJECT_EVALUATOR.get_current_chance_of_success(current_evaluation_data)
 
-        print("RESULT: " + str(success_chance_estimate))
-        print("==============================")
         pickled_date = pickle.dumps(evaluation_data)
         risk_evaluation = RiskEvaluation(project = project, success_chance = float(success_chance_estimate), serialized_project_evaluation_data=pickled_date)
         risk_evaluation.save()
-        unpickled_data = risk_evaluation.get_project_snapshot()
-        print(unpickled_data.initial_budget)
         return risk_evaluation
 
     def get_queryset(self, *args, **kwargs):
@@ -413,7 +411,7 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
         return (risk_evaluation),
     
 
-class RetrainView(View):
+class RetrainView(APIView):
     def get(self, request, pk):
         
         project = get_object_or_404(Project, pk=self.kwargs['pk'])
@@ -423,6 +421,7 @@ class RetrainView(View):
         
         all_past_inprogress_evaluation_data = list()
         
+        # Get the initial project evaluation data and a list of all subsiquent data
         for r in risk_evaluations:
             evaluation_data = r.get_project_snapshot()
             if evaluation_data.is_start_evaluation_data():
@@ -439,7 +438,7 @@ class RetrainView(View):
         context = {
             'result' : 'success'
         }
-        return context
+        return Response(context)
 
 
 class MeetingViewSet(viewsets.ModelViewSet):
@@ -474,12 +473,12 @@ class FeedbackViewSet(viewsets.ModelViewSet):
         return self.queryset.filter(project=project)
 
 
-class RecommendationViewSet(viewsets.ModelViewSet):
-    queryset = Recommendation.objects.all().select_related(
+class SuggestionViewSet(viewsets.ModelViewSet):
+    queryset = Suggestion.objects.all().select_related(
         'project'
     ).all()
 
-    serializer_class = RecommendationSerializer
+    serializer_class = SuggestionSerializer
 
     def get_queryset(self, *args, **kwargs):
         project_id = self.kwargs.get("project_pk")
@@ -490,17 +489,17 @@ class RecommendationViewSet(viewsets.ModelViewSet):
         return self.queryset.filter(project=project)
 
     
-class RecommendationGeneratorViewSet(viewsets.ModelViewSet):
-    serializer_class = RecommendationSerializer
+class SuggestionsGeneratorViewSet(viewsets.ModelViewSet):
+    serializer_class = SuggestionSerializer
     
-    def generate_recommendations(self, project):
+    def generate_suggestions(self, thing, project):
         return PROJECT_SUGGESTER.get_suggestions(project)
 
     def get_queryset(self, *args, **kwargs):
         project_id = self.kwargs.get("project_pk")
         try:
             project = Project.objects.get(id=project_id)
-            recommendations = self.generate_recommendations(self, project)
+            suggestions = self.generate_suggestions(self, project)
         except Project.DoesNotExist:
             raise NotFound('A project with this id does not exist')
-        return (recommendations),
+        return suggestions

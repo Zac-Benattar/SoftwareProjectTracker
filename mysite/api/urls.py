@@ -47,11 +47,11 @@ meetings_router.register( r'meetings', MeetingViewSet, basename='project-meeting
 feedback_router = routers.NestedDefaultRouter( router, r'projects', lookup = 'project')
 feedback_router.register( r'feedback', FeedbackViewSet, basename='project-feedback')
 
-recommendations_router = routers.NestedDefaultRouter( router, r'projects', lookup = 'project')
-recommendations_router.register( r'recommendations', RecommendationViewSet, basename='project-recommendations')
+suggestions_router = routers.NestedDefaultRouter( router, r'projects', lookup = 'project')
+suggestions_router.register( r'suggestions', SuggestionViewSet, basename='project-suggestions')
 
-generate_recommendation_router = routers.NestedDefaultRouter( router, r'projects', lookup = 'project')
-generate_recommendation_router.register( r'generaterecommendations', RecommendationViewSet, basename='project-generateRecommendations')
+generate_suggestions_router = routers.NestedDefaultRouter( router, r'projects', lookup = 'project')
+generate_suggestions_router.register( r'generatesuggestions', SuggestionsGeneratorViewSet, basename='project-generateSuggestions')
 
 # member routers , api call : /api/projects/pk/members/pk/model_name/pk
 schedules_router = routers.NestedDefaultRouter( members_router, r'members', lookup = 'member')
@@ -89,8 +89,8 @@ urlpatterns = [
     path('', include(generate_risk_evaluation_router.urls)),
     path('', include(meetings_router.urls)),
     path('', include(feedback_router.urls)),
-    path('', include(recommendations_router.urls)),
-    path('', include(generate_recommendation_router.urls)),
+    path('', include(suggestions_router.urls)),
+    path('', include(generate_suggestions_router.urls)),
     path('', include(userAccount_router.urls)),
     path('token/', MyTokenObtainPairView.as_view()),
     path('token/refresh/', TokenRefreshView.as_view()),

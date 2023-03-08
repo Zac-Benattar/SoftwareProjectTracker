@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
+import DateTimePicker from "react-datetime-picker";
 import { Link, useLocation, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import SuccessChanceDisplay from "../components/SuccessChanceDisplay";
@@ -6,14 +7,13 @@ import AuthContext from "../context/AuthContext";
 import "./Homepage.css";
 
 
-
 const Projects = () => {
 
   const [projectName, setProjectName] = useState("");
   const [projectDescription, setProjectDescription] = useState("");
-  const [projectBudget, setProjectBudget] = useState("");
-  const [projectStart, setProjectStart] = useState("");
-  const [projectDeadline, setProjectDeadline] = useState("");
+  const [projectNewBudget, setProjectNewBudget] = useState("");
+  const [projectStart, setProjectStart] = useState(new Date());
+  const [projectNewDeadline, setProjectNewDeadline] = useState(new Date());
   const [projectMembers, setProjectMembers] = useState("");
 
   
@@ -53,6 +53,10 @@ const Projects = () => {
   useEffect(() => {
     getProject();
     getRiskEvaluation();
+    setProjectName(project.name);
+    setProjectDescription(project.description);
+    setProjectNewBudget(project.current_budget);
+    setProjectNewDeadline(project.current_deadline);
   }, []);
 
   // Obtaining the specific project via a GET request to the api referencing our authorisation token
@@ -78,6 +82,49 @@ const Projects = () => {
     }
   };
 
+
+  let updateProject = async () => {
+    let response = await fetch("http://127.0.0.1:8000/api/projects/".concat(slug)+"/", {
+      method : "PUT",
+      headers: {
+        'Content-Type' : 'application/json',
+        Authorization: "Bearer " + String(authTokens.access),
+      },
+      body : JSON.stringify({
+        name : projectName,
+        description : projectDescription,
+        client_name : projectName,
+        initial_budget: project.initial_budget,
+        current_budget : projectNewBudget,
+        amount_spent : project.initial_budget,
+        start_date : project.start_date,
+        initial_deadline : project.initial_deadline,
+        current_deadline :  projectNewDeadline,
+        methodology : projectName,
+        gitHub_token : projectName,
+      })
+    });
+
+    let data = await response.json();
+    if (response.status === 200) {
+      setProject(data);
+    }
+  }
+
+  let deleteProject = async (id) => {
+    let response = fetch(
+      "http://127.0.0.1:8000/api/projects/".concat(slug)+"/",
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+      }
+    );
+        
+    setProject(project.filter(p=> p.project_id !== id))
+  }
   console.log(project);
 
   // Obtaining the specific project's most recent risk evaulation via a GET request to the api referencing our authorisation token
@@ -109,10 +156,13 @@ const Projects = () => {
       const editProject = () => {
         var edit_modal = document.getElementById("add-project-modal");
         var close_button = document.getElementsByClassName("close")[0];
+        
         edit_modal.style.display = "block";
         close_button.onclick = function() {
           edit_modal.style.display = "none";
         }
+       
+        
         window.onclick = function(event) {
           if (event.target === edit_modal) {
             edit_modal.style.display = "none";
@@ -121,11 +171,11 @@ const Projects = () => {
 
       }
 
+     
+
 
     return (
       <>
-
-
 
 
 <div id="add-project-modal" className="modal">
@@ -146,7 +196,8 @@ const Projects = () => {
                 <input 
                   className="project-inputs" 
                   type="text"
-                  placeholder="Enter Project Name"
+                  placeholder= "project-name"
+                  defaultValue = {project.name}
                   onChange={event=>setProjectName(event.target.value)}
                 />
             </div>
@@ -162,6 +213,7 @@ const Projects = () => {
                   className="project-inputs" 
                   type="text"
                   placeholder="Enter Description"
+                  defaultValue = {project.description}
                   onChange={event=>setProjectDescription(event.target.value)}
                 />
             </div>
@@ -172,10 +224,10 @@ const Projects = () => {
                   Edit Project Start Date:
                 </label>
 
-                <input
+                <DateTimePicker
                   className="project-inputs" 
-                  type="date"
-                  onChange={event=>setProjectStart(event.target.value)}
+                  defaultValue = {project.start_date}
+                  onChange={(newValue) => setProjectStart(newValue)}
                 />
             </div>
 
@@ -185,10 +237,10 @@ const Projects = () => {
                   Edit Project Deadline:
                 </label>
 
-                <input
+                <DateTimePicker
                   className="project-inputs" 
-                  type="date"
-                  onChange={event=>setProjectDeadline(event.target.value)}
+                  defaultValue = {project.current_deadline}
+                  onChange={(newValue) => setProjectNewDeadline(newValue)}
                 />
             </div>
 
@@ -202,7 +254,8 @@ const Projects = () => {
                   className="project-inputs" 
                   type="number"
                   placeholder="£"
-                  onChange={event=>setProjectBudget(event.target.value)}
+                  defaultValue = {project.current_budget}
+                  onChange={event=>setProjectNewBudget(event.target.value)}
                 />
             </div>
 
@@ -255,22 +308,12 @@ const Projects = () => {
                 ))}
 
                 <span>
-                  <button className="create-project-btn">Edit Project</button>
+                  <button onClick = {updateProject} className="create-project-btn">Save Project</button>
                 </span>
                
             </div>
           </div>
         </div>
-
-
-
-
-
-
-
-
-
-
 
       <div className="home-page">
 
@@ -282,9 +325,7 @@ const Projects = () => {
             <SuccessChanceDisplay key={index} risk_evaluation={riskEvaluation} />
             ))}
 
-                
-
-
+              
             <div className="project-info-container">
                 <div className="project-name">
                     <h1>{project.name}</h1>
@@ -325,7 +366,7 @@ export default Projects;
 
 
 
-  {/* <Navbar/>
+  /* <Navbar/>
                     <div className="projects-page-content"> 
 
 
@@ -381,4 +422,4 @@ export default Projects;
                         <div className="project-risk-score">
                             <p> Your project has 0 suggestions. </p>
                         </div>
-                </div> */}
+                </div> */
