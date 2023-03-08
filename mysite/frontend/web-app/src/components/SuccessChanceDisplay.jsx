@@ -3,15 +3,24 @@ import React from "react";
 
 export const SuccessChanceDisplay = ({ risk_evaluation }) => {
   return (
-    <div className="risk-info-container">
+    
+    <div className="risk-info-container"> 
+
       <div className="project-risk-score">
-        <p>
+        <p className="risk-percentage">
           This project has a {risk_evaluation.success_chance}% chance of
           success as of {risk_evaluation.date}.
         </p>
-        <p> Your project currently has 0 recommendations. </p>
       </div>
-    </div>
+
+      <div className="project-risk-score">
+        <p className="risk-percentage"> Your project currently has 0 recommendations. </p>
+      </div>
+
+      </div>
+
+   
+    
   );
 };
 

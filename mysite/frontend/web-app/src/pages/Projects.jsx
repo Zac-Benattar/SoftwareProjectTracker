@@ -3,10 +3,40 @@ import { Link, useLocation, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import SuccessChanceDisplay from "../components/SuccessChanceDisplay";
 import AuthContext from "../context/AuthContext";
+import "./Homepage.css";
 
 
 
 const Projects = () => {
+
+  const [projectName, setProjectName] = useState("");
+  const [projectDescription, setProjectDescription] = useState("");
+  const [projectBudget, setProjectBudget] = useState("");
+  const [projectStart, setProjectStart] = useState("");
+  const [projectDeadline, setProjectDeadline] = useState("");
+  const [projectMembers, setProjectMembers] = useState("");
+
+
+  // list to store members in a project
+  const [membersList, setMembersList] = useState([{member: ""}]); 
+
+  console.log(membersList);
+  const addMember = () => {
+    setMembersList([...membersList, {member:""}]);
+  }
+
+  const removeMember = (index) => {
+    const list = [...membersList];
+    list.splice(index, 1);
+    setMembersList(list);
+  }
+
+  const changeMember = (e,  index) => {
+    const {name, value} = e.target; 
+    const list = [...membersList];
+    list[index][name]=value;
+    setMembersList(list);
+  }
 
   // Deconstructing the relevent sections from AuthContext
   let { authTokens, logoutUser, user } = useContext(AuthContext);
@@ -75,16 +105,185 @@ const Projects = () => {
   };
 
 
+      const editProject = () => {
+        var edit_modal = document.getElementById("add-project-modal");
+        var close_button = document.getElementsByClassName("close")[0];
+        edit_modal.style.display = "block";
+        close_button.onclick = function() {
+          edit_modal.style.display = "none";
+        }
+        window.onclick = function(event) {
+          if (event.target === edit_modal) {
+            edit_modal.style.display = "none";
+          }
+        }
+
+      }
+
+
     return (
       <>
+
+
+
+
+<div id="add-project-modal" className="modal">
+
+<div className="close"> &times; </div>
+
+
+       
+          <div className="modal-content">
+
+          <h1>Edit this project: </h1>
+            <div className="input-div">
+                <label 
+                  className="input-labels">
+                  Edit Project Name:
+                </label>
+
+                <input 
+                  className="project-inputs" 
+                  type="text"
+                  placeholder="Enter Project Name"
+                  onChange={event=>setProjectName(event.target.value)}
+                />
+            </div>
+
+
+            <div className="input-div">
+                <label 
+                  className="input-labels">
+                  Edit Project Description:
+                </label>
+
+                <textarea 
+                  className="project-inputs" 
+                  type="text"
+                  placeholder="Enter Description"
+                  onChange={event=>setProjectDescription(event.target.value)}
+                />
+            </div>
+
+            <div className="input-div">
+                <label 
+                  className="input-labels">
+                  Edit Project Start Date:
+                </label>
+
+                <input
+                  className="project-inputs" 
+                  type="date"
+                  onChange={event=>setProjectStart(event.target.value)}
+                />
+            </div>
+
+            <div className="input-div">
+                <label 
+                  className="input-labels">
+                  Edit Project Deadline:
+                </label>
+
+                <input
+                  className="project-inputs" 
+                  type="date"
+                  onChange={event=>setProjectDeadline(event.target.value)}
+                />
+            </div>
+
+            <div className="input-div">
+                <label 
+                  className="input-labels">
+                  Edit Project Budget:
+                </label>
+
+                <input
+                  className="project-inputs" 
+                  type="number"
+                  placeholder="£"
+                  onChange={event=>setProjectBudget(event.target.value)}
+                />
+            </div>
+
+            <div className="input-div">
+                <label 
+                  className="input-labels">
+                  Add Member(s):
+                </label>
+
+                {membersList.map((each_member, index) => (
+                  <div key={index} className="members">
+                    <input 
+                    // need to look at functionality again.
+                      className="project-inputs" 
+                      type="text"
+                     // value={each_member.member}
+                      placeholder="Member Name"
+                      onChange={(e)=>(changeMember, index)}
+                    />
+
+                    <input 
+                      //doesn't save role to a varirable yet.
+                      className="project-inputs"
+                      type="text"
+                      placeholder="Member Role"
+                      //onChange={(e)=>addMember(e, index)}
+
+                    />
+
+
+                    <div className="project-inputs">
+                      {membersList.length - 1 === index && 
+                      (
+                        <button 
+                            className="member-button" 
+                            onClick={addMember}> 
+                            <span> Add a member </span>
+                        </button>
+                      )} 
+
+                        <button 
+                            className="member-button"
+                            onClick={()=>removeMember(index)}> 
+                            <span> Remove Member </span>
+                        </button>
+
+                    </div>
+                  </div>
+
+                ))}
+
+                <span>
+                  <button className="create-project-btn">Edit Project</button>
+                </span>
+               
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
       <div className="home-page">
 
       <Navbar/>   
         <div className="projects-page-content">
-         
+            
+          
             {riskEvaluation.map((riskEvaluation, index) => (
             <SuccessChanceDisplay key={index} risk_evaluation={riskEvaluation} />
             ))}
+
+                
+
+
             <div className="project-info-container">
                 <div className="project-name">
                     <h1>{project.name}</h1>
@@ -92,19 +291,23 @@ const Projects = () => {
                 <div className="project-description">
                     <h3 className="des-title"> Project Description: </h3>
                     <p className="des">{project.description}</p>
+                    <br/>
+                    <br/>
                     <h3 className="des-title"> Project methodology: </h3>
                     <p  className="des">{project.methodology}</p>
+                    <br/>
+                    <br/>
                     <h3 className="des-title"> Project budget: </h3>
                     <p className="des">  {project.initial_budget}</p>
+                    <br/>
+                    <br/>
                     <h3 className="des-title"> Project deadine: </h3>
                     <p className="des"> {project.initial_deadline}</p>
 
                 </div>
 
                 <div className="project-buttons">
-
-                <button className="proj-button">Pause project progress</button>
-                <button className="proj-button">Push back project deadline</button>
+                <button className="proj-button" onClick={editProject}>Edit project info</button>
                 </div>
 
                 </div>
