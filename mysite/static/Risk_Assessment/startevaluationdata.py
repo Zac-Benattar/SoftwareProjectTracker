@@ -69,8 +69,8 @@ class StartEvaluationData:
     def get_num_uncompleted_tasks(self):
         return self.get_num_tasks() - self.get_num_completed_tasks()
 
-    def is_start_evaluation_data():
+    def is_start_evaluation_data(self):
         return True
 
-    def is_current_evaluation_data():
+    def is_current_evaluation_data(self):
         return False
