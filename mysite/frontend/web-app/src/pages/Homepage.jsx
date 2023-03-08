@@ -216,22 +216,25 @@ const Homepage = () => {
                       
                       <div key={index} className="members">
 
-                        <input 
 
-                          className="project-inputs"
+                        <input 
+                        // need to look at functionality again.
+                          className="project-inputs" 
                           type="text"
-                          value={each_member.member}
+                         // value={each_member.member}
                           placeholder="Member Name"
                           onChange={(e)=>(changeMember, index)}
-                        
                         />
 
-                        <input 
 
+
+                      
+                        <input 
+                          //doesn't save role to a varirable yet.
                           className="project-inputs"
                           type="text"
                           placeholder="Member Role"
-                          onChange={(e)=>addMember(e, index)}
+                          //onChange={(e)=>addMember(e, index)}
 
                         />
 
