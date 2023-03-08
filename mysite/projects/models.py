@@ -31,6 +31,7 @@ class Project(models.Model):
     current_deadline = models.DateTimeField(default=get_in_week_datetime())
     methodology = models.CharField(max_length=30)
     gitHub = models.CharField(max_length=150, blank=True)
+    projectResult = models.CharField(max_length=1, null=True)
     
     def __str__(self):
         '''Gets string representation of the project object
