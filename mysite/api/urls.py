@@ -17,9 +17,20 @@ router.register(r'skills', SkillViewSet)
 member_router = routers.NestedDefaultRouter( router, r'projects', lookup = 'project')
 member_router.register( r'members', MemberViewSet, basename='project-member')
 
-# maybe task in members ?
 task_router = routers.NestedDefaultRouter( router, r'projects', lookup = 'project')
 task_router.register( r'tasks', TaskViewSet, basename='project-task')
+
+not_started_task_router = routers.NestedDefaultRouter( router, r'projects', lookup = 'project')
+not_started_task_router.register( r'notstartedtasks', NotStartedTaskViewSet, basename='project-task-not-started')
+
+started_task_router = routers.NestedDefaultRouter( router, r'projects', lookup = 'project')
+started_task_router.register( r'startedtasks', StartedTaskViewSet, basename='project-task-started')
+
+finished_task_router = routers.NestedDefaultRouter( router, r'projects', lookup = 'project')
+finished_task_router.register( r'finishedtasks', FinishedTaskViewSet, basename='project-task-finished')
+
+no_status_task_router = routers.NestedDefaultRouter( router, r'projects', lookup = 'project')
+no_status_task_router.register( r'nostatustasks', NoStatusTaskViewSet, basename='project-task-no-status')
 
 risk_evaluation_router = routers.NestedDefaultRouter( router, r'projects', lookup = 'project')
 risk_evaluation_router.register( r'riskevaluation', RiskEvaluationViewSet, basename='project-riskEvaluation')
@@ -64,6 +75,10 @@ urlpatterns = [
     path('', include(member_router.urls)),
     path('', include(schedule_router.urls)),
     path('', include(task_router.urls)),
+    path('', include(not_started_task_router.urls)),
+    path('', include(started_task_router.urls)),
+    path('', include(finished_task_router.urls)),
+    path('', include(no_status_task_router.urls)), 
     path('', include(risk_evaluation_router.urls)),
     path('', include(generate_risk_evaluation_router.urls)),
     path('', include(meeting_router.urls)),
