@@ -60,8 +60,8 @@ const UserProfile = () => {
 
                 <p> Name: {currentUser.first_name} </p>
                 <p> Username:{currentUser.username} </p>
-                
                 <p> Email: {currentUser.email}</p>
+                
                 <p> Join date: {currentUser.date_joined}</p>
 
 
