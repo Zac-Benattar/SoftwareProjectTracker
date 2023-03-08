@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.views import View
 from django.utils import timezone
 
-from .models import Project, Task, Member, Recommendation, RiskEvaluation
+from .models import *
 
 # from static.Risk_Assessment.projectevaluator import ProjectEvaluator
 
@@ -81,7 +81,7 @@ class TasksView(View):
 
 
 
-class RecommendationsView(View):
+class SuggestionsView(View):
     def get(self, request, pk):
         """Returns HttpResponse containing recommendations page listing:
         The relevant project's basic details
@@ -91,11 +91,11 @@ class RecommendationsView(View):
         Returns:
             HttpResponse: detail.html with context: project, recommendations, recommendations_count
         """
-        recommendations = Recommendation.objects.filter(project=get_object_or_404(Project, pk=self.kwargs['pk'])).order_by('-creation_date')
+        recommendations = Suggestion.objects.filter(project=get_object_or_404(Project, pk=self.kwargs['pk'])).order_by('-creation_date')
         context = {
             'project' : get_object_or_404(Project, pk=self.kwargs['pk']),
             'recommendations' : recommendations,
             'recommendations_count' : str(len(recommendations))
         }
-        return render(request, 'projects/recommendations.html', context)
+        return render(request, 'projects/suggestions.html', context)
 

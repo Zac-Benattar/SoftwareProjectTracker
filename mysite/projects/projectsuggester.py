@@ -1,7 +1,6 @@
 import datetime
 from .models import *
 
-
 # retrieve all instances
 all_projects = Project.objects.all()
 all_tasks = Task.objects.all()
@@ -17,10 +16,15 @@ class ProjectSuggester:  # evaluating project's pararameters to make suggestions
     def __init__(self):
         pass
 
-    def get_suggestions(self):
+    def get_suggestions(self, project):
+        self.tasks_past_deadline(project)
+        self.low_average_happiness(project)
+        self.low_budget(project)
+        self.low_completion_ratio(project)
+        self.missing_skillsets(project)
         return generated_recommendations
 
-    def task_past_deadline(self, project):
+    def tasks_past_deadline(self, project):
         # For all uncompleted task, If currentDate > taskDeadline.
         # The program will suggest allocating more people to that task.
 
@@ -30,7 +34,7 @@ class ProjectSuggester:  # evaluating project's pararameters to make suggestions
         for task in all_tasks:
             if task.project == project:
                 if task.completion_status != 'F':
-                    if datetime.date.today() > (task.creation_date + task.duration):
+                    if datetime.datetime.now(timezone.utc) > (task.creation_date + datetime.timedelta(hours=task.duration)):
                         description = (f"You've run out of time to complete the task {task.name}.\
                                 Try allocating more people to the task.")
 
@@ -82,16 +86,20 @@ class ProjectSuggester:  # evaluating project's pararameters to make suggestions
     def low_average_happiness(self, project):
         # Looking at the mean average of happiness if below a certain threshold
         # The program will warn the project manager team happiness is low.
+        
+        if all_feedback.count() == 0:
+            return False
 
         avg_happiness = 0
         count = 0
-
+        
         for f in all_feedback:
             if f.project == project:
                 avg_happiness += f.emotion
                 count += 1
 
-        avg_happiness = avg_happiness / count
+        if count > 0:
+            avg_happiness = avg_happiness / count
         
         happiness_low = False
 
@@ -166,8 +174,8 @@ class ProjectSuggester:  # evaluating project's pararameters to make suggestions
                     completed_task_count += 1
 
         tasks_ratio = completed_task_count / task_count
-        time_ratio = (datetime.date.today() - project.start_date) / \
-            project.current_deadline
+        time_ratio = (datetime.datetime.now(timezone.utc) - project.start_date).total_seconds() / \
+            (project.current_deadline - project.start_date).total_seconds()
 
         low_completion_ratio = False    
 
@@ -195,8 +203,8 @@ class ProjectSuggester:  # evaluating project's pararameters to make suggestions
         # The program will suggest increasing the budget.
 
         budget_ratio = project.current_budget / project.initial_budget
-        time_ratio = (datetime.date.today() - project.start_date) / \
-            project.current_deadline
+        time_ratio = (datetime.datetime.now(timezone.utc) - project.start_date).total_seconds() / \
+            (project.current_deadline - project.start_date).total_seconds()
             
         low_budget = False
 

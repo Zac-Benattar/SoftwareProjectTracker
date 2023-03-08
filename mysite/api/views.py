@@ -473,12 +473,12 @@ class FeedbackViewSet(viewsets.ModelViewSet):
         return self.queryset.filter(project=project)
 
 
-class RecommendationViewSet(viewsets.ModelViewSet):
-    queryset = Recommendation.objects.all().select_related(
+class SuggestionViewSet(viewsets.ModelViewSet):
+    queryset = Suggestion.objects.all().select_related(
         'project'
     ).all()
 
-    serializer_class = RecommendationSerializer
+    serializer_class = SuggestionSerializer
 
     def get_queryset(self, *args, **kwargs):
         project_id = self.kwargs.get("project_pk")
@@ -489,17 +489,17 @@ class RecommendationViewSet(viewsets.ModelViewSet):
         return self.queryset.filter(project=project)
 
     
-class RecommendationGeneratorViewSet(viewsets.ModelViewSet):
-    serializer_class = RecommendationSerializer
+class SuggestionsGeneratorViewSet(viewsets.ModelViewSet):
+    serializer_class = SuggestionSerializer
     
-    def generate_recommendations(self, project):
+    def generate_suggestions(self, thing, project):
         return PROJECT_SUGGESTER.get_suggestions(project)
 
     def get_queryset(self, *args, **kwargs):
         project_id = self.kwargs.get("project_pk")
         try:
             project = Project.objects.get(id=project_id)
-            recommendations = self.generate_recommendations(self, project)
+            suggestions = self.generate_suggestions(self, project)
         except Project.DoesNotExist:
             raise NotFound('A project with this id does not exist')
-        return (recommendations),
+        return suggestions

@@ -303,7 +303,7 @@ body {
     border-radius: 30px;
     margin-right: 5%;
     margin-top: 5%;
-    margin-left:10%;
+    margin-left:1%;
 }
 
 .project-name {
@@ -343,6 +343,22 @@ body {
     border: none;
   }
 
+  .add-skill-btn {
+    border-radius: 8px;
+    background-image: linear-gradient(to right, rgb(255, 255, 255) 50%, rgb(255, 255, 255) 50%, rgb(219, 219, 219));
+    background-size: 200%;
+    background-position: 100%;
+    transition: 0.4s;
+    color: #9c00fd;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    width:30%;
+    margin-top: 3%;
+
+
+  }
+
   .proj-button {
     width: 20%;
     margin: 2%;
@@ -371,7 +387,8 @@ body {
 
   .proj-button:hover, 
   .create-project-btn:hover,
-  .member-button:hover{
+  .member-button:hover,
+  .add-skill-btn:hover{
   background-position: 0%;
 }
 
@@ -397,7 +414,7 @@ body {
 }
 
 
-.modal, .new-role-modal {
+.modal, .new-role-modal{
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     border: none;
@@ -410,18 +427,36 @@ body {
     backdrop-filter: blur(5px);
 }
 
+.skillset-modal {
+    background-color:  #9c00fd;
+    border-radius: 30px;
+    display:none;
+    position: fixed; /* Stay in place */
+    border: none;
+    z-index: 1; /* Sit on top */
+    top: 0;
+    width:40%;
+    height:40%;
+    /* Full height */
+    overflow: auto;/* Enable scroll if needed */
+    backdrop-filter: blur;
+    margin-top:10%;
+}
+
 
 /* Modal Content/Box */
-.modal-content {
-    background-color:  rgb(247, 247, 247);
+.modal-content, .skillset-modal-content {
+    background-color:  #9c00fd;
     background-position: center;
     background-size: cover;
-    margin-top: 60px;
-    width: 80%;
-    margin-left:10%; /* 15% from the top and centered */
-    padding: 3%;
+    
+    width: 100%;
     border-radius: 20px;
-    color: black;
+    color: white;
+    font-size: 10px;
+    font-weight: 100;
+
+    margin-top: 12%;
     
   }
 
@@ -455,23 +490,26 @@ body {
     font-size: 20px;
   }
 
-  .role-input-labels{
-    display: flex;
+
+  .role-input-labels, .skill-input-labels{
+    display: inline-block;
     margin-left: 10%;
-    transform: translate(0%, 150%);
     color:rgb(255, 255, 255);
     font-size: 20px;
+    font-weight: 400;
   }
   
-  .project-inputs{
+  .project-inputs, .skill-inputs{
     display: inline-block;
     margin-left:10%;
-    
+  }
+
+  .skill-input-div{
+    display: block;
   }
   
 
   .close {
-    color: black;
     float: right;
     font-size: 38px;
     font-weight: bold;
@@ -479,6 +517,17 @@ body {
     margin-right: 0%;
     cursor: pointer;
     color:rgb(138, 73, 202);
+  }
+
+
+  .skill-close  {
+    float: right;
+    font-size: 38px;
+    font-weight: bold;
+    margin-top: 2%;
+    margin-right:5%;
+    cursor: pointer;
+    color:rgb(255, 255, 255);
   }
 
 .add-proj-drop {

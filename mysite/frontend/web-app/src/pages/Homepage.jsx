@@ -14,69 +14,65 @@ const Homepage = () => {
   const [projectBudget, setProjectBudget] = useState("");
   const [projectStart, setProjectStart] = useState(new Date());
   const [projectDeadline, setProjectDeadline] = useState(new Date());
-  const [projectMembers, setProjectMembers] = useState("");
+
+  const [skill, setSkill] = useState("");
+  const [skillDescription, setSkillDescription] = useState("");
+  
   
   let [projects, setProjects] = useState([]);
 
 
-   // list to store members in a project
-   const [membersList, setMembersList] = useState([{member: ""}]); 
+      // list to store members in a project
+    const [membersList, setMembersList] = useState([{member: ""}]); 
+    const [rolesList, setRolesList] = useState([{role: ""}]); 
 
-   console.log(membersList);
-   const addMember = () => {
-     setMembersList([...membersList, {member:""}]);
-   }
- 
-   const removeMember = (index) => {
-     const list = [...membersList];
-     list.splice(index, 1);
-     setMembersList(list);
-   }
- 
-   const changeMember = (e,  index) => {
-     const {name, value} = e.target; 
-     const list = [...membersList];
-     list[index][name]=value;
-     setMembersList(list);
-   }
+    console.log(membersList);
 
-   const addProject = () => {
-       var modal = document.getElementById("add-project-modal");
-       var span = document.getElementsByClassName("close")[0];
-       modal.style.display = "block";
-       span.onclick = function() {
-         modal.style.display = "none";
-       }
-       window.onclick = function(event) {
-         if (event.target === modal) {
-           modal.style.display = "none";
-         }
-       }
-   
-   }
+    const addMember = () => {
+      setMembersList([...membersList, {member:""}]);
+    }
 
+    const addMemberRole = () => {
+      setRolesList([...rolesList, {role:""}]);
+    }
+  
+    const removeMember = (index) => {
+      const list = [...membersList];
+      list.splice(index, 1);
+      setMembersList(list);
+    }
 
-      let [allRoles, setRoles] = useState([]);
+    const removeRole = (index) => {
+      const list = [...rolesList];
+      list.splice(index, 1);
+      setRolesList(list);
+    }
+  
+    const changeMember = (e,  index) => {
+      const {name, value} = e.target; 
+      console.log(name);
+      console.log(value);
+      const list = [...membersList];
+      list[index][name]=value;
+      setMembersList(list);
+    }
 
-      useEffect(() => {
-        getRoles();
-      }, []);
+    
 
-      let getRoles = async () => {
-        let response = await fetch("/api/roles/");
-        let data = await response.json();
-        console.log("Data:", data);
-        setRoles(data);
-      };
-
-      // Creates a list of role names from the role object.
-      const roleNames = 
-      allRoles.map(role =>( { key:role.id}, {label:role.name} ));
-
+    const changeRole = (e, index) => {
+      const {name} = e.target;
+      var value = e.target.value;
       
-      const addRole = () => {
-        var modal = document.getElementById("add-role-modal");
-        var span = document.getElementsByClassName("role-close")[0];
+      console.log("rolename", name);
+      console.log("role value", value);
+      const list = [...rolesList];
+      list[index]=value;
+      setRolesList(list);
+    }
+
+    const addProject = () => {
+        var modal = document.getElementById("add-project-modal");
+        var span = document.getElementsByClassName("close")[0];
         modal.style.display = "block";
         span.onclick = function() {
           modal.style.display = "none";
@@ -86,8 +82,23 @@ const Homepage = () => {
             modal.style.display = "none";
           }
         }
-
+    
       }
+
+    const addSkill = () => {
+      var modal = document.getElementById("skillset-modal");
+      var span = document.getElementsByClassName("skill-close")[0];
+      modal.style.display = "block";
+      span.onclick = function() {
+        modal.style.display = "none";
+      }
+      window.onclick = function(event) {
+        if (event.target === modal) {
+          modal.style.display = "none";
+        }
+      }
+
+    }
 
   // Deconstructing the relevent sections from AuthContext
   let { authTokens, logoutUser, user } = useContext(AuthContext);
@@ -147,17 +158,66 @@ const Homepage = () => {
   }
 
   console.log("projects",projects);
-
+  
+  console.log("membersList", membersList);
+  console.log("roleslist", rolesList);
  
 
   return (
     
       <>
+    <div id="skillset-modal" className="skillset-modal">
+
+      <div className="skill-close">  &times; </div>
+          <div className="skillset-modal-content">
+
+
+                <h1>Add to your skillset!</h1>
+                <div className="skill-input-div">
+                    <label 
+                      className="skill-input-labels">
+                      Skill name:
+                    </label>
+
+                    <input 
+                      className="skill-inputs" 
+                      type="text"
+                      placeholder="Enter Skill Name"
+                      onChange={event=>setSkill(event.target.value)}
+                    />
+                </div>
+
+                <div className="skill-input-div">
+                    <label 
+                      className="skill-input-labels">
+                      Skill description:
+                    </label>
+
+                    <textarea 
+                      className="skill-inputs" 
+                      type="text"
+                      placeholder="Enter Skill Description"
+                      onChange={event=>setSkillDescription(event.target.value)}
+                    />
+                </div>
+
+
+                <button onClick = {createProject} className="add-skill-btn">Add skill</button>
+
+
+
+
+          </div>
+
+
+    </div>
+
+
+
+
     <div id="add-project-modal" className="modal">
 
     <div className="close"> &times; </div>
-
-
            
               <div className="modal-content">
 
@@ -242,8 +302,7 @@ const Homepage = () => {
 
                     {membersList.map((each_member, index) => (
                       
-                      <div key={index} className="members">
-
+                      <div key={index} className="getting_members">
 
                         <input 
                         // need to look at functionality again.
@@ -251,18 +310,22 @@ const Homepage = () => {
                           type="text"
                          // value={each_member.member}
                           placeholder="Member Name"
-                          onChange={(e)=>(changeMember, index)}
-                        />
-
-
-
-                      
+                          name="member"
+                          id="member"
+                          required
+                          value = {each_member.member}
+                          onChange={(e)=>(changeMember(e, index))} 
+                        /> 
+                    
                         <input 
                           //doesn't save role to a varirable yet.
                           className="project-inputs"
                           type="text"
                           placeholder="Member Role"
-                          //onChange={(e)=>addMember(e, index)}
+                          name="role"
+                          id="role"
+                          required
+                          onChange={(e) => (changeRole(e,index))}
 
                         />
 
@@ -272,16 +335,19 @@ const Homepage = () => {
                           (
                             <button 
                                 className="member-button" 
-                                onClick={addMember}> 
+                                onClick={(event)=>{addMember();addMemberRole();}}> 
                                 <span> Add a member </span>
                             </button>
                           )} 
 
+                          {membersList.length > 1 && (
                             <button 
-                                className="member-button"
-                                onClick={()=>removeMember(index)}> 
-                                <span> Remove Member </span>
-                            </button>
+                            className="member-button"
+                            onClick={(event)=>{removeMember(index);removeRole(index);}}> 
+                            <span> Remove Member </span>
+                          </button>                          
+                          )}
+                            
 
                         </div>
 
@@ -301,28 +367,15 @@ const Homepage = () => {
                    
                 </div>
 
-
-                
-
-
-
-
               </div>
 
-
-       
-
-      </div>
-
-          
-
-      
-
-
+      </div>  
+  
           <div className="home-page">
 
               <HomeNavbar/> 
               <div className="home-page-content">
+
                 <div className="home-page-menu">
                 
                     <button  
@@ -332,7 +385,8 @@ const Homepage = () => {
                     </button>
                 
                       <button 
-                      className="add-proj-btn">
+                      className="add-proj-btn"
+                      onClick={addSkill}>
                         Edit Skillset
                       </button>
                       

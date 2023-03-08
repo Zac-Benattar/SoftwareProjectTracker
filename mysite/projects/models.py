@@ -336,7 +336,7 @@ class TimeWorked(models.Model):
         return self.member.__str__() + ' ' + self.task.__str__() + ' ' + self.time.__str__() + ' hours'
 
 
-class Recommendation(models.Model):
+class Suggestion(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
     description = models.CharField(max_length=200, blank=True)
@@ -344,10 +344,10 @@ class Recommendation(models.Model):
     dismissed = models.BooleanField(default=False)
 
     def __str__(self):
-        '''Gets string representation of the recommendation
-        Format: <recommendation.name>
+        '''Gets string representation of the suggestion
+        Format: <suggestion.name>
         
         Returns:
-            str string representation of the recommendation
+            str string representation of the suggestion
         '''         
         return self.name
