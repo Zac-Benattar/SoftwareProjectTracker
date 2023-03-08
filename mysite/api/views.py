@@ -489,10 +489,10 @@ class RecommendationViewSet(viewsets.ModelViewSet):
         return self.queryset.filter(project=project)
 
     
-class RecommendationGeneratorViewSet(viewsets.ModelViewSet):
+class RecommendationsGeneratorViewSet(viewsets.ModelViewSet):
     serializer_class = RecommendationSerializer
     
-    def generate_recommendations(self, project):
+    def generate_recommendations(self, thing, project):
         return PROJECT_SUGGESTER.get_suggestions(project)
 
     def get_queryset(self, *args, **kwargs):
@@ -502,4 +502,4 @@ class RecommendationGeneratorViewSet(viewsets.ModelViewSet):
             recommendations = self.generate_recommendations(self, project)
         except Project.DoesNotExist:
             raise NotFound('A project with this id does not exist')
-        return (recommendations),
+        return recommendations

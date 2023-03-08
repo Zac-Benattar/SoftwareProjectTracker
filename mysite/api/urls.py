@@ -51,7 +51,7 @@ recommendations_router = routers.NestedDefaultRouter( router, r'projects', looku
 recommendations_router.register( r'recommendations', RecommendationViewSet, basename='project-recommendations')
 
 generate_recommendations_router = routers.NestedDefaultRouter( router, r'projects', lookup = 'project')
-generate_recommendations_router.register( r'generaterecommendations', RecommendationViewSet, basename='project-generateRecommendations')
+generate_recommendations_router.register( r'generaterecommendations', RecommendationsGeneratorViewSet, basename='project-generateRecommendations')
 
 # member routers , api call : /api/projects/pk/members/pk/model_name/pk
 schedules_router = routers.NestedDefaultRouter( members_router, r'members', lookup = 'member')
