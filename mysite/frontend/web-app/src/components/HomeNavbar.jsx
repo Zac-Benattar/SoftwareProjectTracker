@@ -11,8 +11,9 @@ export const HomeNavbar = () => {
   return (
       
       <nav className="home-nav">
+        
         <h2 className="user-title">
-          Welcome {user.username}
+          <Link to="/">Welcome {user.username}</Link>
         </h2>
         <div className="home-nav-menu">
           <ul>

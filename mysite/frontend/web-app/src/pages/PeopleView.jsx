@@ -52,22 +52,17 @@ const PeopleView = () => {
             <Navbar/>
             <div className="all-containers">
 
-                <div className="people-container">
-                    <div className="people-info">
-                                       
-                        {members.map((member, index) => (
-                            <ListPeople key={index} member={member} />
-                        ))}                 
-                
-                        
-                    </div>
-
+                <div className="people-list">
+                  
+                         
+                    {members.map((member, index) => (
+                        <ListPeople key={index} member={member} />
+                    ))}     
+                                                    
+                    
                 </div>
-
             </div>
-
         </div>
-        
         
         </>
         

@@ -7,42 +7,70 @@ import {Link} from "react-router-dom";
 export const ListPeople = ({ member }) => {
 
 
-    // let [users, setUsers] = useState([]);
+    let [user, setUsers] = useState([]);
+    let [role, setRoles] = useState([]);
+    let [skills, setSkills] = useState([]);
 
-    // useEffect(() => {
-    //     getUsers();
-    // }, []);
+    useEffect(() => {
+        getUsers();
+        getRoles();
+        getSkills();
+    }, []);
 
-    // let getUsers = async () => {
-    //     let response = await fetch('/api/users/'+member.id+'/');
-    //     let data = await response.json();
-    //     console.log("Data:", data);
-    //     setUsers(data);
-    // };
+    let getUsers = async () => {
+        let response = await fetch('/api/users/'+member.id+'/');
+        let data = await response.json();
+        console.log("Data:", data);
+        setUsers(data);
+    };   
 
-    console.log("member");
+    let getRoles = async () => {
+        let response = await fetch('/api/roles/'+member.role+'/');
+        let data = await response.json();
+        console.log("Data:", data);
+        setRoles(data);
+    };
 
+    let getSkills = async () => {
+        let response = await fetch('/api/users/'+member.id+'/skills');
+        let data = await response.json();
+        console.log("Data:", data);
+        setSkills(data);
+    };
+
+
+
+
+    console.log("user",user);
+    console.log("roles",role);
+
+    console.log("skill",skills);
 
   return (
-  
 
-
-        <div className="people-container">
+            <div className="people-container">
             <div className="people-info">
-               
-                <h3> {member.role} </h3> 
-                        
+               <h2> Name: {user.first_name} </h2>
+                <h3> Role: {role.name} </h3> 
+                    
                      <ul className="all-skills">
-                        <li className="skill">
-                            {member.skillset}
-                        </li>
+                       
+
+                        {skills.map((skill) => 
+
+                            <li className="skill">
+                                {skill.name}
+                            </li>
+                        
+                        )}
+                       
                     </ul>
-                     
-                    <p>{member.phone}</p>
-                    <p>{member.email}</p>                    
+                    <p> Work hours: {member.work_hours}</p>
+                    <p>Phone Number: {user.phone}</p>                 
+            </div>
             </div>
 
-        </div>
+       
   
   );
 };

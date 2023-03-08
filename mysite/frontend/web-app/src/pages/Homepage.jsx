@@ -22,17 +22,17 @@ const Homepage = () => {
    const [membersList, setMembersList] = useState([{member: ""}]); 
 
    console.log(membersList);
-   const handleServiceAdd = () => {
+   const addMember = () => {
      setMembersList([...membersList, {member:""}]);
    }
  
-   const handleServiceRemove = (index) => {
+   const removeMember = (index) => {
      const list = [...membersList];
      list.splice(index, 1);
      setMembersList(list);
    }
  
-   const handleServiveChange = (e,  index) => {
+   const changeMember = (e,  index) => {
      const {name, value} = e.target; 
      const list = [...membersList];
      list[index][name]=value;
@@ -124,135 +124,176 @@ const Homepage = () => {
     
       <>
     <div id="add-project-modal" className="modal">
-            <div className="modal-content"> 
-                  
-                  <span className="close">&times;</span>
 
-                  <h1>Create New Project</h1>
+    <div className="close"> &times; </div>
 
-                  <span className = "project_name">
-                      <label forhtml = "project_name" className = "inputLabels">Project Name: </label>
-                      <input 
-                      type = "text" 
-                      required id = "project_name" 
-                      name = "project_name" 
-                      placeholder = "Project Name" 
-                      className = "projectInputs" 
-                      onChange={event=> setProjectName(event.target.value)}>
-                      </input>
-                  </span>
 
-                    <span className = "project_description">
-                        <label forhtml = "project_description" className = "inputLabels">Project Description: </label>
-                        <input 
-                        type = "text" 
-                        required id = "project_description" 
-                        name = "project_description" 
-                        placeholder = "Project Description" 
-                        className = "projectInputs" 
-                        onChange = {event => setProjectDescription(event.target.value)}>
-                        </input>
-                    </span>
+           
+              <div className="modal-content">
 
-                    <span className = "project_budget">
-                        
-                        <label 
-                              forhtml = "project_budget"
-                              className = "inputLabels">
-                                Project Budget: 
-                        </label>
-                        
-                        <input 
-                          type = "text" 
-                          required id = "project_budget" 
-                          name = "project_budget" 
-                          placeholder = "Project Budget" 
-                          className = "projectInputs" 
-                          onChange = {event => setProjectBudget(event.target.value)}>
-                        </input>
-                    </span>
+              
 
-                    <span className = "project_deadline">
-                        
-                        <label 
-                              forhtml = "project_deadine"
-                              className = "inputLabels">
-                                Project Deadline: 
-                        </label>
-                        
-                        <input 
-                          type = "text" 
-                          required id = "project_deadline" 
-                          name = "project_deadline" 
-                          placeholder = "Project Deadline" 
-                          className = "projectInputs" 
-                          onChange = {event => setProjectDeadline(event.target.value)}>
-                        </input>
-                    </span>
+              <h1>Create New Project</h1>
+                <div className="input-div">
+                    <label 
+                      className="input-labels">
+                      Project Name:
+                    </label>
 
-                    <span className = "project_start">
-                        
-                        <label 
-                              forhtml = "project_start"
-                              className = "inputLabels">
-                                Project Start Date: 
-                        </label>
-                        
-                        <input 
-                          type = "text" 
-                          required id = "project_start" 
-                          name = "project_start" 
-                          placeholder = "Project Start" 
-                          className = "projectInputs" 
-                          onChange = {event => setProjectStart(event.target.value)}>
-                        </input>
-                    </span>           
+                    <input 
+                      className="project-inputs" 
+                      type="text"
+                      placeholder="Enter Project Name"
+                      onChange={event=>setProjectName(event.target.value)}
+                    />
+                </div>
 
-                    <label htmlFor="member"> Member(s) </label>
-                    {/* This needs to be turned into a component for simplicity and to remove errors */}
-                    {membersList.map((singleMember,index) => (
-                      <>                  
-                      <div key = {index} className="members">
-                      <input name="member" type="text" id="member" placeholder="Member Username" required
-                      value = {singleMember.member}
-                      onChange={(e)=>handleServiveChange(e, index )}/>
-                      {membersList.length - 1 === index   && 
-                      (
-                      <button onClick={handleServiceAdd}> <span> Add a member </span></button>
-                      )}
 
-                      <Dropdown classname="add-proj-drop" placeHolder="Select Role" options={roleNames}/>
+                <div className="input-div">
+                    <label 
+                      className="input-labels">
+                      Project Description:
+                    </label>
 
-                      <button onClick={addRole}> Role not here? Add a new one. </button>
-                      </div>
+                    <textarea 
+                      className="project-inputs" 
+                      type="text"
+                      placeholder="Enter Description"
+                      onChange={event=>setProjectDescription(event.target.value)}
+                    />
+                </div>
+
+
+                <div className="input-div">
+                    <label 
+                      className="input-labels">
+                      Project Start Date:
+                    </label>
+
+                    <input
+                      className="project-inputs" 
+                      type="date"
+                      onChange={event=>setProjectStart(event.target.value)}
+                    />
+                </div>
+
+
+                <div className="input-div">
+                    <label 
+                      className="input-labels">
+                      Project Deadline:
+                    </label>
+
+                    <input
+                      className="project-inputs" 
+                      type="date"
+                      onChange={event=>setProjectDeadline(event.target.value)}
+                    />
+                </div>
+
+                <div className="input-div">
+                    <label 
+                      className="input-labels">
+                      Project Budget:
+                    </label>
+
+                    <input
+                      className="project-inputs" 
+                      type="number"
+                      placeholder="£"
+                      onChange={event=>setProjectBudget(event.target.value)}
+                    />
+                </div>
+
+
+                <div className="input-div">
+                    <label 
+                      className="input-labels">
+                      Add Member(s):
+                    </label>
+
+                    {membersList.map((each_member, index) => (
                       
-                      <div className="second-div">
-                        <button onClick={()=>handleServiceRemove(index)}> <span> Remove Button </span></button>
+                      <div key={index} className="members">
+
+                        <input 
+
+                          className="project-inputs"
+                          type="text"
+                          value={each_member.member}
+                          placeholder="Member Name"
+                          onChange={(e)=>(changeMember, index)}
+                        
+                        />
+
+                        <input 
+
+                          className="project-inputs"
+                          type="text"
+                          placeholder="Member Role"
+                          onChange={(e)=>addMember(e, index)}
+
+                        />
+
+
+                        <div className="project-inputs">
+                          {membersList.length - 1 === index && 
+                          (
+                            <button 
+                                className="member-button" 
+                                onClick={addMember}> 
+                                <span> Add a member </span>
+                            </button>
+                          )} 
+
+                            <button 
+                                className="member-button"
+                                onClick={()=>removeMember(index)}> 
+                                <span> Remove Member </span>
+                            </button>
+
+                        </div>
+
+                        
+
+
+
                       </div>
-                      </>
-                      
+
+                    
+
                     ))}
-    
+
                     <span>
                       <button className="create-project-btn">Create Project</button>
                     </span>
-                    
-            </div>
-          </div>
+                   
+                </div>
+
+
+                
 
 
 
 
+              </div>
 
 
+       
 
+      </div>
+
+          
+
+      
 
 
           <div className="home-page">
+
               <HomeNavbar/> 
               <div className="home-page-content">
                 <div className="home-page-menu">
-                  
+                
                     <button  
                       className= "add-proj-btn" 
                       onClick = {addProject}> 
@@ -274,10 +315,6 @@ const Homepage = () => {
                 
               </div>
             </div>
-
-        
-    
-
      
       </>     
    

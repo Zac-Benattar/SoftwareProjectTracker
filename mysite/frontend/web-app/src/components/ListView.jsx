@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 //append array of tasks to ganttChartData const
 
@@ -22,40 +22,6 @@ import React, { Component } from "react";
 //only include tasks dependent on the current task not tasks the current task is dependent on
 //dependencies in the depencies string are separated by a comma only (no spaces)
 //format of depencies string --> 'dependency1taskid,dpendency2taskid'
-const listviewdata = [
-  {
-    taskid: "Research",
-    taskname: "Find sources",
-    startdate: new Date(2015, 0, 1),
-    enddate: new Date(2015, 0, 5),
-    duration: null,
-    completionstatus: 100,
-  },
-  {
-    taskid: "Testing",
-    taskname: "Test frontend",
-    startdate: new Date(2015, 0, 11),
-    enddate: new Date(2015, 0, 15),
-    duration: null,
-    completionstatus: 16,
-  },
-  {
-    taskid: "Integrate",
-    taskname: "Integration",
-    startdate: new Date(2015, 0, 1),
-    enddate: new Date(2015, 0, 5),
-    duration: null,
-    completionstatus: 100,
-  },
-  {
-    taskid: "Development",
-    taskname: "Develop backend",
-    startdate: new Date(2015, 0, 1),
-    enddate: new Date(2015, 0, 5),
-    duration: null,
-    completionstatus: null,
-  },
-];
 
 function RenderingListofTasks({ tasks }) {
   const tableRows = tasks.map((task) => {
@@ -64,12 +30,15 @@ function RenderingListofTasks({ tasks }) {
         <td>{task.id}</td>
         <td>{task.name}</td>
         <td>{task.completion_status}</td>
+        <td>{task.duration}</td>
+        <td>{task.startdate}</td>
       </tr>
     );
   });
   return <tbody>{tableRows}</tbody>;
 }
-export const ListView = ({ tasks }) => {
+
+const ListView = ({ tasks }) => {
   return (
     <div>
       <div>
@@ -85,6 +54,8 @@ export const ListView = ({ tasks }) => {
               <th> Task id</th>
               <th> Task name</th>
               <th> Completion status</th>
+              <th> Duration </th>
+              <th> Startdate </th>
             </tr>
           </thead>
           <RenderingListofTasks tasks={tasks} />
@@ -93,4 +64,5 @@ export const ListView = ({ tasks }) => {
     </div>
   );
 };
+
 export default ListView;
