@@ -59,10 +59,10 @@ class CurrentEvaluationData(StartEvaluationData): #CurrentEvaluationData inherit
 
         return matrix #Return 1xn matrix
 
-    def is_start_evaluation_data():
+    def is_start_evaluation_data(self):
         return False
 
-    def is_current_evaluation_data():
+    def is_current_evaluation_data(self):
         return True
 
     #Inherits methods from StartEvaluationData
