@@ -3,6 +3,8 @@
 from sklearn import datasets
 from sklearn import linear_model
 from sklearn.model_selection import train_test_split
+from startevaluationdata import StartEvaluationData
+from currentevaluationdata import CurrentEvaluationData
 
 import pickle #Used to serialise the model to be loaded later saves retraining everytime the program is rerun
 
@@ -95,7 +97,7 @@ def train_model_and_save(data_set_filepath, model_file_path, verbose, test_train
     #Train model
     #This function trains on the training data
     #trained_model = logisitc_regression.partial_fit(in_train, out_train, [-1.0, 1.0]);
-    trained_model = logisitc_regression.fit(in_train, out_train);
+    trained_model = logisitc_regression.fit(in_train, out_train)
     if not test_train_split == 0:
         #make predictions based on the test data
         predictions = trained_model.predict(in_test)
@@ -142,9 +144,10 @@ def add_to_dataset(new_startevaluationdata, new_currentevaluationdata, result_ou
 
     CURRENTEVALATION_DATA_SIZE = len(new_currentevaluationdata)
 
-    new_startevaluationdata_matrix = new_startevaluationdata.get_data_as_matrix()
 
-    new_currentevaluationdata_matrix = [new_currentevaluationdata[i].get_data_as_matrix() for i in range(CURRENTEVALATION_DATA_SIZE)]
+    new_startevaluationdata_matrix = StartEvaluationData.get_data_as_matrix(new_startevaluationdata)
+
+    new_currentevaluationdata_matrix = [CurrentEvaluationData.get_data_as_matrix(new_currentevaluationdata[i]) for i in range(CURRENTEVALATION_DATA_SIZE)]
 
 
     #Write to start_dataset_file

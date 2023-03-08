@@ -1,5 +1,4 @@
 
-from django.views import View
 from django.shortcuts import get_list_or_404, get_object_or_404
 from rest_framework import permissions, viewsets
 from projects.models import *
@@ -9,6 +8,8 @@ from rest_framework.exceptions import NotFound
 from rest_framework.decorators import permission_classes, action
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 
 import sys #Import system file to add extra imports from outside file
@@ -413,7 +414,7 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
         return (risk_evaluation),
     
 
-class RetrainView(View):
+class RetrainView(APIView):
     def get(self, request, pk):
         
         project = get_object_or_404(Project, pk=self.kwargs['pk'])
@@ -423,6 +424,7 @@ class RetrainView(View):
         
         all_past_inprogress_evaluation_data = list()
         
+        # Get the initial project evaluation data and a list of all subsiquent data
         for r in risk_evaluations:
             evaluation_data = r.get_project_snapshot()
             if evaluation_data.is_start_evaluation_data():
@@ -439,7 +441,7 @@ class RetrainView(View):
         context = {
             'result' : 'success'
         }
-        return context
+        return Response(context)
 
 
 class MeetingViewSet(viewsets.ModelViewSet):

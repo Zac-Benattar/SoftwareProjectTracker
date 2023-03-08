@@ -41,6 +41,21 @@ class StartEvaluationData:
         ]]
 
         return matrix #Return 1xn matrix
+    
+    @staticmethod
+    def get_external_data_as_matrix(project):
+        matrix = [[
+        project.initial_budget,
+        project.money_spent,
+        project.num_developers,
+        project.num_other_team_members,
+        project.days_until_original_deadline,
+        project.days_budget_covers_running_costs,
+        project.num_tasks,
+        project.num_completed_tasks
+        ]]
+
+        return matrix #Return 1xn matrix
 
     def get_initial_budget(self):
         return self.initial_budget

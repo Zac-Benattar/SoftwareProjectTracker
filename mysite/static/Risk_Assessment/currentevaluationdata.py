@@ -58,6 +58,26 @@ class CurrentEvaluationData(StartEvaluationData): #CurrentEvaluationData inherit
         ]]
 
         return matrix #Return 1xn matrix
+    
+        #Overrides method from StartEvaluationData
+    def get_external_data_as_matrix(project):
+        matrix = [[
+        project.initial_budget,
+        project.current_budget,
+        project.money_spent,
+        project.num_developers,
+        project.num_other_team_members,
+        project.num_team_left,
+        project.days_until_original_deadline,
+        project.days_until_current_deadline,
+        project.days_budget_covers_running_costs,
+        project.num_tasks,
+        project.num_completed_tasks,
+        project.current_average_happiness,
+        project.current_average_confidence
+        ]]
+
+        return matrix #Return 1xn matrix
 
     def is_start_evaluation_data(self):
         return False
