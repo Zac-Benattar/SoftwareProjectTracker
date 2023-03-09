@@ -20,7 +20,6 @@ class CurrentEvaluationData(StartEvaluationData): #CurrentEvaluationData inherit
 
         self.num_team_left = num_team_left
 
-
         CURRENT_DAY = datetime.now(timezone.utc)
 
         TIME_DELTA_ORIGINAL = original_deadline - CURRENT_DAY
