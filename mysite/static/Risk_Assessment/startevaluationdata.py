@@ -41,7 +41,7 @@ class StartEvaluationData:
         ]]
 
         return matrix #Return 1xn matrix
-    
+
     @staticmethod
     def get_external_data_as_matrix(project):
         matrix = [[
@@ -84,8 +84,12 @@ class StartEvaluationData:
     def get_num_uncompleted_tasks(self):
         return self.get_num_tasks() - self.get_num_completed_tasks()
 
+    #Used to determine what object is stored as current evaluation data and start evaluation can be stored in the same place
+    #Useful for figuring out if a risk assesment snapshot was an initial estimate or an "project in progress" estimate
     def is_start_evaluation_data(self):
         return True
 
+    #Used to determine what object is stored as current evaluation data and start evaluation can be stored in the same place
+    #Useful for figuring out if a risk assesment snapshot was an initial estimate or an "project in progress" estimate
     def is_current_evaluation_data(self):
         return False

@@ -10,27 +10,27 @@ print("Start")
 evaluator = ProjectEvaluator()
 
 #initial_budget, num_developers, num_other_team_members, original_deadline, daily_running_cost, num_tasks
-DEADLINE_DATE = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(days = 100) #What date format should I use?
+DEADLINE_DATE = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(days = 0) #What date format should I use?
 
 #Load in dummy data to predict chance of success (parameters listed below)
 #initial_budget, num_developers, num_other_team_members, original_deadline, daily_running_cost, num_tasks
-start_evaluation_data = StartEvaluationData(2000, 999, 999, DEADLINE_DATE, 10, 999)
+start_evaluation_data = StartEvaluationData(0, 0, 0, DEADLINE_DATE, 0, 1000)
 
 #Get chance of success
 chance_of_success = evaluator.get_initial_chance_of_success(start_evaluation_data)
 print("Chance_Of_Success: " + str(chance_of_success))
 
 
-print("RETRAIN MODEL")
+#print("RETRAIN MODEL")
 #Get all past data to train on
 
 #initial_budget, current_budget, money_spent, num_developers, num_other_team_members, num_team_left, original_deadline, current_deadline, daily_running_cost, num_tasks, completed_tasks, average_happiness, average_confidence
-all_past_current_evaluation_data = [CurrentEvaluationData(1000, 1000, 0, 20, 2, 0, DEADLINE_DATE, DEADLINE_DATE, 100, 100, 0, 1, 1)]
+#all_past_current_evaluation_data = [CurrentEvaluationData(1000, 1000, 0, 20, 2, 0, DEADLINE_DATE, DEADLINE_DATE, 100, 100, 0, 1, 1)]
 
 #Retrain the model with new data
-evaluator.update_model(start_evaluation_data, all_past_current_evaluation_data, -1) #-1 for project failier 1 for project success
+#evaluator.update_model(start_evaluation_data, all_past_current_evaluation_data, -1) #-1 for project failier 1 for project success
 
 
 #Get new chance of success (Just to see change)
-chance_of_success = evaluator.get_initial_chance_of_success(start_evaluation_data)
-print("Chance_Of_Success: " + str(chance_of_success))
+#chance_of_success = evaluator.get_initial_chance_of_success(start_evaluation_data)
+#print("Chance_Of_Success: " + str(chance_of_success))
