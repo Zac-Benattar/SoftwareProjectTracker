@@ -10,6 +10,7 @@ const UserProfile = () => {
   let { authTokens, logoutUser, user } = useContext(AuthContext);
 
   let [currentUser, setUser] = useState([]);
+  let [skills, setSkills] = useState([]);
 
   // Get slug parameter given when Project is referenced in router
   const { slug } = useParams();
@@ -17,6 +18,7 @@ const UserProfile = () => {
   // Setting up states
   useEffect(() => {
     getUser();
+    getSkills();
   }, []);
 
   // Obtaining the specific project's most recent risk evaulation via a GET request to the api referencing our authorisation token
@@ -42,7 +44,18 @@ const UserProfile = () => {
     }
   };
 
+
+  let getSkills = async () => {
+    let response = await fetch('/api/users/'+currentUser.id+'/skills');
+    let data = await response.json();
+    console.log("Data:", data);
+    setSkills(data);
+  };
+
+
+
   console.log(currentUser);
+  console.log(skills);
   return (
     <>
       <div className="home-page">
@@ -51,6 +64,14 @@ const UserProfile = () => {
           <div className="project-info-container">
             <p> Name: {currentUser.first_name} </p>
             <p> Username:{currentUser.username} </p>
+            Skills: 
+            {skills.map((skill) => 
+
+                <li className="skill">
+                    {skill.name}
+                </li>
+
+            )}
 
             <p> Email: {currentUser.email}</p>
             <p> Join date: {currentUser.date_joined}</p>

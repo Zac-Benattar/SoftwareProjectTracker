@@ -570,11 +570,19 @@ body {
   }
 
 
- .delete-proj-btn {
+ .delete-proj-btn, .delete-people-btn {
     cursor: pointer;
     font-size: 25px;
     float: right;
     margin-right: 5%;
-    color:rgb(138, 73, 202);
+    color:red;
  }
 
+ .delete-people-btn {
+    font-size:20px;
+ }
+
+
+ .delete-proj-btn {
+    font-size: 25px;
+ }

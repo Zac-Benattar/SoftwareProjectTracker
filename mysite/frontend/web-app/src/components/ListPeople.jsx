@@ -3,6 +3,7 @@ import { ProgressBar } from "./ProgressBar";
 import { Homepage } from "../pages/Homepage";
 import "../pages/Homepage.css";
 import {Link} from "react-router-dom";
+import { FaTrash } from 'react-icons/fa'
 
 export const ListPeople = ({ member }) => {
 
@@ -49,6 +50,7 @@ export const ListPeople = ({ member }) => {
   return (
 
             <div className="people-container">
+            <i className="delete-people-btn"> <FaTrash /> </i>
             <div className="people-info">
                <h2> Name: {user.first_name} {user.last_name} </h2>
                 <h3> Role: {role.name} </h3> 
