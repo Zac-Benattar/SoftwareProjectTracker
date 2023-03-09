@@ -127,6 +127,19 @@ class Project(models.Model):
             for f in feedbacks:
                 total_confidence += f.confidence
             return total_confidence / feedback_size
+        
+    def get_completion(self):
+        tasks = Task.objects.filter(project=self)
+        
+        if tasks.count() == 0:
+            return 0
+        
+        total_completion = 0
+        for t in tasks:
+            total_completion += t.completion
+            
+        return total_completion / tasks.count()
+        
 
 
 class Skill(models.Model):
@@ -222,7 +235,7 @@ class Task(models.Model):
     name = models.CharField(max_length=30)
     description = models.CharField(max_length=200, blank=True)
     duration = models.IntegerField(default=0)
-    completion = models.DecimalField(max_digits=3, decimal_places=2)
+    completion = models.IntegerField()
     creation_date = models.DateTimeField(auto_now_add=True)
     start_date = models.DateTimeField(default=get_in_hour_datetime())
     latest_finish = models.DateTimeField(default=get_in_week_datetime())

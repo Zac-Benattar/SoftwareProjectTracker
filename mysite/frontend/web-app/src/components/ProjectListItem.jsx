@@ -13,13 +13,12 @@ export const ProjectListItem = ({ project }) => {
     <div className="project_container">
     <div className="title-info">
 
-    
         <div className="title">
           <h1>{project.name}</h1>
         </div>
-  
+
       <div className="progress-bar">
-        <ProgressBar progress="30" />
+        <ProgressBar progress={project.completion} />
       </div>
 
       </div>

@@ -3,9 +3,11 @@ from rest_framework.serializers import Serializer, ModelSerializer, IntegerField
 from projects.models import * 
 
 class ProjectSerializer(ModelSerializer):
+    completion = IntegerField(source='get_completion')
     class Meta:
         model = Project
         fields = '__all__'
+        read_only_fields = ('completion',)
 
 class RoleSerializer(ModelSerializer):
     class Meta:
