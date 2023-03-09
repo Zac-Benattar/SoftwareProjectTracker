@@ -213,6 +213,7 @@ class Task(models.Model):
     name = models.CharField(max_length=30)
     description = models.CharField(max_length=200, blank=True)
     duration = models.IntegerField(default=0)
+    completion = models.DecimalField(max_digits=3, decimal_places=2)
     creation_date = models.DateTimeField(auto_now_add=True)
     start_date = models.DateTimeField(default=get_in_hour_datetime())
     latest_finish = models.DateTimeField(default=get_in_week_datetime())
@@ -286,6 +287,7 @@ class Member(models.Model):
     project_manager = models.BooleanField(default=False)
     developer = models.BooleanField(default=True)
     salary = models.DecimalField(max_digits=15, decimal_places=2)
+    has_quit = models.BooleanField(default=False)
 
     def __str__(self):
         '''Gets string representation of the task object
