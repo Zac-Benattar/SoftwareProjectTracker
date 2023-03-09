@@ -361,12 +361,14 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
             current_budget = float(project.current_budget) #Cast from decimal to a float
             money_spent = float(project.amount_spent) #Cast from decimal to a float
 
+            #Get project updated dealines
+            #Get the current deadline (as well as the previously collected initial deadline)
+            current_deadline = project.current_deadline
 
-
-            current_deadline = project.current_deadline #Get the deadline
-
+            #Get project finished tasks
             completed_tasks = len(Task.objects.filter(project = project, completion_status = 'F')) #Number of tasks finished
 
+            #Get project developer stats
             average_happiness = float(project.get_average_happiness()) #The average happiness of developers
             average_confidence = float(project.get_average_confidence()) #The average confidence of the project from developers
 

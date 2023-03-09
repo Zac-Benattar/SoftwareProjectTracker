@@ -31,28 +31,28 @@ class Project(models.Model):
     methodology = models.CharField(max_length=30)
     gitHub = models.CharField(max_length=150, blank=True)
     projectResult = models.CharField(max_length=1, null=True)
-    
+
     def __str__(self):
         '''Gets string representation of the project object
         Format: <project.name>
-        
+
         Returns:
             str string representation of the project
-        ''' 
+        '''
         return self.name
-    
+
     def get_members_count(self):
         '''Gets number of members of the project
-        
+
         Returns:
             int number of members in the project
         '''
         return len(Member.objects.filter(project=self))
-    
+
     def get_total_salary_expenses(self):
         '''Gets total salaries of the members of the project
         (1 year salary cost)
-        
+
         Returns:
             decimal total of all members salaries
         '''
@@ -64,11 +64,11 @@ class Project(models.Model):
             return salaries_total
         else:
             return 0
-    
+
     def get_daily_running_cost(self):
         '''Gets average daily running cost of the project
         year salaries total / number of days running
-        
+
         Returns:
             decimal average daily running cost of project
         '''
@@ -77,11 +77,11 @@ class Project(models.Model):
             return self.get_total_salary_expenses() / days_running
         else:
             return 0
-    
+
     def has_no_feedback(self):
         '''Gets if the project has just started (true if project has no feedback yet)
         Ongoing project ML model cannot evaluate unless feedback exists in the project
-        
+
         Returns:
             bool true if project has no feedback
         '''
@@ -90,34 +90,43 @@ class Project(models.Model):
             return len(feedbacks) == 0
         else:
             return True
-    
+
     def get_average_happiness(self):
         '''Gets average happiness score of feedbacks for the project
         total happiness from feedbacks / no. feedbacks
-        
+
         Returns:
             decimal average of feedback happiness values
         '''
-        feedbacks = Feedback.objects.filter(project=self)
-        total_happiness = 0
-        for f in feedbacks:
-            total_happiness += f.emotion
-        if total_happiness > 0:
-            return total_happiness / self.get_members_count()
-        
+
+        week_before = timezone.now() - timezone.timedelta(days=7)
+        feedbacks = Feedback.objects.filter(project=self, date > week_before)
+        feedback_size = len(feedbacks)
+        if feedback_size == 0:
+            return 0
+        else:
+            total_happiness = 0
+            for f in feedbacks:
+                total_happiness += f.emotion
+            return total_happiness / feedback_size
+
     def get_average_confidence(self):
         '''Gets average confidence score of feedbacks for the project
         total confidence from feedbacks / no. feedbacks
-        
+
         Returns:
             decimal average of confidence happiness values
         '''
-        feedbacks = Feedback.objects.filter(project=self)
-        total_confidence = 0
-        for f in feedbacks:
-            total_confidence += f.confidence
-        if total_confidence > 0:
-            return total_confidence / self.get_members_count()
+        week_before = timezone.now() - timezone.timedelta(days=7)
+        feedbacks = Feedback.objects.filter(project=self, date > week_before)
+        feedback_size = len(feedbacks)
+        if feedback_size == 0:
+            return 0
+        else:
+            total_confidence = 0
+            for f in feedbacks:
+                total_confidence += f.confidence
+            return total_confidence / feedback_size
 
 
 class Skill(models.Model):
@@ -128,10 +137,10 @@ class Skill(models.Model):
     def __str__(self):
         '''Gets string representation of the skill object
         Format: <skill.name>
-        
+
         Returns:
             str string representation of the skill
-        ''' 
+        '''
         return self.name
 
 
@@ -140,14 +149,14 @@ class CustomUser(AbstractUser):
     # https://django-phonenumber-field.readthedocs.io/en/latest/
     phone = PhoneNumberField(null=False, blank=True, unique=True)
     skillset = models.ManyToManyField(Skill, blank=True)
-    
+
     def __str__(self):
         '''Gets string representation of the custom user object
         Format: <customuser.username>
-        
+
         Returns:
             str string representation of the custom user
-        ''' 
+        '''
         return self.username
 
 
@@ -161,12 +170,12 @@ class RiskEvaluation(models.Model):
     def __str__(self):
         '''Gets string representation of the time risk evaluation object
         Format: <riskevaluation.success_chance>
-        
+
         Returns:
             str string representation of the risk evaluation
-        ''' 
+        '''
         return str(self.success_chance)
-    
+
     def get_project_snapshot(self):
         result = pickle.loads(self.serialized_project_evaluation_data)
         return result
@@ -181,10 +190,10 @@ class Meeting(models.Model):
     def __str__(self):
         '''Gets string representation of the time meeting object
         Format: <meeting.project.name> <meeting.date>
-        
+
         Returns:
             str string representation of the meeting
-        ''' 
+        '''
         return self.project.__str__() + ' ' + self.date.__str__()
 
 
@@ -197,10 +206,10 @@ class Feedback(models.Model):
     def __str__(self):
         '''Gets string representation of the time feedback object
         Format: <feedback.project.name> Feedback <feedback.pk>
-        
+
         Returns:
             str string representation of the feedback
-        ''' 
+        '''
         return self.project.__str__() + ' Feedback ' + str(self.pk)
 
 
@@ -238,37 +247,37 @@ class Task(models.Model):
     def __str__(self):
         '''Gets string representation of the task object
         Format: <task.name> <task.project.name>
-        
+
         Returns:
             str string representation of the mask
         '''
         return self.name + ' ' + self.project.__str__()
-    
+
     def get_duration(self):
-        '''Gets the duration of the task by finding the difference 
+        '''Gets the duration of the task by finding the difference
         between end_date and start_date. May be negative
-        
+
         Returns:
             datetime.timedelta
         '''
         return self.latest_finish - self.start_date
-    
+
     def creation_date_to_unix(self):
         return int(self.creation_date.timestamp())
-    
+
     def start_date_to_unix(self):
         return int(self.start_date.timestamp())
-    
+
     def earliest_finish_date_to_unix(self):
         earliest_finish = self.start_date + timezone.timedelta(days=self.duration)
         print('=============')
         print(earliest_finish)
         print('=============')
         return int(earliest_finish.timestamp())
-    
+
     def latest_finish_date_to_unix(self):
         return int(self.latest_finish.timestamp())
-        
+
 
 class Role(models.Model):
     name = models.CharField(max_length=20)
@@ -291,8 +300,8 @@ class Member(models.Model):
 
     def __str__(self):
         '''Gets string representation of the task object
-        Format: <member.user> <member.role> <member.project> 
-        
+        Format: <member.user> <member.role> <member.project>
+
         Returns:
             str string representation of the member
         '''
@@ -307,7 +316,7 @@ class RoleRequirement(models.Model):
     def __str__(self):
         '''Gets string representation of the role requirement object
         Format: <rolerequirement.role>: <rolerequirementskill1>; <rolerequirementskill2>; ...
-        
+
         Returns:
             str string representation of the role requirement
         '''
@@ -328,10 +337,10 @@ class Schedule(models.Model):
     def __str__(self):
         '''Gets string representation of the schedule object
         Format: <schedule.member.name> <schedule.project.name>
-        
+
         Returns:
             str string representation of the schedule
-        '''    
+        '''
         return self.member.__str__() + ' ' + self.project.__str__()
 
 
@@ -344,10 +353,10 @@ class TimeWorked(models.Model):
     def __str__(self):
         '''Gets string representation of the time worked object
         Format: <timeworked.member.name> <timeworked.task.name> <timeworked.time> hours
-        
+
         Returns:
             str string representation of the timeworked
-        '''            
+        '''
         return self.member.__str__() + ' ' + self.task.__str__() + ' ' + self.time.__str__() + ' hours'
 
 
@@ -361,8 +370,8 @@ class Suggestion(models.Model):
     def __str__(self):
         '''Gets string representation of the suggestion
         Format: <suggestion.name>
-        
+
         Returns:
             str string representation of the suggestion
-        '''         
+        '''
         return self.name
