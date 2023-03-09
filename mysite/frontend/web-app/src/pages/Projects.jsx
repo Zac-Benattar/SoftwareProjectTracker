@@ -55,6 +55,7 @@ const Projects = () => {
     setProjectDescription(project.description);
     setProjectNewBudget(project.current_budget);
     setProjectNewDeadline(project.current_deadline);
+    setProjectStart(project.start_date);
     getSuggestions();
   }, []);
 
@@ -97,7 +98,7 @@ const Projects = () => {
           initial_budget: project.initial_budget,
           current_budget: projectNewBudget,
           amount_spent: project.initial_budget,
-          start_date: project.start_date,
+          start_date: projectStart,
           initial_deadline: project.initial_deadline,
           current_deadline: projectNewDeadline,
           methodology: projectName,
@@ -112,7 +113,7 @@ const Projects = () => {
     }
   };
 
-  let deleteProject = async (id) => {
+  let deleteProject = async () => {
     let response = fetch(
       "http://127.0.0.1:8000/api/projects/".concat(slug) + "/",
       {
@@ -124,9 +125,9 @@ const Projects = () => {
       }
     );
 
-    setProject(project.filter((p) => p.project_id !== id));
+    
   };
-  console.log(project);
+ 
 
   // Obtaining the specific project's most recent risk evaulation via a GET request to the api referencing our authorisation token
   let getRiskEvaluation = async (e) => {
@@ -317,7 +318,7 @@ const Projects = () => {
           ))}
 
           <div className="project-info-container">
-            <i className="delete-proj-btn">
+            <i onClick = { deleteProject } className="delete-proj-btn">
               <FaTrash />
             </i>
             <div className="project-name">
@@ -354,60 +355,4 @@ const Projects = () => {
 
 export default Projects;
 
-/* <Navbar/>
-                    <div className="projects-page-content"> 
 
-
-                <div className="project-info-container">
-
-                    <div className="project-name">
-                        <h1>{state.name}</h1>
-                    </div>
-
-                    <div className="project-description">
-                        <br/>
-                        <h3 className="des-title"> Project Description: </h3>
-                        <p className="des">{state.description}</p>
-                        <br/>
-                        <br/>
-                        <h3 className="des-title"> Project methodology: </h3>
-                        <p  className="des">{state.methodology}</p>
-                        <br/>
-                        <br/>
-                        <h3 className="des-title"> Project budget: </h3>
-                        <p className="des">  {state.i_budget}</p>
-                        <br/>
-                        <br/>
-
-                        <h3 className="des-title"> Project deadine: </h3>
-                        <p className="des"> {state.i_deadline}</p>
-
-                        <br/>
-                        <br/>
-
-                        <h3 className="des-title"> Client: </h3>
-                        <p className="des"> client </p>
-
-
-                    </div>
-                    <div className="project-buttons">
-
-                    <button className="proj-button">Pause project progress</button>
-                    <button className="proj-button">Push back project deadline</button>
-                    </div>
-                </div>  
-
-                <div className="risk-info-container">
-                        <div className="project-risk-score">
-                            <p> Your project has a {riskScore}% chance of success.</p>
-                        </div>
-
-                        <div className="project-risk-score">
-                            <p> Your project has 0 incomplete tasks. </p>
-                        </div>               
-
-                
-                        <div className="project-risk-score">
-                            <p> Your project has 0 suggestions. </p>
-                        </div>
-                </div> */

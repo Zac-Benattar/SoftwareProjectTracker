@@ -36,6 +36,11 @@ const UserProfile = () => {
   useEffect(() => {
     getUser();
     getSkills();
+    setFirstName(currentUser.first_name);
+    setLastName(currentUser.last_name);
+    // setUsername(user.username);
+    // setEmail(user.email);
+    // setPhoneNumber(user.phone);
   }, []);
 
   // Obtaining the specific project's most recent risk evaulation via a GET request to the api referencing our authorisation token
@@ -90,8 +95,8 @@ const UserProfile = () => {
       }
     );
     let data = await response.json();
-    if (response.status === 201) {
-      setFirstName(data);
+    if (response.status === 200) {
+      setUser(data);
     }
   };
 
@@ -110,8 +115,8 @@ const UserProfile = () => {
       }
     );
     let data = await response.json();
-    if (response.status === 201) {
-      setLastName(data);
+    if (response.status === 200) {
+      setUser(data);
     }
   };
 
@@ -130,8 +135,68 @@ const UserProfile = () => {
       }
     );
     let data = await response.json();
+    if (response.status === 200) {
+      setUser(data);
+    }
+  };
+
+  let updatePassword = async () => {
+    let response = await fetch(
+      "http://127.0.0.1:8000/api/users/"+ user.user_id + "/",
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+        body: JSON.stringify({
+          password : verPassword,
+        }),
+      }
+    );
+    let data = await response.json();
+    if (response.status === 200) {
+      setUser(data);
+    }
+  };
+
+  let updateEmail = async () => {
+    let response = await fetch(
+      "http://127.0.0.1:8000/api/users/"+ user.user_id + "/",
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+        body: JSON.stringify({
+          email : email,
+        }),
+      }
+    );
+    let data = await response.json();
+    if (response.status === 200) {
+      setUser(data);
+    }
+  };
+
+  let updatePhonenumber = async () => {
+    let response = await fetch(
+      "http://127.0.0.1:8000/api/users/"+ user.user_id + "/",
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+        body: JSON.stringify({
+          phone : phone,
+        }),
+      }
+    );
+    let data = await response.json();
     if (response.status === 201) {
-      setUsername(data);
+      setUser(data);
     }
   };
 
@@ -166,7 +231,7 @@ const UserProfile = () => {
         });
 
       // if(response.status === 204) {
-      //   setSkills(skills.filter(skill => skill.id !== checked[i]));
+      //   setSkills(skills.filter(skill ? skill.id !== checked[i]));
       // }
     }
 
@@ -550,7 +615,7 @@ const UserProfile = () => {
                       onChange={event=>setEmail(event.target.value)}
                     />
                 </div>
-                <button className="add-skill-btn">Update details.</button>
+                <button onClick={() => {updatePhonenumber(); updateEmail();}} className="add-skill-btn">Update contact details.</button>
 
           </div>
 
@@ -593,7 +658,7 @@ const UserProfile = () => {
                   onChange={event=>setPasswordVerified(event.target.value)}
                 />
             </div>
-            <button onClick={passwordConfirmation} className="add-skill-btn">Update Password</button>
+            <button onClick={() => {passwordConfirmation(); updatePassword();}} className="add-skill-btn">Update Password</button>
 
       </div>
 
@@ -668,7 +733,7 @@ const UserProfile = () => {
             <div className="prof-line">  
 
               <h3 className="prof-title">Email:  </h3>
-              <p className="prof-text"> {currentUser.email}</p>
+              <p className="prof-text"> {email}</p>
             </div>
 
             <div className="prof-line">  
