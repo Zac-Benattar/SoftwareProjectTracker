@@ -51,9 +51,6 @@ const TaskDependenciesChecklist = ({ index, task }) => {
                     </div> 
 
             </div> 
-
-                
-  
   );
 };
 

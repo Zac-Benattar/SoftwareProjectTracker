@@ -23,8 +23,7 @@ const TasksForm = () => {
     getMembers();
   }, []);
 
-  // Obtaining the projects the user is involved in via a GET request to the api referencing our authorisation token
-  // Need to check this URLSS
+  // Obtaining the tasks for the project via a GET request to the api referencing our authorisation token
   let getTasks = async (e) => {
     let response = await fetch(
       "http://127.0.0.1:8000/api/projects/".concat(slug).concat("/tasks/"),
@@ -73,7 +72,6 @@ const TasksForm = () => {
     }
   };
 
-
   const [checkedtasks, setCheckedTasks] = useState([]);
   let [dependencies, setDependencies] = useState(["task1 ", "task2", "task3"]);
 
@@ -115,7 +113,7 @@ const TasksForm = () => {
 
   function View() {
     if (viewStyle === viewoptions[0]) {
-      return <GanttChart tasks={tasks} />;
+      return <GanttChart />;
     } else if (viewStyle === viewoptions[1]) {
       return <ListView tasks={tasks} />;
     } else {

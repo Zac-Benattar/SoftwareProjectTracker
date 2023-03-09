@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils import timezone
 from django.contrib.auth.models import AbstractUser
 from phonenumber_field.modelfields import PhoneNumberField
 from django.utils import timezone
@@ -17,8 +16,6 @@ def get_in_day_datetime():
 
 def get_in_week_datetime():
     return timezone.now() + timezone.timedelta(days=7)
-
-
 
 
 class Project(models.Model):
@@ -217,8 +214,8 @@ class Task(models.Model):
     description = models.CharField(max_length=200, blank=True)
     duration = models.IntegerField(default=0)
     creation_date = models.DateTimeField(auto_now_add=True)
-    start_date = models.DateTimeField(null=True)
-    latest_finish = models.DateTimeField(null=True)
+    start_date = models.DateTimeField(default=get_in_hour_datetime())
+    latest_finish = models.DateTimeField(default=get_in_week_datetime())
     dependent_tasks = models.ManyToManyField(
         'self', symmetrical=False, related_name='prerequisites', blank=True)
     NOTSTARTED = 'NS'
@@ -253,8 +250,24 @@ class Task(models.Model):
         Returns:
             datetime.timedelta
         '''
-        return self.end_date - self.start_date
-
+        return self.latest_finish - self.start_date
+    
+    def creation_date_to_unix(self):
+        return int(self.creation_date.timestamp())
+    
+    def start_date_to_unix(self):
+        return int(self.start_date.timestamp())
+    
+    def earliest_finish_date_to_unix(self):
+        earliest_finish = self.start_date + timezone.timedelta(days=self.duration)
+        print('=============')
+        print(earliest_finish)
+        print('=============')
+        return int(earliest_finish.timestamp())
+    
+    def latest_finish_date_to_unix(self):
+        return int(self.latest_finish.timestamp())
+        
 
 class Role(models.Model):
     name = models.CharField(max_length=20)
