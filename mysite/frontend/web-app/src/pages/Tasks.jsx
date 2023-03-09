@@ -8,6 +8,7 @@ import "./tasks.css";
 import { useParams } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import MembersChecklist from "../components/MembersChecklist";
+import TaskDependenciesChecklist from "../components/TaskDependenciesChecklist";
 
 const TasksForm = () => {
   // Deconstructing the relevent sections from AuthContext
@@ -194,7 +195,7 @@ const TasksForm = () => {
                       <div className="list-container">
                         {members.map((item, index) => (
                           
-                          <MembersChecklist member={item} insex={index}/>
+                          <MembersChecklist member={item} index={index}/>
                          ))}
 
                       </div>
@@ -207,16 +208,13 @@ const TasksForm = () => {
                     <div className="checkList">
                       <label>Add dependencies:</label>
                       <div className="list-container">
-                        {dependencies.map((item, index) => (
-                          <div key={index}>
-                            <input
-                              value={item}
-                              type="checkbox"
-                              onChange={handleCheck}
-                            />
-                            <span className={isChecked(item)}>{item}</span>
-                          </div>
-                        ))}
+                      
+                        {tasks.map((each_task, index) => (
+                          
+                          <TaskDependenciesChecklist task={each_task} index={index}/>
+                         ))}
+
+                     
                       </div>
                     </div>
                   </div>

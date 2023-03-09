@@ -14,18 +14,10 @@ const Homepage = () => {
   const [projectDescription, setProjectDescription] = useState("");
   const [projectBudget, setProjectBudget] = useState("");
   const [projectStart, setProjectStart] = useState(new Date());
-  const [projectDeadline, setProjectDeadline] = useState(new Date());
-
-  const [skill, setSkill] = useState("");
-  const [skillDescription, setSkillDescription] = useState("");
-  
-  
+  const [projectDeadline, setProjectDeadline] = useState(new Date()); 
   let [projects, setProjects] = useState([]);
-
-
-      // list to store members in a project
-    const [membersList, setMembersList] = useState([{member: ""}]); 
-    const [rolesList, setRolesList] = useState([{role: ""}]); 
+  const [membersList, setMembersList] = useState([{member: ""}]); 
+  const [rolesList, setRolesList] = useState([{role: ""}]); 
 
     console.log(membersList);
 
@@ -86,21 +78,6 @@ const Homepage = () => {
     
       }
 
-    const addSkill = () => {
-      var modal = document.getElementById("skillset-modal");
-      var span = document.getElementsByClassName("skill-close")[0];
-      modal.style.display = "block";
-      span.onclick = function() {
-        modal.style.display = "none";
-      }
-      window.onclick = function(event) {
-        if (event.target === modal) {
-          modal.style.display = "none";
-        }
-      }
-
-    }
-
   // Deconstructing the relevent sections from AuthContext
   let { authTokens, logoutUser, user } = useContext(AuthContext);
 
@@ -129,24 +106,6 @@ const Homepage = () => {
     }
   };
 
-  let createSkill = async () => {
-    let response = await fetch("http://127.0.0.1:8000/api/users/" + user.user_id + "/skills/",{
-      method : "POST",
-      headers: {
-        'Content-Type' : 'application/json',
-        Authorization: "Bearer " + String(authTokens.access),
-      },
-      body : JSON.stringify({
-        name: skill,
-        description : skillDescription,
-      })
-    });
-    
-    let data = await response.json();
-    if(response.status === 201) {
-      setSkill([...skill,data]);
-    }
-  };
 
   let createProject = async () => {
     let response = await fetch("http://127.0.0.1:8000/api/projects/", {
@@ -185,53 +144,6 @@ const Homepage = () => {
   return (
     
       <>
-    <div id="skillset-modal" className="skillset-modal">
-
-      <div className="skill-close">  &times; </div>
-          <div className="skillset-modal-content">
-
-
-                <h1>Add to your skillset!</h1>
-                <div className="skill-input-div">
-                    <label 
-                      className="skill-input-labels">
-                      Skill name:
-                    </label>
-
-                    <input 
-                      className="skill-inputs" 
-                      type="text"
-                      placeholder="Enter Skill Name"
-                      onChange={event=>setSkill(event.target.value)}
-                    />
-                </div>
-
-                <div className="skill-input-div">
-                    <label 
-                      className="skill-input-labels">
-                      Skill description:
-                    </label>
-
-                    <textarea 
-                      className="skill-inputs" 
-                      type="text"
-                      placeholder="Enter Skill Description"
-                      onChange={event=>setSkillDescription(event.target.value)}
-                    />
-                </div>
-
-
-                <button onClick = {createSkill} className="add-skill-btn">Add skill</button>
-
-
-
-
-          </div>
-
-
-    </div>
-
-
 
 
     <div id="add-project-modal" className="modal">
@@ -401,12 +313,7 @@ const Homepage = () => {
                       Add Project 
                     </button>
                 
-                      <button 
-                      className="add-proj-btn"
-                      onClick={addSkill}>
-                        Edit Skillset
-                      </button>
-                      
+
                 </div>
                 <div className="projects-list">
                   {projects.map((project, index) => (
