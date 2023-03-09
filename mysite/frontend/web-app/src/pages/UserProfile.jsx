@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import SuccessChanceDisplay from "../components/SuccessChanceDisplay";
 import AuthContext from "../context/AuthContext";
 import HomeNavbar from "../components/HomeNavbar";
+import { FaUser } from 'react-icons/fa'
 
 const UserProfile = () => {
   // Deconstructing the relevent sections from AuthContext
@@ -55,26 +56,49 @@ const UserProfile = () => {
 
 
   console.log(currentUser);
-  console.log(skills);
+  console.log("skill",skills);
   return (
     <>
       <div className="home-page">
         <HomeNavbar />
-        <div className="projects-page-content">
-          <div className="project-info-container">
-            <p> Name: {currentUser.first_name} </p>
-            <p> Username:{currentUser.username} </p>
-            Skills: 
-            {skills.map((skill) => 
+        <div className="user-profile-content">
+          <i className="user-icon"> <FaUser/> </i>
+          <div className="user-info-container">
 
-                <li className="skill">
-                    {skill.name}
-                </li>
+            <div className="prof-line">
+              <h3 className="prof-title"> Name: </h3> 
+              <p className="prof-text"> {currentUser.first_name} </p>
+            </div>
 
-            )}
+            <div className="prof-line">  
+              <h3 className="prof-title"> Username:  </h3 >   
+              <p className="prof-text">{currentUser.username} </p>
+            </div>
 
-            <p> Email: {currentUser.email}</p>
-            <p> Join date: {currentUser.date_joined}</p>
+            <div className="prof-line">  
+              <h3 className="prof-title"> Skills: </h3>
+              {skills.map((skill) => 
+
+                  <li className="skill">
+                      {skill.name}
+                  </li>
+
+              )}
+            </div>
+
+
+            
+            <div className="prof-line">  
+
+              <h3 className="prof-title">Email:  </h3>
+              <p className="prof-text"> {currentUser.email}</p>
+            </div>
+
+            <div className="prof-line">  
+              <h3 className="prof-title"> Join date: </h3> #
+              <p className="prof-text"> {currentUser.date_joined}</p>
+            </div>
+
           </div>
         </div>
       </div>

@@ -586,3 +586,39 @@ body {
  .delete-proj-btn {
     font-size: 25px;
  }
+
+.user-profile-content{
+
+    background-color: white;
+    border-radius: 30px;
+    padding: 2%;
+    margin: 2%;
+    width: 30%;
+    
+    display: inline-block;
+
+}
+
+
+.prof-title{
+    display:inline-block;
+}
+.prof-text{
+    display: inline-block;
+}
+
+
+.user-icon{
+
+    width:35%;
+    height:120px;
+    font-size:4em;
+    border-radius: 50%;
+    border: solid 2px;
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    margin-bottom: 20px;
+    padding:5%;
+    margin-left:32%
+}
