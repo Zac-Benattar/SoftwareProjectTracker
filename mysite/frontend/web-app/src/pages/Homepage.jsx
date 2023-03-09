@@ -133,8 +133,7 @@ const Homepage = () => {
     if (response.status === 201) {
       setProjects([...projects,data]);
     }
-    
-  }
+  };
 
   console.log("projects",projects);
   console.log("membersList", membersList);

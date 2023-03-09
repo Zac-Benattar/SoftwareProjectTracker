@@ -75,6 +75,27 @@ const UserProfile = () => {
   };
 
 
+  let updateFirstName = async () => {
+    let response = await fetch(
+      "http://127.0.0.1:8000/api/users/"+ user.user_id + "/",
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+        body: JSON.stringify({
+          first_name: firstName,
+        }),
+      }
+    );
+    let data = await response.json();
+    if (response.status === 201) {
+      setFirstName(data);
+    }
+  };
+
+
   let createSkill = async () => {
     let response = await fetch("http://127.0.0.1:8000/api/users/" + currentUser.id + "/skills/",{
       method : "POST",
@@ -90,8 +111,23 @@ const UserProfile = () => {
     
     let data = await response.json();
     if(response.status === 201) {
-      setSkill([...skill,data]);
+      setSkills([...skills,data]);
     }
+  };
+
+  let deleteSkill = async (id) => {
+    let response = fetch(
+      "http://127.0.0.1:8000/api/users/" + currentUser.id + "/" + "/skills/", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+      });
+      let data = await response.json();
+      if(response.status === 204) {
+        setSkills(skills.filter((s) => s.skill_id !== id));
+      }
   };
 
 
@@ -359,7 +395,7 @@ const UserProfile = () => {
 
                 </div>
 
-                  <button className="add-skill-btn">Remove skill</button>
+                  <button onClick = {deleteSkill} className="add-skill-btn">Remove skill</button>
 
             </div>
 
@@ -402,7 +438,7 @@ const UserProfile = () => {
                   </div>
 
 
-                  <button className="add-skill-btn">Update name.</button>
+                  <button onClick = { updateFirstName } className="add-skill-btn">Update name.</button>
 
             </div>
 
@@ -471,7 +507,7 @@ const UserProfile = () => {
                       onChange={event=>setEmail(event.target.value)}
                     />
                 </div>
-                <button className="add-skill-btn">Update username.</button>
+                <button className="add-skill-btn">Update details.</button>
 
           </div>
 

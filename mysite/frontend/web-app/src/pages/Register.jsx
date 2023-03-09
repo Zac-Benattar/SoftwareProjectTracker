@@ -55,13 +55,29 @@ export const Register = (props) => {
       }
     };
 
-
-
-
     const handleSubmit = (e) => {
         // page gets reloaded and state gets lost
         e.preventDefault()
     }
+
+    let createUser = async () => {
+      let response = await fetch("http://127.0.0.1:8000/api/users/", {
+        method : "POST",
+        headers: {
+          'Content-Type' : 'application/json',
+        },
+        body : JSON.stringify({
+          username : name,
+          password : password,
+          email : email,
+        })
+      });
+  
+      let data = await response.json();
+      if (response.status === 200) {
+        console.log(data);
+      }
+    };
 
     function passwordConfirmation() {
       var password = document.getElementById("password").value;
@@ -122,9 +138,7 @@ export const Register = (props) => {
         {isStrong === "strong" && <button type="submit"> Register </button>}
 
 
-
-
-        <button onClick={passwordConfirmation} className="register-button" type="submit">
+        <button onClick={() => {passwordConfirmation(); createUser();}} className="register-button" type="submit">
           Register
         </button>
       </form>
