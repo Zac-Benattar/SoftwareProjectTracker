@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 export const Register = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPass] = useState('');
+    const [phone, setPhonenumber] = useState('');
     const [name, setName] = useState('');
     const [confirm_password, setConfirmPass] = useState('');
     const [isError, setError] = useState(null);
@@ -68,14 +69,14 @@ export const Register = (props) => {
         },
         body : JSON.stringify({
           username : name,
-          password : password,
+          password : confirm_password,
           email : email,
+          phone : phone,
         })
       });
   
-      let data = await response.json();
-      if (response.status === 200) {
-        console.log(data);
+      if (response.status === 201) {
+        alert("Account successfully created!");
       }
     };
 
@@ -112,6 +113,15 @@ export const Register = (props) => {
           placeholder="youremail@gmail.com"
           id="email"
           name="email"
+        />
+        <label htmlfor="phone">Phone:</label>
+        <input
+          value={phone}
+          onChange={(e) => setPhonenumber(e.target.value)}
+          type="text"
+          placeholder="Enter phone number"
+          id="phone"
+          name="phone"
         />
         <label htmlfor="password">Password:</label>
         {isError !== null && <p className="errors"> - {isError}</p>}

@@ -124,7 +124,12 @@ const Projects = () => {
         },
       }
     );
-
+    if ( response.status === 205) {
+      alert("Project Deleted!");
+    }
+    else {
+      alert("Project deletion is only allowed for project managers");
+    }
     
   };
  
