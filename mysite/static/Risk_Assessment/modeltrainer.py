@@ -16,18 +16,22 @@ FILE_EXTENSION = ".sav"
 START_POSTFIX = "start" #The filename for the model to load
 IN_PROGRESS_POSTFIX = "inprogress" #The filename for the model to load
 
+#Get the path from this file to easily and robustly load files even if the program starts in a diferent file directory
 BASEPATH = path.dirname(__file__)
 
+#Filename of datasets
 START_DATASET_FILENAME = "startevaluationdataset.txt" #Filename of start prediction dataset
 IN_PROGRESS_DATASET_FILENAME = "inprogressevaluationdataset.txt" #Filename of in progress project prediction dataset
 
+#Generate the filepath of the datasets assuming they are in the same file location as THIS current file
 START_DATASET_FILE_PATH = path.abspath(path.join(BASEPATH, START_DATASET_FILENAME))
 IN_PROGRESS_DATASET_FILE_PATH = path.abspath(path.join(BASEPATH, IN_PROGRESS_DATASET_FILENAME))
 
-
+#Create the filename for the the saved (pickled) model
 START_MODEL_FILENAME = COMBINED_MODEL_NAME + START_POSTFIX + FILE_EXTENSION
 IN_PROGRESS_MODEL_FILENAME = COMBINED_MODEL_NAME + IN_PROGRESS_POSTFIX + FILE_EXTENSION
 
+#Generate the filepath for this assuming it starts in the same place as THIS current file
 START_MODEL_FILE_PATH = path.abspath(path.join(BASEPATH, START_MODEL_FILENAME))
 IN_PROGRESS_MODEL_FILE_PATH = path.abspath(path.join(BASEPATH, IN_PROGRESS_MODEL_FILENAME))
 
@@ -58,7 +62,10 @@ def train_model_and_save(data_set_filepath, model_file_path, verbose, test_train
     #Logistic Regression Algorithm/Object to load
     logisitc_regression = linear_model.LogisticRegression(
     #warm_start = True,
-    max_iter = 2000
+    #class_weight = 'balanced',
+    max_iter = 2000,
+    solver = 'newton-cholesky', #Sometimes can produce more accurate/certain results
+    C = 0.001 #Tune for size of data
     )
 
     #=====================================================================
@@ -117,6 +124,14 @@ def train_model_and_save(data_set_filepath, model_file_path, verbose, test_train
                 print("Expected: " + str(expected_output))
                 print("Predicted: " + str(predicted_output))
                 print("")
+
+    #Find a score for the machine learning model
+    score = trained_model.score(in_data, out_data) #find score for all data (not just training or test data)
+
+    if verbose == True:
+        #Print out model score
+        print("Model Score: " + str(score))
+
     if verbose == True:
         print("Saving model to: " + model_file_path)
     #Save model in serialised form
