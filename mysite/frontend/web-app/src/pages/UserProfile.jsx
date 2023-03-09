@@ -95,6 +95,45 @@ const UserProfile = () => {
     }
   };
 
+  let updateLastName = async () => {
+    let response = await fetch(
+      "http://127.0.0.1:8000/api/users/"+ user.user_id + "/",
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+        body: JSON.stringify({
+          last_name: lastName,
+        }),
+      }
+    );
+    let data = await response.json();
+    if (response.status === 201) {
+      setLastName(data);
+    }
+  };
+
+  let updateUsername = async () => {
+    let response = await fetch(
+      "http://127.0.0.1:8000/api/users/"+ user.user_id + "/",
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+        body: JSON.stringify({
+          username : username,
+        }),
+      }
+    );
+    let data = await response.json();
+    if (response.status === 201) {
+      setUsername(data);
+    }
+  };
 
   let createSkill = async () => {
     let response = await fetch("http://127.0.0.1:8000/api/users/" + currentUser.id + "/skills/",{
@@ -116,18 +155,21 @@ const UserProfile = () => {
   };
 
   let deleteSkill = async (id) => {
-    let response = fetch(
-      "http://127.0.0.1:8000/api/users/" + currentUser.id + "/" + "/skills/", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + String(authTokens.access),
-        },
-      });
-      let data = await response.json();
-      if(response.status === 204) {
-        setSkills(skills.filter((s) => s.skill_id !== id));
-      }
+    for (let i = 0; i < checked.length ; i++) {
+      let response = fetch(
+        "http://127.0.0.1:8000/api/users/" + currentUser.id + "/skills/" + checked[i], {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + String(authTokens.access),
+          },
+        });
+
+      // if(response.status === 204) {
+      //   setSkills(skills.filter(skill => skill.id !== checked[i]));
+      // }
+    }
+
   };
 
 
@@ -149,10 +191,11 @@ const UserProfile = () => {
   // Add or remove checked item from list.
   const handleCheck = (event) => {
       var updatedList = [...checked];
+      var id = event.target.value;
       if (event.target.checked) {
         updatedList = [...checked, event.target.value];
       } else {
-        updatedList.splice(checked.indexOf(event.target.value), 1);
+        updatedList.splice(checked.indexOf(id), 1);
       }
       setChecked(updatedList);
   };
@@ -204,7 +247,7 @@ const UserProfile = () => {
 
   // This is where all checked skills are stored.
   console.log("checked items", checked)
-
+  //console.log("checked skill id", )
 
 
   console.log(currentUser);
@@ -388,8 +431,8 @@ const UserProfile = () => {
 
                     {skills.map((item, index) => (
                            <div key={index}>
-                           <input value={item.name} type="checkbox" onChange={handleCheck}/>
-                           <span className={isChecked(item.name)}> {item.name} </span>
+                           <input value={item.id} type="checkbox" onChange={handleCheck}/>
+                           <span className={isChecked(item.id)}> {item.name} </span>
                        </div>
                     ))}
 
@@ -438,7 +481,7 @@ const UserProfile = () => {
                   </div>
 
 
-                  <button onClick = { updateFirstName } className="add-skill-btn">Update name.</button>
+                  <button onClick={() => {updateFirstName(); updateLastName();}} className="add-skill-btn">Update name.</button>
 
             </div>
 
@@ -465,7 +508,7 @@ const UserProfile = () => {
                       onChange={event=>setUsername(event.target.value)}
                     />
                 </div>
-                <button className="add-skill-btn">Update username.</button>
+                <button onClick = {updateUsername} className="add-skill-btn">Update username.</button>
 
           </div>
 
