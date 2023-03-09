@@ -1,4 +1,3 @@
-
 from django.shortcuts import get_list_or_404, get_object_or_404
 from rest_framework import permissions, viewsets
 from projects.models import *
@@ -10,7 +9,6 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.views import APIView
 from rest_framework.response import Response
-
 
 import sys #Import system file to add extra imports from outside file
 import pathlib #Import the libary to modify paths
@@ -225,7 +223,7 @@ class TaskViewSet(viewsets.ModelViewSet):
         except Project.DoesNotExist:
             raise NotFound('A project with this id does not exist')
         return self.queryset.filter(project=project)
-    
+
 
 class NotStartedTaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all().select_related(
@@ -320,8 +318,10 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
         #Load in data
         initial_budget = float(project.initial_budget) #Cast from decimal to a float
 
-        num_developers = len(Member.objects.filter(project = project, developer = True)) #Get number of developers
-        num_other_team_members = len(Member.objects.filter(project = project, developer = False)) #Get number of team leaders etc.
+        num_developers = len(Member.objects.filter(project = project, developer = True, has_quit = False)) #Get number of developers
+        num_other_team_members = len(Member.objects.filter(project = project, developer = False, has_quit = False)) #Get number of team leaders etc.
+
+        num_team_left = len(Member.objects.filter(project = project, has_quit = True)) #Get number of quit members
 
         original_deadline = project.initial_deadline #Get the deadline
 
@@ -361,10 +361,7 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
             current_budget = float(project.current_budget) #Cast from decimal to a float
             money_spent = float(project.amount_spent) #Cast from decimal to a float
 
-            # ===========================
-            # DO NOT LET THIS SLIP THROUGH THE NET!!!!!!!
-            # ===========================
-            num_team_left = 0
+
 
             current_deadline = project.current_deadline #Get the deadline
 
@@ -409,18 +406,18 @@ class RiskEvaluationGeneratorViewSet(viewsets.ModelViewSet):
         except Project.DoesNotExist:
             raise NotFound('A project with this id does not exist')
         return (risk_evaluation),
-    
+
 
 class RetrainView(APIView):
     def get(self, request, pk):
-        
+
         project = get_object_or_404(Project, pk=self.kwargs['pk'])
         risk_evaluations = RiskEvaluation.objects.filter(project=project)
-        
+
         project_start_evaluation_data = None
-        
+
         all_past_inprogress_evaluation_data = list()
-        
+
         # Get the initial project evaluation data and a list of all subsiquent data
         for r in risk_evaluations:
             evaluation_data = r.get_project_snapshot()
@@ -428,13 +425,13 @@ class RetrainView(APIView):
                 project_start_evaluation_data = evaluation_data
             if evaluation_data.is_current_evaluation_data():
                 all_past_inprogress_evaluation_data.append(evaluation_data)
-        
+
         result = -1
         if project.projectResult == 'S':
             result = 1
 
         PROJECT_EVALUATOR.update_model(project_start_evaluation_data, all_past_inprogress_evaluation_data, result)
-        
+
         context = {
             'result' : 'success'
         }
@@ -488,10 +485,10 @@ class SuggestionViewSet(viewsets.ModelViewSet):
             raise NotFound('A project with this id does not exist')
         return self.queryset.filter(project=project)
 
-    
+
 class SuggestionsGeneratorViewSet(viewsets.ModelViewSet):
     serializer_class = SuggestionSerializer
-    
+
     def generate_suggestions(self, thing, project):
         return PROJECT_SUGGESTER.get_suggestions(project)
 

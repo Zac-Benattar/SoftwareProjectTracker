@@ -27,13 +27,15 @@ import AuthContext from "../context/AuthContext";
 
 function RenderingNotStarted({ tasks }) {
   const tableRows = tasks.map((task) => {
+    const startDate = new Date(task.start_date_unix * 1000)
+    const dateString = startDate.getHours() + ':' + startDate.getMinutes() + ' ' + startDate.getDate() + '/' + startDate.getMonth() + '/' + startDate.getFullYear()
     return (
       <div key={task.id}>
         <h3>{task.id}</h3>
         <p>{task.name}</p>
         <h3>{task.completion_status}</h3>
         <h3>{task.duration}</h3>
-        <h3>{task.startdate}</h3>
+        <h3>{dateString}</h3>
         <p>{task.description}</p>
       </div>
     );
@@ -49,7 +51,7 @@ function RenderingStarted({ tasks }) {
         <p>{task.name}</p>
         <h3>{task.completion_status}</h3>
         <h3>{task.duration}</h3>
-        <h3>{task.startdate}</h3>
+        <h3>{new Date(task.start_date_unix * 1000)}</h3>
         <p>{task.description}</p>
       </div>
     );
@@ -65,7 +67,7 @@ function RenderingCompleted({ tasks }) {
         <h1>{task.name}</h1>
         <h3>{task.completion_status}</h3>
         <h3>{task.duration}</h3>
-        <h3>{task.startdate}</h3>
+        <h3>{new Date(task.start_date_unix * 1000)}</h3>
         <p>{task.description}</p>
       </div>
     );

@@ -310,7 +310,7 @@ body {
     color: rgb(138, 73, 202);
     margin-top:-2%;
     padding: 2%;
-    text-align: left;
+    text-align: center;
     text-decoration: underline;
 }
 
@@ -345,7 +345,7 @@ body {
 
   .add-skill-btn {
     border-radius: 8px;
-    background-image: linear-gradient(to right, rgb(255, 255, 255) 50%, rgb(255, 255, 255) 50%, rgb(219, 219, 219));
+    background-image: linear-gradient(to right, rgb(255, 255, 255) 50%, rgb(255, 255, 255) 50%, rgb(153, 153, 153));
     background-size: 200%;
     background-position: 100%;
     transition: 0.4s;
@@ -354,9 +354,7 @@ body {
     cursor: pointer;
     border: none;
     width:30%;
-    margin-top: 3%;
-
-
+    margin-top: 7%;
   }
 
   .proj-button {
@@ -414,7 +412,7 @@ body {
 }
 
 
-.modal, .new-role-modal{
+.modal, .new-role-modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     border: none;
@@ -427,6 +425,7 @@ body {
     backdrop-filter: blur(5px);
 }
 
+
 .skillset-modal {
     background-color:  #9c00fd;
     border-radius: 30px;
@@ -436,7 +435,7 @@ body {
     z-index: 1; /* Sit on top */
     top: 0;
     width:40%;
-    height:40%;
+    height:50%;
     /* Full height */
     overflow: auto;/* Enable scroll if needed */
     backdrop-filter: blur;
@@ -445,7 +444,21 @@ body {
 
 
 /* Modal Content/Box */
-.modal-content, .skillset-modal-content {
+.modal-content {
+    background-color:  rgb(247, 247, 247);
+    background-position: center;
+    background-size: cover;
+    margin-top: 60px;
+    width: 80%;
+    margin-left:10%; /* 15% from the top and centered */
+    padding: 3%;
+    border-radius: 20px;
+    color: black;
+  }
+
+
+  .skillset-modal-content {
+
     background-color:  #9c00fd;
     background-position: center;
     background-size: cover;
@@ -457,7 +470,7 @@ body {
     font-weight: 100;
 
     margin-top: 12%;
-    
+
   }
 
 
@@ -490,18 +503,26 @@ body {
     font-size: 20px;
   }
 
-
   .role-input-labels, .skill-input-labels{
-    display: inline-block;
+    
     margin-left: 10%;
     color:rgb(255, 255, 255);
     font-size: 20px;
-    font-weight: 400;
+    font-weight:400;
+  }
+
+  .role-input-labels {
+    display: flex;
+  }
+
+  .skill-input-labels{
+    display: inline-block;
   }
   
   .project-inputs, .skill-inputs{
     display: inline-block;
     margin-left:10%;
+    
   }
 
   .skill-input-div{
@@ -510,6 +531,7 @@ body {
   
 
   .close {
+    color: black;
     float: right;
     font-size: 38px;
     font-weight: bold;
@@ -533,7 +555,6 @@ body {
 .add-proj-drop {
     color: black;
     font-size: 30px;
-
 }
 
 
@@ -549,10 +570,117 @@ body {
   }
 
 
- .delete-proj-button {
-    font-size: 20px;
+ .delete-proj-btn, .delete-people-btn {
+    cursor: pointer;
+    font-size: 25px;
     float: right;
     margin-right: 5%;
-    margin-top: 5%;
+    color:red;
  }
+
+ .delete-people-btn {
+    font-size:20px;
+ }
+
+
+ .delete-proj-btn {
+    font-size: 25px;
+ }
+
+.user-profile-content{
+
+    background-color: white;
+    border-radius: 30px;
+    padding: 2%;
+    margin: 2%;
+    width: 50%;
+    
+    display: inline-block;
+
+}
+
+
+.prof-title{
+    display:inline-block;
+}
+.prof-text{
+    display: inline-block;
+}
+
+
+.user-icon{
+
+    width:35%;
+    height:120px;
+    font-size:4em;
+   
+    border: solid 2px;
+    
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    margin-bottom: 20px;
+    padding:5%;
+    margin-left:32%
+}
+
+
+.menu-button{
+    padding: 20px;
+    border-radius: 10px;
+    border: none;
+    background-color: white;
+    color:#9c00fd;
+    cursor: pointer;
+    left:0;
+    display: inline-block;
+    margin-left: 3%;
+    width:10%;
+
+}
+
+.menu-dropdown {
+    display:none;
+    position: absolute;
+    z-index:1;
+}
+
+
+.menu-dropdown>button:hover{
+    background-color: #9c00fd;
+    color:white;
+}
+
+.user-menu {
+    width: 100%;
+    display: block;
+    margin-top: 60px;
+    text-align: left;
+}
+
+.user-menu:hover .menu-dropdown {
+    display: block;
+}
+
+
+
+
+
+.edit-btn {
+    border: none;
+    background-color: white;
+    color:#9c00fd;
+    cursor: pointer;
+    left:0;
+    display: block;
+    margin-left: 3%;
+    width:100%;
+}
+
+
+
+
+
+
+
 

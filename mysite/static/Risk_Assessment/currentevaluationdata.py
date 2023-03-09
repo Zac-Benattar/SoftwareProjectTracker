@@ -20,7 +20,6 @@ class CurrentEvaluationData(StartEvaluationData): #CurrentEvaluationData inherit
 
         self.num_team_left = num_team_left
 
-
         CURRENT_DAY = datetime.now(timezone.utc)
 
         TIME_DELTA_ORIGINAL = original_deadline - CURRENT_DAY
@@ -58,7 +57,7 @@ class CurrentEvaluationData(StartEvaluationData): #CurrentEvaluationData inherit
         ]]
 
         return matrix #Return 1xn matrix
-    
+
         #Overrides method from StartEvaluationData
     def get_external_data_as_matrix(project):
         matrix = [[
@@ -79,9 +78,13 @@ class CurrentEvaluationData(StartEvaluationData): #CurrentEvaluationData inherit
 
         return matrix #Return 1xn matrix
 
+    #Used to determine what object is stored as current evaluation data and start evaluation can be stored in the same place
+    #Useful for figuring out if a risk assesment snapshot was an initial estimate or an "project in progress" estimate
     def is_start_evaluation_data(self):
         return False
 
+    #Used to determine what object is stored as current evaluation data and start evaluation can be stored in the same place
+    #Useful for figuring out if a risk assesment snapshot was an initial estimate or an "project in progress" estimate
     def is_current_evaluation_data(self):
         return True
 

@@ -7,7 +7,7 @@ import AuthContext from "../context/AuthContext";
 //QUERY - are critical actions classified separately from normal suggestions?
 //how does dismissing suggestions work
 
-export const SuggestionsForm = () => {
+const SuggestionsForm = () => {
   const criticalActions = 0;
 
   let [suggestions, setSuggestions] = useState([]);
@@ -67,6 +67,7 @@ export const SuggestionsForm = () => {
           <p className="sug-title">Suggestions</p>
           <div className="menu_container">
             <p>
+              {console.log(suggestions)}
               {suggestions.length} Suggestions, {criticalActions} Critical
               Actions
             </p>

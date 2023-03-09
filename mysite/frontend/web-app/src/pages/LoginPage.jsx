@@ -9,7 +9,7 @@ const LoginPage = (props) => {
   return (
     <div className="auth-form-container">
       <form className="login-form" onSubmit={loginUser}>
-        <h2> Login Page! </h2>
+        <h2> Login Page </h2>
 
         <label htmlFor="username">Username:</label>
         <input

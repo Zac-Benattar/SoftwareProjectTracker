@@ -8,6 +8,7 @@ import "./tasks.css";
 import { useParams } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import MembersChecklist from "../components/MembersChecklist";
+import TaskDependenciesChecklist from "../components/TaskDependenciesChecklist";
 
 const TasksForm = () => {
   // Deconstructing the relevent sections from AuthContext
@@ -22,8 +23,7 @@ const TasksForm = () => {
     getMembers();
   }, []);
 
-  // Obtaining the projects the user is involved in via a GET request to the api referencing our authorisation token
-  // Need to check this URLSS
+  // Obtaining the tasks for the project via a GET request to the api referencing our authorisation token
   let getTasks = async (e) => {
     let response = await fetch(
       "http://127.0.0.1:8000/api/projects/".concat(slug).concat("/tasks/"),
@@ -71,10 +71,6 @@ const TasksForm = () => {
       logoutUser();
     }
   };
-
-
-
-  console.log("members",members);
 
   const [checkedtasks, setCheckedTasks] = useState([]);
   let [dependencies, setDependencies] = useState(["task1 ", "task2", "task3"]);
@@ -197,7 +193,7 @@ const TasksForm = () => {
                       <div className="list-container">
                         {members.map((item, index) => (
                           
-                          <MembersChecklist member={item} insex={index}/>
+                          <MembersChecklist member={item} index={index}/>
                          ))}
 
                       </div>
@@ -210,16 +206,13 @@ const TasksForm = () => {
                     <div className="checkList">
                       <label>Add dependencies:</label>
                       <div className="list-container">
-                        {dependencies.map((item, index) => (
-                          <div key={index}>
-                            <input
-                              value={item}
-                              type="checkbox"
-                              onChange={handleCheck}
-                            />
-                            <span className={isChecked(item)}>{item}</span>
-                          </div>
-                        ))}
+                      
+                        {tasks.map((each_task, index) => (
+                          
+                          <TaskDependenciesChecklist task={each_task} index={index}/>
+                         ))}
+
+                     
                       </div>
                     </div>
                   </div>
@@ -238,13 +231,3 @@ const TasksForm = () => {
 };
 
 export default TasksForm;
-
-// if (viewStyle == viewoptions[0]) {
-//   return <GanttChart />;
-// }else if (viewStyle==viewoptions[1]) {
-//   return <ListView />;
-// }else if (viewStyle==viewoptions[2]) {
-//   return <BoardView />;
-// }else {
-//   <Calendar />
-// }

@@ -29,7 +29,7 @@ def combine_scores(classes, probability):
 
     return sum
 
-#Takes in a value between -1 and 1 and converts to a percentage
+#Takes in a value between -1 and 1 and converts to a percentage between 0-100
 def convert_to_percentage(value):
     return (value + 1) * 50
 
@@ -77,7 +77,7 @@ class ProjectEvaluator:
 
         #=====================================================================
         #ALTERNATIVE APPROACH USING partial_fit() [For models that support it]
-        #Not used as couldn't make results reliable
+        #Not used as couldn't make results reliable/accuracte
         #=====================================================================
 
         #Needs to "retrain" the model using parital_fit()
