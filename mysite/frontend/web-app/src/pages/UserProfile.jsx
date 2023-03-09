@@ -229,10 +229,9 @@ const UserProfile = () => {
             Authorization: "Bearer " + String(authTokens.access),
           },
         });
-
-      // if(response.status === 204) {
-      //   setSkills(skills.filter(skill ? skill.id !== checked[i]));
-      // }
+      if(response.status === 205) {
+        alert("Skills deleted successfully");
+      }
     }
 
   };
