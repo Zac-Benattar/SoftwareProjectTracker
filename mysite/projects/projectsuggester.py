@@ -9,7 +9,7 @@ all_roles = Role.objects.all()
 all_rolerequirements = RoleRequirement.objects.all()
 all_feedback = Feedback.objects.all()
 
-generated_recommendations = list()
+generated_suggestions = list()
 
 class ProjectSuggester:  # evaluating project's pararameters to make suggestions
 
@@ -22,7 +22,7 @@ class ProjectSuggester:  # evaluating project's pararameters to make suggestions
         self.low_budget(project)
         self.low_completion_ratio(project)
         self.missing_skillsets(project)
-        return generated_recommendations
+        return generated_suggestions
 
     def tasks_past_deadline(self, project):
         # For all uncompleted task, If currentDate > taskDeadline.
@@ -38,16 +38,16 @@ class ProjectSuggester:  # evaluating project's pararameters to make suggestions
                         description = (f"You've run out of time to complete the task {task.name}.\
                                 Try allocating more people to the task.")
 
-                        recommendation = Recommendation(
+                        suggestion = Suggestion(
                             project=project,
                             name='Task past deadline',
                             description=description
                         )
 
-                        # Save recommendation to the database
-                        recommendation.save()
-                        # Record recommendation to the of generated recommendations
-                        generated_recommendations.append(recommendation)
+                        # Save suggestion to the database
+                        suggestion.save()
+                        # Record suggestion to the of generated suggestions
+                        generated_suggestions.append(suggestion)
                         task_past_deadline = True
 
         return task_past_deadline
@@ -69,16 +69,16 @@ class ProjectSuggester:  # evaluating project's pararameters to make suggestions
                                 for the role as {member.role.name} in the project {project.name}.\
                                     Try changing their role to one more adequate.")
 
-                            recommendation = Recommendation(
+                            suggestion = Suggestion(
                                 project=project,
                                 name='User skills missing',
                                 description=description
                             )
 
-                            # Save recommendation to the database
-                            recommendation.save()
-                            # Record recommendation to the of generated recommendations
-                            generated_recommendations.append(recommendation)
+                            # Save suggestion to the database
+                            suggestion.save()
+                            # Record suggestion to the of generated suggestions
+                            generated_suggestions.append(suggestion)
                             roles_not_statisfied = False
 
         return roles_not_statisfied
@@ -107,16 +107,16 @@ class ProjectSuggester:  # evaluating project's pararameters to make suggestions
             description = (f"The average happiness of the members of the project {project.name} \
                     is low: {avg_happiness}.")
 
-            recommendation = Recommendation(
+            suggestion = Suggestion(
                 project=project,
                 name='Low average happiness',
                 description=description
             )
 
-            # Save recommendation to the database
-            recommendation.save()
-            # Record recommendation to the of generated recommendations
-            generated_recommendations.append(recommendation)
+            # Save suggestion to the database
+            suggestion.save()
+            # Record suggestion to the of generated suggestions
+            generated_suggestions.append(suggestion)
             happiness_low = True
 
         return happiness_low
@@ -141,16 +141,16 @@ class ProjectSuggester:  # evaluating project's pararameters to make suggestions
         if comment_count < line_count / 6:
             description = (f"You may want to consider adding more comments to the file {file_path} \
                     to make it more understandable.")
-            recommendation = Recommendation(
+            suggestion = Suggestion(
                 project=project,
                 name='Low average happiness',
                 description=description
             )
 
-            # Save recommendation to the database
-            recommendation.save()
-            # Record recommendation to the of generated recommendations
-            generated_recommendations.append(recommendation)
+            # Save suggestion to the database
+            suggestion.save()
+            # Record suggestion to the of generated suggestions
+            generated_suggestions.append(suggestion)
             low_comments = True
             
         return low_comments
@@ -183,16 +183,16 @@ class ProjectSuggester:  # evaluating project's pararameters to make suggestions
             description = (f"We suggest extending the deadline for the project {project.name} to \
                     complete the remaining taks.")
             
-            recommendation = Recommendation(
+            suggestion = Suggestion(
                 project=project,
                 name='Low average task completion rate',
                 description=description
             )
 
-            # Save recommendation to the database
-            recommendation.save()
-            # Record recommendation to the of generated recommendations
-            generated_recommendations.append(recommendation)
+            # Save suggestion to the database
+            suggestion.save()
+            # Record suggestion to the of generated suggestions
+            generated_suggestions.append(suggestion)
             low_completion_ratio = True
 
         return low_completion_ratio
@@ -212,16 +212,16 @@ class ProjectSuggester:  # evaluating project's pararameters to make suggestions
             description = (f"We suggest increasing the budget for the project {project.name} to \
                     complete the remaining taks.")
             
-            recommendation = Recommendation(
+            suggestion = Suggestion(
                 project=project,
                 name='Low budget',
                 description=description
             )
 
-            # Save recommendation to the database
-            recommendation.save()
-            # Record recommendation to the of generated recommendations
-            generated_recommendations.append(recommendation)
+            # Save suggestion to the database
+            suggestion.save()
+            # Record suggestion to the of generated suggestions
+            generated_suggestions.append(suggestion)
             low_budget = True
 
         return low_budget
