@@ -7,6 +7,7 @@ import HomeNavbar from "../components/HomeNavbar";
 import { FaUser } from 'react-icons/fa';
 import "./Homepage.css";
 import SkillChecklist from "../components/SkillChecklist";
+import { isAccordionItemSelected } from "react-bootstrap/esm/AccordionContext";
 
 
 const UserProfile = () => {
@@ -26,6 +27,7 @@ const UserProfile = () => {
 
   let [currentUser, setUser] = useState([]);
   let [skills, setSkills] = useState([]);
+  const [isError, setError] = useState(null);
 
   // Get slug parameter given when Project is referenced in router
   const { slug } = useParams();
@@ -126,6 +128,40 @@ const UserProfile = () => {
   })
   : "";
 
+  const onPassChange = (e) => {
+    let pass = e.target.value;
+    setPassword({...password, 
+            pass: e.target.value,
+          });
+    setError(null);
+    let caps, small, num, specialSymbol;
+    if (password.length < 4) {
+      setError(
+        "Password should contain minimum 4 characters, with one UPPERCASE, lowercase, number and special character: @$! % * ? &"
+      );
+      return;
+    } else {
+      caps = (password.match(/[A-Z]/g) || []).length;
+      small = (password.match(/[a-z]/g) || []).length;
+      num = (password.match(/[0-9]/g) || []).length;
+      specialSymbol = (password.match(/\W/g) || []).length;
+      if (caps < 1) {
+        setError("Must add one UPPERCASE letter");
+        return;
+      } else if (small < 1) {
+        setError("Must add one lowercase letter");
+        return;
+      } else if (num < 1) {
+        setError("Must add one number");
+        return;
+      } else if (specialSymbol < 1) {
+        setError("Must add one special symbol: @$! % * ? &");
+        return;
+      }
+    }
+  };
+
+
   // return classes based on whether item is checked
   var isChecked = (item) => 
   checked.includes(item) ? "checked-item" : "not-checked-item";
@@ -137,6 +173,7 @@ const UserProfile = () => {
 
   console.log(currentUser);
   console.log("skill",skills);
+  console.log(isError);
 
 
 
@@ -232,6 +269,19 @@ const UserProfile = () => {
     }
 
   }
+
+
+
+  function passwordConfirmation() {
+    var password = document.getElementById("password").value;
+    var confirmPassword = document.getElementById("password-confirmed").value;
+   
+    if (password == "") {
+        alert("Error: The password field is Empty.");
+    } else if (password != confirmPassword) {
+        alert("Please make sure your passwords match.")
+    }
+}
 
 
 
@@ -440,11 +490,14 @@ const UserProfile = () => {
                   className="skill-input-labels">
                   Update password:
                 </label>
+                {isError !== null && <p className="errors"> - {isError}</p>}
 
                 <input 
-                  className="skill-inputs" 
+                  className="skill-inputs"
+                  value={password} 
                   type="password"
-                  onChange={event=>setPassword(event.target.value)}
+                  id="password"
+                  onChange={event=>{onPassChange(event);setPassword(event.target.value)}}
                 />
             </div>
 
@@ -457,10 +510,11 @@ const UserProfile = () => {
                 <input 
                   className="skill-inputs" 
                   type="password"
+                  id= "password-confirmed"
                   onChange={event=>setPasswordVerified(event.target.value)}
                 />
             </div>
-            <button className="add-skill-btn">Update username.</button>
+            <button onClick={passwordConfirmation} className="add-skill-btn">Update Password</button>
 
       </div>
 

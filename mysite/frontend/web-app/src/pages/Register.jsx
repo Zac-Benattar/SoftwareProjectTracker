@@ -5,18 +5,80 @@ export const Register = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPass] = useState('');
     const [name, setName] = useState('');
+    const [confirm_password, setConfirmPass] = useState('');
+    const [isError, setError] = useState(null);
+
+    const onPassChange = (e) => {
+      let pass = e.target.value;
+      setPass({...password, 
+              pass: e.target.value,
+            });
+      setError(null);
+      let caps, small, num, specialSymbol;
+      if (password.length < 4) {
+        setError(
+          "Password should contain minimum 4 characters, with one UPPERCASE, lowercase, number and special character: @$! % * ? &"
+        );
+        return;
+      } else {
+        caps = (password.match(/[A-Z]/g) || []).length;
+        small = (password.match(/[a-z]/g) || []).length;
+        num = (password.match(/[0-9]/g) || []).length;
+        specialSymbol = (password.match(/\W/g) || []).length;
+        if (caps < 1) {
+          setError("Must add one UPPERCASE letter");
+          return;
+        } else if (small < 1) {
+          setError("Must add one lowercase letter");
+          return;
+        } else if (num < 1) {
+          setError("Must add one number");
+          return;
+        } else if (specialSymbol < 1) {
+          setError("Must add one special symbol: @$! % * ? &");
+          return;
+        }
+      }
+    };
+
+
+    const [isStrong, initRobustPassword] = useState(null);
+    const initPwdInput = async (childData) => {
+      initRobustPassword(childData);
+    };
+    const onSubmit = async (e) => {
+      try {
+        e.preventDefault();
+        e.persist();
+      } catch (error) {
+        throw error;
+      }
+    };
+
+
+
 
     const handleSubmit = (e) => {
-        
         // page gets reloaded and state gets lost
         e.preventDefault()
-
-        console.log(email);
     }
 
+    function passwordConfirmation() {
+      var password = document.getElementById("password").value;
+      var confirmPassword = document.getElementById("password-confirmed").value;
+     
+      if (password == "") {
+          alert("Error: The password field is Empty.");
+      } else if (password != confirmPassword) {
+          alert("Please make sure your passwords match.")
+      }
+    }
+
+
   return (
-    <div className="auth-form-container">
+    <div className="reg-auth-form-container">
       <form className="register-form" onSubmit={handleSubmit}>
+        <h2> Register here </h2>
         <label htmlfor="name">Full name:</label>
         <input
           value={name}
@@ -36,15 +98,33 @@ export const Register = (props) => {
           name="email"
         />
         <label htmlfor="password">Password:</label>
+        {isError !== null && <p className="errors"> - {isError}</p>}
         <input
           value={password}
-          onChange={(e) => setPass(e.target.value)}
+          onChange={(e) => {onPassChange(e);setPass(e.target.value);}}
           type="password"
           placeholder="********"
           id="password"
           name="password"
+          
         />
-        <button className="register-button" type="submit">
+        <label htmlfor="confirm-password">Password:</label>
+        <input
+          value={confirm_password}
+          onChange={(e) => setConfirmPass(e.target.value)}
+          type="password"
+          placeholder="********"
+          id="password-confirmed"
+          name="password"
+        />
+
+
+        {isStrong === "strong" && <button type="submit"> Register </button>}
+
+
+
+
+        <button onClick={passwordConfirmation} className="register-button" type="submit">
           Register
         </button>
       </form>
