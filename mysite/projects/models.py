@@ -30,7 +30,7 @@ class Project(models.Model):
     current_deadline = models.DateTimeField(default=get_in_week_datetime())
     methodology = models.CharField(max_length=30)
     gitHub = models.CharField(max_length=150, blank=True)
-    projectResult = models.CharField(max_length=1, null=True)
+    projectResult = models.CharField(max_length=1, blank=True, null=True)
 
     def __str__(self):
         '''Gets string representation of the project object
@@ -100,7 +100,7 @@ class Project(models.Model):
         '''
 
         week_before = timezone.now() - timezone.timedelta(days=7)
-        feedbacks = Feedback.objects.filter(project=self, date > week_before)
+        feedbacks = Feedback.objects.filter(project=self, date__gt=week_before)
         feedback_size = len(feedbacks)
         if feedback_size == 0:
             return 0
@@ -118,7 +118,7 @@ class Project(models.Model):
             decimal average of confidence happiness values
         '''
         week_before = timezone.now() - timezone.timedelta(days=7)
-        feedbacks = Feedback.objects.filter(project=self, date > week_before)
+        feedbacks = Feedback.objects.filter(project=self, date__gt=week_before)
         feedback_size = len(feedbacks)
         if feedback_size == 0:
             return 0
