@@ -1,7 +1,6 @@
 #converts python model objects to json inkedId
 from rest_framework.serializers import ModelSerializer
 from projects.models import * 
-from django.contrib.auth.hashers import make_password
 
 class ProjectSerializer(ModelSerializer):
     class Meta:
@@ -35,6 +34,12 @@ class SkillSerializer(ModelSerializer):
         model = Skill
         fields = '__all__'
 
+    def create(self, validated_data):
+        get_user = self.context['request'].user
+        skill = super().create(validated_data)
+        get_user.skillset.add(skill)
+        get_user.save()
+        return skill
 
 class MemberSerializer(ModelSerializer):
     class Meta:

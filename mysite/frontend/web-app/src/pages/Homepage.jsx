@@ -129,6 +129,25 @@ const Homepage = () => {
     }
   };
 
+  let createSkill = async () => {
+    let response = await fetch("http://127.0.0.1:8000/api/users/" + user.user_id + "/skills/",{
+      method : "POST",
+      headers: {
+        'Content-Type' : 'application/json',
+        Authorization: "Bearer " + String(authTokens.access),
+      },
+      body : JSON.stringify({
+        name: skill,
+        description : skillDescription,
+      })
+    });
+    
+    let data = await response.json();
+    if(response.status === 201) {
+      setSkill([...skill,data]);
+    }
+  };
+
   let createProject = async () => {
     let response = await fetch("http://127.0.0.1:8000/api/projects/", {
       method : "POST",
@@ -159,7 +178,6 @@ const Homepage = () => {
   }
 
   console.log("projects",projects);
-  
   console.log("membersList", membersList);
   console.log("roleslist", rolesList);
  
@@ -203,7 +221,7 @@ const Homepage = () => {
                 </div>
 
 
-                <button onClick = {createProject} className="add-skill-btn">Add skill</button>
+                <button onClick = {createSkill} className="add-skill-btn">Add skill</button>
 
 
 
