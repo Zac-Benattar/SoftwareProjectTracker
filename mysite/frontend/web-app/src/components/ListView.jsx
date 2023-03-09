@@ -25,13 +25,15 @@ import React from "react";
 
 function RenderingListofTasks({ tasks }) {
   const tableRows = tasks.map((task) => {
+    const startDate = new Date(task.start_date_unix * 1000)
+    const dateString = startDate.getHours() + ':' + startDate.getMinutes() + ' ' + startDate.getDate() + '/' + startDate.getMonth() + '/' + startDate.getFullYear()
     return (
       <tr key={task.id}>
         <td>{task.id}</td>
         <td>{task.name}</td>
         <td>{task.completion_status}</td>
         <td>{task.duration}</td>
-        <td>{task.startdate}</td>
+        <td>{dateString}</td>
       </tr>
     );
   });

@@ -289,22 +289,6 @@ class NoStatusTaskViewSet(viewsets.ModelViewSet):
         return self.queryset.filter(project=project, completion_status='N/A')
     
 
-class GanttTaskViewSet(viewsets.ModelViewSet):
-    queryset = Task.objects.all().select_related(
-        'project'
-    ).all()
-    serializer_class = TaskGanttSerializer
-    permission_classes = [IsOwnerOrCoWorker]
-
-    def get_queryset(self, *args, **kwargs):
-        project_id = self.kwargs.get("project_pk")
-        try:
-            project = Project.objects.get(id=project_id)
-        except Project.DoesNotExist:
-            raise NotFound('A project with this id does not exist')
-        return self.queryset.filter(project=project)
-
-
 class RiskEvaluationViewSet(viewsets.ModelViewSet):
     queryset = RiskEvaluation.objects.all().select_related(
         'project'

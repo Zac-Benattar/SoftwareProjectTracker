@@ -102,11 +102,6 @@ class FeedbackSerializer(ModelSerializer):
         fields = '__all__'
         
 class TaskSerializer(ModelSerializer):
-    class Meta:
-        model = Task
-        fields = '__all__'
-        
-class TaskGanttSerializer(ModelSerializer):
     creation_date_unix = IntegerField(source='creation_date_to_unix')
     start_date_unix = IntegerField(source='start_date_to_unix')    
     earliest_finish_date_unix = IntegerField(source='earliest_finish_date_to_unix')

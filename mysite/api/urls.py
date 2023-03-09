@@ -20,9 +20,6 @@ members_router.register( r'members', MemberViewSet, basename='project-members')
 tasks_router = routers.NestedDefaultRouter( router, r'projects', lookup = 'project')
 tasks_router.register( r'tasks', TaskViewSet, basename='project-tasks')
 
-gantt_tasks_router = routers.NestedDefaultRouter( router, r'projects', lookup = 'project')
-gantt_tasks_router.register( r'gantttasks', GanttTaskViewSet, basename='project-gantt-tasks')
-
 not_started_tasks_router = routers.NestedDefaultRouter( router, r'projects', lookup = 'project')
 not_started_tasks_router.register( r'notstartedtasks', NotStartedTaskViewSet, basename='project-tasks-not-started')
 
@@ -84,7 +81,6 @@ urlpatterns = [
     path('', include(members_router.urls)),
     path('', include(schedules_router.urls)),
     path('', include(tasks_router.urls)),
-    path('', include(gantt_tasks_router.urls)),
     path('', include(not_started_tasks_router.urls)),
     path('', include(started_tasks_router.urls)),
     path('', include(finished_tasks_router.urls)),
