@@ -158,7 +158,7 @@ const BoardView = () => {
   };
 
   return (
-    <div>
+    <div className="view-container">
       <div>
         <h2 className="board-title">Board View</h2>
         <table>

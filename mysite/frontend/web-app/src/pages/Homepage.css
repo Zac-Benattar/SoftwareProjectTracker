@@ -458,6 +458,18 @@ body {
     backdrop-filter: brightness(15%);
 }
 
+.edit-task-modal{
+  display: none; /* Hidden by default */
+    border: none;
+    z-index: 1; /* Sit on top */
+    top: 0;
+    width:100%;
+    height:100%;
+    /* Full height */
+    overflow: auto;/* Enable scroll if needed */
+    
+}
+
 
 .skillset-modal {
     background-color:  #9c00fd;
