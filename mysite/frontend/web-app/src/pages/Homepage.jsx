@@ -44,8 +44,6 @@ const Homepage = () => {
   
     const changeMember = (e,  index) => {
       const {name, value} = e.target; 
-      console.log(name);
-      console.log(value);
       const list = [...membersList];
       list[index][name]=value;
       setMembersList(list);
@@ -142,69 +140,63 @@ const Homepage = () => {
  
 
   return (
-    
-      <>
+    <>
+        <div id="add-project-modal" className="create-project-modal">
+        
 
-
-    <div id="add-project-modal" className="create-project-modal">
-
-    <div className="close"> &times; </div>
-           
               <div className="create-project-content">      
-              <h1>Create New Project</h1>
-              <div className="create-project-div">
-                  <div className="create-project-label">Project Name:</div>
-                  <div className="create-project-input">
-                    <input 
-                      className="input-bar"
-                      type="text"
-                      placeholder="Enter Project Name"
-                      onChange={event=>setProjectName(event.target.value)}
-                    />
+              <div className="close"> &times; </div>
+                    <h1>Create New Project</h1>
+                    <div className="create-project-div">
+                        <div className="create-project-label">Project Name:</div>
+                        <div className="create-project-input">
+                          <input 
+                            className="input-bar"
+                            type="text"
+                            placeholder="Enter Project Name"
+                            onChange={event=>setProjectName(event.target.value)}
+                          />
+                        </div>
+                    </div>
+                    <div className="create-project-div">
+                        <div className="create-project-label">Project Description:</div>
+                        <div className="create-project-input">
+                          <textarea 
+                              className="text-area-bar" 
+                              type="text"
+                              placeholder="Enter Description"
+                              onChange={event=>setProjectDescription(event.target.value)}
+                            />
+                        </div>
+                    </div>
+                  <div className="create-project-div">
+                      <div className="create-project-label">Project Methodology:</div>
+                      <div className="create-project-input">
+                      <textarea 
+                          className="text-area-bar" 
+                          type="text"
+                          placeholder="Enter Project Methodology"
+                          onChange={event=>setProjectDescription(event.target.value)}
+                        />
+                      </div>
                   </div>
-              </div>
-              <div className="create-project-div">
-                  <div className="create-project-label">Project Description:</div>
-                  <div className="create-project-input">
-                  <textarea 
-                      className="text-area-bar" 
-                      type="text"
-                      placeholder="Enter Description"
-                      onChange={event=>setProjectDescription(event.target.value)}
-                    />
+                <div className="create-project-div">
+                    <div className="create-project-label">Project Start Date:</div>
+                    <div className="create-project-input">
+                      <DateTimePicker
+                        onChange={(newValue) => setProjectStart(newValue)}
+                      />
+                    </div>
+                </div>
+                  <div className="create-project-div">
+                      <div className="create-project-label">Project Deadline:</div>
+                      <div className="create-project-input">
+                      <DateTimePicker
+                          
+                          onChange={(newValue) => setProjectDeadline(newValue)}
+                        />
+                      </div>
                   </div>
-              </div>
-              <div className="create-project-div">
-                  <div className="create-project-label">Project Description:</div>
-                  <div className="create-project-input">
-                  <textarea 
-                      className="text-area-bar" 
-                      type="text"
-                      placeholder="Enter Project Methodology"
-                      onChange={event=>setProjectDescription(event.target.value)}
-                    />
-                  </div>
-              </div>
-              <div className="create-project-div">
-                  <div className="create-project-label">Project Start Date:</div>
-                  <div className="create-project-input">
-                    <DateTimePicker
-                      className="input-date"
-                      onChange={(newValue) => setProjectStart(newValue)}
-                    />
-
-                     
-                  </div>
-              </div>
-              <div className="create-project-div">
-                  <div className="create-project-label">Project Deadline:</div>
-                  <div className="create-project-input">
-                  <DateTimePicker
-                      className="project-inputs" 
-                      onChange={(newValue) => setProjectDeadline(newValue)}
-                    />
-                  </div>
-              </div>
               <div className="create-project-div">
                   <div className="create-project-label">Project Budget:</div>
                   <div className="create-project-input">
@@ -216,20 +208,17 @@ const Homepage = () => {
                     />
                   </div>
               </div>
-              <div className="create-project-div">Add Member(s):</div>
-                <div className="input-div">
-                    <label 
-                      className="input-labels">
-                      
-                    </label>
+
+              <div className="create-project-div">
+                <div className="create-project-label">Add Member(s):</div>
 
                     {membersList.map((each_member, index) => (
                       
-                      <div key={index} className="getting_members">
+                      <div key={index} className="create-project-div">
 
                         <input 
                         // need to look at functionality again.
-                          className="project-inputs" 
+                          className="input-bar" 
                           type="text"
                          // value={each_member.member}
                           placeholder="Member Name"
@@ -242,7 +231,7 @@ const Homepage = () => {
                     
                         <input 
                           //doesn't save role to a varirable yet.
-                          className="project-inputs"
+                          className="input-bar"
                           type="text"
                           placeholder="Member Role"
                           name="role"
@@ -251,9 +240,10 @@ const Homepage = () => {
                           onChange={(e) => (changeRole(e,index))}
 
                         />
+                    
 
 
-                        <div className="project-inputs">
+                        <div className="create-project-div">
                           {membersList.length - 1 === index && 
                           (
                             <button 
@@ -273,26 +263,24 @@ const Homepage = () => {
                             
 
                         </div>
-
-                        
-
-
-
                       </div>
 
-                    
-
+                  
                     ))}
-
+                  </div>
                     <span>
                       <button onClick = {createProject} className="create-project-btn">Create Project</button>
                     </span>
-                   
-                </div>
 
-              </div>
 
-      </div>  
+            </div>
+          </div>
+
+                  
+
+        
+            
+
   
           <div className="home-page">
 
@@ -319,10 +307,11 @@ const Homepage = () => {
                 
               </div>
             </div>
-     
-      </>     
-   
+
+
+  
+</>
   );
-}
+};
 
 export default Homepage;

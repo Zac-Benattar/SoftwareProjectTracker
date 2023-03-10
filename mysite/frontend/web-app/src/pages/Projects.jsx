@@ -17,11 +17,17 @@ const Projects = () => {
 
   // list to store members in a project
   const [membersList, setMembersList] = useState([{ member: "" }]);
-
+  const [rolesList, setRolesList] = useState([{role: ""}]); 
   console.log(membersList);
+
+
   const addMember = () => {
     setMembersList([...membersList, { member: "" }]);
   };
+
+  const editMemberRole = () => {
+    setRolesList([...rolesList, {role:""}]);
+  }
 
   const removeMember = (index) => {
     const list = [...membersList];
@@ -29,12 +35,29 @@ const Projects = () => {
     setMembersList(list);
   };
 
+  const removeRole = (index) => {
+    const list = [...rolesList];
+    list.splice(index, 1);
+    setRolesList(list);
+  }
+
   const changeMember = (e, index) => {
     const { name, value } = e.target;
     const list = [...membersList];
     list[index][name] = value;
     setMembersList(list);
   };
+
+  const changeRole = (e, index) => {
+    const {name} = e.target;
+    var value = e.target.value;
+    
+    console.log("rolename", name);
+    console.log("role value", value);
+    const list = [...rolesList];
+    list[index]=value;
+    setRolesList(list);
+  }
 
   // Deconstructing the relevent sections from AuthContext
   let { authTokens, logoutUser, user } = useContext(AuthContext);
@@ -202,75 +225,82 @@ const Projects = () => {
 
   return (
     <>
-      <div id="add-project-modal" className="modal">
+      <div id="add-project-modal" className="edit-modal">
+        
+
+        <div className="edit-modal-content">
         <div className="close"> &times; </div>
-
-        <div className="modal-content">
           <h1>Edit this project: </h1>
-          <div className="input-div">
-            <label className="input-labels">Edit Project Name:</label>
-
-            <input
-              className="project-inputs"
-              type="text"
-              placeholder="project-name"
-              defaultValue={project.name}
-              onChange={(event) => setProjectName(event.target.value)}
-            />
+          <div className="edit-project-div">
+            <div className="edit-project-label">
+              Edit Project Name:
+            </div>
+            <div className="edit-project-div">
+              <input
+                className="input-bar"
+                type="text"
+                placeholder="project-name"
+                defaultValue={project.name}
+                onChange={(event) => setProjectName(event.target.value)}
+              />
+            </div>
           </div>
 
-          <div className="input-div">
-            <label className="input-labels">Edit Project Description:</label>
-
+          <div className="edit-project-div">
+            <div className="edit-project-label">Edit Project Description:</div>
+            <div className="edit-project-div">
             <textarea
-              className="project-inputs"
+              className="text-area-bar" 
               type="text"
               placeholder="Enter Description"
               defaultValue={project.description}
               onChange={(event) => setProjectDescription(event.target.value)}
             />
+            </div>
           </div>
 
-          <div className="input-div">
-            <label className="input-labels">Edit Project Start Date:</label>
-
+          <div className="edit-project-div">
+          <div className="edit-project-label">Edit Project Start Date:</div>
+          <div className="edit-project-div">
             <DateTimePicker
-              className="project-inputs"
               defaultValue={project.start_date}
               onChange={(newValue) => setProjectStart(newValue)}
             />
+            </div>
           </div>
 
-          <div className="input-div">
-            <label className="input-labels">Edit Project Deadline:</label>
-
+          <div className="edit-project-div">
+          <div className="edit-project-label">Edit Project Deadline:</div>
+          <div className="edit-project-div">
             <DateTimePicker
-              className="project-inputs"
               defaultValue={project.current_deadline}
               onChange={(newValue) => setProjectNewDeadline(newValue)}
             />
+            </div>
           </div>
 
-          <div className="input-div">
-            <label className="input-labels">Edit Project Budget:</label>
-
+          <div className="edit-project-div">
+        
+          <div className="edit-project-label">Edit Project Budget:</div>
+            <div className="edit-project-div">
             <input
-              className="project-inputs"
+              className="input-bar"
               type="number"
               placeholder="£"
               defaultValue={project.current_budget}
               onChange={(event) => setProjectNewBudget(event.target.value)}
             />
+            </div>
           </div>
 
-          <div className="input-div">
-            <label className="input-labels">Add Member(s):</label>
+          <div className="edit-project-div">
+          <div className="edit-project-label">Add Member(s):</div>
 
             {membersList.map((each_member, index) => (
-              <div key={index} className="members">
+              <div key={index} className="edit-project-div">
                 <input
                   // need to look at functionality again.
-                  className="project-inputs"
+                  className="input-bar"
                   type="text"
                   // value={each_member.member}
                   placeholder="Member Name"
@@ -279,25 +309,32 @@ const Projects = () => {
 
                 <input
                   //doesn't save role to a varirable yet.
-                  className="project-inputs"
+                  className="input-bar"
                   type="text"
                   placeholder="Member Role"
                   //onChange={(e)=>addMember(e, index)}
                 />
 
-                <div className="project-inputs">
-                  {membersList.length - 1 === index && (
-                    <button className="member-button" onClick={addMember}>
+                <div className="edit-project-div">
+                  {membersList.length - 1 === index &&
+                  (
+                    <button 
+                      className="member-button" 
+                      onClick={(event)=>{addMember();editMemberRole();}}>
                       <span> Add a member </span>
                     </button>
                   )}
 
-                  <button
-                    className="member-button"
-                    onClick={() => removeMember(index)}
-                  >
-                    <span> Remove Member </span>
-                  </button>
+                  {membersList.length > 1 && (
+
+                    <button
+                      className="member-button"
+                      onClick={(event) => {removeMember(index);removeRole(index);}}>
+                      <span> Remove Member </span>
+                    </button>
+                  )}
+
+
                 </div>
               </div>
             ))}

@@ -237,17 +237,17 @@ const UserProfile = () => {
   };
 
 
-  const closeModal = () => {
-    var modal = document.getElementById("skillset-modal");   
-    var btn = document.getElementsByClassName("add-skill-btn");
+  // const closeModal = () => {
+  //   var modal = document.getElementById("skillset-modal");   
+  //   var btn = document.getElementsByClassName("add-skill-btn");
 
-    modal.style.display = "block";
-    btn.onclick = function() {
-      modal.style.display = "none";
-    }
+  //   modal.style.display = "block";
+  //   btn.onclick = function() {
+  //     modal.style.display = "none";
+  //   }
 
   
-  }
+  // }
 
   // Gets checked elements of a checklist.
   let [checked, setChecked] = useState([]);

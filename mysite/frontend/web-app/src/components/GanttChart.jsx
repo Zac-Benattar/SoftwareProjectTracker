@@ -41,7 +41,7 @@ const GanttChart = ({ tasks }) => {
   });
 
   const columns = [
-    { type: "string", label: "Task ID" },
+    { type: "number", label: "Task ID" },
     { type: "string", label: "Task Name" },
     { type: "date", label: "Start Date" },
     { type: "date", label: "End Date" },
@@ -122,7 +122,7 @@ const GanttChart = ({ tasks }) => {
         height={"410px"}
         chartType="Gantt"
         loader={<div>Loading Chart</div>}
-        data={ganttChartExampleData}
+        data={data}
         rootProps={{ "data-testid": "1" }}
       />
     </div>
