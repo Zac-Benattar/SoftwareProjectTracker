@@ -485,7 +485,7 @@ class SuggestionViewSet(viewsets.ModelViewSet):
             project = Project.objects.get(id=project_id)
         except Project.DoesNotExist:
             raise NotFound('A project with this id does not exist')
-        return self.queryset.filter(project=project, dissmissed=False)
+        return self.queryset.filter(project=project, dismissed=False)
 
 
 class SuggestionsGeneratorViewSet(viewsets.ModelViewSet):
