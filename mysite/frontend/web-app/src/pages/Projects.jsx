@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useContext } from "react";
 import DateTimePicker from "react-datetime-picker";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import SuccessChanceDisplay from "../components/SuccessChanceDisplay";
 import AuthContext from "../context/AuthContext";
 import "./Homepage.css";
 import { FaTrash } from "react-icons/fa";
-import DateStringifier from "../utils/DateStringifier";
+import UnixDateStringifier from "../utils/DateStringifier";
 
 const Projects = () => {
   const [projectName, setProjectName] = useState("");
@@ -216,7 +216,6 @@ const Projects = () => {
     // If the response is good - set the state of projects to be the result of the GET request
     if (response.status === 200) {
       setSuggestions(data);
-      console.log(suggestions);
       // If the respose is unauthorised, log out the user using the imported AuthContext method
     } else if (response.statusText === "Unauthorized") {
       logoutUser();
@@ -381,7 +380,7 @@ const Projects = () => {
               <br />
               <br />
               <h3 className="des-title"> Project deadine: </h3>
-              <p className="des"> {DateStringifier.getFullDateFromUNIXTimestampSeconds(project.current_deadline_unix)}</p>
+              <p className="des"> {UnixDateStringifier.getFullDate(project.current_deadline_unix)}</p>
             </div>
 
             <div className="project-buttons">

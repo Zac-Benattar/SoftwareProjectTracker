@@ -1,5 +1,5 @@
 import React from "react";
-import DateStringifier from "../utils/DateStringifier";
+import UnixDateStringifier from "../utils/DateStringifier";
 // import "../pages/Homepage.css";
 
 export const SuccessChanceDisplay = ({ risk_evaluation, suggestions }) => {
@@ -10,7 +10,7 @@ export const SuccessChanceDisplay = ({ risk_evaluation, suggestions }) => {
       <div className="project-risk-score">
         <p className="risk-percentage">
           This project has a {risk_evaluation.success_chance}% chance of success
-          as of {DateStringifier.getTimeFromUNIXTimestampSeconds(risk_evaluation.date_unix)}
+          as of {UnixDateStringifier.getTime(risk_evaluation.date_unix)}
         </p>
       </div>
 

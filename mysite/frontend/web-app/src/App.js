@@ -7,7 +7,7 @@ import Projects from "./pages/Projects";
 import PeopleView from "./pages/PeopleView";
 import SuggestionsForm from "./pages/Suggestions";
 import Tasks from "./pages/Tasks";
-import MeetingsForm from "./components/MeetingView";
+import MeetingsForm from "./pages/MeetingView";
 import UserProfile from "./pages/UserProfile";
 import { AuthProvider } from "./context/AuthContext";
 import { BrowserRouter, Route, Routes } from "react-router-dom";

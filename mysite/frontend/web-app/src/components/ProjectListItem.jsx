@@ -3,7 +3,7 @@ import ProgressBar from "./ProgressBar";
 import "../pages/Homepage.css";
 import { Link } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
-import DateStringifier from "../utils/DateStringifier";
+import UnixDateStringifier from "../utils/DateStringifier";
 
 const ProjectListItem = ({ project }) => {
   const projectRoute = "/projects/".concat(project.id);
@@ -26,7 +26,7 @@ const ProjectListItem = ({ project }) => {
             <br />
             <br />
             <h3>Current Deadline:</h3>
-            <p> {DateStringifier.getFullDateFromUNIXTimestampSeconds(project.current_deadline_unix)}</p>
+            <p> {UnixDateStringifier.getFullDate(project.current_deadline_unix)}</p>
             <br />
             <br />
             <h3>Methodology: </h3>
