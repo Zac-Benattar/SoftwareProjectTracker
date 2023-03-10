@@ -90,12 +90,15 @@ class ProjectsViewSet(viewsets.ModelViewSet):
         Returns:
             list(projects)
         '''
-        user = get_object_or_404(CustomUser, username=self.request.user)
-        members = Member.objects.filter(user=user)
-        queryset = Project.objects.all()
+        user_object = get_object_or_404(CustomUser, username=self.request.user)
+        members = get_list_or_404(Member, user=user_object)
+        queryset = None
+        
+        ids = list()
         for m in members:
-            queryset.union(Project.objects.filter(id=m.project.id))
-
+            ids.append(m.project.id)
+        queryset = Project.objects.filter(id__in=ids)
+        
         return queryset
 
 
