@@ -175,6 +175,17 @@ const Homepage = () => {
                   </div>
               </div>
               <div className="create-project-div">
+                  <div className="create-project-label">Project Description:</div>
+                  <div className="create-project-input">
+                  <textarea 
+                      className="text-area-bar" 
+                      type="text"
+                      placeholder="Enter Project Methodology"
+                      onChange={event=>setProjectDescription(event.target.value)}
+                    />
+                  </div>
+              </div>
+              <div className="create-project-div">
                   <div className="create-project-label">Project Start Date:</div>
                   <div className="create-project-input">
                     <DateTimePicker
