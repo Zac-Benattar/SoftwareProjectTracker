@@ -3,47 +3,10 @@ import ProgressBar from "./ProgressBar";
 import "../pages/Homepage.css";
 import { Link } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
+import DateStringifier from "../utils/DateStringifier";
 
 export const ProjectListItem = ({ project }) => {
   const projectRoute = "/projects/".concat(project.id);
-
-  // Turning unix timestamp into a nicely formatted string
-  const currentDeadlineDate = new Date(project.current_deadline_unix * 1000);
-  var currentDeadlineString = "";
-
-  // If number of hours in the date is zero, append another zero to the end to get e.g. 00:30 rather than 0:30
-  if (currentDeadlineDate.getUTCHours() === 0) {
-    currentDeadlineString += currentDeadlineDate.getUTCHours() + "0";
-  } else if (
-    currentDeadlineDate.getUTCHours() > 0 &&
-    currentDeadlineDate.getUTCHours() < 10
-  ) {
-    currentDeadlineString += "0" + currentDeadlineDate.getUTCHours();
-  } else {
-    currentDeadlineString += currentDeadlineDate.getUTCHours();
-  }
-
-  currentDeadlineString += ":";
-
-  // If number of minutes in the date is zero, append another zero to the end to get e.g. 12:00 rather than 12:0
-  if (currentDeadlineDate.getUTCMinutes() === 0) {
-    currentDeadlineString += currentDeadlineDate.getUTCMinutes() + "0 ";
-  } else if (
-    currentDeadlineDate.getUTCMinutes() > 0 &&
-    currentDeadlineDate.getUTCMinutes() < 10
-  ) {
-    currentDeadlineString += "0" + currentDeadlineDate.getUTCMinutes();
-  } else {
-    currentDeadlineString += currentDeadlineDate.getUTCMinutes();
-  }
-
-  currentDeadlineString +=
-    " " +
-    currentDeadlineDate.getUTCDate() +
-    "/" +
-    currentDeadlineDate.getUTCMonth() +
-    "/" +
-    currentDeadlineDate.getUTCFullYear();
 
   return (
     <Link to={projectRoute}>
@@ -63,7 +26,7 @@ export const ProjectListItem = ({ project }) => {
             <br />
             <br />
             <h3>Current Deadline:</h3>
-            <p> {currentDeadlineString}</p>
+            <p> {DateStringifier.getFullDateFromUNIXTimestampSeconds(project.current_deadline_unix)}</p>
             <br />
             <br />
             <h3>Methodology: </h3>
