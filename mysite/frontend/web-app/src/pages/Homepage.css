@@ -147,28 +147,33 @@ body {
     margin-left: 10%;
 }
 
-.home-page-menu{
+.home-page-menu, .task-page-menu{
     width: 100%;
-    display: block;
     margin-top: 60px;
-    text-align: left;
 }
 
-
+.home-page-menu{
+  text-align: left;
+  display: block;
+}
 
 .home-page-menu>button{
+  left:0;
+  margin-left: 3%;
+}
+
+.home-page-menu>button , .task-page-menu>button{
     padding: 20px;
     border-radius: 10px;
     border: none;
     background-color: white;
     color:#9c00fd;
     cursor: pointer;
-    left:0;
     display: inline-block;
-    margin-left: 3%;
     width:10%;
 }
-.home-page-menu>button:hover{
+.home-page-menu>button:hover,
+.task.page.menu>button:hover{
     opacity: 70%;
 }
 .all_projects{
@@ -330,7 +335,7 @@ body {
 }
 
 
-.proj-button, .create-project-btn, .member-button {
+.proj-button, .create-project-btn, .member-button, .task-button {
     border-radius: 8px;
     background-image: linear-gradient(to right, rgb(65, 206, 245) 50%, rgb(65, 206, 245) 50%, #9c00fd);
     background-size: 200%;
@@ -341,6 +346,15 @@ body {
     cursor: pointer;
     border: none;
   }
+
+  .task-button{
+    width:30%;
+    float:right;
+    margin-bottom: 3%;
+  }
+
+
+
 
   .add-skill-btn {
     border-radius: 8px;
@@ -385,7 +399,8 @@ body {
   .proj-button:hover, 
   .create-project-btn:hover,
   .member-button:hover,
-  .add-skill-btn:hover{
+  .add-skill-btn:hover,
+  .task-button:hover{
   background-position: 0%;
 }
 
@@ -456,18 +471,6 @@ body {
 }
 
 
-/* Modal Content/Box */
-/* .modal-content {
-    background-color:  rgb(247, 247, 247);
-    background-position: center;
-    background-size: cover;
-    margin-top: 60px;
-    width: 80%;
-    margin-left:10%; /* 15% from the top and centered */
-    /* padding: 3%;
-    border-radius: 20px;
-    color: black;
-  } */ 
   .create-project-content, .edit-modal-content {
     background-image: linear-gradient(to right, rgb(255, 255, 255) 0%, rgb(233, 233, 233) 50%, rgb(209, 209, 209));
     box-shadow: rgba(255, 255, 255, 0.35) 0px 5px 60px;

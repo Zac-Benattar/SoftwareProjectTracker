@@ -21,7 +21,20 @@ const TasksForm = () => {
     isOpen: false,
   });
 
-  const openModal = () => setmodalstate({ isOpen: true });
+  const openModal = () => {
+        var modal = document.getElementById("add-project-modal");
+        var span = document.getElementsByClassName("close")[0];
+        modal.style.display = "block";
+        span.onclick = function() {
+          modal.style.display = "none";
+        }
+        window.onclick = function(event) {
+          if (event.target === modal) {
+            modal.style.display = "none";
+          }
+        }
+    
+  };
   const closeModal = () => setmodalstate({ isOpen: false });
 
   const viewoptions = ["Gantt Chart", "List View", "Board View"];
@@ -97,23 +110,6 @@ const TasksForm = () => {
   };
 
 
-
-
-  
-
-  // const [checked, setChecked] = useState([]);
-
-  // const handleMemberCheck = (event, checked, setChecked) => {
-  //   var updatedList = [...checked];
-  //   if (event.target.checked) {
-  //     updatedList = [...checked, event.target.value];
-  //   } else {
-  //     updatedList.splice(checked.indexOf(event.target.value), 1);
-  //   }
-  //   setChecked(updatedList);
-  // };
-
-
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -124,31 +120,6 @@ const TasksForm = () => {
     e.preventDefault();
   };
 
-
-  //  // Add or remove checked item from list.
-  //  const handleTaskCheck = (event) => {
-  //      var updatedList = [...checkedTasks];
-  //      if (event.target.checkedTasks) {
-  //        updatedList = [...checkedTasks, event.target.value];
-  //      } else {
-  //        updatedList.splice(checkedTasks.indexOf(event.target.value), 1);
-  //      }
-  //      setCheckedTasks(updatedList);
-  //  };
-
-  //  const checkedItems = checkedTasks.length 
-  //      ? checkedTasks.reduce((total, item) => {
-  //          return total + ',' + item;
-  //  })
-  //  : "";
-
-  //  // return classes based on whether item is checked
-  //  var isChecked = (item) => 
-  //  checkedTasks.includes(item) ? "checked-item" : "not-checked-item";
-
-
-
-   
   // Gets checked elements of a checklist.
   let [checkedTasks, setChecked] = useState([]);
 
@@ -198,73 +169,68 @@ const TasksForm = () => {
             </div>
 
 
-            
-            <button onClick={openModal}> Add Task </button>
-            <div className="modal_container">
-              <Modal show={modalstate.isOpen} className="addTask_container">
-                <button onClick={closeModal}>Close</button>
+            <div className="task-page-menu">
+                
+                    <button  
+                      className= "add-proj-btn" 
+                      onClick={openModal} 
+                      > 
+                      Add New Task
+                    </button>
+            </div>
 
+          
+
+            <div id="add-project-modal" className="create-project-modal">
+              
+              <div className="create-project-content">
+                <div className="close" onClick={closeModal}>&times;</div>
+                <h1>Add New task</h1>
                 <form onSubmit={handleSubmit}>
-                  <div className="addTaskField_container">
-                    <label> Task name:</label>
-                    <input
+                  <div className="create-project-div">
+                  <div className="create-project-label">Task Name:</div>
+                  <div className="create-project-input"><input
+                      className="input-bar"
                       type="text"
                       name="taskname"
                       value={inputs.taskname || ""}
                       onChange={handleChange}
-                    />
+                    /></div>
                   </div>
-                  <br />
-                  <div className="addTaskField_container">
-                    <label> Task description:</label>
-                    <input
+                  <div className="create-project-div">
+                  <div className="create-project-label">Task Description</div>
+                  <div className="create-project-input">  <input
+                      className="input-bar"
                       type="text"
                       name="taskdescription"
                       value={inputs.taskdescription || ""}
                       onChange={handleChange}
-                    />
+                    /></div>
                   </div>
-                  <br />
-                  <div className="addTaskField_container">
-                    <label> Task name:</label>
-                    <input
+                  <div className="create-project-div">
+                  <div className="create-project-label">Task date:</div>
+                  <div className="create-project-input"> <input
+                      className="input-bar"
                       type="date"
                       name="startdate"
                       value={inputs.startdate || ""}
                       onChange={handleChange}
-                    />
+                    /></div> 
                   </div>
-                  <div className="addTaskField_container">
-                    <label> Duration:</label>
-                    <input
+                  <div className="create-project-div">
+                  <div className="create-project-label">Duration:</div>
+                  <div className="create-project-input"><input
+                      className="input-bar"
                       type="text"
                       name="duration"
                       value={inputs.duration || ""}
                       onChange={handleChange}
-                    />
+                    /></div>
                   </div>
-                  <br />
-                  <div className="addTaskField_container">
-
+                
+                  <div className="create-project-div">
                     <div className="checkList">
-
-                      <label>Add team members:</label>
-
-                      <div className="list-container">
-                        {members.map((item, index) => (
-                          
-                          <MembersChecklist member={item} index={index}/>
-                         ))}
-
-                      </div>
-
-                    </div>
-
-                  </div>
-                  <br />
-                  <div className="addTaskField_container">
-                    <div className="checkList">
-                      <label>Add dependencies:</label>
+                    <div className="create-project-label">Pick task dependencies:</div>
                       <div className="checkList">
                       
                         {tasks.map((task, index) => (
@@ -285,11 +251,15 @@ const TasksForm = () => {
                      
                       </div>
                     </div>
+                    <button type="submit" className="task-button">Add Task</button>
                   </div>
-                  <button type="submit">Add Task</button>
+                  
                 </form>
-              </Modal>
-            </div>
+              </div>
+              </div>
+               
+            
+                       
           </div>
           <div className="view-container">
             <View />

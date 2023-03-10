@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ListView.css";
+import { FaEdit } from "react-icons/fa";
 //append array of tasks to ganttChartData const
 
 //ganttChartData const stores array of task arrays
@@ -23,26 +24,144 @@ import "./ListView.css";
 //dependencies in the depencies string are separated by a comma only (no spaces)
 //format of depencies string --> 'dependency1taskid,dpendency2taskid'
 
-function RenderingListofTasks({ tasks }) {
-  const tableRows = tasks.map((task) => {
-    const startDate = new Date(task.start_date_unix * 1000)
-    const dateString = startDate.getHours() + ':' + startDate.getMinutes() + ' ' + startDate.getDate() + '/' + startDate.getMonth() + '/' + startDate.getFullYear()
-    return (
-      <tr key={task.id}>
-        <td>{task.id}</td>
-        <td>{task.name}</td>
-        <td>{task.completion_status}</td>
-        <td>{task.duration}</td>
-        <td>{dateString}</td>
-      </tr>
-    );
-  });
-  return <tbody>{tableRows}</tbody>;
-}
-
 const ListView = ({ tasks }) => {
+      const [modalstate, setmodalstate] = useState({
+        isOpen: false,
+      });
+
+      const openModal = () => {
+          var modal = document.getElementById("add-project-modal");
+          var span = document.getElementsByClassName("close")[0];
+          modal.style.display = "block";
+          span.onclick = function() {
+            modal.style.display = "none";
+          }
+          window.onclick = function(event) {
+            if (event.target === modal) {
+              modal.style.display = "none";
+            }
+          }
+
+      };
+
+      const tableRows = tasks.map((task) => {
+        const startDate = new Date(task.start_date_unix * 1000)
+        const dateString = startDate.getHours() + ':' + startDate.getMinutes() + ' ' + startDate.getDate() + '/' + startDate.getMonth() + '/' + startDate.getFullYear()
+        return (
+          <tr key={task.id}>
+            <td>{task.id}</td>
+            <td>{task.name}</td>
+            <td>{task.completion_status}</td>
+            <td>{task.duration}</td>
+            <td>{dateString}</td>
+            <td><i className="edit-task-icon" onClick={openModal}><FaEdit/></i></td>
+          </tr>
+        );
+      });
+
+      let [name, getName] = useState("");
+      let [completionStatus, getCompletionStatus] = useState([]);
+      let [duration, getDuration] = useState("");
+      let [description, getDescription] = useState("");
+
+      
+      // Gets checked elements of a checklist.
+      let [checkedTasks, setChecked] = useState([]);
+
+      // Add or remove checked item from list.
+      const handleCheck = (event) => {
+          var updatedList = [...checkedTasks];
+          var id = event.target.value;
+          if (event.target.checked) {
+            updatedList = [...checkedTasks, event.target.value];
+          } else {
+            updatedList.splice(checkedTasks.indexOf(id), 1);
+          }
+          setChecked(updatedList);
+      };
+
+      
+      // return classes based on whether item is checked
+      var isChecked = (item) => 
+      checkedTasks.includes(item) ? "checked-item" : "not-checked-item";
+      
+
+
+    const closeModal = () => setmodalstate({ isOpen: false });
+
+
   return (
-    
+
+    <>
+
+        <div id="add-project-modal" className="create-project-modal">
+              
+              <div className="create-project-content">
+                <div className="close" onClick={closeModal}>&times;</div>
+                <h1>Add New task</h1>
+                <form>
+                  <div className="create-project-div">
+                  <div className="create-project-label">Edit task name:</div>
+                  <div className="create-project-input"><input
+                      className="input-bar"
+                      type="text"
+                      name="taskname"
+                      
+                      onChange={(event)=>getName(event.target.value)}
+                    /></div>
+                  </div>
+                  <div className="create-project-div">
+                  <div className="create-project-label">Task Description</div>
+                  <div className="create-project-input">  <input
+                      className="input-bar"
+                      type="text"
+                      name="taskdescription"
+                      
+                      onChange={(event)=>getDescription(event.target.value)}
+                    /></div>
+                  </div>
+                 
+                  <div className="create-project-div">
+                  <div className="create-project-label">Duration:</div>
+                  <div className="create-project-input"><input
+                      className="input-bar"
+                      type="text"
+                      name="duration"
+                     
+                      onChange={(event)=>getDuration(event.target.value)}
+                    /></div>
+                  </div>
+                
+                  <div className="create-project-div">
+                    <div className="checkList">
+                    <div className="create-project-label">Pick task dependencies:</div>
+                      <div className="checkList">
+                      
+                        {tasks.map((task, index) => (
+                          <div key={index}>
+
+
+                            <input
+                            type="checkbox"
+                            value={task.name}
+                            onChange={handleCheck}
+                            />
+
+                            <span className={isChecked(task.name)}>{task.name}</span>
+                          </div>
+                          
+                         ))}
+
+                     
+                      </div>
+                    </div>
+                    <button type="submit" className="task-button">Edit Task</button>
+                  </div>
+                  
+                </form>
+              </div>
+            </div>
+      
       <div className="listview-container">
         <h2 className="title-list">List View</h2>
         <table className="list-table">
@@ -53,13 +172,19 @@ const ListView = ({ tasks }) => {
               <th className="table-title"> Completion status</th>
               <th className="table-title"> Duration </th>
               <th className="table-title"> Startdate </th>
+              <th className="table-title"> Edit Task </th>
             </tr>
           </thead>
-          <RenderingListofTasks tasks={tasks} />
+          
+        <tbody>{tableRows}</tbody>
         </table>
       </div>
+
+
+    </>
     
   );
 };
+
 
 export default ListView;
