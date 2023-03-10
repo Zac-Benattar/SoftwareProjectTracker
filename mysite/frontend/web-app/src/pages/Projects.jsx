@@ -221,7 +221,7 @@ const Projects = () => {
   };
 
   console.log("memebrs",membersList);
-  console.log("roles", rolesList);s
+  console.log("roles", rolesList);
 
   return (
     <>
