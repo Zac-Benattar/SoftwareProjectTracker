@@ -17,17 +17,16 @@ const Projects = () => {
 
   // list to store members in a project
   const [membersList, setMembersList] = useState([{ member: "" }]);
-  const [rolesList, setRolesList] = useState([{role: ""}]); 
+  const [rolesList, setRolesList] = useState([{ role: "" }]);
   console.log(membersList);
-
 
   const addMember = () => {
     setMembersList([...membersList, { member: "" }]);
   };
 
   const editMemberRole = () => {
-    setRolesList([...rolesList, {role:""}]);
-  }
+    setRolesList([...rolesList, { role: "" }]);
+  };
 
   const removeMember = (index) => {
     const list = [...membersList];
@@ -39,7 +38,7 @@ const Projects = () => {
     const list = [...rolesList];
     list.splice(index, 1);
     setRolesList(list);
-  }
+  };
 
   const changeMember = (e, index) => {
     const { name, value } = e.target;
@@ -49,15 +48,15 @@ const Projects = () => {
   };
 
   const changeRole = (e, index) => {
-    const {name} = e.target;
+    const { name } = e.target;
     var value = e.target.value;
-    
+
     console.log("rolename", name);
     console.log("role value", value);
     const list = [...rolesList];
-    list[index]=value;
+    list[index] = value;
     setRolesList(list);
-  }
+  };
 
   // Deconstructing the relevent sections from AuthContext
   let { authTokens, logoutUser, user } = useContext(AuthContext);
@@ -147,15 +146,12 @@ const Projects = () => {
         },
       }
     );
-    if ( response.status === 205) {
+    if (response.status === 205) {
       alert("Project Deleted!");
-    }
-    else {
+    } else {
       alert("Project deletion is only allowed for project managers");
     }
-    
   };
- 
 
   // Obtaining the specific project's most recent risk evaulation via a GET request to the api referencing our authorisation token
   let getRiskEvaluation = async (e) => {
@@ -216,25 +212,59 @@ const Projects = () => {
     // If the response is good - set the state of projects to be the result of the GET request
     if (response.status === 200) {
       setSuggestions(data);
-      console.log(suggestions)
+      console.log(suggestions);
       // If the respose is unauthorised, log out the user using the imported AuthContext method
     } else if (response.statusText === "Unauthorized") {
       logoutUser();
     }
   };
 
+  // Turning unix timestamp into a nicely formatted string
+  const currentDeadlineDate = new Date(project.current_deadline_unix * 1000);
+  var currentDeadlineString = "";
+
+  // If number of hours in the date is zero, append another zero to the end to get e.g. 00:30 rather than 0:30
+  if (currentDeadlineDate.getUTCHours() === 0) {
+    currentDeadlineString += currentDeadlineDate.getUTCHours() + "0";
+  } else if (
+    currentDeadlineDate.getUTCHours() > 0 &&
+    currentDeadlineDate.getUTCHours() < 10
+  ) {
+    currentDeadlineString += "0" + currentDeadlineDate.getUTCHours();
+  } else {
+    currentDeadlineString += currentDeadlineDate.getUTCHours();
+  }
+
+  currentDeadlineString += ":";
+
+  // If number of minutes in the date is zero, append another zero to the end to get e.g. 12:00 rather than 12:0
+  if (currentDeadlineDate.getUTCMinutes() === 0) {
+    currentDeadlineString += currentDeadlineDate.getUTCMinutes() + "0 ";
+  } else if (
+    currentDeadlineDate.getUTCMinutes() > 0 &&
+    currentDeadlineDate.getUTCMinutes() < 10
+  ) {
+    currentDeadlineString += "0" + currentDeadlineDate.getUTCMinutes();
+  } else {
+    currentDeadlineString += currentDeadlineDate.getUTCMinutes();
+  }
+
+  currentDeadlineString +=
+    " " +
+    currentDeadlineDate.getUTCDate() +
+    "/" +
+    currentDeadlineDate.getUTCMonth() +
+    "/" +
+    currentDeadlineDate.getUTCFullYear();
+
   return (
     <>
       <div id="add-project-modal" className="edit-modal">
-        
-
         <div className="edit-modal-content">
-        <div className="close"> &times; </div>
+          <div className="close"> &times; </div>
           <h1>Edit this project: </h1>
           <div className="edit-project-div">
-            <div className="edit-project-label">
-              Edit Project Name:
-            </div>
+            <div className="edit-project-label">Edit Project Name:</div>
             <div className="edit-project-div">
               <input
                 className="input-bar"
@@ -249,52 +279,51 @@ const Projects = () => {
           <div className="edit-project-div">
             <div className="edit-project-label">Edit Project Description:</div>
             <div className="edit-project-div">
-            <textarea
-              className="text-area-bar" 
-              type="text"
-              placeholder="Enter Description"
-              defaultValue={project.description}
-              onChange={(event) => setProjectDescription(event.target.value)}
-            />
+              <textarea
+                className="text-area-bar"
+                type="text"
+                placeholder="Enter Description"
+                defaultValue={project.description}
+                onChange={(event) => setProjectDescription(event.target.value)}
+              />
             </div>
           </div>
 
           <div className="edit-project-div">
-          <div className="edit-project-label">Edit Project Start Date:</div>
-          <div className="edit-project-div">
-            <DateTimePicker
-              defaultValue={project.start_date}
-              onChange={(newValue) => setProjectStart(newValue)}
-            />
-            </div>
-          </div>
-
-          <div className="edit-project-div">
-          <div className="edit-project-label">Edit Project Deadline:</div>
-          <div className="edit-project-div">
-            <DateTimePicker
-              defaultValue={project.current_deadline}
-              onChange={(newValue) => setProjectNewDeadline(newValue)}
-            />
-            </div>
-          </div>
-
-          <div className="edit-project-div">
-        
-          <div className="edit-project-label">Edit Project Budget:</div>
+            <div className="edit-project-label">Edit Project Start Date:</div>
             <div className="edit-project-div">
-            <input
-              className="input-bar"
-              type="number"
-              placeholder="£"
-              defaultValue={project.current_budget}
-              onChange={(event) => setProjectNewBudget(event.target.value)}
-            />
+              <DateTimePicker
+                defaultValue={project.start_date}
+                onChange={(newValue) => setProjectStart(newValue)}
+              />
             </div>
           </div>
 
           <div className="edit-project-div">
-          <div className="edit-project-label">Add Member(s):</div>
+            <div className="edit-project-label">Edit Project Deadline:</div>
+            <div className="edit-project-div">
+              <DateTimePicker
+                defaultValue={project.current_deadline}
+                onChange={(newValue) => setProjectNewDeadline(newValue)}
+              />
+            </div>
+          </div>
+
+          <div className="edit-project-div">
+            <div className="edit-project-label">Edit Project Budget:</div>
+            <div className="edit-project-div">
+              <input
+                className="input-bar"
+                type="number"
+                placeholder="£"
+                defaultValue={project.current_budget}
+                onChange={(event) => setProjectNewBudget(event.target.value)}
+              />
+            </div>
+          </div>
+
+          <div className="edit-project-div">
+            <div className="edit-project-label">Add Member(s):</div>
 
             {membersList.map((each_member, index) => (
               <div key={index} className="edit-project-div">
@@ -316,25 +345,29 @@ const Projects = () => {
                 />
 
                 <div className="edit-project-div">
-                  {membersList.length - 1 === index &&
-                  (
-                    <button 
-                      className="member-button" 
-                      onClick={(event)=>{addMember();editMemberRole();}}>
+                  {membersList.length - 1 === index && (
+                    <button
+                      className="member-button"
+                      onClick={(event) => {
+                        addMember();
+                        editMemberRole();
+                      }}
+                    >
                       <span> Add a member </span>
                     </button>
                   )}
 
                   {membersList.length > 1 && (
-
                     <button
                       className="member-button"
-                      onClick={(event) => {removeMember(index);removeRole(index);}}>
+                      onClick={(event) => {
+                        removeMember(index);
+                        removeRole(index);
+                      }}
+                    >
                       <span> Remove Member </span>
                     </button>
                   )}
-
-
                 </div>
               </div>
             ))}
@@ -360,7 +393,7 @@ const Projects = () => {
           ))}
 
           <div className="project-info-container">
-            <i onClick = { deleteProject } className="delete-proj-btn">
+            <i onClick={deleteProject} className="delete-proj-btn">
               <FaTrash />
             </i>
             <div className="project-name">
@@ -380,7 +413,7 @@ const Projects = () => {
               <br />
               <br />
               <h3 className="des-title"> Project deadine: </h3>
-              <p className="des"> {project.initial_deadline}</p>
+              <p className="des"> {currentDeadlineString}</p>
             </div>
 
             <div className="project-buttons">
@@ -396,5 +429,3 @@ const Projects = () => {
 };
 
 export default Projects;
-
-

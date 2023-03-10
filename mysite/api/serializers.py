@@ -1,13 +1,16 @@
 #converts python model objects to json inkedId
-from rest_framework.serializers import Serializer, ModelSerializer, IntegerField
+from rest_framework.serializers import ModelSerializer, IntegerField
 from projects.models import * 
 
 class ProjectSerializer(ModelSerializer):
     completion = IntegerField(source='get_completion')
+    start_date_unix = IntegerField(source='get_start_date_unix')
+    initial_deadline_unix = IntegerField(source='get_initial_deadline_unix')
+    current_deadline_unix = IntegerField(source='get_current_deadline_unix')
     class Meta:
         model = Project
-        fields = '__all__'
-        read_only_fields = ('completion',)
+        exclude = ('start_date', 'initial_deadline', 'current_deadline')
+        read_only_fields = ('completion', 'start_date_unix', 'initial_deadline_unix', 'current_deadline_unix')
 
 class RoleSerializer(ModelSerializer):
     class Meta:
@@ -64,7 +67,6 @@ class RiskEvaluationSerializer(ModelSerializer):
         model = RiskEvaluation
         read_only_fields = ('date_unix',)
         exclude = ('date',)
-
 
 class FeedbackSerializer(ModelSerializer):
     class Meta:
