@@ -1,5 +1,3 @@
-// Sample events calendar build, explained and detailed over at
-// https://justacoding.blog/react-calendar-component-example-with-events/
 import React, { useState, useEffect, Fragment } from 'react';
 import './Calendar.css';
 // Some config for convenience
@@ -176,7 +174,9 @@ const EventForm = ({ setShowingEventForm, addEvent, editEvent, withEvent, setVie
         <label>Date to
           <input type="datetime-local" defaultValue={event.dateTo} onChange={(e) => setEvent({ ...event, dateTo: e.target.value })} />
         </label>
-
+        <label>Description
+        <input type="text" placeholder="ie. Weekly meeting to discuss project progress" defaultValue={event.name} onChange={(e) => setEvent({ ...event, name: e.target.value })} />
+        </label>
         {withEvent ? (
         	<Fragment>
             <button onClick={() => editEvent(event)}>Edit event</button>

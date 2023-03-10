@@ -141,6 +141,9 @@ const TasksForm = () => {
                 <option> {viewoptions[2]}</option>
               </select>
             </div>
+
+
+            
             <button onClick={openModal}> Add Task </button>
             <div className="modal_container">
               <Modal show={modalstate.isOpen} className="addTask_container">
@@ -223,7 +226,7 @@ const TasksForm = () => {
               </Modal>
             </div>
           </div>
-          <div className="mainbody_container">
+          <div className="view-container">
             <View />
           </div>
         </div>

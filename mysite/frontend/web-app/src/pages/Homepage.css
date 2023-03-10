@@ -1,3 +1,5 @@
+
+
 * {
     box-sizing: border-box;
     
@@ -222,7 +224,6 @@ body {
 
 .info>h3{
     color: rgb(138, 73, 202);
-
 }
 
 
@@ -244,12 +245,9 @@ body {
 
 
 
-
-
 .user-profile {
     display: inline-block;
-    text-align: center;
-    
+    text-align: center; 
 }
 
 
@@ -282,9 +280,8 @@ body {
 
 .skill {
     display: inline-block;
-    padding: 3%;
+    padding: 2%;
     text-indent: none;
-    border: solid 1px rgb(188, 188, 255);
     border-radius: 30px;
     background-color: rgb(188, 188, 255);
     margin: 0.5%;
@@ -293,6 +290,8 @@ body {
 .all-skills {
     list-style: none;
     padding-left:0;
+    display: block;
+    width:100%;
 }
 
 .project-info-container {
@@ -425,6 +424,20 @@ body {
     backdrop-filter: blur(5px);
 }
 
+.create-project-modal{
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    border: none;
+    z-index: 1; /* Sit on top */
+    top: 0;
+    width: 100%; /* Full width */
+    height:100%;
+    padding:30px;
+    /* Full height */
+    overflow: auto;/* Enable scroll if needed */
+    backdrop-filter: brightness(15%);
+}
+
 
 .skillset-modal {
     background-color:  #9c00fd;
@@ -455,7 +468,72 @@ body {
     border-radius: 20px;
     color: black;
   }
+  .create-project-content {
+    background-image: linear-gradient(to right, rgb(255, 255, 255) 0%, rgb(233, 233, 233) 50%, rgb(209, 209, 209));
+    box-shadow: rgba(255, 255, 255, 0.35) 0px 5px 60px;
+    background-position: center;
+    background-size: cover;
+    width: 60%;
+    margin-left:20%; /* 15% from the top and centered */
+    padding:30px;
+    border-radius: 20px;
+    color: black;
+  }
 
+  .create-project-content>h1{
+    color:transparent;
+    background-image: linear-gradient(40deg, rgb(65, 206, 245), #9c00fd);
+    background-clip: text;
+    font-size: 50px;
+    padding:20px;
+  }
+
+  .create-project-div{
+    width:100%;
+    display:block;
+    text-align: left;
+    padding: 0 10%;
+    margin: 20px 0;
+  }
+  .create-project-label{
+    color:transparent;
+    background-image: linear-gradient(40deg, rgb(65, 206, 245), #9c00fd);
+    background-clip: text;
+    font-size: 25px;
+    width:50%;
+    vertical-align: top;
+    display: inline-block;
+  }
+
+  .create-project-input{
+    display: inline-block;    
+    width:50%;
+  }
+
+  .input-bar{
+    width:100%;
+    border:solid 1px #9c00fd3a;
+    background-color: transparent;
+    color:#9c00fd;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+  .input-bar::placeholder, .text-area-bar::placeholder{
+    color:#9c00fd
+  }
+  .text-area-bar{
+    width:100%;
+    border:solid 1px #9c00fd3a;
+    background-color: transparent;
+    color:#9c00fd;
+    resize: none;
+    padding:15px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+
+  .input-date{
+    height: 30px;
+    border:none
+  }
 
   .skillset-modal-content {
 
@@ -495,7 +573,6 @@ body {
     text-align: center;
     padding:2%;
   }
-
   .input-labels{
     display: inline-block;
     margin-left: 10%;
@@ -523,6 +600,12 @@ body {
     display: inline-block;
     margin-left:10%;
     
+  }
+
+  .input-div{
+    text-align: left;
+    padding:5px;
+    width:100%;
   }
 
   .skill-input-div{
@@ -679,6 +762,65 @@ body {
 
 
 
+.suggestion_container {
+    display: inline-block;
+    padding: 50px;
+    text-indent: none;
+    border: solid 1px rgb(188, 188, 255);
+    border-radius: 30px;
+    background-color: rgb(188, 188, 255);
+    margin: 12px;
+    width:30%;
+  }
+
+  .mainbody_container {
+    display: block;
+    padding: 50px;
+    text-indent: none;
+    border: solid 1px rgb(188, 188, 255);
+    border-radius: 30px;
+    background-color: rgb(188, 188, 255);
+    margin: 30px;
+    width:90%;
+  }
+  
+  .addTaskField_container {
+    padding: 2px;
+    text-indent: none;
+    margin: 3px;
+    text-align: left;
+  }
+  
+  .addTask_container {
+    display: inline-block;
+    padding: 30px;
+    text-indent: none;
+    border: solid 1px rgb(173, 173, 243);
+    border-radius: 20px;
+    background-color: rgb(245, 241, 247);
+    margin: 30px;
+    text-align: left;
+    overflow-y: scroll;
+    max-height: 90%;
+  }
+
+
+  .calander-container{
+    display: block;
+    padding: 50px;
+    text-indent: none;
+    border: solid 1px rgb(188, 188, 255);
+    border-radius: 30px;
+    background-color: rgb(188, 188, 255);
+    margin: 30px;
+    width:50%;
+
+  }
+
+
+  @import url("https://cdn.syncfusion.com/ej2/material.css");
+
+  
 
 
 

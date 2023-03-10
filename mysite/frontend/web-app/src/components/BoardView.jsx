@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
+import "../pages/tasks.css";
 
 //append array of tasks to ganttChartData const
 
@@ -29,12 +30,7 @@ function RenderingNotStarted({ tasks }) {
   const tableRows = tasks.map((task) => {
     return (
       <div key={task.id}>
-        <h3>{task.id}</h3>
-        <p>{task.name}</p>
-        <h3>{task.completion_status}</h3>
-        <h3>{task.duration}</h3>
-        <h3>{task.startdate}</h3>
-        <p>{task.description}</p>
+        <p className="task-info">{task.name}</p>
       </div>
     );
   });
@@ -44,13 +40,8 @@ function RenderingNotStarted({ tasks }) {
 function RenderingStarted({ tasks }) {
   const tableRows = tasks.map((task) => {
     return (
-      <div key={task.id}>
-        <h3>{task.id}</h3>
-        <p>{task.name}</p>
-        <h3>{task.completion_status}</h3>
-        <h3>{task.duration}</h3>
-        <h3>{task.startdate}</h3>
-        <p>{task.description}</p>
+      <div key={task.id}> 
+        <p className="task-info">{task.name}</p>
       </div>
     );
   });
@@ -60,13 +51,8 @@ function RenderingStarted({ tasks }) {
 function RenderingCompleted({ tasks }) {
   const tableRows = tasks.map((task) => {
     return (
-      <div key={task.id}>
-        <h3>{task.id}</h3>
-        <h1>{task.name}</h1>
-        <h3>{task.completion_status}</h3>
-        <h3>{task.duration}</h3>
-        <h3>{task.startdate}</h3>
-        <p>{task.description}</p>
+      <div key={task.id}>   
+        <p className="task-info">{task.name}</p>
       </div>
     );
   });
@@ -140,6 +126,9 @@ const BoardView = () => {
     }
   };
 
+ 
+
+
   // Obtaining the projects the user is involved in via a GET request to the api referencing our authorisation token
   // Need to check this URLSS
   let getFinishedTasks = async (e) => {
@@ -169,26 +158,33 @@ const BoardView = () => {
   return (
     <div>
       <div>
-        <h2>Board View</h2>
+        <h2 className="board-title">Board View</h2>
         <table>
           <thead>
-            <tr>
+            <tr className="board-headers">
+
+           
+            
               <th>
-                <h2>Not started</h2>
+                <h2 className="task-category">Not started</h2>
+              </th>
+              
+              <th>
+                <h2 className="task-category">Started</h2>
               </th>
               <th>
-                <h2>Started</h2>
+                <h2 className="task-category">Completed</h2>
               </th>
-              <th>
-                <h2>Completed</h2>
-              </th>
+
             </tr>
+            
           </thead>
           <tbody>
-            <tr>
+            <tr className="board-view-row">
               <td>
                 <RenderingNotStarted tasks={notStartedTasks} />
               </td>
+
               <td>
                 <RenderingStarted tasks={startedTasks} />
               </td>
@@ -204,3 +200,5 @@ const BoardView = () => {
 };
 
 export default BoardView;
+
+

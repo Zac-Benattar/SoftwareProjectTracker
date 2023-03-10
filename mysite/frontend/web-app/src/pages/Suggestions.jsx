@@ -3,6 +3,7 @@ import React, { useState, useEffect, useContext } from "react";
 import Navbar from "../components/Navbar";
 import { useParams } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
+import "./Homepage.css";
 
 //QUERY - are critical actions classified separately from normal suggestions?
 //how does dismissing suggestions work
@@ -80,3 +81,5 @@ const SuggestionsForm = () => {
 };
 
 export default SuggestionsForm;
+
+

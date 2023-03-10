@@ -1,18 +1,21 @@
 import React, {useState, useEffect} from "react";
+import CalendarView from '../components/CalendarView';
 import Navbar from "./Navbar";
-import CalendarView from './CalendarView';
+import "./Calendar.css";
+
 
 export const MeetingsForm = () => {
   return(
   <>
   <div className="home-page">
-  <Navbar />
-  <div className="main_container">
-    <p className="title">Meetings Calendar</p>
-    <div className="mainbody_container">
-        <CalendarView />
-    </div>
-  </div>
+
+        <Navbar/>
+
+          <div className="mainbody-container">
+              
+              <CalendarView />
+          </div>
+     
   </div>
   </>
   )

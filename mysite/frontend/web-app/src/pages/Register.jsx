@@ -119,11 +119,6 @@ export const Register = (props) => {
         />
 
 
-        {isStrong === "strong" && <button type="submit"> Register </button>}
-
-
-
-
         <button onClick={passwordConfirmation} className="register-button" type="submit">
           Register
         </button>

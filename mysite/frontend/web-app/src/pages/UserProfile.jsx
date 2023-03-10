@@ -281,10 +281,20 @@ const UserProfile = () => {
     } else if (password != confirmPassword) {
         alert("Please make sure your passwords match.")
     }
-}
+  }
 
+  function getRemainingSkills() {
+    var updatedList = [...skills];
+    var i=0;
+    for(i=0; i < updatedList.length; i++) {
+      if (checked.includes(updatedList[i].id)) {
+        updatedList.splice(updatedList[i], 1);
+      }
+    }
+    setSkills(updatedList);
+  }
 
-
+    
 
 
 
@@ -544,7 +554,7 @@ const UserProfile = () => {
                           <button className="edit-btn" onClick={editContactDetails}>Edit Contact Details</button>
                           <button className="edit-btn" onClick={addSkill}>
                             Add to your skillset</button>
-                          <button className="edit-btn" onClick={removeSkill}>Remove from your skillset</button>
+                          <button className="edit-btn" onClick={(e) => {getRemainingSkills();removeSkill()}}>Remove from your skillset</button>
                       </div>
 
           </div>

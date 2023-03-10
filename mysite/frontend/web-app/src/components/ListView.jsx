@@ -1,5 +1,5 @@
 import React from "react";
-
+import "./ListView.css";
 //append array of tasks to ganttChartData const
 
 //ganttChartData const stores array of task arrays
@@ -40,28 +40,23 @@ function RenderingListofTasks({ tasks }) {
 
 const ListView = ({ tasks }) => {
   return (
-    <div>
-      <div>
-        <h2>List View</h2>
-        <select>
-          <option>Deadline</option>
-          <option>Name</option>
-          <option>Completion Status</option>
-        </select>
-        <table>
+    
+      <div className="listview-container">
+        <h2 className="title-list">List View</h2>
+        <table className="list-table">
           <thead>
             <tr>
-              <th> Task id</th>
-              <th> Task name</th>
-              <th> Completion status</th>
-              <th> Duration </th>
-              <th> Startdate </th>
+              <th className="table-title"> Task ID</th>
+              <th className="table-title"> Task name</th>
+              <th className="table-title"> Completion status</th>
+              <th className="table-title"> Duration </th>
+              <th className="table-title"> Startdate </th>
             </tr>
           </thead>
           <RenderingListofTasks tasks={tasks} />
         </table>
       </div>
-    </div>
+    
   );
 };
 

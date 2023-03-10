@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
 import "./Homepage.css";
 import AuthContext from "../context/AuthContext";
-import { Dropdown } from "../components/Dropdown";
 import { ProjectListItem } from "../components/ProjectListItem";
 import HomeNavbar from "../components/HomeNavbar";
-import DateTimePicker from 'react-datetime-picker';
+// import DateTimePicker from 'react-datetime-picker';
+import DateTimePicker from 'react-datetime-picker/dist/entry.nostyle';
+
 
 
 
@@ -146,87 +147,70 @@ const Homepage = () => {
       <>
 
 
-    <div id="add-project-modal" className="modal">
+    <div id="add-project-modal" className="create-project-modal">
 
     <div className="close"> &times; </div>
            
-              <div className="modal-content">             
-
+              <div className="create-project-content">      
               <h1>Create New Project</h1>
-                <div className="input-div">
-                    <label 
-                      className="input-labels">
-                      Project Name:
-                    </label>
-
+              <div className="create-project-div">
+                  <div className="create-project-label">Project Name:</div>
+                  <div className="create-project-input">
                     <input 
-                      className="project-inputs" 
+                      className="input-bar"
                       type="text"
                       placeholder="Enter Project Name"
                       onChange={event=>setProjectName(event.target.value)}
                     />
-                </div>
-
-
-                <div className="input-div">
-                    <label 
-                      className="input-labels">
-                      Project Description:
-                    </label>
-
-                    <textarea 
-                      className="project-inputs" 
+                  </div>
+              </div>
+              <div className="create-project-div">
+                  <div className="create-project-label">Project Description:</div>
+                  <div className="create-project-input">
+                  <textarea 
+                      className="text-area-bar" 
                       type="text"
                       placeholder="Enter Description"
                       onChange={event=>setProjectDescription(event.target.value)}
                     />
-                </div>
-
-
-                <div className="input-div">
-                    <label 
-                      className="input-labels">
-                      Project Start Date:
-                    </label>
-
+                  </div>
+              </div>
+              <div className="create-project-div">
+                  <div className="create-project-label">Project Start Date:</div>
+                  <div className="create-project-input">
                     <DateTimePicker
-                      className="project-inputs" 
+                      className="input-date"
                       onChange={(newValue) => setProjectStart(newValue)}
                     />
-                </div>
 
-
-                <div className="input-div">
-                    <label 
-                      className="input-labels">
-                      Project Deadline:
-                    </label>
-
-                    <DateTimePicker
+                     
+                  </div>
+              </div>
+              <div className="create-project-div">
+                  <div className="create-project-label">Project Deadline:</div>
+                  <div className="create-project-input">
+                  <DateTimePicker
                       className="project-inputs" 
                       onChange={(newValue) => setProjectDeadline(newValue)}
                     />
-                </div>
-
-                <div className="input-div">
-                    <label 
-                      className="input-labels">
-                      Project Budget:
-                    </label>
-
-                    <input
-                      className="project-inputs" 
+                  </div>
+              </div>
+              <div className="create-project-div">
+                  <div className="create-project-label">Project Budget:</div>
+                  <div className="create-project-input">
+                  <input
+                      className="input-bar" 
                       type="number"
                       placeholder="£"
                       onChange={event=>setProjectBudget(event.target.value)}
                     />
-                </div>
-
-
+                  </div>
+              </div>
+              <div className="create-project-div">Add Member(s):</div>
                 <div className="input-div">
                     <label 
                       className="input-labels">
-                      Add Member(s):
+                      
                     </label>
 
                     {membersList.map((each_member, index) => (
@@ -304,6 +288,7 @@ const Homepage = () => {
 
               <HomeNavbar/> 
               <div className="home-page-content">
+
 
                 <div className="home-page-menu">
                 

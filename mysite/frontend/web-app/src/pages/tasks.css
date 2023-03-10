@@ -19,3 +19,77 @@
     z-index: "1000";
     overflow-y: "auto";
   };
+
+
+  .mainbody_container {
+    display: block;
+    padding: 50px;
+    text-indent: none;
+    border: solid 1px rgb(188, 188, 255);
+    border-radius: 30px;
+    background-color:  rgb(232, 232, 232);
+    margin: 30px;
+    width:90%;
+  }
+
+  .view-container {
+    background-color:  rgb(232, 232, 232);
+    padding:2%;
+    width: 50%;
+    margin-left:25%;
+    border-radius:8px;
+    margin-top:5%;
+  }
+
+  .title-list{
+    color: #9c00fd;
+    margin-top:0;
+  }
+  
+  .addTaskField_container {
+    padding: 2px;
+    text-indent: none;
+    margin: 3px;
+    text-align: left;
+  }
+  
+  .addTask_container {
+    display: inline-block;
+    padding: 30px;
+    text-indent: none;
+    border: solid 1px rgb(173, 173, 243);
+    border-radius: 20px;
+    background-color: rgb(245, 241, 247);
+    margin: 30px;
+    text-align: left;
+    overflow-y: scroll;
+    max-height: 90%;
+  }
+
+
+ .board-title{
+  color: #9c00fd;
+  font-size: 50px;
+  margin-top:0;
+  text-decoration: underline;
+ }
+
+ .board-view-row, .board-view-row:hover{
+  background-color: rgb(173, 173, 243);
+  color: rgb(11, 150, 189);
+  font-size: 25px;
+  font-weight:200;
+}
+
+.task-category{
+  color: rgb(11, 150, 189);
+  font-size:30px;
+}
+
+.board-headers{
+  background-color: rgb(173, 173, 243);
+}
+
+.board-headers:hover, .board-view-row:hover{
+  background-color: rgb(173, 173, 243);
+}
