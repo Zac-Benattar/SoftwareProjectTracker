@@ -1,8 +1,11 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, useContext, Fragment } from "react";
+import { useParams } from "react-router-dom";
+import AuthContext from "../context/AuthContext";
+import UnixDateStringifier from "../utils/DateStringifier";
 import "./Calendar.css";
 
 // Some config for convenience
-const MOCK_LOADING_TIME = 100;
+const MOCK_LOADING_TIME = 1000;
 const SAMPLE_META =
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
 
@@ -26,10 +29,10 @@ const DAYS_SHORT = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 const toStartOfDay = (date) => {
   const newDate = new Date(date);
-  newDate.setUTCHours(0);
-  newDate.setUTCMinutes(0);
-  newDate.setUTCSeconds(0);
-  newDate.setUTCMilliseconds(0);
+  newDate.setHours(0);
+  newDate.setMinutes(0);
+  newDate.setSeconds(0);
+  newDate.setMilliseconds(0);
   return newDate;
 };
 
@@ -44,12 +47,12 @@ const dateToInputFormat = (date) => {
     return null;
   }
 
-  const month = pad(date.getUTCMonth() + 1);
-  const day = pad(date.getUTCDate());
-  const hours = pad(date.getUTCHours());
-  const minutes = pad(date.getUTCMinutes());
+  const month = pad(date.getMonth() + 1);
+  const day = pad(date.getDate());
+  const hours = pad(date.getHours());
+  const minutes = pad(date.getMinutes());
 
-  return `${date.getUTCFullYear()}-${month}-${day}T${hours}:${minutes}`;
+  return `${date.getFullYear()}-${month}-${day}T${hours}:${minutes}`;
 };
 
 // Could be used to filter out invalid events data also
@@ -68,12 +71,8 @@ const parseEvents = (events) => {
   });
 };
 
-/**
- * @param {Date} date The date
- * @param {event} events The string
- */
 const findEventsForDate = (events, date) => {
-  const dateTime = date.getTime()
+  const dateTime = date.getTime();
 
   return events.filter((event) => {
     const eventFromTime = toStartOfDay(event.from).getTime();
@@ -91,15 +90,15 @@ const Navigation = ({ date, setDate, setShowingEventForm }) => {
         className="back"
         onClick={() => {
           const newDate = new Date(date);
-          newDate.setMonth(newDate.getUTCMonth() - 1);
-          newDate.setUTCDate(newDate);
+          newDate.setMonth(newDate.getMonth() - 1);
+          setDate(newDate);
         }}
       >
-        {"<-"} {MONTHS[date.getUTCMonth() === 0 ? 11 : date.getUTCMonth() - 1]}
+        {"<-"} {MONTHS[date.getMonth() === 0 ? 11 : date.getMonth() - 1]}
       </div>
 
       <div className="monthAndYear">
-        {MONTHS[date.getUTCMonth()]} {date.getUTCFullYear()}
+        {MONTHS[date.getMonth()]} {date.getFullYear()}
         <a
           href="javascript:;"
           onClick={() => setShowingEventForm({ visible: true })}
@@ -112,11 +111,11 @@ const Navigation = ({ date, setDate, setShowingEventForm }) => {
         className="forward"
         onClick={() => {
           const newDate = new Date(date);
-          newDate.setUTCMonth(newDate.getUTCMonth() + 1);
-          newDate.setUTCDate(newDate);
+          newDate.setMonth(newDate.getMonth() + 1);
+          setDate(newDate);
         }}
       >
-        {MONTHS[date.getUTCMonth() === 11 ? 0 : date.getUTCMonth() + 1]} {"->"}
+        {MONTHS[date.getMonth() === 11 ? 0 : date.getMonth() + 1]} {"->"}
       </div>
     </div>
   );
@@ -344,14 +343,14 @@ const Grid = ({
   // the target month/year combination
   // Then increment upon this day until we have a full set
   // of date objects to work with
-  const startingDate = new Date(date.getUTCFullYear(), date.getUTCMonth(), 1);
-  startingDate.setUTCDate(startingDate.getUTCDate() - (startingDate.getUTCDay() - 1));
+  const startingDate = new Date(date.getFullYear(), date.getMonth(), 1);
+  startingDate.setDate(startingDate.getDate() - (startingDate.getDay() - 1));
 
   const dates = [];
   for (let i = 0; i < ROWS_COUNT * 7; i++) {
     const date = new Date(startingDate);
     dates.push({ date, events: findEventsForDate(events, date) });
-    startingDate.setUTCDate(startingDate.getUTCDate() + 1);
+    startingDate.setDate(startingDate.getDate() + 1);
   }
 
   return (
@@ -363,11 +362,11 @@ const Grid = ({
             className={`cell ${
               date.date.getTime() === currentDate.getTime() ? "current" : ""
             } ${
-              date.date.getUTCMonth() !== actualDate.getUTCMonth() ? "otherMonth" : ""
+              date.date.getMonth() !== actualDate.getMonth() ? "otherMonth" : ""
             }`}
           >
             <div className="date">
-              {date.date.getUTCDate()}
+              {date.date.getDate()}
               <a
                 href="javascript:;"
                 className="addEventOnDay"
@@ -467,7 +466,7 @@ const Calendar = ({ month, year, preloadedEvents = [] }) => {
 
     setTimeout(() => {
       const updatedEvents = [...events].filter(
-        (finalEvent) => finalEvent.id !== event.id
+        (finalEvent) => finalEvent.id != event.id
       );
 
       setEvents(updatedEvents);
@@ -528,13 +527,62 @@ const Calendar = ({ month, year, preloadedEvents = [] }) => {
   );
 };
 
-export const CalendarView = ({ meetings }) => {
+export const CalendarView = () => {
+  // Deconstructing the relevent sections from AuthContext
+  let { authTokens, logoutUser, user } = useContext(AuthContext);
+
+  // Defining the states
+  let [meetings, setMeetings] = useState([]);
+
+  // Get slug parameter given when Project is referenced in router
+  const { slug } = useParams();
+
+  // Setting up states
+  useEffect(() => {
+    getMeetings();
+  }, []);
+
+  let getMeetings = async (e) => {
+    let response = await fetch(
+      "http://127.0.0.1:8000/api/projects/".concat(slug).concat("/meetings/"),
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+      }
+    );
+    let data = await response.json();
+
+    // If the response is good - set the state of projects to be the result of the GET request
+    if (response.status === 200) {
+      setMeetings(data);
+      // If the respose is unauthorised, log out the user using the imported AuthContext method
+    } else if (response.statusText === "Unauthorized") {
+      logoutUser();
+    }
+  };
+
+  const meetingsData = meetings.map((meeting) => {
+    return {
+      id: meeting.id,
+      name: meeting.name,
+      dateFrom: dateToInputFormat(new Date(meeting.start_date_unix * 1000)),
+      dateTo: dateToInputFormat(new Date(meeting.end_date_unix * 1000)),
+      meta: meeting.description,
+      type: meeting.type,
+    };
+  });
+
+  console.log(meetingsData);
+
   //get meetings from database
   //need name, start date + end date, meta=description, type enables colour categorisation
   //add type field to database?
   const d = new Date();
-  let thismonth = d.getUTCMonth() + 1;
-  let thisyear = d.getUTCFullYear();
+  let thismonth = d.getMonth() + 1;
+  let thisyear = d.getFullYear();
   const exampleMeetingsData = [
     {
       id: 1,
@@ -610,12 +658,13 @@ export const CalendarView = ({ meetings }) => {
     },
   ];
 
+  console.log(exampleMeetingsData);
 
   return (
     <Calendar
       month={thismonth}
       year={thisyear}
-      preloadedEvents={meetings}
+      preloadedEvents={meetingsData}
     />
   );
 };
