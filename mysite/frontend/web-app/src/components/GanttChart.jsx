@@ -32,11 +32,11 @@ const GanttChart = ({ tasks }) => {
     }
 
     return [
-      task.id,
+      task.id.toString(),
       task.name,
       new Date(task.start_date_unix * 1000),
       new Date(task.latest_finish_date_unix * 1000),
-      task.duration,
+      null,
       task.completion,
       dependentTasksString,
     ];
@@ -111,11 +111,8 @@ const GanttChart = ({ tasks }) => {
     ],
   ];
 
-  if (ganttChartData.length === 0) {
-    data = ganttChartExampleData;
-  }
-
   console.log(ganttChartExampleData)
+  console.log(data)
 
   return (
     <div className="container mt-5">

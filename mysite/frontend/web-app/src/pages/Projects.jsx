@@ -220,9 +220,6 @@ const Projects = () => {
     }
   };
 
-  console.log("memebrs",membersList);
-  console.log("roles", rolesList);s
-
   return (
     <>
       <div id="add-project-modal" className="edit-modal">
