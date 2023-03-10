@@ -295,13 +295,19 @@ class Task(models.Model):
 
     def earliest_finish_date_to_unix(self):
         earliest_finish = self.start_date + timezone.timedelta(days=self.duration)
-        print('=============')
-        print(earliest_finish)
-        print('=============')
         return int(earliest_finish.timestamp())
 
     def latest_finish_date_to_unix(self):
         return int(self.latest_finish.timestamp())
+    
+    def get_dependent_tasks_string(self):
+        dependencies_list = self.dependent_tasks.all()
+        dependencies_string = ''
+        for t in dependencies_list:
+            dependencies_string += str(t.id) + ','
+        
+        return dependencies_string
+
 
 
 class Role(models.Model):

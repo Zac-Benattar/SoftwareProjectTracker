@@ -1,5 +1,5 @@
 #converts python model objects to json inkedId
-from rest_framework.serializers import ModelSerializer, IntegerField
+from rest_framework.serializers import ModelSerializer, IntegerField, CharField
 from projects.models import * 
 
 class ProjectSerializer(ModelSerializer):
@@ -88,7 +88,9 @@ class TaskSerializer(ModelSerializer):
     start_date_unix = IntegerField(source='start_date_to_unix')    
     earliest_finish_date_unix = IntegerField(source='earliest_finish_date_to_unix')
     latest_finish_date_unix = IntegerField(source='latest_finish_date_to_unix')
+    dependent_tasks_string = CharField(source='get_dependent_tasks_string')
     
     class Meta:
         model = Task
-        fields = ['id', 'members', 'project', 'name', 'description', 'duration', 'completion', 'creation_date_unix', 'start_date_unix', 'earliest_finish_date_unix', 'latest_finish_date_unix', 'dependent_tasks', 'completion_status']
+        exclude = ('creation_date', 'start_date', 'latest_finish')
+        read_only_fields = ('creation_date_unix', 'start_date_unix', 'earliest_finish_date_unix', 'latest_finish_date_unix', 'dependent_tasks_string')
