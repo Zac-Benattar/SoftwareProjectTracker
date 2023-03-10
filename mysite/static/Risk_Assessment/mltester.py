@@ -10,14 +10,19 @@ print("Start")
 evaluator = ProjectEvaluator()
 
 #initial_budget, num_developers, num_other_team_members, original_deadline, daily_running_cost, num_tasks
-DEADLINE_DATE = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(days = 0) #What date format should I use?
+DEADLINE_DATE = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(days = 100) #What date format should I use?
 
 #Load in dummy data to predict chance of success (parameters listed below)
 #initial_budget, num_developers, num_other_team_members, original_deadline, daily_running_cost, num_tasks
-start_evaluation_data = StartEvaluationData(0, 0, 0, DEADLINE_DATE, 0, 1000)
+#start_evaluation_data = StartEvaluationData(0, 0, 0, DEADLINE_DATE, 0, 1000)
+
+current_evaluation_data = CurrentEvaluationData(100000, 100000, 0, 20, 2, 0, DEADLINE_DATE, DEADLINE_DATE, 100, 100, 0, 0, 0)
 
 #Get chance of success
-chance_of_success = evaluator.get_initial_chance_of_success(start_evaluation_data)
+#chance_of_success = evaluator.get_initial_chance_of_success(start_evaluation_data)
+
+
+chance_of_success = evaluator.get_current_chance_of_success(current_evaluation_data)
 print("Chance_Of_Success: " + str(chance_of_success))
 
 
