@@ -67,7 +67,7 @@ const SuggestionsForm = () => {
       }
     );
     let data = await response.json();
-    if (response.status === 201) {
+    if (response.status === 200) {
       setSuggestions(data);
       alert("Suggestion dismissed!");
     }
