@@ -13,7 +13,6 @@ const Projects = () => {
   const [projectNewBudget, setProjectNewBudget] = useState("");
   const [projectStart, setProjectStart] = useState(new Date());
   const [projectNewDeadline, setProjectNewDeadline] = useState(new Date());
-  const [projectMembers, setProjectMembers] = useState("");
 
   // list to store members in a project
   const [membersList, setMembersList] = useState([{ member: "" }]);
