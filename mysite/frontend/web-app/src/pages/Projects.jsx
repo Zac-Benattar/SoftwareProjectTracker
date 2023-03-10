@@ -6,6 +6,7 @@ import SuccessChanceDisplay from "../components/SuccessChanceDisplay";
 import AuthContext from "../context/AuthContext";
 import "./Homepage.css";
 import { FaTrash } from "react-icons/fa";
+import DateStringifier from "../utils/DateStringifier";
 
 const Projects = () => {
   const [projectName, setProjectName] = useState("");
@@ -219,44 +220,6 @@ const Projects = () => {
     }
   };
 
-  // Turning unix timestamp into a nicely formatted string
-  const currentDeadlineDate = new Date(project.current_deadline_unix * 1000);
-  var currentDeadlineString = "";
-
-  // If number of hours in the date is zero, append another zero to the end to get e.g. 00:30 rather than 0:30
-  if (currentDeadlineDate.getUTCHours() === 0) {
-    currentDeadlineString += currentDeadlineDate.getUTCHours() + "0";
-  } else if (
-    currentDeadlineDate.getUTCHours() > 0 &&
-    currentDeadlineDate.getUTCHours() < 10
-  ) {
-    currentDeadlineString += "0" + currentDeadlineDate.getUTCHours();
-  } else {
-    currentDeadlineString += currentDeadlineDate.getUTCHours();
-  }
-
-  currentDeadlineString += ":";
-
-  // If number of minutes in the date is zero, append another zero to the end to get e.g. 12:00 rather than 12:0
-  if (currentDeadlineDate.getUTCMinutes() === 0) {
-    currentDeadlineString += currentDeadlineDate.getUTCMinutes() + "0 ";
-  } else if (
-    currentDeadlineDate.getUTCMinutes() > 0 &&
-    currentDeadlineDate.getUTCMinutes() < 10
-  ) {
-    currentDeadlineString += "0" + currentDeadlineDate.getUTCMinutes();
-  } else {
-    currentDeadlineString += currentDeadlineDate.getUTCMinutes();
-  }
-
-  currentDeadlineString +=
-    " " +
-    currentDeadlineDate.getUTCDate() +
-    "/" +
-    currentDeadlineDate.getUTCMonth() +
-    "/" +
-    currentDeadlineDate.getUTCFullYear();
-
   return (
     <>
       <div id="add-project-modal" className="edit-modal">
@@ -413,7 +376,7 @@ const Projects = () => {
               <br />
               <br />
               <h3 className="des-title"> Project deadine: </h3>
-              <p className="des"> {currentDeadlineString}</p>
+              <p className="des"> {DateStringifier.getFullDateFromUNIXTimestampSeconds(project.current_deadline_unix)}</p>
             </div>
 
             <div className="project-buttons">
