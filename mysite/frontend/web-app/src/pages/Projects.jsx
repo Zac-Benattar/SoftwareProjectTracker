@@ -18,13 +18,14 @@ const Projects = () => {
   // list to store members in a project
   const [membersList, setMembersList] = useState([{ member: "" }]);
   const [rolesList, setRolesList] = useState([{ role: "" }]);
+
   console.log(membersList);
 
   const addMember = () => {
     setMembersList([...membersList, { member: "" }]);
   };
 
-  const editMemberRole = () => {
+  const addMemberRole = () => {
     setRolesList([...rolesList, { role: "" }]);
   };
 
@@ -219,6 +220,9 @@ const Projects = () => {
     }
   };
 
+  console.log("memebrs",membersList);
+  console.log("roles", rolesList);s
+
   return (
     <>
       <div id="add-project-modal" className="edit-modal">
@@ -295,7 +299,7 @@ const Projects = () => {
                   type="text"
                   // value={each_member.member}
                   placeholder="Member Name"
-                  onChange={(e) => (changeMember, index)}
+                  onChange={(e) => (changeMember(e,index), index)}
                 />
 
                 <input
@@ -303,7 +307,7 @@ const Projects = () => {
                   className="input-bar"
                   type="text"
                   placeholder="Member Role"
-                  //onChange={(e)=>addMember(e, index)}
+                  onChange={(e)=>changeRole(e, index)}
                 />
 
                 <div className="edit-project-div">
@@ -312,7 +316,7 @@ const Projects = () => {
                       className="member-button"
                       onClick={(event) => {
                         addMember();
-                        editMemberRole();
+                        addMemberRole();
                       }}
                     >
                       <span> Add a member </span>

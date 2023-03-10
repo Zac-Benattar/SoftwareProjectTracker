@@ -14,6 +14,7 @@ const Homepage = () => {
   const [projectStart, setProjectStart] = useState(new Date());
   const [projectDeadline, setProjectDeadline] = useState(new Date());
   let [projects, setProjects] = useState([]);
+  
   const [membersList, setMembersList] = useState([{ member: "" }]);
   const [rolesList, setRolesList] = useState([{ role: "" }]);
 
