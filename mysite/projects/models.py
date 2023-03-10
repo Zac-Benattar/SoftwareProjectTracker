@@ -8,14 +8,11 @@ import pickle
 def get_today_datetime():
     return timezone.now()
 
-
 def get_in_hour_datetime():
     return timezone.now() + timezone.timedelta(hours=1)
 
-
 def get_in_day_datetime():
     return timezone.now() + timezone.timedelta(days=1)
-
 
 def get_in_week_datetime():
     return timezone.now() + timezone.timedelta(days=7)
@@ -130,27 +127,28 @@ class Project(models.Model):
             for f in feedbacks:
                 total_confidence += f.confidence
             return total_confidence / feedback_size
-
+        
     def get_completion(self):
         tasks = Task.objects.filter(project=self)
-
+        
         if tasks.count() == 0:
             return 0
-
+        
         total_completion = 0
         for t in tasks:
             total_completion += t.completion
-
+            
         return total_completion / tasks.count()
-
+    
     def get_start_date_unix(self):
         return int(self.start_date.timestamp())
-
+    
     def get_initial_deadline_unix(self):
         return int(self.initial_deadline.timestamp())
-
+    
     def get_current_deadline_unix(self):
         return int(self.current_deadline.timestamp())
+        
 
 
 class Skill(models.Model):
@@ -203,7 +201,7 @@ class RiskEvaluation(models.Model):
     def get_project_snapshot(self):
         result = pickle.loads(self.serialized_project_evaluation_data)
         return result
-
+    
     def get_date_unix(self):
         return int(self.date.timestamp())
 
@@ -211,11 +209,9 @@ class RiskEvaluation(models.Model):
 class Meeting(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     attendence = models.IntegerField(default=0)
-    name = models.CharField(default='Meeting', max_length=50)
     date = models.DateTimeField(default=get_in_week_datetime())
     duration = models.IntegerField(default=0)
-    description = models.CharField(blank=True, max_length=3000)
-    type = models.CharField(default='General', max_length=30)
+
     def __str__(self):
         '''Gets string representation of the time meeting object
         Format: <meeting.project.name> <meeting.date>
@@ -224,13 +220,6 @@ class Meeting(models.Model):
             str string representation of the meeting
         '''
         return self.project.__str__() + ' ' + self.date.__str__()
-    
-    def get_start_date_unix(self):
-        return int(self.date.timestamp())
-    
-    def get_end_date_unix(self):
-        end_date = self.date + timezone.timedelta(hours=self.duration)
-        return int(end_date.timestamp())
 
 
 class Feedback(models.Model):
@@ -305,20 +294,20 @@ class Task(models.Model):
         return int(self.start_date.timestamp())
 
     def earliest_finish_date_to_unix(self):
-        earliest_finish = self.start_date + \
-            timezone.timedelta(days=self.duration)
+        earliest_finish = self.start_date + timezone.timedelta(days=self.duration)
         return int(earliest_finish.timestamp())
 
     def latest_finish_date_to_unix(self):
         return int(self.latest_finish.timestamp())
-
+    
     def get_dependent_tasks_string(self):
         dependencies_list = self.dependent_tasks.all()
         dependencies_string = ''
         for t in dependencies_list:
             dependencies_string += str(t.id) + ','
-
+        
         return dependencies_string
+
 
 
 class Role(models.Model):

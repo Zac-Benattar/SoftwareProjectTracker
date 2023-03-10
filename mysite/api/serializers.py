@@ -79,12 +79,9 @@ class SuggestionSerializer(ModelSerializer):
         fields = '__all__'
 
 class MeetingSerializer(ModelSerializer):
-    start_date_unix = IntegerField(source='get_start_date_unix')
-    end_date_unix = IntegerField(source='get_end_date_unix')
     class Meta:
         model = Meeting
         fields = '__all__'
-        read_only_fields = ('start_date_unix', 'end_date_unix')
         
 class TaskSerializer(ModelSerializer):
     creation_date_unix = IntegerField(source='creation_date_to_unix')

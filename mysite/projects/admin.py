@@ -51,18 +51,29 @@ class SuggestionAdmin(admin.ModelAdmin):
 
 
 class ScheduleAdmin(admin.ModelAdmin):
+    fieldsets = [
+        ('Details', {'fields': ('project', 'member', 'task', 'hours')}),
+    ]
+
     list_display = ('project', 'member', 'task', 'hours')
     list_filter = ['project', 'member', 'task']
     search_fields = ['project', 'member', 'task']
 
 
 class RoleRequirementAdmin(admin.ModelAdmin):
+    fieldsets = [
+        ('Details', {'fields': ('role', 'skillset')}),
+    ]
+
     list_display = ('role',)
     list_filter = ['role', 'skillset']
     search_fields = ['role', 'skillset']
 
 
 class MeetingAdmin(admin.ModelAdmin):
+    fieldsets = [
+        ('Details', {'fields': ('project', 'date', 'duration', 'attendence')}),
+    ]
 
     list_display = ('project', 'date', 'duration', 'attendence')
     list_filter = ['project', 'date']
