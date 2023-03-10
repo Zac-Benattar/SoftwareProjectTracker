@@ -38,9 +38,9 @@ const UserProfile = () => {
     getSkills();
     setFirstName(currentUser.first_name);
     setLastName(currentUser.last_name);
-    // setUsername(user.username);
-    // setEmail(user.email);
-    // setPhoneNumber(user.phone);
+    setUsername(currentUser.username);
+    setEmail(currentUser.email);
+    setPhoneNumber(currentUser.phone);
   }, []);
 
   // Obtaining the specific project's most recent risk evaulation via a GET request to the api referencing our authorisation token
@@ -742,7 +742,7 @@ const UserProfile = () => {
             <div className="prof-line">  
 
               <h3 className="prof-title">Email:  </h3>
-              <p className="prof-text"> {email}</p>
+              <p className="prof-text"> {currentUser.email}</p>
             </div>
 
             <div className="prof-line">  
