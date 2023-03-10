@@ -1,13 +1,16 @@
 #converts python model objects to json inkedId
-from rest_framework.serializers import Serializer, ModelSerializer, IntegerField
+from rest_framework.serializers import ModelSerializer, IntegerField
 from projects.models import * 
 
 class ProjectSerializer(ModelSerializer):
     completion = IntegerField(source='get_completion')
+    start_date_unix = IntegerField(source='get_start_date_unix')
+    initial_deadline_unix = IntegerField(source='get_initial_deadline_unix')
+    current_deadline_unix = IntegerField(source='get_current_deadline_unix')
     class Meta:
         model = Project
-        fields = '__all__'
-        read_only_fields = ('completion',)
+        exclude = ('start_date', 'initial_deadline', 'current_deadline')
+        read_only_fields = ('completion', 'start_date_unix', 'initial_deadline_unix', 'current_deadline_unix')
 
 class RoleSerializer(ModelSerializer):
     class Meta:
@@ -58,25 +61,12 @@ class ScheduleSerializer(ModelSerializer):
         model = Schedule
         fields = '__all__'
 
-class TimeWorkedSerializer(ModelSerializer):
-    class Meta:
-        model = TimeWorked
-        fields = '__all__'
-
-class ScheduleSerializer(ModelSerializer):
-    class Meta:
-        model = Schedule
-        fields = '__all__'
-
 class RiskEvaluationSerializer(ModelSerializer):
+    date_unix = IntegerField(source='get_date_unix')
     class Meta:
         model = RiskEvaluation
-        fields = '__all__'
-
-class MeetingSerializer(ModelSerializer):
-    class Meta:
-        model = Meeting
-        fields = '__all__'
+        read_only_fields = ('date_unix',)
+        exclude = ('date',)
 
 class FeedbackSerializer(ModelSerializer):
     class Meta:
@@ -88,19 +78,9 @@ class SuggestionSerializer(ModelSerializer):
         model = Suggestion
         fields = '__all__'
 
-class RiskEvaluationSerializer(ModelSerializer):
-    class Meta:
-        model = RiskEvaluation
-        fields = '__all__'
-
 class MeetingSerializer(ModelSerializer):
     class Meta:
         model = Meeting
-        fields = '__all__'
-
-class FeedbackSerializer(ModelSerializer):
-    class Meta:
-        model = Feedback
         fields = '__all__'
         
 class TaskSerializer(ModelSerializer):
