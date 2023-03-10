@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
 import "./Homepage.css";
 import AuthContext from "../context/AuthContext";
-import ProjectListItem from "../components/ProjectListItem";
+import { ProjectListItem } from "../components/ProjectListItem";
 import HomeNavbar from "../components/HomeNavbar";
 // import DateTimePicker from 'react-datetime-picker';
 import DateTimePicker from "react-datetime-picker/dist/entry.nostyle";
