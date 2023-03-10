@@ -150,7 +150,7 @@ const Projects = () => {
         },
       }
     );
-    if (response.status === 205) {
+    if (response.status === 204) {
       alert("Project Deleted!");
     } else {
       alert("Project deletion is only allowed for project managers");
@@ -359,9 +359,11 @@ const Projects = () => {
           ))}
 
           <div className="project-info-container">
-            <i onClick={deleteProject} className="delete-proj-btn">
-              <FaTrash />
-            </i>
+            <Link to={"/"}>
+              <i onClick={deleteProject} className="delete-proj-btn">
+                <FaTrash />
+              </i>
+            </Link>
             <div className="project-name">
               <h1>{project.name}</h1>
             </div>
