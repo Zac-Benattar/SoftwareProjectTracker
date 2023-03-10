@@ -220,9 +220,6 @@ const Projects = () => {
     }
   };
 
-  console.log("memebrs",membersList);
-  console.log("roles", rolesList);
-
   return (
     <>
       <div id="add-project-modal" className="edit-modal">
@@ -231,7 +228,7 @@ const Projects = () => {
           <h1>Edit this project: </h1>
           <div className="edit-project-div">
             <div className="edit-project-label">Edit Project Name:</div>
-            <div className="edit-project-div">
+            <div calassName="edit-project-div">
               <input
                 className="input-bar"
                 type="text"
