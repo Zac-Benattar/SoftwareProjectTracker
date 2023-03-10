@@ -30,7 +30,7 @@ const ListView = ({ tasks }) => {
       });
 
       const openModal = () => {
-          var modal = document.getElementById("add-project-modal");
+          var modal = document.getElementById("edit-task-modal");
           var span = document.getElementsByClassName("close")[0];
           modal.style.display = "block";
           span.onclick = function() {
@@ -94,11 +94,11 @@ const ListView = ({ tasks }) => {
 
     <>
 
-        <div id="add-project-modal" className="create-project-modal">
+        <div id="edit-task-modal" className="create-project-modal">
               
               <div className="create-project-content">
                 <div className="close" onClick={closeModal}>&times;</div>
-                <h1>Add New task</h1>
+                <h1>Edit this task</h1>
                 <form>
                   <div className="create-project-div">
                   <div className="create-project-label">Edit task name:</div>

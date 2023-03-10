@@ -4,6 +4,8 @@ import Navbar from "../components/Navbar";
 import { useParams } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import "./Homepage.css";
+import { FaTrash } from 'react-icons/fa';
+ 
 
 //QUERY - are critical actions classified separately from normal suggestions?
 //how does dismissing suggestions work
@@ -73,36 +75,48 @@ const SuggestionsForm = () => {
     }
   };
 
-  function RenderingSuggestions({ suggestions }) {
-    const allsuggestions = suggestions.map((suggestion, index) => {
-      return (
-        <div className="mainbody_container" key={index}>
-          <h3>{suggestion.id}</h3>
-          <h3>{suggestion.name}</h3>
-          <p>{suggestion.description}</p>
-          <button value={suggestion.id} onClick = {updateSuggestion}> Dismiss suggestion</button>
-        </div>
-      );
-    });
-    return <div>{allsuggestions}</div>;
-  }
   return (
-    <>
+
       <div className="home-page">
         <Navbar />
         <div className="main_container">
+          
           <p className="sug-title">Suggestions</p>
           <div className="menu_container">
-            <p>
-              {console.log(suggestions)}
-              {suggestions.length} Suggestions, {criticalActions} Critical
-              Actions
-            </p>
+
+          <div className="all-containers">
+
+          <div className="people-list">
+
+            <div className="suggestions-container">
+            
+                <div className="all-suggestions">
+
+                  {suggestions.map((suggestion, index) => (
+                  <div>
+                    <div> 
+                    <h3 className="sug-title">{suggestion.name}</h3>
+                    <p>{suggestion.description}</p>
+                    <button className="member-button" value={suggestion.id} onClick = {updateSuggestion}> Dismiss suggestion</button>
+                    </div>
+                  </div>
+
+                ))}
+
+               
+              </div>
+
+            </div>
+                         
+              
           </div>
-          <RenderingSuggestions suggestions={suggestions}/>
+            
+          </div>
+        
         </div>
       </div>
-    </>
+    </div>
+
   );
 };
 
