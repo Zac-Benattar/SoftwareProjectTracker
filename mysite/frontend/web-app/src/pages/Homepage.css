@@ -266,7 +266,7 @@ body {
     margin-left: 10%;
 }
 
-.people-container{
+.people-container, .suggestions-container{
     background-color: white;
     border-radius: 30px;
     padding: 2%;
@@ -292,7 +292,7 @@ body {
     margin: 0.5%;
 }
 
-.all-skills {
+.all-skills, .all-suggestions {
     list-style: none;
     padding-left:0;
     display: block;
@@ -351,6 +351,11 @@ body {
     width:30%;
     float:right;
     margin-bottom: 3%;
+  }
+
+  .sug-title {
+    color:red;
+    font-size:20px;
   }
 
 
@@ -451,6 +456,18 @@ body {
     /* Full height */
     overflow: auto;/* Enable scroll if needed */
     backdrop-filter: brightness(15%);
+}
+
+.edit-task-modal{
+  display: none; /* Hidden by default */
+    border: none;
+    z-index: 1; /* Sit on top */
+    top: 0;
+    width:100%;
+    height:100%;
+    /* Full height */
+    overflow: auto;/* Enable scroll if needed */
+    
 }
 
 

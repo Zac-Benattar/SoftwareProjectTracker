@@ -30,7 +30,7 @@ const ListView = ({ tasks }) => {
       });
 
       const openModal = () => {
-          var modal = document.getElementById("add-project-modal");
+          var modal = document.getElementById("edit-task-modal");
           var span = document.getElementsByClassName("close")[0];
           modal.style.display = "block";
           span.onclick = function() {
@@ -93,13 +93,16 @@ const ListView = ({ tasks }) => {
   return (
 
     <>
+    
 
-        <div id="add-project-modal" className="create-project-modal">
+   
+
+        <div id="edit-task-modal" className="edit-task-modal">
               
               <div className="create-project-content">
-                <div className="close" onClick={closeModal}>&times;</div>
-                <h1>Add New task</h1>
-                <form>
+                <div className="close" >&times;</div>
+                <h1>Edit this task</h1>
+               
                   <div className="create-project-div">
                   <div className="create-project-label">Edit task name:</div>
                   <div className="create-project-input"><input
@@ -158,9 +161,19 @@ const ListView = ({ tasks }) => {
                     <button type="submit" className="task-button">Edit Task</button>
                   </div>
                   
-                </form>
+                
               </div>
             </div>
+
+
+      
+
+
+
+    <div className="view-container">
+
+ 
+      
       
       <div className="listview-container">
         <h2 className="title-list">List View</h2>
@@ -179,6 +192,12 @@ const ListView = ({ tasks }) => {
         <tbody>{tableRows}</tbody>
         </table>
       </div>
+
+
+   
+
+      </div>
+
 
 
     </>

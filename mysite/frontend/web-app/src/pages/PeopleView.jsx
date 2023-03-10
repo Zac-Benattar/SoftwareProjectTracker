@@ -65,9 +65,6 @@ const PeopleView = () => {
         </div>
         
         </>
-        
-
-
     )
 }
 

@@ -256,14 +256,12 @@ const TasksForm = () => {
                   
                 </form>
               </div>
-              </div>
+            </div>
                
-            
-                       
           </div>
-          <div className="view-container">
-            <View />
-          </div>
+          
+          <View />
+         
         </div>
       </div>
     </>
