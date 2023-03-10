@@ -145,7 +145,7 @@ export const Register = (props) => {
         />
 
 
-        <button onClick={passwordConfirmation} className="register-button" type="submit">
+        <button onClick={() => {passwordConfirmation(); createUser();}} className="register-button" type="submit">
           Register
         </button>
       </form>
