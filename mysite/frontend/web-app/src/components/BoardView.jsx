@@ -28,6 +28,8 @@ import "../pages/tasks.css";
 
 function RenderingNotStarted({ tasks }) {
   const tableRows = tasks.map((task) => {
+    const startDate = new Date(task.start_date_unix * 1000)
+    const dateString = startDate.getHours() + ':' + startDate.getMinutes() + ' ' + startDate.getDate() + '/' + startDate.getMonth() + '/' + startDate.getFullYear()
     return (
       <div key={task.id}>
         <p className="task-info">{task.name}</p>
@@ -51,7 +53,7 @@ function RenderingStarted({ tasks }) {
 function RenderingCompleted({ tasks }) {
   const tableRows = tasks.map((task) => {
     return (
-      <div key={task.id}>   
+<div key={task.id}>   
         <p className="task-info">{task.name}</p>
       </div>
     );

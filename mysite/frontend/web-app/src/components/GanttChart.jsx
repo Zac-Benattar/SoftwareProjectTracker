@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import Chart from "react-google-charts";
+import React from 'react';
+import Chart from 'react-google-charts';
 //append array of tasks to ganttChartData const
 
 //ganttChartData const stores array of task arrays
@@ -25,16 +25,14 @@ import Chart from "react-google-charts";
 
 const GanttChart = ({ tasks }) => {
 
-  console.log(tasks)
-
   // Some of this are compatable, many are not with the required format
   const ganttChartData = tasks.map((task) => {
     return (
       [
         task.id,
         task.name,
-        task.start_date,
-        task.latest_finish,
+        new Date(task.start_date_unix * 1000),
+        new Date(task.latest_finish_date_unix * 1000),
         task.duration,
         task.completion,
         task.dependencies,
@@ -42,7 +40,19 @@ const GanttChart = ({ tasks }) => {
     );
   });
 
-  console.log(ganttChartData)
+  const columns = [
+    { type: "string", label: "Task ID" },
+    { type: "string", label: "Task Name" },
+    { type: "date", label: "Start Date" },
+    { type: "date", label: "End Date" },
+    { type: "number", label: "Duration" },
+    { type: "number", label: "Percent Complete" },
+    { type: "string", label: "Dependencies" },
+  ];
+
+  const data = [columns, ...tasks];
+
+  console.log(data)
   
   const ganttChartExampleData = [
     [

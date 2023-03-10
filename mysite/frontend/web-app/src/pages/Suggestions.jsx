@@ -46,15 +46,41 @@ const SuggestionsForm = () => {
       logoutUser();
     }
   };
+  
+  let updateSuggestion = async (e) => {
+
+    console.log("test",e)
+    let response = await fetch(
+      "http://127.0.0.1:8000/api/projects/"
+      .concat(slug)
+      .concat("/suggestions/")
+      .concat(e.target.value) + "/",
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+        body: JSON.stringify({
+          dismissed : "true",
+        }),
+      }
+    );
+    let data = await response.json();
+    if (response.status === 201) {
+      setSuggestions(data);
+      alert("Suggestion dismissed!");
+    }
+  };
 
   function RenderingSuggestions({ suggestions }) {
-    const allsuggestions = suggestions.map((suggestion) => {
+    const allsuggestions = suggestions.map((suggestion, index) => {
       return (
-        <div className="mainbody_container">
+        <div className="mainbody_container" key={index}>
           <h3>{suggestion.id}</h3>
           <h3>{suggestion.name}</h3>
           <p>{suggestion.description}</p>
-          <button> Dismiss suggestion</button>
+          <button value={suggestion.id} onClick = {updateSuggestion}> Dismiss suggestion</button>
         </div>
       );
     });

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 export const Register = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPass] = useState('');
+    const [phone, setPhonenumber] = useState('');
     const [name, setName] = useState('');
     const [confirm_password, setConfirmPass] = useState('');
     const [isError, setError] = useState(null);
@@ -55,13 +56,29 @@ export const Register = (props) => {
       }
     };
 
-
-
-
     const handleSubmit = (e) => {
         // page gets reloaded and state gets lost
         e.preventDefault()
     }
+
+    let createUser = async () => {
+      let response = await fetch("http://127.0.0.1:8000/api/users/", {
+        method : "POST",
+        headers: {
+          'Content-Type' : 'application/json',
+        },
+        body : JSON.stringify({
+          username : name,
+          password : confirm_password,
+          email : email,
+          phone : phone,
+        })
+      });
+  
+      if (response.status === 201) {
+        alert("Account successfully created!");
+      }
+    };
 
     function passwordConfirmation() {
       var password = document.getElementById("password").value;
@@ -96,6 +113,15 @@ export const Register = (props) => {
           placeholder="youremail@gmail.com"
           id="email"
           name="email"
+        />
+        <label htmlfor="phone">Phone:</label>
+        <input
+          value={phone}
+          onChange={(e) => setPhonenumber(e.target.value)}
+          type="text"
+          placeholder="Enter phone number"
+          id="phone"
+          name="phone"
         />
         <label htmlfor="password">Password:</label>
         {isError !== null && <p className="errors"> - {isError}</p>}

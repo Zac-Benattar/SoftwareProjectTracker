@@ -79,7 +79,7 @@ class ProjectSuggester:  # evaluating project's pararameters to make suggestions
                             suggestion.save()
                             # Record suggestion to the of generated suggestions
                             generated_suggestions.append(suggestion)
-                            roles_not_statisfied = False
+                            roles_not_statisfied = True
 
         return roles_not_statisfied
 
@@ -203,9 +203,9 @@ class ProjectSuggester:  # evaluating project's pararameters to make suggestions
         # The program will suggest increasing the budget.
 
         budget_ratio = project.current_budget / project.initial_budget
-        time_ratio = (datetime.datetime.now(timezone.utc) - project.start_date).total_seconds() / \
+        time_ratio = (project.current_deadline - project.start_date).total_seconds() / \
             (project.current_deadline - project.start_date).total_seconds()
-            
+        
         low_budget = False
 
         if time_ratio > budget_ratio:
