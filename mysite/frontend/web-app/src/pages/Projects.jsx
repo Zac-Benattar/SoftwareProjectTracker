@@ -109,7 +109,7 @@ const Projects = () => {
     let response = await fetch(
       "http://127.0.0.1:8000/api/projects/".concat(slug) + "/",
       {
-        method: "PUT",
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + String(authTokens.access),
@@ -133,6 +133,9 @@ const Projects = () => {
     let data = await response.json();
     if (response.status === 200) {
       setProject(data);
+    }
+    else { 
+      alert("Editing project is limited to project manager only")
     }
   };
 
