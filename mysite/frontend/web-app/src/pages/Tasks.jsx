@@ -17,6 +17,30 @@ const TasksForm = () => {
   let [tasks, setTasks] = useState([]);
   let [members, setMembers] = useState([]);
 
+  const [modalstate, setmodalstate] = useState({
+    isOpen: false,
+  });
+
+  const openModal = () => setmodalstate({ isOpen: true });
+  const closeModal = () => setmodalstate({ isOpen: false });
+
+  const viewoptions = ["Gantt Chart", "List View", "Board View"];
+  const [viewStyle, setviewStyle] = useState(viewoptions[0]);
+  const [inputs, setInputs] = useState({});
+
+
+  
+  function View() {
+    if (viewStyle === viewoptions[0]) {
+      return <GanttChart tasks={tasks} />;
+    } else if (viewStyle === viewoptions[1]) {
+      return <ListView tasks={tasks} />;
+    } else {
+      return <BoardView />;
+    }
+  }
+
+
   // Setting up states
   useEffect(() => {
     getTasks();
@@ -72,31 +96,24 @@ const TasksForm = () => {
     }
   };
 
-  const [checkedtasks, setCheckedTasks] = useState([]);
-  let [dependencies, setDependencies] = useState(["task1 ", "task2", "task3"]);
 
-  const [checked, setChecked] = useState([]);
 
-  const handleCheck = (event, checked, setChecked) => {
-    var updatedList = [...checked];
-    if (event.target.checked) {
-      updatedList = [...checked, event.target.value];
-    } else {
-      updatedList.splice(checked.indexOf(event.target.value), 1);
-    }
-    setChecked(updatedList);
-  };
 
-  const [modalstate, setmodalstate] = useState({
-    isOpen: false,
-  });
+  
 
-  const openModal = () => setmodalstate({ isOpen: true });
-  const closeModal = () => setmodalstate({ isOpen: false });
+  // const [checked, setChecked] = useState([]);
 
-  const viewoptions = ["Gantt Chart", "List View", "Board View"];
-  const [viewStyle, setviewStyle] = useState(viewoptions[0]);
-  const [inputs, setInputs] = useState({});
+  // const handleMemberCheck = (event, checked, setChecked) => {
+  //   var updatedList = [...checked];
+  //   if (event.target.checked) {
+  //     updatedList = [...checked, event.target.value];
+  //   } else {
+  //     updatedList.splice(checked.indexOf(event.target.value), 1);
+  //   }
+  //   setChecked(updatedList);
+  // };
+
+
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
@@ -105,21 +122,61 @@ const TasksForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    alert({ checked });
   };
-  const isChecked = (item) =>
-    checked.includes(item) ? "checked-item" : "not-checked-item";
 
-  function View() {
-    if (viewStyle === viewoptions[0]) {
-      return <GanttChart tasks={tasks} />;
-    } else if (viewStyle === viewoptions[1]) {
-      return <ListView tasks={tasks} />;
-    } else {
-      return <BoardView />;
-    }
-  }
+
+  //  // Add or remove checked item from list.
+  //  const handleTaskCheck = (event) => {
+  //      var updatedList = [...checkedTasks];
+  //      if (event.target.checkedTasks) {
+  //        updatedList = [...checkedTasks, event.target.value];
+  //      } else {
+  //        updatedList.splice(checkedTasks.indexOf(event.target.value), 1);
+  //      }
+  //      setCheckedTasks(updatedList);
+  //  };
+
+  //  const checkedItems = checkedTasks.length 
+  //      ? checkedTasks.reduce((total, item) => {
+  //          return total + ',' + item;
+  //  })
+  //  : "";
+
+  //  // return classes based on whether item is checked
+  //  var isChecked = (item) => 
+  //  checkedTasks.includes(item) ? "checked-item" : "not-checked-item";
+
+
+
+   
+  // Gets checked elements of a checklist.
+  let [checkedTasks, setChecked] = useState([]);
+
+  // Add or remove checked item from list.
+  const handleCheck = (event) => {
+      var updatedList = [...checkedTasks];
+      var id = event.target.value;
+      if (event.target.checked) {
+        updatedList = [...checkedTasks, event.target.value];
+      } else {
+        updatedList.splice(checkedTasks.indexOf(id), 1);
+      }
+      setChecked(updatedList);
+  };
+
+  
+  // return classes based on whether item is checked
+  var isChecked = (item) => 
+  checkedTasks.includes(item) ? "checked-item" : "not-checked-item";
+
+  // This is where all checked skills are stored.
+
+
+
+   console.log("tasks",tasks);
+   console.log("checked tasks",checkedTasks);
+
+
   return (
     <>
       <div className="home-page">
@@ -208,11 +265,21 @@ const TasksForm = () => {
                   <div className="addTaskField_container">
                     <div className="checkList">
                       <label>Add dependencies:</label>
-                      <div className="list-container">
+                      <div className="checkList">
                       
-                        {tasks.map((each_task, index) => (
+                        {tasks.map((task, index) => (
+                          <div key={index}>
+
+
+                            <input
+                            type="checkbox"
+                            value={task.name}
+                            onChange={handleCheck}
+                            />
+
+                            <span className={isChecked(task.name)}>{task.name}</span>
+                          </div>
                           
-                          <TaskDependenciesChecklist task={each_task} index={index}/>
                          ))}
 
                      
