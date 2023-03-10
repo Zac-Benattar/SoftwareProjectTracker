@@ -192,6 +192,9 @@ class RiskEvaluation(models.Model):
     def get_project_snapshot(self):
         result = pickle.loads(self.serialized_project_evaluation_data)
         return result
+    
+    def get_date_unix(self):
+        return int(self.date.timestamp())
 
 
 class Meeting(models.Model):

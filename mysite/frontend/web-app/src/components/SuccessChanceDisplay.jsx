@@ -4,6 +4,8 @@ import React from "react";
 export const SuccessChanceDisplay = ({ risk_evaluation, suggestions }) => {
 
   const suggestionCount = suggestions.length
+  const date = new Date(risk_evaluation.date_unix * 1000)
+  const dateString = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
 
   return (
     
@@ -12,7 +14,7 @@ export const SuccessChanceDisplay = ({ risk_evaluation, suggestions }) => {
       <div className="project-risk-score">
         <p className="risk-percentage">
           This project has a {risk_evaluation.success_chance}% chance of
-          success as of {risk_evaluation.date}.
+          success as of {dateString}
         </p>
       </div>
 

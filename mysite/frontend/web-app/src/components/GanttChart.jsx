@@ -111,9 +111,6 @@ const GanttChart = ({ tasks }) => {
     ],
   ];
 
-
-
-
   return (
     <div className="container mt-5">
       <h2>React Gantt Chart Example</h2>
