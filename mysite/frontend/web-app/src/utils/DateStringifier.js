@@ -50,11 +50,11 @@ class UnixDateStringifier {
     dateString += "-";
     // If month in the date is zero, append another zero to the end to get e.g. 00 rather than 0
     if (date.getUTCMonth() === 0) {
-      dateString += date.getUTCHours() + "0";
+      dateString += (date.getUTCMonth() + 1) + "0";
     } else if (date.getUTCMonth() > 0 && date.getUTCMonth() < 10) {
-      dateString += "0" + date.getUTCMonth();
+      dateString += "0" + (date.getUTCMonth() + 1);
     } else {
-      dateString += date.getUTCMonth();
+      dateString += (date.getUTCMonth() + 1);
     }
     dateString += "-";
     dateString += date.getUTCDate();
