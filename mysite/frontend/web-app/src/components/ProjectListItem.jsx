@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
 import DateStringifier from "../utils/DateStringifier";
 
-export const ProjectListItem = ({ project }) => {
+const ProjectListItem = ({ project }) => {
   const projectRoute = "/projects/".concat(project.id);
 
   return (
