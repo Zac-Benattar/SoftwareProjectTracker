@@ -146,22 +146,6 @@ class RoleViewSet(viewsets.ModelViewSet):
     serializer_class = RoleSerializer
 
 
-class ScheduleViewSet(viewsets.ModelViewSet):
-    queryset = Schedule.objects.all().select_related(
-        'member'
-    ).all()
-
-    serializer_class = ScheduleSerializer
-
-    def get_queryset(self, *args, **kwargs):
-        member_id = self.kwargs.get("member_pk")
-        try:
-            member = Member.objects.get(id=member_id)
-        except Member.DoesNotExist:
-            raise NotFound('A member with this id does not exist')
-        return self.queryset.filter(member=member)
-
-
 class TimeWorkedViewSet(viewsets.ModelViewSet):
     queryset = TimeWorked.objects.all().select_related(
         'member'

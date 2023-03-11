@@ -50,31 +50,13 @@ class SuggestionAdmin(admin.ModelAdmin):
     search_fields = ['project', 'name', 'description']
 
 
-class ScheduleAdmin(admin.ModelAdmin):
-    fieldsets = [
-        ('Details', {'fields': ('project', 'member', 'task', 'hours')}),
-    ]
-
-    list_display = ('project', 'member', 'task', 'hours')
-    list_filter = ['project', 'member', 'task']
-    search_fields = ['project', 'member', 'task']
-
-
 class RoleRequirementAdmin(admin.ModelAdmin):
-    fieldsets = [
-        ('Details', {'fields': ('role', 'skillset')}),
-    ]
-
     list_display = ('role',)
     list_filter = ['role', 'skillset']
     search_fields = ['role', 'skillset']
 
 
 class MeetingAdmin(admin.ModelAdmin):
-    fieldsets = [
-        ('Details', {'fields': ('project', 'date', 'duration', 'attendence')}),
-    ]
-
     list_display = ('project', 'date', 'duration', 'attendence')
     list_filter = ['project', 'date']
     search_fields = ['project', 'date']
@@ -99,7 +81,6 @@ admin.site.register(Role, RoleAdmin)
 admin.site.register(Member, MemberAdmin)
 admin.site.register(TimeWorked, TimeWorkedAdmin)
 admin.site.register(Suggestion, SuggestionAdmin)
-admin.site.register(Schedule, ScheduleAdmin)
 admin.site.register(RoleRequirement, RoleRequirementAdmin)
 admin.site.register(Meeting, MeetingAdmin)
 admin.site.register(Feedback, FeedbackAdmin)

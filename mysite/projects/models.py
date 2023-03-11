@@ -357,24 +357,6 @@ class RoleRequirement(models.Model):
         return output
 
 
-# I don't understand why we have this class,
-# we can just put tasks in the project
-class Schedule(models.Model):
-    member = models.ForeignKey(Member, on_delete=models.CASCADE)
-    task = models.ForeignKey(Task, on_delete=models.CASCADE)
-    hours = models.IntegerField(default=0)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
-
-    def __str__(self):
-        '''Gets string representation of the schedule object
-        Format: <schedule.member.name> <schedule.project.name>
-
-        Returns:
-            str string representation of the schedule
-        '''
-        return self.member.__str__() + ' ' + self.project.__str__()
-
-
 # Used for tracking time worked
 class TimeWorked(models.Model):
     member = models.ForeignKey(Member, on_delete=models.CASCADE)

@@ -56,11 +56,6 @@ class TimeWorkedSerializer(ModelSerializer):
         model = TimeWorked
         fields = '__all__'
 
-class ScheduleSerializer(ModelSerializer):
-    class Meta:
-        model = Schedule
-        fields = '__all__'
-
 class RiskEvaluationSerializer(ModelSerializer):
     date_unix = IntegerField(source='get_date_unix')
     class Meta:

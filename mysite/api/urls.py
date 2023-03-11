@@ -54,9 +54,6 @@ generate_suggestions_router = routers.NestedDefaultRouter( router, r'projects', 
 generate_suggestions_router.register( r'generatesuggestions', SuggestionsGeneratorViewSet, basename='project-generateSuggestions')
 
 # member routers , api call : /api/projects/pk/members/pk/model_name/pk
-schedules_router = routers.NestedDefaultRouter( members_router, r'members', lookup = 'member')
-schedules_router.register( r'schedules', ScheduleViewSet, basename='member-schedules')
-
 timeWorked_router = routers.NestedDefaultRouter( members_router, r'members', lookup = 'member')
 timeWorked_router.register( r'timeworked', TimeWorkedViewSet, basename='member-timeWorked')
 
@@ -79,7 +76,6 @@ urlpatterns = [
     path('', include(role_requirements_router.urls)),
     path('', include(timeWorked_router.urls)),
     path('', include(members_router.urls)),
-    path('', include(schedules_router.urls)),
     path('', include(tasks_router.urls)),
     path('', include(not_started_tasks_router.urls)),
     path('', include(started_tasks_router.urls)),
