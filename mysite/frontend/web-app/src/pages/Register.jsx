@@ -1,19 +1,17 @@
-import React, { useState, useContext } from "react";
-import AuthContext from "../context/AuthContext";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Register = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPass] = useState('');
+    const [username, setUsername] = useState('');
+    const [firstname, setFirstName] = useState('');
+    const [lastname, setLastName] = useState('');
     const [phone, setPhonenumber] = useState('');
-    const [name, setName] = useState('');
-    const [confirm_password, setConfirmPass] = useState('');
+    const [confirmPassword, setConfirmPass] = useState('');
     const [isError, setError] = useState(null);
 
-    let { loginUser } = useContext(AuthContext);
-
     const onPassChange = (e) => {
-      let pass = e.target.value;
       setPass({...password, 
               pass: e.target.value,
             });
@@ -45,15 +43,12 @@ const Register = (props) => {
       }
     };
 
-    const [isStrong, initRobustPassword] = useState(null);
-    const initPwdInput = async (childData) => {
-      initRobustPassword(childData);
-    };
-
     const onSubmit = async (e) => {
       try {
-        if (isStrong && passwordConfirmation() && createUser()) {
-          loginUser()
+        if (passwordConfirmation()) {
+          console.log('attempted to create a user')
+          console.log(password)
+          createUser()
         } else {
           e.preventDefault();
           e.persist();
@@ -63,57 +58,93 @@ const Register = (props) => {
       }
     };
 
-    let createUser = async () => {
+    let createUser = async (e) => {
+
+      console.log(JSON.stringify({
+        username: username,
+        password: confirmPassword,
+        email: email,
+        phone: phone
+      }))
+
       let response = await fetch("http://127.0.0.1:8000/api/users/", {
-        method : "POST",
+        method: "POST",
         headers: {
-          'Content-Type' : 'application/json',
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*"
         },
-        body : JSON.stringify({
-          username : name,
-          password : confirm_password,
-          email : email,
-          phone : phone,
+        body: JSON.stringify({
+          username: username,
+          password: confirmPassword,
+          email: email,
+          phone: phone
         })
       });
   
       if (response.status === 201) {
         alert("Account successfully created!");
+        return true
       }
+
+      return false
     };
 
     function passwordConfirmation() {
       var password = document.getElementById("password").value;
       var confirmPassword = document.getElementById("password-confirmed").value;
      
-      if (password === "") {
+      if (password === "" || confirmPassword === "") {
           alert("Error: The password field is Empty.");
+          return false;
       } else if (password !== confirmPassword) {
           alert("Please make sure your passwords match.")
+          return false;
       }
+
+      return true;
     }
 
   return (
     <div className="reg-auth-form-container">
       <form className="register-form" onSubmit={onSubmit}>
         <h2> Register here </h2>
-        <label htmlFor="name">Full name:</label>
+        <label htmlFor="firstname">First name:</label>
         <input
           data-testid="input-boxes" 
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={firstname}
+          onChange={(e) => setFirstName(e.target.value)}
           type="text"
-          placeholder="Your Name"
+          placeholder="First Name"
           id="name"
           name="name"
         />
-        <label htmlFor="email">Email:</label>
+        <label htmlFor="lastname">Last name:</label>
         <input
           data-testid="input-boxes" 
+          value={lastname}
+          onChange={(e) => setLastName(e.target.value)}
+          type="text"
+          placeholder="Last name"
+          id="last name"
+          name="last name"
+        />
+          <label htmlFor="username">Username:</label>
+        <input
+          data-testid="input-boxes" 
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          type="text"
+          placeholder="Username"
+          id="username"
+          name="username"
+        />
+        <label htmlFor="email">Email:</label>
+        <input
+          data-testid="input-boxes"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           type="email"
-          placeholder="youremail@gmail.com"
+          placeholder="example@email.com"
           id="email"
           name="email"
         />
@@ -136,25 +167,24 @@ const Register = (props) => {
           type="password"
           placeholder="********"
           id="password"
-          name="password"
-          
+          name="password"    
         />
         <label htmlFor="confirm-password">Retype Password:</label>
         <input
           data-testid="input-boxes" 
-          value={confirm_password}
+          value={confirmPassword}
           onChange={(e) => setConfirmPass(e.target.value)}
           type="password"
           placeholder="********"
           id="password-confirmed"
-          name="password"
+          name="password-confirmed"
         />
 
         <button onClick={() => { onSubmit() }} className="register-button" type="submit">
           Register
         </button>
       </form>
-      <Link data-testid="link-button"  className="link-btn" to="/login">Have an account? Login Here</Link>
+      <Link data-testid="link-button" className="link-btn" to="/login">Have an account? Login Here</Link>
     </div>
   );
 };
