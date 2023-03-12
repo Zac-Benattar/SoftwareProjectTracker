@@ -109,7 +109,7 @@ const Projects = () => {
     let response = await fetch(
       "http://127.0.0.1:8000/api/projects/".concat(slug) + "/",
       {
-        method: "PUT",
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + String(authTokens.access),
@@ -134,6 +134,9 @@ const Projects = () => {
     if (response.status === 200) {
       setProject(data);
     }
+    else { 
+      alert("Editing project is limited to project manager only")
+    }
   };
 
   let deleteProject = async () => {
@@ -147,7 +150,7 @@ const Projects = () => {
         },
       }
     );
-    if (response.status === 205) {
+    if (response.status === 204) {
       alert("Project Deleted!");
     } else {
       alert("Project deletion is only allowed for project managers");
@@ -356,9 +359,11 @@ const Projects = () => {
           ))}
 
           <div className="project-info-container">
-            <i onClick={deleteProject} className="delete-proj-btn">
-              <FaTrash />
-            </i>
+            <Link to={"/"}>
+              <i onClick={deleteProject} className="delete-proj-btn">
+                <FaTrash />
+              </i>
+            </Link>
             <div className="project-name">
               <h1>{project.name}</h1>
             </div>
@@ -372,7 +377,7 @@ const Projects = () => {
               <br />
               <br />
               <h3 className="des-title"> Project budget: </h3>
-              <p className="des"> £{project.initial_budget}</p>
+              <p className="des"> £{Math.round(project.initial_budget)}</p>
               <br />
               <br />
               <h3 className="des-title"> Project deadine: </h3>

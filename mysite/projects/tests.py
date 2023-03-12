@@ -59,14 +59,14 @@ class tester(TestCase):
     def test_task_past_deadline(self):
         example_project = Project.objects.get(name="SE_project")
         test = ProjectSuggester()
-        self.assertEqual(test.tasks_past_deadline(example_project), False, 'The fuction is wrong.')
+        self.assertEqual(test.tasks_past_deadline(example_project), False, 'The function is wrong.')
 
     # CHANGING ROLES FUNCTION
     ## function will return TRUE if the suggestion has to be displayed
     def test_missing_skillsets(self):
         example_project = Project.objects.get(name="SE_project")
         test = ProjectSuggester()
-        self.assertEqual(test.missing_skillsets(example_project), True, 'The fuction is wrong.')
+        self.assertEqual(test.missing_skillsets(example_project), True, 'The function is wrong.')
 
     # AVERAGE HAPPINESS FUNCTION
     ## function will return the average happiness
@@ -75,25 +75,26 @@ class tester(TestCase):
         test = ProjectSuggester()
         self.assertEqual(test.low_average_happiness(example_project), True, 'The fuction is wrong.')
 
-    # COUNT COMMENTS FUNCTION
-    ## function will return the number of comments
-    def test_count_comments(self):
-        example_project = Project.objects.get(name="SE_project")
-        # CREATING FILEPATH OF A CODE
-        file_path = r"C:\Users\alexp\Documents\GitHub\SoftwareProjectTracker\mysite\test\test.py"
-        test = ProjectSuggester()
-        self.assertEqual(test.count_comments(file_path, example_project), False, 'The fuction is wrong.')
+    # Not configured to work for everyone so commented out for now - Zac
+    # # COUNT COMMENTS FUNCTION
+    # ## function will return the number of comments
+    # def test_count_comments(self):
+    #     example_project = Project.objects.get(name="SE_project")
+    #     # CREATING FILEPATH OF A CODE
+    #     file_path = r"C:\Users\alexp\Documents\GitHub\SoftwareProjectTracker\mysite\test\test.py"
+    #     test = ProjectSuggester()
+    #     self.assertEqual(test.count_comments(file_path, example_project), False, 'The function is wrong.')
 
     # COMPLETION RATIO FUNCTION
     ## function will return TRUE if the suggestion has to be displayed
     def test_low_completion_ratio(self):
         example_project = Project.objects.get(name="SE_project")
         test = ProjectSuggester()
-        self.assertEqual(test.low_completion_ratio(example_project), False, 'The fuction is wrong.')
+        self.assertEqual(test.low_completion_ratio(example_project), False, 'The function is wrong.')
 
     # LOW BUDGET FUNCTION
     ## function will return TRUE if the suggestion has to be displayed
     def test_low_budget(self):
         example_project = Project.objects.get(name="SE_project")
         test = ProjectSuggester()
-        self.assertEqual(test.low_budget(example_project), True, 'The fuction is wrong.')
+        self.assertEqual(test.low_budget(example_project), True, 'The function is wrong.')

@@ -90,12 +90,15 @@ class ProjectsViewSet(viewsets.ModelViewSet):
         Returns:
             list(projects)
         '''
-        user = get_object_or_404(CustomUser, username=self.request.user)
-        members = Member.objects.filter(user=user)
-        queryset = Project.objects.all()
+        user_object = get_object_or_404(CustomUser, username=self.request.user)
+        members = get_list_or_404(Member, user=user_object)
+        queryset = None
+        
+        ids = list()
         for m in members:
-            queryset.union(Project.objects.filter(id=m.project.id))
-
+            ids.append(m.project.id)
+        queryset = Project.objects.filter(id__in=ids)
+        
         return queryset
 
 
@@ -141,22 +144,6 @@ class UserSkillViewSet(viewsets.ModelViewSet):
 class RoleViewSet(viewsets.ModelViewSet):
     queryset = Role.objects.all()
     serializer_class = RoleSerializer
-
-
-class ScheduleViewSet(viewsets.ModelViewSet):
-    queryset = Schedule.objects.all().select_related(
-        'member'
-    ).all()
-
-    serializer_class = ScheduleSerializer
-
-    def get_queryset(self, *args, **kwargs):
-        member_id = self.kwargs.get("member_pk")
-        try:
-            member = Member.objects.get(id=member_id)
-        except Member.DoesNotExist:
-            raise NotFound('A member with this id does not exist')
-        return self.queryset.filter(member=member)
 
 
 class TimeWorkedViewSet(viewsets.ModelViewSet):

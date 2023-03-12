@@ -99,6 +99,7 @@ const Homepage = () => {
       logoutUser();
     }
   };
+  var project_id;
 
   let createProject = async () => {
     let response = await fetch("http://127.0.0.1:8000/api/projects/", {
@@ -113,7 +114,7 @@ const Homepage = () => {
         client_name: projectName,
         initial_budget: projectBudget,
         current_budget: projectBudget,
-        amount_spent: projectBudget,
+        amount_spent: "0",
         start_date: projectStart,
         initial_deadline: projectDeadline,
         current_deadline: projectDeadline,
@@ -121,11 +122,28 @@ const Homepage = () => {
         gitHub_token: projectName,
       }),
     });
-
     let data = await response.json();
     if (response.status === 201) {
       setProjects([...projects, data]);
+      project_id = data.id;
     }
+  };
+
+  let createMember = async () => {
+    let response = await fetch("http://127.0.0.1:8000/api/projects/" + project_id +  "/members/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + String(authTokens.access),
+      },
+      body: JSON.stringify({
+        role : "1",
+        project : project_id,
+        user : user.id,
+        project_manager : "true",
+        salary: "1000",
+      }),
+    });
   };
 
   console.log("projects", projects);
@@ -257,7 +275,7 @@ const Homepage = () => {
             ))}
           </div>
           <span>
-            <button onClick={createProject} className="create-project-btn">
+            <button onClick={() => {createProject(); createMember();}} className="create-project-btn">
               Create Project
             </button>
           </span>

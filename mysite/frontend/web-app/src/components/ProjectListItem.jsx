@@ -2,7 +2,6 @@ import React from "react";
 import ProgressBar from "./ProgressBar";
 import "../pages/Homepage.css";
 import { Link } from "react-router-dom";
-import { FaTrash } from "react-icons/fa";
 import DateStringifier from "../utils/DateStringifier";
 
 export const ProjectListItem = ({ project }) => {
@@ -22,7 +21,7 @@ export const ProjectListItem = ({ project }) => {
         </div>
         <div className="info_container">
           <div className="info">
-            <h3>Current Budget:</h3> <p> £{project.current_budget}</p>
+            <h3>Current Budget:</h3> <p> £{Math.round(project.current_budget)}</p>
             <br />
             <br />
             <h3>Current Deadline:</h3>

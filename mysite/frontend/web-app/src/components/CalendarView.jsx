@@ -87,7 +87,7 @@ const Navigation = ({ date, setDate, setShowingEventForm }) => {
           newDate.setMonth(newDate.getMonth() - 1)
           setDate(newDate)
         }}>
-          {"<-"} {MONTHS[date.getMonth() == 0 ? 11 : date.getMonth() - 1]}
+          {"<-"} {MONTHS[date.getMonth() === 0 ? 11 : date.getMonth() - 1]}
       </div>
 
       <div className="monthAndYear">
@@ -133,18 +133,18 @@ const Event = ({ event, setViewingEvent, setShowingEventForm, deleteEvent }) => 
       <p>From <b>{event.dateFrom}</b> to <b>{event.dateTo}</b></p>
       <p>{event.meta}</p>
 
-      <button href="javascript:;" onClick={() => {
+      <button onClick={() => {
 				setViewingEvent(null)
 				setShowingEventForm({ visible: true, withEvent: event })
        }}>
         Change this event
       </button>
       
-      <button className="red" href="javascript:;" onClick={() => deleteEvent(event)}>
+      <button className="red" onClick={() => deleteEvent(event)}>
         Delete this event
       </button>
 
-      <a className="close" href="javascript:;" onClick={() => setViewingEvent(null)}>Back to calendar</a>
+      <p className="close" onClick={() => setViewingEvent(null)}>Back to calendar</p>
     </Modal>
   )
 }
@@ -180,17 +180,17 @@ const EventForm = ({ setShowingEventForm, addEvent, editEvent, withEvent, setVie
         {withEvent ? (
         	<Fragment>
             <button onClick={() => editEvent(event)}>Edit event</button>
-            <a className="close" href="javascript:;" onClick={() => {
+            <p className="close" onClick={() => {
             	setShowingEventForm({ visible: false })
             	setViewingEvent(event)}
             }>
               Cancel (go back to event view)
-            </a>
+            </p>
           </Fragment>
         ) : (
         	<Fragment>
             <button onClick={() => addEvent(event)}>Add event to calendar</button>
-            <a className="close" href="javascript:;" onClick={() => setShowingEventForm({ visible: false })}>Cancel (go back to calendar)</a>
+            <p className="close" onClick={() => setShowingEventForm({ visible: false })}>Cancel (go back to calendar)</p>
           </Fragment>
         )}
       </div>
@@ -260,7 +260,7 @@ const Grid = ({ date, events, setViewingEvent, setShowingEventForm, actualDate }
         return (
           <div 
             key={index}
-            className={`cell ${date.date.getTime() == currentDate.getTime() ? "current" : ""} ${date.date.getMonth() != actualDate.getMonth() ? "otherMonth" : ""}`
+            className={`cell ${date.date.getTime() === currentDate.getTime() ? "current" : ""} ${date.date.getMonth() !== actualDate.getMonth() ? "otherMonth" : ""}`
 						}>
             <div className="date">
               {date.date.getDate()}<a href="javascript:;" className="addEventOnDay" onClick={() => setShowingEventForm({ visible: true, preselectedDate: date.date })}>+</a>
@@ -290,29 +290,13 @@ const Calendar = ({ month, year, preloadedEvents = [] }) => {
   const [events, setEvents] = useState(parsedEvents)
   
   useEffect(() => {
-  	// You could retrieve fresh events data here
-    // So whenever the calendar month is toggled,
-    // make a request and populate `events` with the
-    // new results
-    
-    // Would be better to cache these results so you
-    // don't make needless network requests
-    // So you could maintain an array of `date`s
-    // and simply consult this before you fire off
-    // any new network requests
-  	console.log("Date has changed... Let's load some fresh data")
+  	console.log("Date changed. Reloading")
   }, [date])
 
   const addEvent = (event) => {
     setIsLoading(true)
     setShowingEventForm({ visible: false })
 
-		// These timeouts are to imitate HTTP requests
-    // So in a real impementation, you'd interact
-    // with your backend service here and handle
-    // the result accordingly...
-    // Likewise for `editEvent` and `deleteEvent`
-    // below
     setTimeout(() => {
       const parsedEvents = parseEvents([event])
       
@@ -347,7 +331,7 @@ const Calendar = ({ month, year, preloadedEvents = [] }) => {
     setViewingEvent(null)
 
     setTimeout(() => {
-      const updatedEvents = [...events].filter(finalEvent => finalEvent.id != event.id)
+      const updatedEvents = [...events].filter(finalEvent => finalEvent.id !== event.id)
       
       setEvents(updatedEvents)
       setIsLoading(false)

@@ -38,8 +38,8 @@ risk_evaluations_router.register( r'riskevaluations', RiskEvaluationViewSet, bas
 generate_risk_evaluation_router = routers.NestedDefaultRouter( router, r'projects', lookup = 'project')
 generate_risk_evaluation_router.register( r'generateriskevaluation', RiskEvaluationGeneratorViewSet, basename='project-generateRiskEvaluation')
 
-# retrain_model_router = routers.NestedDefaultRouter( router, r'projects', lookup = 'project')
-# retrain_model_router.register( r'retrainmodel', RetrainView, basename='project-retrainmodel')
+retrain_model_router = routers.NestedDefaultRouter( router, r'projects', lookup = 'project')
+retrain_model_router.register( r'retrainmodel', RetrainView, basename='project-retrainmodel')
 
 meetings_router = routers.NestedDefaultRouter( router, r'projects', lookup = 'project')
 meetings_router.register( r'meetings', MeetingViewSet, basename='project-meetings')
@@ -54,9 +54,6 @@ generate_suggestions_router = routers.NestedDefaultRouter( router, r'projects', 
 generate_suggestions_router.register( r'generatesuggestions', SuggestionsGeneratorViewSet, basename='project-generateSuggestions')
 
 # member routers , api call : /api/projects/pk/members/pk/model_name/pk
-schedules_router = routers.NestedDefaultRouter( members_router, r'members', lookup = 'member')
-schedules_router.register( r'schedules', ScheduleViewSet, basename='member-schedules')
-
 timeWorked_router = routers.NestedDefaultRouter( members_router, r'members', lookup = 'member')
 timeWorked_router.register( r'timeworked', TimeWorkedViewSet, basename='member-timeWorked')
 
@@ -79,7 +76,6 @@ urlpatterns = [
     path('', include(role_requirements_router.urls)),
     path('', include(timeWorked_router.urls)),
     path('', include(members_router.urls)),
-    path('', include(schedules_router.urls)),
     path('', include(tasks_router.urls)),
     path('', include(not_started_tasks_router.urls)),
     path('', include(started_tasks_router.urls)),
