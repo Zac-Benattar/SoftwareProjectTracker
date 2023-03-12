@@ -43,5 +43,4 @@ function App() {
   );
 }
 
-// NEED TO CHANGE ROUTES TO SLUG - COULD NOT GET THIS WROK
 export default App;

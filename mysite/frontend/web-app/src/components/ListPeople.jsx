@@ -31,7 +31,7 @@ export const ListPeople = ({ member }) => {
   };
 
   let getSkills = async () => {
-    let response = await fetch("/api/users/" + member.user + "/skills");
+    let response = await fetch("/api/users/" + member.user + "/skills/");
     let data = await response.json();
     console.log("Data:", data);
     setSkills(data);
@@ -44,7 +44,7 @@ export const ListPeople = ({ member }) => {
       </i>
       <div className="people-info">
         <h2>
-          Name: {user.first_name} {user.last_name}{" "}
+          Name: {user.first_name} {user.last_name}
         </h2>
         <h3> Role: {role.name} </h3>
 
