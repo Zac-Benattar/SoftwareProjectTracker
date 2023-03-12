@@ -96,8 +96,9 @@ export const Register = (props) => {
     <div className="reg-auth-form-container">
       <form className="register-form" onSubmit={handleSubmit}>
         <h2> Register here </h2>
-        <label htmlfor="name">Full name:</label>
+        <label htmlFor="name">Full name:</label>
         <input
+          data-testid="input-boxes" 
           value={name}
           onChange={(e) => setName(e.target.value)}
           type="text"
@@ -105,8 +106,9 @@ export const Register = (props) => {
           id="name"
           name="name"
         />
-        <label htmlfor="email">Email:</label>
+        <label htmlFor="email">Email:</label>
         <input
+          data-testid="input-boxes" 
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           type="email"
@@ -114,8 +116,9 @@ export const Register = (props) => {
           id="email"
           name="email"
         />
-        <label htmlfor="phone">Phone:</label>
+        <label htmlFor="phone">Phone:</label>
         <input
+          data-testid="input-boxes"
           value={phone}
           onChange={(e) => setPhonenumber(e.target.value)}
           type="text"
@@ -123,9 +126,10 @@ export const Register = (props) => {
           id="phone"
           name="phone"
         />
-        <label htmlfor="password">Password:</label>
+        <label htmlFor="password">Password:</label>
         {isError !== null && <p className="errors"> - {isError}</p>}
         <input
+          data-testid="input-boxes"
           value={password}
           onChange={(e) => {onPassChange(e);setPass(e.target.value);}}
           type="password"
@@ -134,8 +138,9 @@ export const Register = (props) => {
           name="password"
           
         />
-        <label htmlfor="confirm-password">Password:</label>
+        <label htmlFor="confirm-password">Retype Password:</label>
         <input
+          data-testid="input-boxes" 
           value={confirm_password}
           onChange={(e) => setConfirmPass(e.target.value)}
           type="password"
@@ -149,7 +154,7 @@ export const Register = (props) => {
           Register
         </button>
       </form>
-      <Link className="link-btn" to="/login">Have an account? Login Here</Link>
+      <Link data-testid="link-button"  className="link-btn" to="/login">Have an account? Login Here</Link>
     </div>
   );
 };
