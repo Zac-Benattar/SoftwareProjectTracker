@@ -41,6 +41,16 @@
     margin-top:5%;
   }
 
+  .gantt-view-container {
+    background-color:  rgb(232, 232, 232);
+    padding:2%;
+    width: 60%;
+    margin-left:15%;
+    border-radius:8px;
+    margin-top:5%;
+  }
+  
+
   .title-list{
     color: #9c00fd;
     margin-top:0;

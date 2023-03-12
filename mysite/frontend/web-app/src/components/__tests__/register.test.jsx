@@ -14,5 +14,5 @@ test('renders registeration link', () => {
 test('renders input boxes', () => {
     render(<Router><Register/></Router>);
     const registerLink = screen.getAllByTestId("input-boxes");
-    expect(registerLink.length).toBe(5);
+    expect(registerLink.length).toBe(7);
 }) 
