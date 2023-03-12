@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import AuthContext from "../context/AuthContext";
 import { Link } from "react-router-dom";
 
-export const Register = (props) => {
+const Register = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPass] = useState('');
     const [phone, setPhonenumber] = useState('');
     const [name, setName] = useState('');
     const [confirm_password, setConfirmPass] = useState('');
     const [isError, setError] = useState(null);
+
+    let { loginUser } = useContext(AuthContext);
 
     const onPassChange = (e) => {
       let pass = e.target.value;
@@ -42,24 +45,23 @@ export const Register = (props) => {
       }
     };
 
-
     const [isStrong, initRobustPassword] = useState(null);
     const initPwdInput = async (childData) => {
       initRobustPassword(childData);
     };
+
     const onSubmit = async (e) => {
       try {
-        e.preventDefault();
-        e.persist();
+        if (isStrong && passwordConfirmation() && createUser()) {
+          loginUser()
+        } else {
+          e.preventDefault();
+          e.persist();
+        }
       } catch (error) {
         throw error;
       }
     };
-
-    const handleSubmit = (e) => {
-        // page gets reloaded and state gets lost
-        e.preventDefault()
-    }
 
     let createUser = async () => {
       let response = await fetch("http://127.0.0.1:8000/api/users/", {
@@ -84,17 +86,16 @@ export const Register = (props) => {
       var password = document.getElementById("password").value;
       var confirmPassword = document.getElementById("password-confirmed").value;
      
-      if (password == "") {
+      if (password === "") {
           alert("Error: The password field is Empty.");
-      } else if (password != confirmPassword) {
+      } else if (password !== confirmPassword) {
           alert("Please make sure your passwords match.")
       }
     }
 
-
   return (
     <div className="reg-auth-form-container">
-      <form className="register-form" onSubmit={handleSubmit}>
+      <form className="register-form" onSubmit={onSubmit}>
         <h2> Register here </h2>
         <label htmlFor="name">Full name:</label>
         <input
@@ -149,8 +150,7 @@ export const Register = (props) => {
           name="password"
         />
 
-
-        <button onClick={() => {passwordConfirmation(); createUser();}} className="register-button" type="submit">
+        <button onClick={() => { onSubmit() }} className="register-button" type="submit">
           Register
         </button>
       </form>

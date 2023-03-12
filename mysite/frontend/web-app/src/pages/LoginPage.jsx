@@ -28,8 +28,7 @@ const LoginPage = (props) => {
         />
 
         <button className="login-button" type="submit">
-          {" "}
-          Log-in{" "}
+          Log-in
         </button>
       </form>
       <Link className="link-btn" to="/register">Register</Link>
