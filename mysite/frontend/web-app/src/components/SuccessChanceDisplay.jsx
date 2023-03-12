@@ -9,7 +9,7 @@ export const SuccessChanceDisplay = ({ risk_evaluation, suggestions }) => {
     <div className="risk-info-container">
       <div className="project-risk-score">
         <p className="risk-percentage">
-          This project has a {risk_evaluation.success_chance}% chance of success
+          This project has a {parseFloat(risk_evaluation.success_chance).toFixed(2)}% chance of success
           as of {DateStringifier.getTimeFromUNIXTimestampSeconds(risk_evaluation.date_unix)}
         </p>
       </div>

@@ -377,7 +377,7 @@ const Projects = () => {
               <br />
               <br />
               <h3 className="des-title"> Project budget: </h3>
-              <p className="des"> £{project.initial_budget}</p>
+              <p className="des"> £{Math.round(project.initial_budget)}</p>
               <br />
               <br />
               <h3 className="des-title"> Project deadine: </h3>
