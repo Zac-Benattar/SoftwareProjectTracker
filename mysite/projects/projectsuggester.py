@@ -11,7 +11,7 @@ all_feedback = Feedback.objects.all()
 
 generated_suggestions = list()
 
-class ProjectSuggester:  # evaluating project's pararameters to make suggestions
+class ProjectSuggester:  # evaluating project's parameters to make suggestions
 
     def __init__(self):
         pass
@@ -25,7 +25,7 @@ class ProjectSuggester:  # evaluating project's pararameters to make suggestions
         return generated_suggestions
 
     def tasks_past_deadline(self, project):
-        # For all uncompleted task, If currentDate > taskDeadline.
+        # For all uncompleted tasks, If currentDate > taskDeadline.
         # The program will suggest allocating more people to that task.
 
         task_past_deadline = False
