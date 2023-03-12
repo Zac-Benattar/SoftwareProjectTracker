@@ -228,7 +228,7 @@ const Projects = () => {
           <h1>Edit this project: </h1>
           <div className="edit-project-div">
             <div className="edit-project-label">Edit Project Name:</div>
-            <div calassName="edit-project-div">
+            <div className="edit-project-div">
               <input
                 className="input-bar"
                 type="text"
