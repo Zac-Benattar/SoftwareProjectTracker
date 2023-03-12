@@ -14,7 +14,7 @@ const LoginPage = (props) => {
         <label htmlFor="username">Username:</label>
         <input
           type="username"
-          placeholder="username"
+          placeholder="Username"
           id="username"
           name="username"
         />
@@ -22,7 +22,7 @@ const LoginPage = (props) => {
         <label htmlFor="password">Password:</label>
         <input
           type="password"
-          placeholder="********"
+          placeholder="Password"
           id="password"
           name="password"
         />

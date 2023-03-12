@@ -11,12 +11,32 @@ test('username input should be rendered', () => {
 
 test('password input should be rendered', () => {
     render(<Router><LoginPage/></Router>);
-    const userNameInput = screen.getByPlaceholderText(/password/i);
-    expect(userNameInput).toBeInTheDocument();
+    const passInput = screen.getByPlaceholderText(/password/i);
+    expect(passInput).toBeInTheDocument();
 })
 
 test('button input should be rendered', () => {
     render(<Router><LoginPage/></Router>);
-    const userNameInput = screen.getByRole('button');
-    expect(userNameInput).toBeInTheDocument();
+    const buttonInput = screen.getByRole('button');
+    expect(buttonInput).toBeInTheDocument();
 })
+
+test('username input should be empty', () => {
+    render(<Router><LoginPage/></Router>);
+    const userNameInput = screen.getByPlaceholderText(/username/i);;
+    expect(userNameInput.value).toBe("");
+})
+
+test('password input should be empty', () => {
+    render(<Router><LoginPage/></Router>);
+    const passInput = screen.getByPlaceholderText(/password/i);;
+    expect(passInput.value).toBe("");
+})
+
+
+test('button input should be disabled', () => {
+    render(<Router><LoginPage/></Router>);
+    const buttonInput = screen.getByRole('button');
+    expect(buttonInput).toBeDisabled();
+})
+

@@ -1,5 +1,6 @@
 import React from "react";
 import Chart from "react-google-charts";
+import "../pages/tasks.css";
 //append array of tasks to ganttChartData const
 
 //ganttChartData const stores array of task arrays
@@ -115,7 +116,8 @@ const GanttChart = ({ tasks }) => {
   console.log(data)
 
   return (
-    <div className="container mt-5">
+    <div className="gantt-view-container">
+    <div className="gantt-chart">
       <Chart
         width={"700px"}
         height={"410px"}
@@ -124,6 +126,7 @@ const GanttChart = ({ tasks }) => {
         data={data}
         rootProps={{ "data-testid": "1" }}
       />
+    </div>
     </div>
   );
 };
