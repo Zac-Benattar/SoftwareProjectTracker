@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 export const Register = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPass] = useState('');
+    const [username, setUsername] = useState('');
+    const [firstname, setFirstName] = useState('');
+    const [lastname, setLastName] = useState('');
     const [phone, setPhonenumber] = useState('');
     const [name, setName] = useState('');
     const [confirm_password, setConfirmPass] = useState('');
@@ -96,23 +99,43 @@ export const Register = (props) => {
     <div className="reg-auth-form-container">
       <form className="register-form" onSubmit={handleSubmit}>
         <h2> Register here </h2>
-        <label htmlFor="name">Full name:</label>
+        <label htmlFor="firstname">First name:</label>
         <input
           data-testid="input-boxes" 
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={firstname}
+          onChange={(e) => setFirstName(e.target.value)}
           type="text"
-          placeholder="Your Name"
+          placeholder="First Name"
           id="name"
           name="name"
         />
-        <label htmlFor="email">Email:</label>
+        <label htmlFor="lastname">Last name:</label>
         <input
           data-testid="input-boxes" 
+          value={lastname}
+          onChange={(e) => setLastName(e.target.value)}
+          type="text"
+          placeholder="Last name"
+          id="last name"
+          name="last name"
+        />
+          <label htmlFor="username">Username:</label>
+        <input
+          data-testid="input-boxes" 
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          type="text"
+          placeholder="Username"
+          id="username"
+          name="username"
+        />
+        <label htmlFor="email">Email:</label>
+        <input
+          data-testid="input-boxes"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           type="email"
-          placeholder="youremail@gmail.com"
+          placeholder="example@email.com"
           id="email"
           name="email"
         />
@@ -135,8 +158,7 @@ export const Register = (props) => {
           type="password"
           placeholder="********"
           id="password"
-          name="password"
-          
+          name="password"    
         />
         <label htmlFor="confirm-password">Retype Password:</label>
         <input
@@ -149,12 +171,13 @@ export const Register = (props) => {
           name="password"
         />
 
-
-        <button onClick={() => {passwordConfirmation(); createUser();}} className="register-button" type="submit">
+        <button 
+          onClick={() => {passwordConfirmation(); createUser();}} 
+           className="register-button" type="submit">
           Register
         </button>
       </form>
-      <Link data-testid="link-button"  className="link-btn" to="/login">Have an account? Login Here</Link>
+      <Link data-testid="link-button" className="link-btn" to="/login">Have an account? Login Here</Link>
     </div>
   );
 };
