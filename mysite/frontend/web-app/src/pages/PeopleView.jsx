@@ -44,8 +44,6 @@ const PeopleView = () => {
     }
   };
 
-  console.log("members", members)
-
     return (
         <>
         <div className="home-page">

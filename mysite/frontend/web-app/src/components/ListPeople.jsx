@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ProgressBar } from "./ProgressBar";
-import { Homepage } from "../pages/Homepage";
 import "../pages/Homepage.css";
-import { Link } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
 
 export const ListPeople = ({ member }) => {
@@ -11,30 +8,30 @@ export const ListPeople = ({ member }) => {
   let [skills, setSkills] = useState([]);
 
   useEffect(() => {
-    getUsers();
+    getUser();
     getRoles();
     getSkills();
   }, []);
 
-  let getUsers = async () => {
+  let getUser = async () => {
     let response = await fetch("/api/users/" + member.id + "/");
     let data = await response.json();
-    console.log("Data:", data);
     setUsers(data);
   };
 
   let getRoles = async () => {
     let response = await fetch("/api/roles/" + member.role + "/");
     let data = await response.json();
-    console.log("Data:", data);
     setRoles(data);
   };
 
   let getSkills = async () => {
+
     let response = await fetch("/api/users/" + member.user + "/skills/");
     let data = await response.json();
-    console.log("Data:", data);
+    
     setSkills(data);
+  
   };
 
   return (
