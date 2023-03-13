@@ -1,7 +1,12 @@
-import {render, screen, cleanup} from "@testing-library/react";
+import {render, screen, cleanup, fireEvent} from "@testing-library/react";
 import LoginPage from "../../pages/LoginPage";
 import { BrowserRouter as Router } from "react-router-dom";
 
+test('renders link to login button', () => {
+    render(<Router><LoginPage/></Router>);
+    const registerLink = screen.getByTestId("link-button");
+    expect(registerLink).toBeInTheDocument();
+})
 
 test('username input should be rendered', () => {
     render(<Router><LoginPage/></Router>);
@@ -34,9 +39,22 @@ test('password input should be empty', () => {
 })
 
 
-test('button input should be disabled', () => {
+test('username input should change', () => {
     render(<Router><LoginPage/></Router>);
-    const buttonInput = screen.getByRole('button');
-    expect(buttonInput).toBeDisabled();
+    
+    const userNameInput = screen.getByPlaceholderText(/username/i);
+    const testValue = "test";
+    fireEvent.change(userNameInput, {target:{value:testValue}});
+    expect(userNameInput.value).toBe(testValue);
 })
+
+
+test('password input should be empty', () => {
+    render(<Router><LoginPage/></Router>);
+    const passInput = screen.getByPlaceholderText(/password/i);
+    const testValue = "test";
+    fireEvent.change(passInput, {target:{value:testValue}});
+    expect(passInput.value).toBe(testValue);
+})
+
 

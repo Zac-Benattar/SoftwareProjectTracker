@@ -31,7 +31,7 @@ const LoginPage = (props) => {
           Log-in
         </button>
       </form>
-      <Link className="link-btn" to="/register">Register</Link>
+      <Link  data-testid="link-button"  className="link-btn" to="/register">Register</Link>
     </div>
   );
 };
