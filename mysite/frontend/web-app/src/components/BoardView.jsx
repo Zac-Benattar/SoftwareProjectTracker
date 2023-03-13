@@ -28,8 +28,17 @@ import "../pages/tasks.css";
 
 function RenderingNotStarted({ tasks }) {
   const tableRows = tasks.map((task) => {
-    const startDate = new Date(task.start_date_unix * 1000)
-    const dateString = startDate.getHours() + ':' + startDate.getMinutes() + ' ' + startDate.getDate() + '/' + startDate.getMonth() + '/' + startDate.getFullYear()
+    const startDate = new Date(task.start_date_unix * 1000);
+    const dateString =
+      startDate.getHours() +
+      ":" +
+      startDate.getMinutes() +
+      " " +
+      startDate.getDate() +
+      "/" +
+      startDate.getMonth() +
+      "/" +
+      startDate.getFullYear();
     return (
       <div key={task.id}>
         <p className="task-info">{task.name}</p>
@@ -42,7 +51,7 @@ function RenderingNotStarted({ tasks }) {
 function RenderingStarted({ tasks }) {
   const tableRows = tasks.map((task) => {
     return (
-      <div key={task.id}> 
+      <div key={task.id}>
         <p className="task-info">{task.name}</p>
       </div>
     );
@@ -53,7 +62,7 @@ function RenderingStarted({ tasks }) {
 function RenderingCompleted({ tasks }) {
   const tableRows = tasks.map((task) => {
     return (
-<div key={task.id}>   
+      <div key={task.id}>
         <p className="task-info">{task.name}</p>
       </div>
     );
@@ -128,9 +137,6 @@ const BoardView = () => {
     }
   };
 
- 
-
-
   // Obtaining the projects the user is involved in via a GET request to the api referencing our authorisation token
   // Need to check this URLSS
   let getFinishedTasks = async (e) => {
@@ -164,22 +170,17 @@ const BoardView = () => {
         <table>
           <thead>
             <tr className="board-headers">
-
-           
-            
               <th>
                 <h2 className="task-category">Not started</h2>
               </th>
-              
+
               <th>
                 <h2 className="task-category">Started</h2>
               </th>
               <th>
                 <h2 className="task-category">Completed</h2>
               </th>
-
             </tr>
-            
           </thead>
           <tbody>
             <tr className="board-view-row">
@@ -202,5 +203,3 @@ const BoardView = () => {
 };
 
 export default BoardView;
-
-

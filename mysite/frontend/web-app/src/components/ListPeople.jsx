@@ -26,12 +26,10 @@ export const ListPeople = ({ member }) => {
   };
 
   let getSkills = async () => {
-
     let response = await fetch("/api/users/" + member.user + "/skills/");
     let data = await response.json();
-    
+
     setSkills(data);
-  
   };
 
   return (
@@ -47,7 +45,9 @@ export const ListPeople = ({ member }) => {
 
         <ul className="all-skills">
           {skills.map((skill, index) => (
-            <li key={index} className="skill">{skill.name}</li>
+            <li key={index} className="skill">
+              {skill.name}
+            </li>
           ))}
         </ul>
         <p> Work hours: {member.work_hours}</p>
