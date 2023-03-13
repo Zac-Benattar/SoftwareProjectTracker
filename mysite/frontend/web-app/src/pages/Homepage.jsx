@@ -145,10 +145,6 @@ const Homepage = () => {
     });
   };
 
-  console.log("projects", projects);
-  console.log("membersList", membersList);
-  console.log("roleslist", rolesList);
-
   return (
     <>
       <div id="add-project-modal" className="create-project-modal">

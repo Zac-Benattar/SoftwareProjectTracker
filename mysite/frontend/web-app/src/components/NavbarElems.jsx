@@ -1,9 +1,9 @@
-import { FaTimes } from 'react-icons/fa';
-import { NavLink as Link } from 'react-router-dom';
-import styled from 'styled-components';
-  
+import { FaTimes } from "react-icons/fa";
+import { NavLink as Link } from "react-router-dom";
+import styled from "styled-components";
+
 export const Nav = styled.nav`
-  background: #63D471;
+  background: #63d471;
   height: 85px;
   display: flex;
   justify-content: space-between;
@@ -12,7 +12,7 @@ export const Nav = styled.nav`
   /* Third Nav */
   /* justify-content: flex-start; */
 `;
-  
+
 export const NavLink = styled(Link)`
   color: #808080;
   display: flex;
@@ -25,7 +25,7 @@ export const NavLink = styled(Link)`
     color: #000000;
   }
 `;
-  
+
 export const Bars = styled(FaTimes)`
   display: none;
   color: #808080;
@@ -39,7 +39,7 @@ export const Bars = styled(FaTimes)`
     cursor: pointer;
   }
 `;
-  
+
 export const NavMenu = styled.div`
   display: flex;
   align-items: center;
@@ -53,7 +53,7 @@ export const NavMenu = styled.div`
     display: none;
   }
 `;
-  
+
 export const NavBtn = styled.nav`
   display: flex;
   align-items: center;
@@ -65,7 +65,7 @@ export const NavBtn = styled.nav`
     display: none;
   }
 `;
-  
+
 export const NavBtnLink = styled(Link)`
   border-radius: 4px;
   background: #808080;

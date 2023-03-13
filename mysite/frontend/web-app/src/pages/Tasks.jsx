@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Modal } from "react-bootstrap";
 import Navbar from "../components/Navbar";
 import GanttChart from "../components/GanttChart";
 import ListView from "../components/ListView";
@@ -7,8 +6,6 @@ import BoardView from "../components/BoardView";
 import "./tasks.css";
 import { useParams } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
-import MembersChecklist from "../components/MembersChecklist";
-import TaskDependenciesChecklist from "../components/TaskDependenciesChecklist";
 
 const TasksForm = () => {
   // Deconstructing the relevent sections from AuthContext
@@ -22,27 +19,24 @@ const TasksForm = () => {
   });
 
   const openModal = () => {
-        var modal = document.getElementById("add-project-modal");
-        var span = document.getElementsByClassName("close")[0];
-        modal.style.display = "block";
-        span.onclick = function() {
-          modal.style.display = "none";
-        }
-        window.onclick = function(event) {
-          if (event.target === modal) {
-            modal.style.display = "none";
-          }
-        }
-    
+    var modal = document.getElementById("add-project-modal");
+    var span = document.getElementsByClassName("close")[0];
+    modal.style.display = "block";
+    span.onclick = function () {
+      modal.style.display = "none";
+    };
+    window.onclick = function (event) {
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    };
   };
-  const closeModal = () => setmodalstate({ isOpen: false });
 
+  const closeModal = () => setmodalstate({ isOpen: false });
   const viewoptions = ["Gantt Chart", "List View", "Board View"];
   const [viewStyle, setviewStyle] = useState(viewoptions[0]);
   const [inputs, setInputs] = useState({});
 
-
-  
   function View() {
     if (viewStyle === viewoptions[0]) {
       return <GanttChart tasks={tasks} />;
@@ -52,7 +46,6 @@ const TasksForm = () => {
       return <BoardView />;
     }
   }
-
 
   // Setting up states
   useEffect(() => {
@@ -83,9 +76,9 @@ const TasksForm = () => {
     }
   };
 
-  /* Obtaining the members of the project to be chosen for the task via a GET request to the api 
+  /* Obtaining the members of the project to be chosen for the task via a GET request to the api
    * referencing our authorisation token */
-  
+
   let getMembers = async (e) => {
     let response = await fetch(
       "http://127.0.0.1:8000/api/projects/".concat(slug).concat("/members/"),
@@ -99,7 +92,6 @@ const TasksForm = () => {
     );
     let data = await response.json();
 
-
     // If the response is good - set the state of projects to be the result of the GET request
     if (response.status === 200) {
       setMembers(data);
@@ -108,7 +100,6 @@ const TasksForm = () => {
       logoutUser();
     }
   };
-
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -125,28 +116,24 @@ const TasksForm = () => {
 
   // Add or remove checked item from list.
   const handleCheck = (event) => {
-      var updatedList = [...checkedTasks];
-      var id = event.target.value;
-      if (event.target.checked) {
-        updatedList = [...checkedTasks, event.target.value];
-      } else {
-        updatedList.splice(checkedTasks.indexOf(id), 1);
-      }
-      setChecked(updatedList);
+    var updatedList = [...checkedTasks];
+    var id = event.target.value;
+    if (event.target.checked) {
+      updatedList = [...checkedTasks, event.target.value];
+    } else {
+      updatedList.splice(checkedTasks.indexOf(id), 1);
+    }
+    setChecked(updatedList);
   };
 
-  
   // return classes based on whether item is checked
-  var isChecked = (item) => 
-  checkedTasks.includes(item) ? "checked-item" : "not-checked-item";
+  var isChecked = (item) =>
+    checkedTasks.includes(item) ? "checked-item" : "not-checked-item";
 
   // This is where all checked skills are stored.
 
-
-
-   console.log("tasks",tasks);
-   console.log("checked tasks",checkedTasks);
-
+  console.log("tasks", tasks);
+  console.log("checked tasks", checkedTasks);
 
   return (
     <>
@@ -168,100 +155,99 @@ const TasksForm = () => {
               </select>
             </div>
 
-
             <div className="task-page-menu">
-                
-                    <button  
-                      className= "add-proj-btn" 
-                      onClick={openModal} 
-                      > 
-                      Add New Task
-                    </button>
+              <button className="add-proj-btn" onClick={openModal}>
+                Add New Task
+              </button>
             </div>
 
-          
-
             <div id="add-project-modal" className="create-project-modal">
-              
               <div className="create-project-content">
-                <div className="close" onClick={closeModal}>&times;</div>
+                <div className="close" onClick={closeModal}>
+                  &times;
+                </div>
                 <h1>Add New task</h1>
                 <form onSubmit={handleSubmit}>
                   <div className="create-project-div">
-                  <div className="create-project-label">Task Name:</div>
-                  <div className="create-project-input"><input
-                      className="input-bar"
-                      type="text"
-                      name="taskname"
-                      value={inputs.taskname || ""}
-                      onChange={handleChange}
-                    /></div>
+                    <div className="create-project-label">Task Name:</div>
+                    <div className="create-project-input">
+                      <input
+                        className="input-bar"
+                        type="text"
+                        name="taskname"
+                        value={inputs.taskname || ""}
+                        onChange={handleChange}
+                      />
+                    </div>
                   </div>
                   <div className="create-project-div">
-                  <div className="create-project-label">Task Description</div>
-                  <div className="create-project-input">  <input
-                      className="input-bar"
-                      type="text"
-                      name="taskdescription"
-                      value={inputs.taskdescription || ""}
-                      onChange={handleChange}
-                    /></div>
+                    <div className="create-project-label">Task Description</div>
+                    <div className="create-project-input">
+                      <input
+                        className="input-bar"
+                        type="text"
+                        name="taskdescription"
+                        value={inputs.taskdescription || ""}
+                        onChange={handleChange}
+                      />
+                    </div>
                   </div>
                   <div className="create-project-div">
-                  <div className="create-project-label">Task date:</div>
-                  <div className="create-project-input"> <input
-                      className="input-bar"
-                      type="date"
-                      name="startdate"
-                      value={inputs.startdate || ""}
-                      onChange={handleChange}
-                    /></div> 
+                    <div className="create-project-label">Task date:</div>
+                    <div className="create-project-input">
+                      <input
+                        className="input-bar"
+                        type="date"
+                        name="startdate"
+                        value={inputs.startdate || ""}
+                        onChange={handleChange}
+                      />
+                    </div>
                   </div>
                   <div className="create-project-div">
-                  <div className="create-project-label">Duration:</div>
-                  <div className="create-project-input"><input
-                      className="input-bar"
-                      type="text"
-                      name="duration"
-                      value={inputs.duration || ""}
-                      onChange={handleChange}
-                    /></div>
+                    <div className="create-project-label">Duration:</div>
+                    <div className="create-project-input">
+                      <input
+                        className="input-bar"
+                        type="text"
+                        name="duration"
+                        value={inputs.duration || ""}
+                        onChange={handleChange}
+                      />
+                    </div>
                   </div>
-                
+
                   <div className="create-project-div">
                     <div className="checkList">
-                    <div className="create-project-label">Pick task dependencies:</div>
+                      <div className="create-project-label">
+                        Pick task dependencies:
+                      </div>
                       <div className="checkList">
-                      
                         {tasks.map((task, index) => (
                           <div key={index}>
-
-
                             <input
-                            type="checkbox"
-                            value={task.name}
-                            onChange={handleCheck}
+                              type="checkbox"
+                              value={task.name}
+                              onChange={handleCheck}
                             />
 
-                            <span className={isChecked(task.name)}>{task.name}</span>
+                            <span className={isChecked(task.name)}>
+                              {task.name}
+                            </span>
                           </div>
-                          
-                         ))}
-
-                     
+                        ))}
                       </div>
                     </div>
-                    <button type="submit" className="task-button">Add Task</button>
+                    <button type="submit" className="task-button">
+                      Add Task
+                    </button>
                   </div>
-                  
                 </form>
               </div>
             </div>
-               
           </div>
-          
+
           <View />
-         
         </div>
       </div>
     </>

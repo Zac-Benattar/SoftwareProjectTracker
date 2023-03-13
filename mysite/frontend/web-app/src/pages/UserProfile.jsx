@@ -1,14 +1,11 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import SuccessChanceDisplay from "../components/SuccessChanceDisplay";
 import AuthContext from "../context/AuthContext";
 import HomeNavbar from "../components/HomeNavbar";
-import { FaUser } from 'react-icons/fa';
+import { FaUser } from "react-icons/fa";
 import "./Homepage.css";
 import SkillChecklist from "../components/SkillChecklist";
 import { isAccordionItemSelected } from "react-bootstrap/esm/AccordionContext";
-
 
 const UserProfile = () => {
   // Deconstructing the relevent sections from AuthContext
@@ -66,23 +63,16 @@ const UserProfile = () => {
     }
   };
 
-
-  console.log("current user", currentUser);
-  console.log("current user id", currentUser.id);
-  console.log(user.user_id);
-
-
   let getSkills = async () => {
-    let response = await fetch('/api/users/'+user.user_id+'/skills/');
+    let response = await fetch("/api/users/" + user.user_id + "/skills/");
     let data = await response.json();
     console.log("Data:", data);
     setSkills(data);
   };
 
-
   let updateFirstName = async () => {
     let response = await fetch(
-      "http://127.0.0.1:8000/api/users/"+ user.user_id + "/",
+      "http://127.0.0.1:8000/api/users/" + user.user_id + "/",
       {
         method: "PATCH",
         headers: {
@@ -102,7 +92,7 @@ const UserProfile = () => {
 
   let updateLastName = async () => {
     let response = await fetch(
-      "http://127.0.0.1:8000/api/users/"+ user.user_id + "/",
+      "http://127.0.0.1:8000/api/users/" + user.user_id + "/",
       {
         method: "PATCH",
         headers: {
@@ -122,7 +112,7 @@ const UserProfile = () => {
 
   let updateUsername = async () => {
     let response = await fetch(
-      "http://127.0.0.1:8000/api/users/"+ user.user_id + "/",
+      "http://127.0.0.1:8000/api/users/" + user.user_id + "/",
       {
         method: "PATCH",
         headers: {
@@ -130,7 +120,7 @@ const UserProfile = () => {
           Authorization: "Bearer " + String(authTokens.access),
         },
         body: JSON.stringify({
-          username : username,
+          username: username,
         }),
       }
     );
@@ -142,7 +132,7 @@ const UserProfile = () => {
 
   let updatePassword = async () => {
     let response = await fetch(
-      "http://127.0.0.1:8000/api/users/"+ user.user_id + "/",
+      "http://127.0.0.1:8000/api/users/" + user.user_id + "/",
       {
         method: "PATCH",
         headers: {
@@ -150,7 +140,7 @@ const UserProfile = () => {
           Authorization: "Bearer " + String(authTokens.access),
         },
         body: JSON.stringify({
-          password : verPassword,
+          password: verPassword,
         }),
       }
     );
@@ -162,7 +152,7 @@ const UserProfile = () => {
 
   let updateEmail = async () => {
     let response = await fetch(
-      "http://127.0.0.1:8000/api/users/"+ user.user_id + "/",
+      "http://127.0.0.1:8000/api/users/" + user.user_id + "/",
       {
         method: "PATCH",
         headers: {
@@ -170,7 +160,7 @@ const UserProfile = () => {
           Authorization: "Bearer " + String(authTokens.access),
         },
         body: JSON.stringify({
-          email : email,
+          email: email,
         }),
       }
     );
@@ -182,7 +172,7 @@ const UserProfile = () => {
 
   let updatePhonenumber = async () => {
     let response = await fetch(
-      "http://127.0.0.1:8000/api/users/"+ user.user_id + "/",
+      "http://127.0.0.1:8000/api/users/" + user.user_id + "/",
       {
         method: "PATCH",
         headers: {
@@ -190,7 +180,7 @@ const UserProfile = () => {
           Authorization: "Bearer " + String(authTokens.access),
         },
         body: JSON.stringify({
-          phone : phone,
+          phone: phone,
         }),
       }
     );
@@ -201,44 +191,50 @@ const UserProfile = () => {
   };
 
   let createSkill = async () => {
-    let response = await fetch("http://127.0.0.1:8000/api/users/" + currentUser.id + "/skills/",{
-      method : "POST",
-      headers: {
-        'Content-Type' : 'application/json',
-        Authorization: "Bearer " + String(authTokens.access),
-      },
-      body : JSON.stringify({
-        name: skill,
-        description : skillDescription,
-      })
-    });
-    
+    let response = await fetch(
+      "http://127.0.0.1:8000/api/users/" + currentUser.id + "/skills/",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + String(authTokens.access),
+        },
+        body: JSON.stringify({
+          name: skill,
+          description: skillDescription,
+        }),
+      }
+    );
+
     let data = await response.json();
-    if(response.status === 201) {
-      setSkills([...skills,data]);
+    if (response.status === 201) {
+      setSkills([...skills, data]);
     }
   };
 
   let deleteSkill = async (id) => {
-    for (let i = 0; i < checked.length ; i++) {
+    for (let i = 0; i < checked.length; i++) {
       let response = fetch(
-        "http://127.0.0.1:8000/api/users/" + currentUser.id + "/skills/" + checked[i], {
+        "http://127.0.0.1:8000/api/users/" +
+          currentUser.id +
+          "/skills/" +
+          checked[i],
+        {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
             Authorization: "Bearer " + String(authTokens.access),
           },
-        });
-      if(response.status === 205) {
+        }
+      );
+      if (response.status === 205) {
         alert("Skills deleted successfully");
       }
     }
-
   };
 
-
   // const closeModal = () => {
-  //   var modal = document.getElementById("skillset-modal");   
+  //   var modal = document.getElementById("skillset-modal");
   //   var btn = document.getElementsByClassName("add-skill-btn");
 
   //   modal.style.display = "block";
@@ -246,7 +242,6 @@ const UserProfile = () => {
   //     modal.style.display = "none";
   //   }
 
-  
   // }
 
   // Gets checked elements of a checklist.
@@ -254,28 +249,25 @@ const UserProfile = () => {
 
   // Add or remove checked item from list.
   const handleCheck = (event) => {
-      var updatedList = [...checked];
-      var id = event.target.value;
-      if (event.target.checked) {
-        updatedList = [...checked, event.target.value];
-      } else {
-        updatedList.splice(checked.indexOf(id), 1);
-      }
-      setChecked(updatedList);
+    var updatedList = [...checked];
+    var id = event.target.value;
+    if (event.target.checked) {
+      updatedList = [...checked, event.target.value];
+    } else {
+      updatedList.splice(checked.indexOf(id), 1);
+    }
+    setChecked(updatedList);
   };
 
-
-  const checkedItems = checked.length 
-      ? checked.reduce((total, item) => {
-          return total + ',' + item;
-  })
-  : "";
+  const checkedItems = checked.length
+    ? checked.reduce((total, item) => {
+        return total + "," + item;
+      })
+    : "";
 
   const onPassChange = (e) => {
     let pass = e.target.value;
-    setPassword({...password, 
-            pass: e.target.value,
-          });
+    setPassword({ ...password, pass: e.target.value });
     setError(null);
     let caps, small, num, specialSymbol;
     if (password.length < 4) {
@@ -304,132 +296,109 @@ const UserProfile = () => {
     }
   };
 
-
   // return classes based on whether item is checked
-  var isChecked = (item) => 
-  checked.includes(item) ? "checked-item" : "not-checked-item";
-
-  // This is where all checked skills are stored.
-  console.log("checked items", checked)
-  //console.log("checked skill id", )
-
-
-  console.log(currentUser);
-  console.log("skill",skills);
-  console.log(isError);
-
-
-
+  var isChecked = (item) =>
+    checked.includes(item) ? "checked-item" : "not-checked-item";
 
   const addSkill = () => {
     var modal = document.getElementById("skillset-modal");
     var span = document.getElementsByClassName("skill-close")[0];
     modal.style.display = "block";
-    span.onclick = function() {
+    span.onclick = function () {
       modal.style.display = "none";
-    }
-    window.onclick = function(event) {
+    };
+    window.onclick = function (event) {
       if (event.target === modal) {
         modal.style.display = "none";
       }
-    }
-
-  }
+    };
+  };
 
   const removeSkill = () => {
     var modal = document.getElementById("remove-skills-modal");
     var span = document.getElementsByClassName("skill-close")[1];
     modal.style.display = "block";
-    span.onclick = function() {
+    span.onclick = function () {
       modal.style.display = "none";
-    }
-    window.onclick = function(event) {
+    };
+    window.onclick = function (event) {
       if (event.target === modal) {
         modal.style.display = "none";
       }
-    }
-
-  }
+    };
+  };
 
   const editName = () => {
     var modal = document.getElementById("name-modal");
     var span = document.getElementsByClassName("skill-close")[2];
     modal.style.display = "block";
-    span.onclick = function() {
+    span.onclick = function () {
       modal.style.display = "none";
-    }
-    window.onclick = function(event) {
+    };
+    window.onclick = function (event) {
       if (event.target === modal) {
         modal.style.display = "none";
       }
-    }
-
-  }
-
+    };
+  };
 
   const editUsername = () => {
     var modal = document.getElementById("username-modal");
     var span = document.getElementsByClassName("skill-close")[3];
     modal.style.display = "block";
-    span.onclick = function() {
+    span.onclick = function () {
       modal.style.display = "none";
-    }
-    window.onclick = function(event) {
+    };
+    window.onclick = function (event) {
       if (event.target === modal) {
         modal.style.display = "none";
       }
-    }
-
-  }
+    };
+  };
 
   const editContactDetails = () => {
     var modal = document.getElementById("contact-modal");
     var span = document.getElementsByClassName("skill-close")[4];
     modal.style.display = "block";
-    span.onclick = function() {
+    span.onclick = function () {
       modal.style.display = "none";
-    }
-    window.onclick = function(event) {
+    };
+    window.onclick = function (event) {
       if (event.target === modal) {
         modal.style.display = "none";
       }
-    }
-
-  }
-
+    };
+  };
 
   const editPassword = () => {
     var modal = document.getElementById("password-modal");
     var span = document.getElementsByClassName("skill-close")[5];
     modal.style.display = "block";
-    span.onclick = function() {
+    span.onclick = function () {
       modal.style.display = "none";
-    }
-    window.onclick = function(event) {
+    };
+    window.onclick = function (event) {
       if (event.target === modal) {
         modal.style.display = "none";
       }
-    }
-
-  }
-
-
+    };
+  };
 
   function passwordConfirmation() {
     var password = document.getElementById("password").value;
     var confirmPassword = document.getElementById("password-confirmed").value;
-   
-    if (password == "") {
-        alert("Error: The password field is Empty.");
-    } else if (password != confirmPassword) {
-        alert("Please make sure your passwords match.")
+
+    if (password === "") {
+      alert("Error: The password field is Empty.");
+    } else if (password !== confirmPassword) {
+      alert("Please make sure your passwords match.");
     }
   }
 
   function getRemainingSkills() {
     var updatedList = [...skills];
-    var i=0;
-    for(i=0; i < updatedList.length; i++) {
+    var i = 0;
+    for (i = 0; i < updatedList.length; i++) {
       if (checked.includes(updatedList[i].id)) {
         updatedList.splice(updatedList[i], 1);
       }
@@ -437,323 +406,271 @@ const UserProfile = () => {
     setSkills(updatedList);
   }
 
-    
-
-
-
-
-
   return (
     <>
+      <div id="skillset-modal" className="skillset-modal">
+        <div className="skill-close"> &times; </div>
+        <div className="skillset-modal-content">
+          <h1>Add to your skillset!</h1>
+          <div className="skill-input-div">
+            <label className="skill-input-labels">Skill name:</label>
 
+            <input
+              className="skill-inputs"
+              type="text"
+              placeholder="Enter Skill Name"
+              onChange={(event) => setSkill(event.target.value)}
+            />
+          </div>
 
-        <div id="skillset-modal" className="skillset-modal">
+          <div className="skill-input-div">
+            <label className="skill-input-labels">Skill description:</label>
 
-        <div className="skill-close">  &times; </div>
-            <div className="skillset-modal-content">
+            <textarea
+              className="skill-inputs"
+              type="text"
+              placeholder="Enter Skill Description"
+              onChange={(event) => setSkillDescription(event.target.value)}
+            />
+          </div>
 
-
-                  <h1>Add to your skillset!</h1>
-                  <div className="skill-input-div">
-                      <label 
-                        className="skill-input-labels">
-                        Skill name:
-                      </label>
-
-                      <input 
-                        className="skill-inputs" 
-                        type="text"
-                        placeholder="Enter Skill Name"
-                        onChange={event=>setSkill(event.target.value)}
-                      />
-                  </div>
-
-                  <div className="skill-input-div">
-                      <label 
-                        className="skill-input-labels">
-                        Skill description:
-                      </label>
-
-                      <textarea 
-                        className="skill-inputs" 
-                        type="text"
-                        placeholder="Enter Skill Description"
-                        onChange={event=>setSkillDescription(event.target.value)}
-                      />
-                  </div>
-
-
-                  <button onClick = {createSkill} className="add-skill-btn">Add skill</button>
-
-            </div>
-
-
+          <button onClick={createSkill} className="add-skill-btn">
+            Add skill
+          </button>
         </div>
+      </div>
 
+      <div id="remove-skills-modal" className="skillset-modal">
+        <div className="skill-close"> &times; </div>
+        <div className="skillset-modal-content">
+          <h1>Remove skills from your skillset.</h1>
 
-        <div id="remove-skills-modal" className="skillset-modal">
+          <div className="checkList">
+            {skills.map((item, index) => (
+              <div key={index}>
+                <input value={item.id} type="checkbox" onChange={handleCheck} />
+                <span className={isChecked(item.id)}> {item.name} </span>
+              </div>
+            ))}
+          </div>
 
-        <div className="skill-close">  &times; </div>
-            <div className="skillset-modal-content">
-
-
-                  <h1>Remove skills from your skillset.</h1>
-
-                  <div className="checkList">
-
-                  
-
-                    {skills.map((item, index) => (
-                           <div key={index}>
-                           <input value={item.id} type="checkbox" onChange={handleCheck}/>
-                           <span className={isChecked(item.id)}> {item.name} </span>
-                       </div>
-                    ))}
-
-                </div>
-
-                  <button onClick = {deleteSkill} className="add-skill-btn">Remove skill</button>
-
-            </div>
-
-
+          <button onClick={deleteSkill} className="add-skill-btn">
+            Remove skill
+          </button>
+        </div>
       </div>
 
       <div id="name-modal" className="skillset-modal">
+        <div className="skill-close"> &times; </div>
+        <div className="skillset-modal-content">
+          <h1>Edit your name.</h1>
+          <div className="skill-input-div">
+            <label className="skill-input-labels">First name:</label>
 
-        <div className="skill-close">  &times; </div>
-            <div className="skillset-modal-content">
-
-
-                  <h1>Edit your name.</h1>
-                  <div className="skill-input-div">
-                      <label 
-                        className="skill-input-labels">
-                        First name:
-                      </label>
-
-                      <input 
-                        className="skill-inputs" 
-                        type="text"
-                        placeholder="Enter First Name"
-                        onChange={event=>setFirstName(event.target.value)}
-                      />
-                  </div>
-
-                  <div className="skill-input-div">
-                      <label 
-                        className="skill-input-labels">
-                        Last name:
-                      </label>
-
-                      <textarea 
-                        className="skill-inputs" 
-                        type="text"
-                        placeholder="Enter Last Name"
-                        onChange={event=>setLastName(event.target.value)}
-                      />
-                  </div>
-
-
-                  <button onClick={() => {updateFirstName(); updateLastName();}} className="add-skill-btn">Update name.</button>
-
-            </div>
-
-
-        </div>
-
-        <div id="username-modal" className="skillset-modal">
-
-          <div className="skill-close">  &times; </div>
-          <div className="skillset-modal-content">
-
-
-                <h1>Edit username.</h1>
-                <div className="skill-input-div">
-                    <label 
-                      className="skill-input-labels">
-                      New username:
-                    </label>
-
-                    <input 
-                      className="skill-inputs" 
-                      type="text"
-                      placeholder="Enter username."
-                      onChange={event=>setUsername(event.target.value)}
-                    />
-                </div>
-                <button onClick = {updateUsername} className="add-skill-btn">Update username.</button>
-
+            <input
+              className="skill-inputs"
+              type="text"
+              placeholder="Enter First Name"
+              onChange={(event) => setFirstName(event.target.value)}
+            />
           </div>
 
+          <div className="skill-input-div">
+            <label className="skill-input-labels">Last name:</label>
+
+            <textarea
+              className="skill-inputs"
+              type="text"
+              placeholder="Enter Last Name"
+              onChange={(event) => setLastName(event.target.value)}
+            />
+          </div>
+
+          <button
+            onClick={() => {
+              updateFirstName();
+              updateLastName();
+            }}
+            className="add-skill-btn"
+          >
+            Update name.
+          </button>
+        </div>
       </div>
 
+      <div id="username-modal" className="skillset-modal">
+        <div className="skill-close"> &times; </div>
+        <div className="skillset-modal-content">
+          <h1>Edit username.</h1>
+          <div className="skill-input-div">
+            <label className="skill-input-labels">New username:</label>
 
+            <input
+              className="skill-inputs"
+              type="text"
+              placeholder="Enter username."
+              onChange={(event) => setUsername(event.target.value)}
+            />
+          </div>
+          <button onClick={updateUsername} className="add-skill-btn">
+            Update username.
+          </button>
+        </div>
+      </div>
 
       <div id="contact-modal" className="skillset-modal">
+        <div className="skill-close"> &times; </div>
+        <div className="skillset-modal-content">
+          <h1>Edit contact details.</h1>
+          <div className="skill-input-div">
+            <label className="skill-input-labels">Phone number:</label>
 
-          <div className="skill-close">  &times; </div>
-          <div className="skillset-modal-content">
-
-
-                <h1>Edit contact details.</h1>
-                <div className="skill-input-div">
-                    <label 
-                      className="skill-input-labels">
-                      Phone number:
-                    </label>
-
-                    <input 
-                      className="skill-inputs" 
-                      type="text"
-                      placeholder="Enter phone number."
-                      onChange={event=>setPhoneNumber(event.target.value)}
-                    />
-                </div>
-
-                <div className="skill-input-div">
-                    <label 
-                      className="skill-input-labels">
-                      Email:
-                    </label>
-
-                    <input 
-                      className="skill-inputs" 
-                      type="email"
-                      placeholder="Enter email."
-                      onChange={event=>setEmail(event.target.value)}
-                    />
-                </div>
-                <button onClick={() => {updatePhonenumber(); updateEmail();}} className="add-skill-btn">Update contact details.</button>
-
+            <input
+              className="skill-inputs"
+              type="text"
+              placeholder="Enter phone number."
+              onChange={(event) => setPhoneNumber(event.target.value)}
+            />
           </div>
 
-      </div>
+          <div className="skill-input-div">
+            <label className="skill-input-labels">Email:</label>
 
+            <input
+              className="skill-inputs"
+              type="email"
+              placeholder="Enter email."
+              onChange={(event) => setEmail(event.target.value)}
+            />
+          </div>
+          <button
+            onClick={() => {
+              updatePhonenumber();
+              updateEmail();
+            }}
+            className="add-skill-btn"
+          >
+            Update contact details.
+          </button>
+        </div>
+      </div>
 
       <div id="password-modal" className="skillset-modal">
+        <div className="skill-close"> &times; </div>
+        <div className="skillset-modal-content">
+          <h1>Change your password.</h1>
+          <div className="skill-input-div">
+            <label className="skill-input-labels">Update password:</label>
+            {isError !== null && <p className="errors"> - {isError}</p>}
 
-      <div className="skill-close">  &times; </div>
-      <div className="skillset-modal-content">
+            <input
+              className="skill-inputs"
+              value={password}
+              type="password"
+              id="password"
+              onChange={(event) => {
+                onPassChange(event);
+                setPassword(event.target.value);
+              }}
+            />
+          </div>
 
+          <div className="skill-input-div">
+            <label className="skill-input-labels">Re-type your password:</label>
 
-            <h1>Change your password.</h1>
-            <div className="skill-input-div">
-                <label 
-                  className="skill-input-labels">
-                  Update password:
-                </label>
-                {isError !== null && <p className="errors"> - {isError}</p>}
-
-                <input 
-                  className="skill-inputs"
-                  value={password} 
-                  type="password"
-                  id="password"
-                  onChange={event=>{onPassChange(event);setPassword(event.target.value)}}
-                />
-            </div>
-
-            <div className="skill-input-div">
-                <label 
-                  className="skill-input-labels">
-                  Re-type your password:
-                </label>
-
-                <input 
-                  className="skill-inputs" 
-                  type="password"
-                  id= "password-confirmed"
-                  onChange={event=>setPasswordVerified(event.target.value)}
-                />
-            </div>
-            <button onClick={() => {passwordConfirmation(); updatePassword();}} className="add-skill-btn">Update Password</button>
-
+            <input
+              className="skill-inputs"
+              type="password"
+              id="password-confirmed"
+              onChange={(event) => setPasswordVerified(event.target.value)}
+            />
+          </div>
+          <button
+            onClick={() => {
+              passwordConfirmation();
+              updatePassword();
+            }}
+            className="add-skill-btn"
+          >
+            Update Password
+          </button>
+        </div>
       </div>
-
-</div>
-
-
-
-
-
 
       <div className="home-page">
         <HomeNavbar />
 
         <div className="home-page-content">
-
           <div className="user-menu">
-
-                      <button 
-                      className="menu-button"
-                      >
-                        Edit Account Details
-                      </button>
-                      <div className="menu-dropdown"> 
-                          <button className="edit-btn" onClick={editName}>Edit Name</button>
-                          <button className="edit-btn" onClick={editUsername}>Edit Username</button>
-                          <button className="edit-btn" onClick={editPassword}>Edit Password</button>
-                          <button className="edit-btn" onClick={editContactDetails}>Edit Contact Details</button>
-                          <button className="edit-btn" onClick={addSkill}>
-                            Add to your skillset</button>
-                          <button className="edit-btn" onClick={(e) => {getRemainingSkills();removeSkill()}}>Remove from your skillset</button>
-                      </div>
-
+            <button className="menu-button">Edit Account Details</button>
+            <div className="menu-dropdown">
+              <button className="edit-btn" onClick={editName}>
+                Edit Name
+              </button>
+              <button className="edit-btn" onClick={editUsername}>
+                Edit Username
+              </button>
+              <button className="edit-btn" onClick={editPassword}>
+                Edit Password
+              </button>
+              <button className="edit-btn" onClick={editContactDetails}>
+                Edit Contact Details
+              </button>
+              <button className="edit-btn" onClick={addSkill}>
+                Add to your skillset
+              </button>
+              <button
+                className="edit-btn"
+                onClick={(e) => {
+                  getRemainingSkills();
+                  removeSkill();
+                }}
+              >
+                Remove from your skillset
+              </button>
+            </div>
           </div>
 
-      
-        <div className="user-profile-content">
+          <div className="user-profile-content">
+            <i className="user-icon">
+              <FaUser />
+            </i>
+            <div className="user-info-container">
+              <div className="prof-line">
+                <h3 className="prof-title"> Name: </h3>
+                <p className="prof-text">
+                  {currentUser.first_name} {currentUser.last_name}
+                </p>
+              </div>
 
+              <div className="prof-line">
+                <h3 className="prof-title"> Username: </h3>
+                <p className="prof-text">{currentUser.username} </p>
+              </div>
 
-          <i className="user-icon"> <FaUser/> </i>
-          <div className="user-info-container">
+              <div className="prof-line">
+                <h3 className="prof-title"> Skills: </h3>
+                {skills.map((skill) => (
+                  <li className="skill">{skill.name}</li>
+                ))}
+              </div>
 
-            <div className="prof-line">
-              <h3 className="prof-title"> Name: </h3> 
-              <p className="prof-text"> {currentUser.first_name} {currentUser.last_name}</p>
-            </div>
-
-            <div className="prof-line">  
-              <h3 className="prof-title"> Username:  </h3 >   
-              <p className="prof-text">{currentUser.username} </p>
-            </div>
-
-            <div className="prof-line">  
-              <h3 className="prof-title"> Skills: </h3>
-              {skills.map((skill) => 
-
-                  <li className="skill">
-                      {skill.name}
-                  </li>
-
-              )}
-            </div>
-
-
-            <div className="prof-line">  
-
-                <h3 className="prof-title">Contact number:  </h3>
+              <div className="prof-line">
+                <h3 className="prof-title">Contact number: </h3>
                 <p className="prof-text"> {currentUser.phone}</p>
+              </div>
+
+              <div className="prof-line">
+                <h3 className="prof-title">Email: </h3>
+                <p className="prof-text"> {currentUser.email}</p>
+              </div>
+
+              <div className="prof-line">
+                <h3 className="prof-title"> Join date: </h3> #
+                <p className="prof-text"> {currentUser.date_joined}</p>
+              </div>
             </div>
-
-
-            
-            <div className="prof-line">  
-
-              <h3 className="prof-title">Email:  </h3>
-              <p className="prof-text"> {currentUser.email}</p>
-            </div>
-
-            <div className="prof-line">  
-              <h3 className="prof-title"> Join date: </h3> #
-              <p className="prof-text"> {currentUser.date_joined}</p>
-            </div>
-
           </div>
-        </div>
-
-
         </div>
       </div>
     </>

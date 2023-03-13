@@ -1,11 +1,8 @@
-import { indexOf } from "lodash";
 import React, { useState, useEffect, useContext } from "react";
 import Navbar from "../components/Navbar";
 import { useParams } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import "./Homepage.css";
-import { FaTrash } from 'react-icons/fa';
- 
 
 //QUERY - are critical actions classified separately from normal suggestions?
 //how does dismissing suggestions work
@@ -15,7 +12,7 @@ const SuggestionsForm = () => {
 
   let [suggestions, setSuggestions] = useState([]);
 
-  let { authTokens, logoutUser, user } = useContext(AuthContext);
+  let { authTokens, logoutUser } = useContext(AuthContext);
   const { slug } = useParams();
 
   // Setting up states
@@ -48,15 +45,14 @@ const SuggestionsForm = () => {
       logoutUser();
     }
   };
-  
-  let updateSuggestion = async (e) => {
 
-    console.log("test",e)
+  let updateSuggestion = async (e) => {
+    console.log("test", e);
     let response = await fetch(
       "http://127.0.0.1:8000/api/projects/"
-      .concat(slug)
-      .concat("/suggestions/")
-      .concat(e.target.value) + "/",
+        .concat(slug)
+        .concat("/suggestions/")
+        .concat(e.target.value) + "/",
       {
         method: "PATCH",
         headers: {
@@ -64,7 +60,7 @@ const SuggestionsForm = () => {
           Authorization: "Bearer " + String(authTokens.access),
         },
         body: JSON.stringify({
-          dismissed : "true",
+          dismissed: "true",
         }),
       }
     );
@@ -76,50 +72,38 @@ const SuggestionsForm = () => {
   };
 
   return (
-
-      <div className="home-page">
-        <Navbar />
-        <div className="main_container">
-          
-          <p className="sug-title">Suggestions</p>
-          <div className="menu_container">
-
+    <div className="home-page">
+      <Navbar />
+      <div className="main_container">
+        <p className="sug-title">Suggestions</p>
+        <div className="menu_container">
           <div className="all-containers">
-
-          <div className="people-list">
-
-            <div className="suggestions-container">
-            
+            <div className="people-list">
+              <div className="suggestions-container">
                 <div className="all-suggestions">
-
                   {suggestions.map((suggestion, index) => (
-                  <div>
-                    <div> 
-                    <h3 className="sug-title">{suggestion.name}</h3>
-                    <p>{suggestion.description}</p>
-                    <button className="member-button" value={suggestion.id} onClick = {updateSuggestion}> Dismiss suggestion</button>
+                    <div>
+                      <div>
+                        <h3 className="sug-title">{suggestion.name}</h3>
+                        <p>{suggestion.description}</p>
+                        <button
+                          className="member-button"
+                          value={suggestion.id}
+                          onClick={updateSuggestion}
+                        >
+                          Dismiss suggestion
+                        </button>
+                      </div>
                     </div>
-                  </div>
-
-                ))}
-
-               
+                  ))}
+                </div>
               </div>
-
             </div>
-                         
-              
           </div>
-            
-          </div>
-        
         </div>
       </div>
     </div>
-
   );
 };
 
 export default SuggestionsForm;
-
-

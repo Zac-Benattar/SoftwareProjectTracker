@@ -1,6 +1,5 @@
 import React from "react";
 import DateStringifier from "../utils/DateStringifier";
-// import "../pages/Homepage.css";
 
 export const SuccessChanceDisplay = ({ risk_evaluation, suggestions }) => {
   const suggestionCount = suggestions.length;
