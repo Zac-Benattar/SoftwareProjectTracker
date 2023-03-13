@@ -58,25 +58,28 @@ class CurrentEvaluationData(StartEvaluationData): #CurrentEvaluationData inherit
 
         return matrix #Return 1xn matrix
 
-        #Overrides method from StartEvaluationData
+    #Overrides method from StartEvaluationData
+    #Used for implementing this in higher order functions
+    @staticmethod
     def get_external_data_as_matrix(project):
-        matrix = [[
-        project.initial_budget,
-        project.current_budget,
-        project.money_spent,
-        project.num_developers,
-        project.num_other_team_members,
-        project.num_team_left,
-        project.days_until_original_deadline,
-        project.days_until_current_deadline,
-        project.days_budget_covers_running_costs,
-        project.num_tasks,
-        project.num_completed_tasks,
-        project.current_average_happiness,
-        project.current_average_confidence
-        ]]
+        #matrix = [[
+        #project.initial_budget,
+        #project.current_budget,
+        #project.money_spent,
+        #project.num_developers,
+        #project.num_other_team_members,
+        #project.num_team_left,
+        #project.days_until_original_deadline,
+        #project.days_until_current_deadline,
+        #project.days_budget_covers_running_costs,
+        #project.num_tasks,
+        #project.num_completed_tasks,
+        #project.current_average_happiness,
+        #project.current_average_confidence
+        #]]
 
-        return matrix #Return 1xn matrix
+        #return matrix #Return 1xn matrix
+        return project.get_data_as_matrix() #
 
     #Used to determine what object is stored as current evaluation data and start evaluation can be stored in the same place
     #Useful for figuring out if a risk assesment snapshot was an initial estimate or an "project in progress" estimate
@@ -101,3 +104,19 @@ class CurrentEvaluationData(StartEvaluationData): #CurrentEvaluationData inherit
 
     def get_average_confidence(self):
         return self.current_average_confidence
+
+    #To String Function
+    def __str__(self):
+        return "[initial_budget: " + str(self.initial_budget) +\
+        ", current_budget: " + str(self.current_budget) +\
+        ", money_spent: " + str(self.money_spent) +\
+        ", num_developers: " + str(self.num_developers) +\
+        ", num_other_team_members: " + str(self.num_other_team_members) +\
+        ", num_team_left: " + str(self.num_team_left) +\
+        ", days_until_original_deadline: " + str(self.days_until_original_deadline) +\
+        ", days_until_current_deadline: " + str(self.days_until_current_deadline) +\
+        ", days_budget_covers_running_costs: " + str(self.days_budget_covers_running_costs) +\
+        ", num_tasks: " + str(self.num_tasks) +\
+        ", num_completed_tasks: " + str(self.num_completed_tasks) +\
+        ", current_average_happiness: " + str(self.current_average_happiness) +\
+        ", current_average_confidence: " + str(self.current_average_confidence)  + "]"

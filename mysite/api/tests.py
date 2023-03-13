@@ -6,11 +6,73 @@ from django.urls import reverse
 
 
 class Tests(APITestCase) :
-    def test_user(self):
-        response = self.client.get('/api/users/',format='json')
+    def test_member(self):
+        response = self.client.get('/api/project/1/members',format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         if ( response.status_code == 200):
-            print("  API - GET endpoint for user --------- OK")
+            print("   API - GET endpoint for members --------- OK")
+
+    def test_suggestion(self):
+        response = self.client.get('/api/project/1/suggestions',format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        if ( response.status_code == 200):
+            print("  API - GET endpoint for suggestions --------- OK")
+
+    def test_tasks(self):
+        response = self.client.get('/api/projects/1/tasks',format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        if ( response.status_code == 200):
+            print("  API - GET endpoint for tasks --------- OK")
+
+    def test_riskevaluation(self):
+        response = self.client.get('/api/projects/1/riskevaluation',format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        if ( response.status_code == 200):
+            print("  API - GET endpoint for risk evaluation --------- OK")
+
+    def test_meetings(self):
+        response = self.client.get('/api/projects/1/meetings',format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        if ( response.status_code == 200):
+            print("  API - GET endpoint for meetings --------- OK")
+
+
+    def test_feedback(self):
+        response = self.client.get('/api/projects/1/feedback',format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        if ( response.status_code == 200):
+            print("  API - GET endpoint for feedback --------- OK")
+
+    def test_userprofile(self):
+        response = self.client.get('/api/users/1/myaccount',format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        if ( response.status_code == 200):
+            print("  API - GET endpoint for user profile --------- OK")
+
+
+    def test_userskills(self):
+        response = self.client.get('/api/users/1/skills',format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        if ( response.status_code == 200):
+            print("  API - GET endpoint for user skills --------- OK")
+    
+    def test_generatingsuggestion(self):
+        response = self.client.get('/api/projects/1/suggestion',format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        if ( response.status_code == 200):
+            print("  API - GET endpoint for generating suggestions--------- OK")
+    
+    def test_generating_risk_evaluation(self):
+        response = self.client.get('/api/projects/1/riskevaluation',format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        if ( response.status_code == 200):
+            print("  API - GET endpoint for generating risk evaluation--------- OK")
+
+    def test_role_requirement(self):
+        response = self.client.get('/api/role/rolerequirement',format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        if ( response.status_code == 200):
+            print("  API - GET endpoint for role requirements --------- OK")
 
     def test_create_user(self):
         client = APIClient()
