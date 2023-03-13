@@ -42,21 +42,24 @@ class StartEvaluationData:
 
         return matrix #Return 1xn matrix
 
+    #Used for implementing this in higher order functions
     @staticmethod
     def get_external_data_as_matrix(project):
-        matrix = [[
-        project.initial_budget,
-        project.money_spent,
-        project.num_developers,
-        project.num_other_team_members,
-        project.days_until_original_deadline,
-        project.days_budget_covers_running_costs,
-        project.num_tasks,
-        project.num_completed_tasks
-        ]]
+        #matrix = [[
+        #project.initial_budget,
+        #project.money_spent,
+        #project.num_developers,
+        #project.num_other_team_members,
+        #project.days_until_original_deadline,
+        #project.days_budget_covers_running_costs,
+        #project.num_tasks,
+        #project.num_completed_tasks
+        #]]
 
-        return matrix #Return 1xn matrix
+        #return matrix #Return 1xn matrix
+        return project.get_data_as_matrix()
 
+    #
     def get_initial_budget(self):
         return self.initial_budget
 
@@ -93,3 +96,14 @@ class StartEvaluationData:
     #Useful for figuring out if a risk assesment snapshot was an initial estimate or an "project in progress" estimate
     def is_current_evaluation_data(self):
         return False
+
+    #To String Function
+    def __str__(self):
+        return "[initial_budget: " + str(self.initial_budget) +\
+        ", money_spent: " + str(self.money_spent) +\
+        ", num_developers: " + str(self.num_developers) +\
+        ", num_other_team_members: " + str(self.num_other_team_members) +\
+        ", days_until_original_deadline: " + str(self.days_until_original_deadline) +\
+        ", days_budget_covers_running_costs: " + str(self.days_budget_covers_running_costs) +\
+        ", num_tasks: " + str(self.num_tasks) +\
+        ", num_completed_tasks: " + str(self.num_completed_tasks) + "]"

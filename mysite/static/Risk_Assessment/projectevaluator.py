@@ -65,7 +65,9 @@ class ProjectEvaluator:
     def update_model(self, new_startevaluationdata, new_currentevaluationdata, result_out):
 
         #=====================================================================
-        #SIMPLE APPROACH USING fit() [On the whole dataset again]
+        #SIMPLE APPROACH USING fit()
+        #[On the whole dataset again]
+        #This uses the simple trainer in modeltrainer.py
         #=====================================================================
         #Add new data to dataset
         modeltrainer.add_to_dataset(new_startevaluationdata, new_currentevaluationdata, result_out)
