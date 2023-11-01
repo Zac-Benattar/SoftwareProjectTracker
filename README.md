@@ -1,3 +1,6 @@
+# Archived
+This project is now archived and read-only.
+
 # SoftwareProjectTracker
 
 Project is not containerised or particularly nicely deployable.
